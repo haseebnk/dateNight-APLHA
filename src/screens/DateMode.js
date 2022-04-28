@@ -914,14 +914,16 @@ const styles = StyleSheet.create({
     //     fontFamily: "Poppins-Regular",
 
     // },
+   
     PingText: {
-        fontSize: 13,
+        fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontWeight: "bold",
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
         marginTop: 27,
-        marginHorizontal: 6
+        marginHorizontal: 4,
+
 
     },
     ChallengeContainer: {

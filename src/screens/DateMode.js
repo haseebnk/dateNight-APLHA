@@ -625,12 +625,9 @@ const styles = StyleSheet.create({
     },
     ping: {
         flexDirection: "row",
-
+        marginTop: 20,
         alignSelf: "center",
-        justifyContent: 'space-evenly',
-
-
-
+        
 
 
     },
@@ -862,24 +859,32 @@ const styles = StyleSheet.create({
 
 
     },
-    pinLockUnclock: {
-        fontSize: 12,
-        color: "white",
-        alignSelf: "center",
-        fontWeight: "bold",
-        textAlign: "center",
-        marginTop: 10,
-        marginHorizontal: 6
-    },
-
     PingUnlock: {
-        width: 89,
+        width: 90,
         height: 90,
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
         fontFamily: "Poppins-Regular",
 
+
+    },
+    PingLock: {
+        width: 90,
+        height: 90,
+        borderRadius: 12,
+        margin: 15,
+        backgroundColor: "#C5C5C5",
+        fontFamily: "Poppins-Regular",
+
+    },
+    PingPlayed: {
+        width: 90,
+        height: 90,
+        borderRadius: 12,
+        margin: 15,
+        backgroundColor: "#1AC72B",
+        fontFamily: "Poppins-Regular",
 
     },
     ping3: {
@@ -890,32 +895,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    ping: {
-        flexDirection: "row",
-        marginTop: 15,
-        alignSelf: "center",
-        marginBottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    PingPlayed: {
-        width: 89,
-        height: 90,
-        borderRadius: 12,
-        margin: 15,
-        backgroundColor: "#1AC72B",
-        fontFamily: "Poppins-Regular",
+   
+    // PingPlayed: {
+    //     width: 89,
+    //     height: 90,
+    //     borderRadius: 12,
+    //     margin: 15,
+    //     backgroundColor: "#1AC72B",
+    //     fontFamily: "Poppins-Regular",
 
-    },
-    PingLock: {
-        width: 89,
-        height: 90,
-        borderRadius: 12,
-        margin: 15,
-        backgroundColor: "#C5C5C5",
-        fontFamily: "Poppins-Regular",
+    // },
+    // PingLock: {
+    //     width: 89,
+    //     height: 90,
+    //     borderRadius: 12,
+    //     margin: 15,
+    //     backgroundColor: "#C5C5C5",
+    //     fontFamily: "Poppins-Regular",
 
-    },
+    // },
     PingText: {
         fontSize: 13,
         color: "white",

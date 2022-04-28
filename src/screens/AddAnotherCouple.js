@@ -13,13 +13,23 @@ import {
     ScrollView,
     FlatList,
     SafeAreaView,
-    Pressable
+    Pressable, 
+    Dimensions
 } from 'react-native';
 import { moderateScale } from "react-native-size-matters";
 import LinearGradient from 'react-native-linear-gradient';
 // import SplashScreen from 'react-native-splash-screen';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NotesContext } from "../context/NotesContext"
+
+
+
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+
+
 
 const COLORS = [
     {
@@ -531,7 +541,7 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff',
-
+height:windowHeight-5,
     },
     tinyLogo: {
         display: "flex",

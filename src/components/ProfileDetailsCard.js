@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
 
     cardTextHead: {
         color: 'white',
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         fontWeight:'700',
         fontSize: 18,
         marginLeft: 25,

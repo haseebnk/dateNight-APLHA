@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     },
     ChooseMeal: {
         fontSize: 16,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         color: 'white',
         alignSelf: "flex-start",
         marginLeft: 30,

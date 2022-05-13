@@ -150,7 +150,7 @@ marginLeft:5,
     changePassHeading: {
         color: '#fff',
         fontSize: 18,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         alignSelf:'center',
         marginTop: 2,
         marginBottom: 30,
@@ -160,7 +160,7 @@ marginLeft:5,
 
     container: {
         flex: 1,
-        paddingTop: 30,
+        paddingTop: Platform.OS ==='ios' ? 65 :30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff'
     },

@@ -808,7 +808,7 @@ const styles = StyleSheet.create({
     },
     thirdText: {
         fontSize: 20,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         alignSelf: 'center',
         color: '#74FF82',
 
@@ -817,7 +817,7 @@ const styles = StyleSheet.create({
     },
     secondText: {
         fontSize: 30,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         alignSelf: 'center',
         color: '#74FF82',
         marginTop: -5,
@@ -830,7 +830,7 @@ const styles = StyleSheet.create({
     },
     firstText: {
         fontSize: 20,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         alignSelf: 'center',
         color: '#74FF82',
         marginTop: 20
@@ -943,8 +943,8 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 20,
         color: "white",
-        fontFamily: "buttershine-serif",
-        marginTop: 15
+        fontFamily: "Poppins-Regular",
+        marginTop: Platform.OS ==='ios' ? 45 :15,
 
     },
 

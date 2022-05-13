@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   steps: {
     color: 'white',
     fontSize: 17,
-    fontFamily: "buttershine-serif",
+    fontFamily: "Poppins-Regular",
 
     // marginTop: 180,
     // marginBottom: 10,
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   getStarted: {
     color: 'white',
-    fontFamily: "buttershine-serif",
+    fontFamily: "Poppins-Regular",
     fontSize: 17,
 
     // marginBottom: -230,
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: 'white',
-    fontFamily: "buttershine-serif",
+    fontFamily: "Poppins-Regular",
 
     fontSize: 17,
 
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     color: '#FF2B25',
     fontSize: 43,
 
-    fontFamily: "buttershine-serif",
+    fontFamily: "Poppins-Regular",
 
     alignSelf: "center",
     alignContent: "center",
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   datingText: {
     color: '#A5A5A5',
     fontSize: 17,
-    fontFamily: "buttershine-serif",
+    fontFamily: "Poppins-Regular",
 
     alignSelf: "center",
     alignContent: "center",

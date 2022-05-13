@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Animated ,Modal , LayoutAnimation,
     Platform,
-    UIManager, SafeAreaView} from 'react-native';
+    UIManager, SafeAreaView , Pressable} from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -42,10 +42,13 @@ const FAQScreen = (props) => {
 
     return (
 
+
+
         <LinearGradient
             colors={['#24202f', '#24202f', '#24202f']}
             style={styles.container}
         >
+            <SafeAreaView>
             <View >
 
                 {/* <NavHeader title="FAQ" /> */}
@@ -102,11 +105,11 @@ const FAQScreen = (props) => {
 
                                 {press === item.id ?
 
-                                    <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
-
-                                        <Text style={{ padding: 15, marginHorizontal: 0, marginTop: -15, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Poppins-Regular", }}>{item.description} </Text>
-
-                                    </TouchableOpacity>
+                                    <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
+<View style={{backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18,}}>
+                                                    <Text style={{ margin: 15, padding: 15, marginHorizontal: 0, marginTop: -10, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Poppins-Regular", }}>{item.description} </Text>
+                                                </View>
+                                    </Pressable>
 
                                     :
 
@@ -119,7 +122,7 @@ const FAQScreen = (props) => {
                     </SafeAreaView>
                 </View>
             </View>
-
+            </SafeAreaView>
         </LinearGradient>
     );
 }
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginHorizontal: 135,
         marginBottom: 20,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         textAlign: 'center',
         marginLeft: 115,
 

@@ -195,6 +195,7 @@ export default function AddAnotherCouple(props) {
                     colors={['#24202f', '#24202f', '#24202f']}
                     style={styles.container}
                 >
+                    <SafeAreaView style={{flex:1}}>
                     <View style={{ flexDirection: "row" }}>
                         <TouchableOpacity onPress={() => props.navigation.goBack()}>
 
@@ -360,6 +361,8 @@ export default function AddAnotherCouple(props) {
 
                         </TouchableOpacity>
                     </View>
+
+                   </SafeAreaView>
                    
                 </LinearGradient>
             </TouchableWithoutFeedback>
@@ -428,7 +431,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginHorizontal: 65,
         marginBottom: 20,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         textAlign: 'center',
 
 
@@ -537,11 +540,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     container: {
-        flex: 1,
+        
         paddingTop: 30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff',
-height:windowHeight-5,
+height:windowHeight,
     },
     tinyLogo: {
         display: "flex",
@@ -624,7 +627,7 @@ height:windowHeight-5,
     profileText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         alignSelf: "center",
     },
 });

@@ -1,4 +1,4 @@
-import React, { useRef, useState , useContext} from 'react';
+import React, { useRef, useState, useContext } from 'react';
 
 // import all the components we are going to use
 import {
@@ -23,7 +23,7 @@ import {
 
 
 } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Carousel from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -113,25 +113,25 @@ const windowHeight = Dimensions.get('window').height;
 
 
 const PreData = [
-    {   
+    {
 
 
         id: 1,
-        key:"1",
+        key: "1",
         title: 'Pre-Plan',
         description:
             'Date 01',
     },
     {
         id: 2,
-        key:"2",
+        key: "2",
         title: 'Pre-Plan',
         description:
             'Date 02',
     },
     {
         id: 3,
-        key:"3",
+        key: "3",
         title: 'Pre-Plan',
         description:
             'Date 03',
@@ -139,28 +139,28 @@ const PreData = [
 
     {
         id: 4,
-        key:"4",
+        key: "4",
         title: 'Pre-Plan',
         description:
             'Date 04',
     },
     {
         id: 5,
-        key:"5",
+        key: "5",
         title: 'Pre-Plan',
         description:
             'Date 05',
     },
     {
         id: 6,
-        key:"6",
+        key: "6",
         title: 'Pre-Plan',
         description:
             'Date 06',
     },
     {
         id: 7,
-        key:"7",
+        key: "7",
         title: 'Pre-Plan',
         description:
             'Date 07',
@@ -179,7 +179,7 @@ const data = [
     {
 
         id: 1,
-        key:"1",
+        key: "1",
         color: ['#80D3FC', '#80D3FC',],
         title: 'First Date Mode',
         description:
@@ -188,7 +188,7 @@ const data = [
     {
 
         id: 2,
-        key:"2",
+        key: "2",
         color: ['#44BEFB', '#44BEFB',],
         title: 'Casual Date Mode',
         description:
@@ -197,7 +197,7 @@ const data = [
     {
 
         id: 3,
-        key:"3",
+        key: "3",
         color: ['#0883FB', '#0883FB',],
         title: 'Exclusive Date Mode',
         description:
@@ -206,7 +206,7 @@ const data = [
     {
 
         id: 4,
-        key:"4",
+        key: "4",
         color: ['#0149FF', '#0149FF',],
         title: 'Married Date Mode',
         description:
@@ -219,7 +219,7 @@ const data = [
 const Pings = [
     {
         id: "Item 1",
-        key:"1",
+        key: "1",
         type: "unlock",
         text: "Selfie challenge",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -227,7 +227,7 @@ const Pings = [
     },
     {
         id: "Item 2",
-        key:"2",
+        key: "2",
         type: "unlock",
         text: " Compliment your date ",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -235,7 +235,7 @@ const Pings = [
     },
     {
         id: "Item 3",
-        key:"3",
+        key: "3",
         type: "unlock",
         text: "Truth and dare",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -243,7 +243,7 @@ const Pings = [
     },
     {
         id: "Item 4",
-        key:"4",
+        key: "4",
         type: "unlock",
         text: " Compliment your date ",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -251,7 +251,7 @@ const Pings = [
     },
     {
         id: "Item 5",
-        key:"5",
+        key: "5",
         type: "lock",
         text: " Compliment your date ",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -259,7 +259,7 @@ const Pings = [
     },
     {
         id: "Item 6",
-        key:"6",
+        key: "6",
         type: "lock",
         text: " Compliment your date ",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -267,7 +267,7 @@ const Pings = [
     },
     {
         id: "Item 2",
-        key:"7",
+        key: "7",
         type: "lock",
         text: " Compliment your date ",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -303,7 +303,6 @@ const HomeScreen = (props) => {
 
 
     const xyz = (type) => {
-        console.log(type)
         type == 'lock' ? setModalOpenn(true) : null
     }
 
@@ -322,25 +321,26 @@ const HomeScreen = (props) => {
     const [time, setTime] = useState(new Date(Date.now()));
 
     const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
+    const [isDatePickerVisible, setShow] = useState(false);
 
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
         setIsDateSelected(true)
         setDate(currentDate);
+        setShow(false)
     };
 
 
     const onChangeTime = (event, selectedDate) => {
         const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
         setIsTimeSelected(true)
         setTime(currentDate);
+        setShow(false)
     };
 
     const showMode = (currentMode) => {
+        console.log(currentMode,)
         setShow(true);
         setMode(currentMode);
     };
@@ -391,11 +391,13 @@ const HomeScreen = (props) => {
         }).start();
     };
 
+    const hideDatePicker = () => {
+        setShow(false)
+    };
 
 
-  
     const onPress = () => setCount(count + 5);
-    const onPree = () => setCount(count > 0 ? count -5 : count - 0);
+    const onPree = () => setCount(count > 0 ? count - 5 : count - 0);
 
     // // Default active selector
     // const [activeSections, setActiveSections] = useState([]);
@@ -515,7 +517,6 @@ const HomeScreen = (props) => {
             let myLocalArray = []
             myLocalArray = Pings.splice(0, 1)
             setMyArray(myLocalArray)
-            console.log(myLocalArray)
             { Pings[0].type == 'lock' ? setModalOpenn(true) : null }
         }
 
@@ -666,7 +667,7 @@ const HomeScreen = (props) => {
                     </Modal>
                     <View style={styles.TopHeader}>
                         <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                            <Text style={{ fontSize: 20,   fontFamily: "buttershine-serif", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
+                            <Text style={{ fontSize: 20, fontFamily: "Poppins-Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => props.navigation.navigate('personalprofiledetails')}>
@@ -714,80 +715,80 @@ const HomeScreen = (props) => {
                                 <Text style={styles.ModeHeading}>Choose Your Mode</Text>
                             </View>
 
-                            <SafeAreaView style={{flex: 1}}>
-                            <FlatList
-                          
-                            nestedScrollEnabled
-                            ListEmptyComponent={null}
-                            ListFooterComponent={null}
-                            ListHeaderComponent={null}
-                            
-                                data={data}
-                                keyExtractor={(item, index) => index.toString()}
-                                style={{ width: (windowWidth - 50), }}
-                                renderItem={({ item, index }) => (
-                                    <Pressable
-                                        onPress={() => { LayoutAnimation.easeInEaseOut(); questionPick(item) }}
-                                        style={{ marginTop: 20, width: '100%', padding: 0 }}
-                                    >
-                                        {press === item.id ?
+                            <SafeAreaView style={{ flex: 1 }}>
+                                <FlatList
 
-                                            <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }}  >
+                                    nestedScrollEnabled
+                                    ListEmptyComponent={null}
+                                    ListFooterComponent={null}
+                                    ListHeaderComponent={null}
+
+                                    data={data}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    style={{ width: (windowWidth - 50), }}
+                                    renderItem={({ item, index }) => (
+                                        <Pressable
+                                            onPress={() => { LayoutAnimation.easeInEaseOut(); questionPick(item) }}
+                                            style={{ marginTop: 20, width: '100%', padding: 0 }}
+                                        >
+                                            {press === item.id ?
+
+                                                <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }}  >
+                                                    <LinearGradient
+                                                        colors={[item.color[0], item.color[1]]}
+                                                        style={{
+                                                            flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76,
+                                                            borderColor: 'white', borderWidth: 1.5,
+                                                            borderTopLeftRadius: 18, borderTopRightRadius: 18, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, color: "White",
+                                                        }}>
+
+                                                        <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
+                                                        <Text style={{ padding: 5, color: 'white', marginLeft: -20, fontFamily: "Poppins-Regular", fontSize: 16, width: moderateScale(180) }}>{item.title}</Text>
+
+                                                        {/* <AntDesign name="caretdown" size={16} color="black"/> */}
+
+                                                        <View style={styles.RadioView2}>
+                                                            <View style={onPress == item ? styles.RadioInnerViewNormal : styles.RadioInnerView} >
+                                                            </View>
+                                                        </View>
+                                                    </LinearGradient>
+                                                </Pressable>
+                                                :
                                                 <LinearGradient
                                                     colors={[item.color[0], item.color[1]]}
-                                                    style={{
-                                                        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76,
-                                                        borderColor: 'white', borderWidth: 1.5,
-                                                        borderTopLeftRadius: 18, borderTopRightRadius: 18, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, color: "White",
-                                                    }}>
-
-                                                    <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
-                                                    <Text style={{ padding: 5, color: 'white', marginLeft: -20,   fontFamily: "buttershine-serif", fontSize: 16, width: moderateScale(180) }}>{item.title}</Text>
-
-                                                    {/* <AntDesign name="caretdown" size={16} color="black"/> */}
+                                                    style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
+                                                    <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
+                                                    <View >
+                                                        <Text style={{ padding: 5, marginLeft: -20, fontFamily: "Poppins-Regular", color: "white", fontSize: 16, width: moderateScale(180), }}>{item.title}</Text>
+                                                    </View>
 
                                                     <View style={styles.RadioView2}>
-                                                        <View style={onPress == item ? styles.RadioInnerViewNormal : styles.RadioInnerView} >
+                                                        <View style={onPress == item ? styles.RadioInnerView : styles.RadioInnerViewNormal} >
                                                         </View>
                                                     </View>
+
                                                 </LinearGradient>
-                                            </Pressable>
-                                            :
-                                            <LinearGradient
-                                                colors={[item.color[0], item.color[1]]}
-                                                style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
-                                                <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
-                                                <View >
-                                                    <Text style={{ padding: 5, marginLeft: -20,   fontFamily: "buttershine-serif", color: "white", fontSize: 16, width: moderateScale(180), }}>{item.title}</Text>
-                                                </View>
+                                            }
 
-                                                <View style={styles.RadioView2}>
-                                                    <View style={onPress == item ? styles.RadioInnerView : styles.RadioInnerViewNormal} >
+                                            {press === item.id ?
+
+                                                <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
+
+                                                    <View style={{ backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, }}>
+                                                        <Text style={{ margin: 15, padding: 15, marginHorizontal: 0, marginTop: -10, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Poppins-Regular", }}>{item.description} </Text>
                                                     </View>
-                                                </View>
-
-                                            </LinearGradient>
-                                        }
-
-                                        {press === item.id ?
-
-                                            <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
-
-                                                <View style={{}}>
-                                                    <Text style={{ margin: 15, padding: 15, marginHorizontal: 0, marginTop: -10, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Poppins-Regular", }}>{item.description} </Text>
-                                                </View>
 
 
-                                            </Pressable>
+                                                </Pressable>
 
-                                            :
-                                            null
-                                        }
-                                    </Pressable>
+                                                :
+                                                null
+                                            }
+                                        </Pressable>
 
-                                )}
-                            />
-                              </SafeAreaView>
+                                    )}
+                                />
+                            </SafeAreaView>
                         </View>
                     </View>
 
@@ -855,38 +856,35 @@ const HomeScreen = (props) => {
 
                     </View>
 
-                {
-                    state && state.length > 0 ? (
-                        <>
-                        <View style={styles.AddPersonView}>
-                            <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
-                            {/* <TouchableOpacity onPress={() => props.navigation.navigate("addpartnersdetails")}> */}
-                            {/* <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                    {
+                        state && state.length > 0 ? (
+                            <>
+                                <View style={styles.AddPersonView}>
+                                    <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
+                                    {/* <TouchableOpacity onPress={() => props.navigation.navigate("addpartnersdetails")}> */}
+                                    {/* <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
                                     style={styles.linearGradient} >
                                     <Text style={styles.AddButtonText}>
                                         Add New Person
                                     </Text>
                                 </LinearGradient> */}
-                                <TouchableOpacity onPress={()=> props.navigation.navigate("addcouple")}>
-                                <Text style={{ bottom:-7,fontSize:12, color:'white' , alignSelf:'flex-end' , marginRight:45 , fontFamily :'Poppins-Regular'}}>Add New +</Text>
-                                </TouchableOpacity>
-                            <CoupleCard></CoupleCard>
-                            {/* </TouchableOpacity> */}
-                        </View> 
-                        </>
-                    ) : null
-                }
-                {
-                    console.log(state, 'state')
-                }
-                 
-                 
-                   
-               
-               
-               
-               
+                                    <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
+                                        <Text style={{ bottom: -7, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
+                                    </TouchableOpacity>
+                                    <CoupleCard></CoupleCard>
+                                    {/* </TouchableOpacity> */}
+                                </View>
+                            </>
+                        ) : null
+                    }
+
+
+
+
+
+
+
                     <View style={styles.AddCouple}>
 
                         <Text style={styles.choosePersonText}>   Add Another Couple</Text>
@@ -1118,12 +1116,15 @@ const HomeScreen = (props) => {
                     <View style={styles.ScheduleView}>
                         <Text style={styles.chooseDateText}> Schedule Your Date</Text>
 
-                        <Pressable onPress={showDatepicker} >
+                        {/* <Pressable onPress={showDatepicker} >
+                            
+                        </Pressable> */}
+                        <TouchableOpacity onPress={() => showDatepicker()}>
                             <View style={styles.sectionStyle2}>
 
                                 <Text
                                     style={{ color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginHorizontal: 20, }}
-                                    onPress={showDatepicker}
+
                                 >
                                     {isDateSelected ? `${date.getDate() + ' | ' + date.getMonth() + ' | ' + date.getFullYear()}` : "Select Date"}
                                 </Text>
@@ -1135,18 +1136,9 @@ const HomeScreen = (props) => {
                                 </View>
 
 
-                                {show && (
-                                    <DateTimePicker
-                                        testID="dateTimePicker"
-                                        value={date}
-                                        mode={mode}
-                                        is24Hour={true}
-                                        display="default"
-                                        onChange={mode == 'date' ? onChange : onChangeTime}
-                                    />
-                                )}
+
                             </View>
-                        </Pressable>
+                        </TouchableOpacity>
 
                         <Pressable onPress={showTimepicker} >
                             <View style={styles.sectionStyle2}>
@@ -1185,8 +1177,25 @@ const HomeScreen = (props) => {
                         </TouchableOpacity>
 
                     </View>
-                </ScrollView>
 
+                </ScrollView>
+                {/* <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    isVisible={show}
+                    is24Hour={true}
+                    display="default"
+                    onChange={mode == 'date' ? onChange : onChangeTime}
+                /> */}
+                <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode={mode}
+                    onConfirm={mode == 'date' ? onChange : onChangeTime}
+                    onCancel={hideDatePicker}
+                    display="default"
+                    is24Hour={true}
+                />
             </View>
         </SafeAreaView>
     );
@@ -1408,7 +1417,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
 
         marginBottom: 5,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         textAlign: 'center',
 
     },
@@ -1579,7 +1588,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "white",
         alignSelf: "center",
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         textAlign: "center",
 
 
@@ -1659,7 +1668,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 25,
         fontSize: 16,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
 
     },
     zipCode: {
@@ -1753,7 +1762,7 @@ const styles = StyleSheet.create({
     },
     AddPersonView: {
         marginTop: 20,
-       
+
         backgroundColor: 'black',
 
     },
@@ -1763,7 +1772,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
 
 
     },
@@ -1783,7 +1792,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
 
     },
     SelectYourPingText: {
@@ -1792,7 +1801,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
     },
     choosePersonText: {
         marginTop: 40,
@@ -1800,7 +1809,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
 
 
     }

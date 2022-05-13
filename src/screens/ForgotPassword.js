@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     ForgotPassHeading: {
         color: '#fff',
         fontSize: 20,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
 
 
         marginTop: 2,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        paddingTop: 30,
+        paddingTop: Platform.OS ==='ios' ? 65 :30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff'
     },

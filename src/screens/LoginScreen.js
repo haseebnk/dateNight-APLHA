@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: 30,
+        paddingTop: Platform.OS ==='ios' ? 65 :30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff'
     },
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     loginText: {
         color: '#fff',
         fontSize: 20,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
 
 
         marginTop: 20,
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
      
     },
 });

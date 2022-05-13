@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 40,
         color: "white",
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         fontWeight:'700',
         marginTop: 30,
     },

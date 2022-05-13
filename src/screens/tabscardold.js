@@ -984,7 +984,7 @@ const styles = StyleSheet.create({
     },
     ChooseMeal: {
         fontSize: 16,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
         color: 'white',
 
         marginLeft: 30,

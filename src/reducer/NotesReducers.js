@@ -1,6 +1,7 @@
 
 export const initialState = [
-//    {name:"alvina mos", number:"+92473874834"  , email:"alina123@gmail.com" ,}
+    {name:"alvina mos", number:"+92473874834"  , email:"alina123@gmail.com" ,   color: [ '#8265FB', '#6617F1',]  },
+    {name:"jack mos", number:"+92473874834"  , email:"alina123@gmail.com" ,   color: [ '#F11775', '#FB6580',]  }
 ]
 
 

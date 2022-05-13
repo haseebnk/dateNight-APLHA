@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 60,
     marginBottom:20,
-    fontFamily: "buttershine-serif",
+    fontFamily: "Poppins-Regular",
     top:-20,
     
   },

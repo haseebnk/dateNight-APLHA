@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
         marginTop: -15,
         marginBottom: 25,
         textAlign: 'center',
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
 
     },
     takePhoto: {
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: 30,
+        paddingTop: Platform.OS ==='ios' ? 65 :30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff'
     },
@@ -449,13 +449,13 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
     },
     profileText: {
         color: '#ffff',
         fontSize: 16,
         marginTop:20,
         alignSelf: "center",
-        fontFamily: "buttershine-serif",
+        fontFamily: "Poppins-Regular",
     },
 });

@@ -283,7 +283,7 @@ const HomeScreen = (props) => {
 
     const { state } = useContext(NotesContext)
 
-
+    const [addEvent, setEvent] = useState(false);
 
     const [toggleActive, setToggle] = useState(false);
     //fahas faq
@@ -911,7 +911,19 @@ const HomeScreen = (props) => {
 
 
                         <View style={styles.addEvent}>
+                            {addEvent ?
+                                (
+                                    <>
+                                        <View style={styles.mealView} >
 
+
+                                            <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
+
+
+                                        </View>
+                                    </>
+                                ) : null
+                            }
 
                             <View style={styles.mealView} >
 
@@ -1034,14 +1046,15 @@ const HomeScreen = (props) => {
 
                                 </View>
 
-
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#80D3FC', '#80D3FC']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add a meal
-                                    </Text>
-                                </LinearGradient>
+                                <TouchableOpacity onPress={()=> setEvent(true)}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#80D3FC', '#80D3FC']}
+                                        style={styles.addEventButton} >
+                                        <Text style={styles.AddMeal}>
+                                            Add a meal
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#44BEFB', '#44BEFB']}
                                     style={styles.addEventButton} >
@@ -1064,13 +1077,7 @@ const HomeScreen = (props) => {
                                     </Text>
                                 </LinearGradient>
                             </View>
-                            <View style={styles.mealView} >
 
-
-                                <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
-
-
-                            </View>
                         </View>
                     </ScrollView>
 

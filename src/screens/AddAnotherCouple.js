@@ -541,10 +541,10 @@ const styles = StyleSheet.create({
     },
     container: {
         
-        paddingTop: 30,
+        paddingTop: Platform.OS ==='ios' ? 65 :30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff',
-height:windowHeight,
+
     },
     tinyLogo: {
         display: "flex",

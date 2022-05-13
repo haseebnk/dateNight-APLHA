@@ -120,7 +120,7 @@ function ProfileDetailsCard() {
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                            style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                            style={{ margin: 3, marginRight: 0, marginTop: 6, height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                         </TouchableOpacity>
 
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
 
     },
     flex3: {
-        flex: .9,
+        flex: .7,
 
         borderRadius: moderateScale(18),
         flexDirection: 'column',

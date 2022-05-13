@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Animated ,Modal , LayoutAnimation,
+import {
+    View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Animated, Modal, LayoutAnimation,
     Platform,
-    UIManager, SafeAreaView , Pressable} from 'react-native';
+    UIManager, SafeAreaView, Pressable
+} from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -49,79 +51,79 @@ const FAQScreen = (props) => {
             style={styles.container}
         >
             <SafeAreaView>
-            <View >
+                <View >
 
-                {/* <NavHeader title="FAQ" /> */}
+                    {/* <NavHeader title="FAQ" /> */}
 
-                <View style={{ alignItems: 'center', }}>
-
-
-                    <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity onPress={() => props.navigation.goBack()}>
-
-                            <Image style={styles.imgClose}
-                                source={require("../assets/close.png")}
-                            ></Image>
-                        </TouchableOpacity>
-                        <Text style={styles.faqHeading}>FAQ</Text>
-                    </View>
-
-                    <SafeAreaView   style={{  width: '90%' , alignSelf:'center'}}>
-                    <FlatList
-                    
-                    nestedScrollEnabled
-                   
-                    ListEmptyComponent={null}
-                    ListFooterComponent={null}
-                    ListHeaderComponent={null}
-                        data={data}
-                        keyExtractor={(item, index) => index.toString()}
-                        style={{ width: '100%' }}
-                        renderItem={({ item, index }) => (
-                            <TouchableOpacity
-                                onPress={() =>   {LayoutAnimation.easeInEaseOut(); questionPick(item)} }
-                                style={{ marginTop: 20, width: '100%', padding: 0 }}
-                            >
-                                {press === item.id ?
-                                    <TouchableOpacity onPress={() =>  {LayoutAnimation.easeInEaseOut();  setPress('')} } >
-                                    <View style={{ borderColor:'white',borderWidth:.7 , flexDirection: 'row', alignItems: 'center', backgroundColor: '#363143', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White" }}>
-                                        <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
-                                        <Text style={{ color: 'white', fontFamily: "Poppins-Regular", fontSize: 16 }}>{item.title}</Text>
-                                        {/* <AntDesign name="caretdown" size={16} color="black"/> */}
+                    <View style={{ alignItems: 'center', }}>
 
 
-                                    </View>
-                                    </TouchableOpacity>
-                                    :
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#363143', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
-                                        <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
-                                        <View>
-                                            <Text style={{ padding: 5, fontFamily: "Poppins-Regular", color: "white", fontSize: 16, }}>{item.title}</Text>
-                                        </View>
+                        <View style={{ flexDirection: "row" }}>
+                            <TouchableOpacity onPress={() => props.navigation.goBack()}>
+
+                                <Image style={styles.imgClose}
+                                    source={require("../assets/close.png")}
+                                ></Image>
+                            </TouchableOpacity>
+                            <Text style={styles.faqHeading}>FAQ</Text>
+                        </View>
+
+                        <SafeAreaView style={{ width: '90%', alignSelf: 'center' }}>
+                            <FlatList
+
+                                nestedScrollEnabled
+
+                                ListEmptyComponent={null}
+                                ListFooterComponent={null}
+                                ListHeaderComponent={null}
+                                data={data}
+                                keyExtractor={(item, index) => index.toString()}
+                                style={{ width: '100%' }}
+                                renderItem={({ item, index }) => (
+                                    <TouchableOpacity
+                                        onPress={() => { LayoutAnimation.easeInEaseOut(); questionPick(item) }}
+                                        style={{ marginTop: 20, width: '100%', padding: 0 }}
+                                    >
+                                        {press === item.id ?
+                                            <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} >
+                                                <View style={{ borderColor: 'white', borderWidth: 0.9, flexDirection: 'row', alignItems: 'center', backgroundColor: '#363143', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White" }}>
+                                                    <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
+                                                    <Text style={{ color: 'white', fontFamily: "Poppins-Regular", fontSize: 16 }}>{item.title}</Text>
+                                                    {/* <AntDesign name="caretdown" size={16} color="black"/> */}
 
 
-                                    </View>
-                                }
+                                                </View>
+                                            </TouchableOpacity>
+                                            :
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#363143', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
+                                                <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
+                                                <View>
+                                                    <Text style={{ padding: 5, fontFamily: "Poppins-Regular", color: "white", fontSize: 16, }}>{item.title}</Text>
+                                                </View>
 
-                                {press === item.id ?
 
-                                    <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
-<View style={{backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18,}}>
+                                            </View>
+                                        }
+
+                                        {press === item.id ?
+
+                                            <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
+                                                <View style={{ backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, }}>
                                                     <Text style={{ margin: 15, padding: 15, marginHorizontal: 0, marginTop: -10, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Poppins-Regular", }}>{item.description} </Text>
                                                 </View>
-                                    </Pressable>
+                                            </Pressable>
 
-                                    :
+                                            :
 
-                                    null
-                                }
-                            </TouchableOpacity>
+                                            null
+                                        }
+                                    </TouchableOpacity>
 
-                        )}
-                    />
-                    </SafeAreaView>
+                                )}
+                            />
+                        </SafeAreaView>
+                    </View>
                 </View>
-            </View>
             </SafeAreaView>
         </LinearGradient>
     );

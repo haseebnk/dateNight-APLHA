@@ -108,7 +108,7 @@ function DateTimeCard() {
 
 
 
-            <TouchableOpacity activeOpacity={.9} onPress={() => checked ? setChecked(false) : setChecked(true)}>
+            <TouchableOpacity activeOpacity={.9} onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}>
 
 
                 <LinearGradient
@@ -146,7 +146,7 @@ function DateTimeCard() {
 
 
 
-            <TouchableOpacity activeOpacity={.9} onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}>
+            <TouchableOpacity activeOpacity={.9} onPress={() => checked ? setChecked(false) : setChecked(true)}>
 
 
                 <LinearGradient
@@ -167,8 +167,8 @@ function DateTimeCard() {
                         {/* <MaterialIcons style={{ marginLeft: -45, marginBottom: 40 }} name='expand-more' size={hp('3%')} color="white" /> */}
                     </View>
                     <View style={styles.flex3}>
-                        <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                        <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
+                            style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                         </TouchableOpacity>
                         {/* <MaterialIcons style={{ marginLeft: 15, marginBottom: 0 }} name='mode-edit' size={hp('3%')} color="white" />
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
 
     },
     flex3: {
-        flex: .9,
+        flex: .8,
 
         borderRadius: moderateScale(18),
         flexDirection: 'column',

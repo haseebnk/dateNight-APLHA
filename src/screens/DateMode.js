@@ -779,7 +779,7 @@ const styles = StyleSheet.create({
         width: 17,
         borderRadius: 20,
         backgroundColor: 'white',
-        marginTop: 9,
+        top: 3,
         marginHorizontal: 65
     },
     modalText: {
@@ -800,11 +800,12 @@ const styles = StyleSheet.create({
 
     },
     InnerContainer: {
-        height: scale(270),
+        height: scale(280),
         width: scale(250),
         backgroundColor: '#FFFFFF',
         borderRadius: 17,
-        alignSelf: 'center'
+        alignSelf: 'center',
+       
     },
     thirdText: {
         fontSize: 20,
@@ -816,8 +817,8 @@ const styles = StyleSheet.create({
 
     },
     secondText: {
-        fontSize: 30,
-        fontFamily: "Poppins-Regular",
+        fontSize: 25,
+        fontFamily: "Poppins-Bold",
         alignSelf: 'center',
         color: '#74FF82',
         marginTop: -5,
@@ -930,12 +931,13 @@ const styles = StyleSheet.create({
 
         alignSelf: 'center',
         width: scale(300),
-        height: scale(420),
+        height: scale(440),
         backgroundColor: '#363143',
         borderColor: '#00B712',
         borderWidth: 2.5,
         borderRadius: 20,
-        marginTop: 20
+        marginTop: 20,
+        
 
     },
 
@@ -952,7 +954,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        height: windowHeight,
+      
 
         paddingHorizontal: 0,
         backgroundColor: '#ffff',

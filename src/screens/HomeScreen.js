@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 
 // import all the components we are going to use
 import {
@@ -19,8 +19,9 @@ import {
     LayoutAnimation,
     Platform,
     UIManager,
-    TouchableHighlight
-
+    TouchableHighlight,
+    BackHandler,
+    Alert,
 
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -51,9 +52,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-
-
-
 
 
 
@@ -279,6 +277,28 @@ const Pings = [
 
 
 const HomeScreen = (props) => {
+
+
+    useEffect(() => {
+        const backAction = () => {
+          Alert.alert("Hold on!", "Are you sure you want to go back?", [
+            {
+              text: "Cancel",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "YES", onPress: () => BackHandler.exitApp() }
+          ]);
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          backAction
+        );
+    
+        return () => backHandler.remove();
+      }, []);
 
 
     const { state } = useContext(NotesContext)
@@ -1046,7 +1066,7 @@ const HomeScreen = (props) => {
 
                                 </View>
 
-                                <TouchableOpacity onPress={()=> setEvent(true)}>
+                                <TouchableOpacity onPress={() => setEvent(true)}>
                                     <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                         colors={['#80D3FC', '#80D3FC']}
                                         style={styles.addEventButton} >

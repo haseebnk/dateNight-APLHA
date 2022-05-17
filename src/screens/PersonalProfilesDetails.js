@@ -19,6 +19,7 @@ import { moderateScale } from 'react-native-size-matters';
 import ProfileDetailsCard from '../components/ProfileDetailsCard';
 import CoupleCard from '../components/CoupleCard';
 import DateTimeCard from '../components/DateTimeCard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import SplashScreen from 'react-native-splash-screen';
 
@@ -78,6 +79,13 @@ export default function PersonalProfileDetails(props) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+
+    const onLogoutPress = async () => {
+        await AsyncStorage.removeItem('@auth_token')
+        setTimeout(() => {
+            props.navigation.navigate('login');
+          }, 1000);
+    }
 
     return (
 
@@ -166,60 +174,60 @@ export default function PersonalProfileDetails(props) {
 
                     <Text style={styles.profileText}>Profile Background Color</Text>
 
-                    <SafeAreaView style={{flex: 1}}>
-                    <FlatList
-                        horizontal={true}
-                        data={COLORS}
-                        keyExtractor={(item, index) => index.toString()}
-                        style={{ alignSelf: 'center', }}
-                        renderItem={({ item, index }) => (
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <FlatList
+                            horizontal={true}
+                            data={COLORS}
+                            keyExtractor={(item, index) => index.toString()}
+                            style={{ alignSelf: 'center', }}
+                            renderItem={({ item, index }) => (
 
-                            <TouchableOpacity
-                                onPress={() => questionPick(item)}
-                                style={{ marginTop: 5, padding: 0, marginTop: 20, }}
-                            >
-                                <View style={{ flexDirection: 'row', width: '100%' }}>
-                                    {press === item.id ?
+                                <TouchableOpacity
+                                    onPress={() => questionPick(item)}
+                                    style={{ marginTop: 5, padding: 0, marginTop: 20, }}
+                                >
+                                    <View style={{ flexDirection: 'row', width: '100%' }}>
+                                        {press === item.id ?
 
-                                        <TouchableOpacity onPress={() => setPress('')}  >
+                                            <TouchableOpacity onPress={() => setPress('')}  >
+
+                                                <LinearGradient
+                                                    colors={[item.color[0], item.color[1]]}
+
+                                                    style={styles.withBorder}>
+
+                                                </LinearGradient>
+
+                                            </TouchableOpacity>
+
+                                            :
 
                                             <LinearGradient
-                                                colors={[item.color[0], item.color[1]]}
 
-                                                style={styles.withBorder}>
+                                                colors={[item.color[0], item.color[1]]}
+                                                style={styles.withOutBorder}>
 
                                             </LinearGradient>
+                                        }
+                                    </View>
 
-                                        </TouchableOpacity>
+                                </TouchableOpacity>
 
-                                        :
-
-                                        <LinearGradient
-
-                                            colors={[item.color[0], item.color[1]]}
-                                            style={styles.withOutBorder}>
-
-                                        </LinearGradient>
-                                    }
-                                </View>
-
-                            </TouchableOpacity>
-
-                        )}
-                    />
+                            )}
+                        />
                     </SafeAreaView>
 
 
                     <Text style={styles.ReminderText}>Reminders</Text>
 
 
-                    <View style={{ }}>
-                      
+                    <View style={{}}>
+
                         <ProfileDetailsCard></ProfileDetailsCard>
-                           
+
 
                     </View>
-                    <View style={{ marginTop:-20}}>
+                    <View style={{ marginTop: -20 }}>
 
                         <DateTimeCard></DateTimeCard>
 
@@ -260,6 +268,13 @@ export default function PersonalProfileDetails(props) {
 
                             <Text style={styles.cancelButtonText}>
                                 Cancel
+                            </Text>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => onLogoutPress()}>
+
+                            <Text style={styles.cancelButtonText}>
+                                Logout
                             </Text>
 
                         </TouchableOpacity>
@@ -443,7 +458,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: Platform.OS ==='ios' ? 65 :30,
+        paddingTop: Platform.OS === 'ios' ? 65 : 30,
 
         backgroundColor: '#ffff',
 

@@ -39,6 +39,9 @@ export default function Splashing(props) {
     setTimeout(() => props.navigation.navigate("slider") , 2000);
   }, []);
 
+
+  
+
   const fadeAnim = useRef(new Animated.Value(-130)).current;
   const fadeIn = () => {
     // Will change fadeAnim value to 1 in 5 seconds

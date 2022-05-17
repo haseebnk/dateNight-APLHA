@@ -669,7 +669,7 @@ class ReactNavigationBottomTabs extends Component {
         return (
             <Tab.Navigator
 
-            
+            tabBarOptions={{ showLabel: false }}
                 screenOptions={
                     {
 
@@ -681,6 +681,7 @@ class ReactNavigationBottomTabs extends Component {
 
                             borderBottomLeftRadius: 16,
                             borderBottomRightRadius: 16,
+                            paddingTop:30
                         }
                     }
                 }

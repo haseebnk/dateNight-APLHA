@@ -273,7 +273,7 @@ export default function PersonalProfileDetails(props) {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => onLogoutPress()}>
 
-                            <Text style={styles.cancelButtonText}>
+                            <Text style={styles.logoutButtonText}>
                                 Logout
                             </Text>
 
@@ -338,6 +338,14 @@ const styles = StyleSheet.create({
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 25,
+        marginBottom: 20
+    },
+    logoutButtonText: {
+        fontSize: 16,
+        fontFamily: "Poppins-Regular",
+        color: '#fafafa',
+        alignSelf: 'center',
+        marginTop: 0,
         marginBottom: 30
     },
     saveButtonText: {

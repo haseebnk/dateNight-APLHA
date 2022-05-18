@@ -27,6 +27,7 @@ import ActiveIndicator from './src/screens/ActiveIndicator';
 import SplashScreen from "react-native-splash-screen"
 
 import { NotesProvider } from "./src/context/NotesContext"
+import AppContext from './src/components/appcontext';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,7 +35,21 @@ const Stack = createNativeStackNavigator();
 
 
 
+
 const App = () => {
+
+
+
+  const [userToken, setuserToken] = useState(null);
+
+
+const userSettings = {
+  userToken: userToken,
+}
+
+
+
+
 
 
   const [user, setUser] = useState(null)
@@ -62,6 +77,7 @@ const App = () => {
 
   function AuthStack() {
     return (
+     
       <NavigationContainer>
         <Stack.Navigator initialRouteName="splash">
 
@@ -88,11 +104,13 @@ const App = () => {
 
         </Stack.Navigator>
       </NavigationContainer>
+      
     )
   }
 
   function MyStack() {
     return (
+    
       <NavigationContainer>
         <Stack.Navigator initialRouteName="home">
 
@@ -121,13 +139,18 @@ const App = () => {
 
         </Stack.Navigator>
       </NavigationContainer>
+ 
     )
   }
 
   return (
-    <NotesProvider>
+    <AppContext.Provider value={userSettings}>
+      <NotesProvider>
+
+      
       {user ? <MyStack /> : <AuthStack />}
-    </NotesProvider>
+      </NotesProvider>
+   </AppContext.Provider>
   )
 }
 

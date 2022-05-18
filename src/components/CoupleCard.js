@@ -62,22 +62,6 @@ const windowHeight = Dimensions.get('window').height;
 
 function CoupleCard() {
 
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const { state } = useContext(NotesContext)
 
 
@@ -92,13 +76,8 @@ function CoupleCard() {
                 keyExtractor={item => item.name}
                 renderItem={({ item }) => {
                     return (
-
-
                         <View style={styles.container2} >
-
                             {console.log(item)}
-
-
                             <LinearGradient style={styles.withBorder} colors={[item.color[0], item.color[1]]} title="Welcome">
 
                                 {/* <Text style={{ alignSelf: 'center', fontSize: 22, color: 'white', }} >{item.name}</Text>
@@ -108,13 +87,12 @@ function CoupleCard() {
                                     <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
                                 </View>
                                 <View style={styles.flex2}>
-                                <View  style={{ flexDirection: 'column', marginTop: 20, }}>
-                    <Text style={styles.cardTextHead}>{item.name} </Text>
-                    <Text style={styles.cardText}>Phone:  {item.number}</Text>
-                    <Text style={styles.cardText}>Email:  {item.email}</Text>
-                    <Text style={styles.cardText}>Date 0f birth:  {item.dateb}</Text>
-                    {/* <Text style={styles.cardText}>{v.Number}</Text> */}
-                </View>
+                                    <View style={{ flexDirection: 'column', marginTop: 20, }}>
+                                        <Text style={styles.cardTextHead}>{item.name} </Text>
+                                        <Text style={styles.cardText}>Phone:  {item.number}</Text>
+                                        <Text style={styles.cardText}>Email:  {item.email}</Text>
+                                        <Text style={styles.cardText}>Date 0f birth:  {item.dateb}</Text>
+                                    </View>
                                 </View>
                                 <View style={styles.flex3}>
                                     <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
@@ -129,8 +107,6 @@ function CoupleCard() {
 
 
                         </View>
-
-
                     )
                 }}
             />

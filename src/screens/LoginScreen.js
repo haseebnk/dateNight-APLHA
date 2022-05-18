@@ -16,6 +16,7 @@ import {
 
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { moderateScale } from 'react-native-size-matters';
 
 
 
@@ -108,8 +109,8 @@ export default function LoginScreen2(props) {
 
                             />
 
-                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: 2, left: 4 }}> Y</Text>
-                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: -2, right: 6 }}>N</Text>
+                            <Text style={{ color: 'white', fontSize: moderateScale(15, 0.1), position: 'absolute', bottom:  moderateScale(1, 0.1), left:  moderateScale(3, 0.1) }}> Y</Text>
+                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize:  moderateScale(15, 0.1), fontFamily: 'Poppins-Regular', position: 'absolute', bottom:  moderateScale(0, 0.1), right:  moderateScale(5, 0.1) }}>N</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -119,10 +120,6 @@ export default function LoginScreen2(props) {
                 <TouchableOpacity onPress={() => props.navigation.navigate("forgotpassword")}>
                     <Text style={styles.fpText} >Forgot Password?</Text>
                </TouchableOpacity>
-                
-                {/* <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Sign in</Text>
-        </TouchableOpacity> */}
                 <TouchableOpacity onPress={() => props.navigation.navigate("indicator")}>
                     <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                         colors={['#FF7474', '#E20303']}

@@ -30,7 +30,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const Data = [{
     id: 1,
-    name: 'Sheduled Date',
+    name: 'Sheduled Date 1',
     Gname: 'Alvina Taichi',
     date: 'Date :  01 | 07 | 2022:',
     day: 'Day:  Wednesday:',
@@ -41,7 +41,7 @@ const Data = [{
 
 const Data2 = [{
     id: 1,
-    name: 'Sheduled Date',
+    name: 'Sheduled Date 2',
     Gname: 'Alvina Taichi',
     date: 'Date :  01 | 12 | 2022:',
     day: 'Day:  Wednesday:',
@@ -130,9 +130,10 @@ function DateTimeCard() {
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                            style={{ margin: 3, marginRight: 1, marginTop: moderateScale(9, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                         </TouchableOpacity>
+                        <MaterialIcons style={{ marginBottom: moderateScale(15, 0.1) , marginLeft:12 }} name='more-vert' size={hp('4%')} color="white" />
                         {/* <MaterialIcons style={{ marginLeft: 15, marginBottom: 0 }} name='mode-edit' size={hp('3%')} color="white" />
 
                         <MaterialIcons style={{ marginLeft: 15, marginBottom: 25 }} name='delete-outline' size={hp('3%')} color="white" /> */}
@@ -168,9 +169,10 @@ function DateTimeCard() {
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                            style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                            style={{ margin: 3, marginRight: 1, marginTop: moderateScale(13, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                         </TouchableOpacity>
+                        <MaterialIcons style={{ marginBottom: moderateScale(15, 0.1) , marginLeft:12 }} name='more-vert' size={hp('4%')} color="white" />
                         {/* <MaterialIcons style={{ marginLeft: 15, marginBottom: 0 }} name='mode-edit' size={hp('3%')} color="white" />
 
                         <MaterialIcons style={{ marginLeft: 15, marginBottom: 25 }} name='delete-outline' size={hp('3%')} color="white" /> */}
@@ -193,20 +195,12 @@ function DateTimeCard() {
 
 const styles = StyleSheet.create({
     picSize: {
-
         marginLeft: 10,
         marginTop: 20,
         height: 150,
         width: 110,
         borderRadius: 14,
         alignItems: 'center'
-
-
-
-
-
-
-
     },
     flex3: {
         flex: .8,
@@ -218,11 +212,6 @@ const styles = StyleSheet.create({
     },
     flex2: {
         flex: 4,
-
-
-
-
-
     },
     flex1: {
         flex: .5,
@@ -261,7 +250,7 @@ const styles = StyleSheet.create({
         fontWeight:'700',
         fontSize: 18,
         marginLeft: 25,
-        marginTop: 10
+        marginTop: moderateScale(15, 0.1)
 
 
 

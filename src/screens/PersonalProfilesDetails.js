@@ -21,6 +21,7 @@ import CoupleCard from '../components/CoupleCard';
 import DateTimeCard from '../components/DateTimeCard';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import SplashScreen from 'react-native-splash-screen';
 
@@ -121,6 +122,13 @@ export default function PersonalProfileDetails(props) {
         console.log(e.nativeEvent.key)
     };
 
+
+    const onLogoutPress = async () => {
+        await AsyncStorage.removeItem('@auth_token')
+        setTimeout(() => {
+            props.navigation.navigate('login');
+          }, 1000);
+    }
 
     return (
 
@@ -316,6 +324,13 @@ export default function PersonalProfileDetails(props) {
                             </Text>
 
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={() => onLogoutPress()}>
+
+                            <Text style={styles.logoutButtonText}>
+                                Logout
+                            </Text>
+
+                        </TouchableOpacity>
                     </View>
                     {/* <TouchableOpacity style={styles.loginButton}>
              <Text style={styles.loginButtonText}>Sign in</Text>
@@ -376,6 +391,14 @@ const styles = StyleSheet.create({
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 25,
+        marginBottom: 20
+    },
+    logoutButtonText: {
+        fontSize: 16,
+        fontFamily: "Poppins-Regular",
+        color: '#fafafa',
+        alignSelf: 'center',
+        marginTop: 0,
         marginBottom: 30
     },
     saveButtonText: {

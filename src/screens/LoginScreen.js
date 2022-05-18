@@ -13,10 +13,14 @@ import {
     LayoutAnimation,
     Platform,
     UIManager,
-
+    BackHandler,
+    Alert
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale } from 'react-native-size-matters';
+import axios from 'axios';
+import axiosconfig from '../services/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -34,8 +38,75 @@ export default function LoginScreen2(props) {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const [toggleActive, setToggle] = useState(false);
+
+
+    useEffect(() => {
+        const backAction = () => {
+          Alert.alert("Hold on!", "Are you sure you want to go back?", [
+            {
+              text: "Cancel",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "YES", onPress: () => BackHandler.exitApp() }
+          ]);
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          backAction
+        );
+    
+        return () => backHandler.remove();
+      }, []);
+
+
+    const onLoginUser = () => {
+
+
+        if (email && password) {
+
+        var data = {
+            email: email,
+            password: password
+        }
+        axiosconfig
+           .post('/login', data)
+            .then((res: any) => {
+            //   setLoader(false);
+              if (res.data.error) {
+                  console.log('Eroro',res)
+                // showToast('login error', res.data.error_description);
+              } else {
+                  console.log("Got it", res.data.access_token)
+                
+                storeData(res.data.access_token);
+
+                
+              }
+            })
+            .catch(err => {
+              console.log('error', 'Invalid Credentials', err);
+            });
+        }
+
+    }
+
+    const storeData = async value => {
+        try {
+          await AsyncStorage.setItem('@auth_token', value);
+
+        //   context.setuserToken(value);
+          setTimeout(() => {
+            props.navigation.navigate('home');
+          }, 1000);
+        } catch (e) {}
+      };
 
     return (
         <TouchableWithoutFeedback
@@ -63,14 +134,14 @@ export default function LoginScreen2(props) {
                     />
                     <TextInput
                         style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginTop: 8 }}
-
+                        value={email}
                         placeholder='Email'
                         placeholderTextColor='white'
                         autoCorrect={true}
                         autoCompleteType='email'
                         keyboardType='email-address'
                         textContentType='emailAddress'
-
+                        onChangeText={(text) => setEmail(text)}
                     />
                 </View>
                 <View style={styles.sectionStyle}>
@@ -79,11 +150,13 @@ export default function LoginScreen2(props) {
                         style={styles.ImageStyle}
                     />
                     <TextInput
+                        value={password}
                         style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginTop: 8 }}
                         placeholder="Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
                         textContentType='password'
+                        onChangeText={(text) => setPassword(text)}
                     />
                 </View>
 
@@ -114,7 +187,7 @@ export default function LoginScreen2(props) {
                         </TouchableOpacity>
 
                     </View>
-                    
+
                 </TouchableOpacity>
                 <Text style={{ color: 'white', fontSize: 12, marginLeft: 70, marginTop: 4, fontFamily: "Poppins-Regular", }}>Remember</Text>
                 <TouchableOpacity onPress={() => props.navigation.navigate("forgotpassword")}>
@@ -129,7 +202,7 @@ export default function LoginScreen2(props) {
                         </Text>
                     </LinearGradient>
                 </TouchableOpacity>
-              
+
                 <View style={styles.signUpTextView}>
                     <Text style={styles.signUpText}>Don't have an account?</Text>
                     <TouchableOpacity onPress={() => props.navigation.navigate("signup")}>
@@ -234,7 +307,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: Platform.OS ==='ios' ? 65 :30,
+        paddingTop: Platform.OS === 'ios' ? 65 : 30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff'
     },
@@ -303,7 +376,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        
+
     },
 
     signUpTextView: {
@@ -319,6 +392,6 @@ const styles = StyleSheet.create({
         color: '#ffff',
         fontSize: 16,
         fontFamily: "Poppins-Regular",
-     
+
     },
 });

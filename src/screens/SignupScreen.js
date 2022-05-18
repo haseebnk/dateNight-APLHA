@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
     StyleSheet,
     Image,
@@ -16,7 +16,12 @@ import {
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 // import SplashScreen from 'react-native-splash-screen';
+import AppContext from '../components/appcontext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import axiosconfig from '../services/axios';
 
 const COLORS = [
     {
@@ -27,20 +32,20 @@ const COLORS = [
     },
     {
         id: 2,
-        color: ['#7AC9FD', '#0071BC', ],
+        color: ['#7AC9FD', '#0071BC',],
 
 
     }
     ,
     {
         id: 3,
-        color: ['#7AFDD0', '#00BC89', ],
+        color: ['#7AFDD0', '#00BC89',],
 
 
     },
     {
         id: 4,
-        color: ['#6617F1', '#8265FB', ],
+        color: ['#6617F1', '#8265FB',],
 
 
     },
@@ -53,14 +58,14 @@ const COLORS = [
 
 ]
 
-export default function SignupScreen(props) {
+export default function SignupScreen({navigation}) {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     const [checked, setChecked] = React.useState(false);
 
-
+    const myContext = useContext(AppContext);
 
     const [press, setPress] = useState('');
 
@@ -71,6 +76,134 @@ export default function SignupScreen(props) {
     function questionClose(item) {
         setPress(item.id)
     }
+
+
+    const [image, setImage] = useState(null)
+    const [username, setUserName] = useState(null)
+    const [number, setNumber] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [datebirth, setBirth] = useState(null)
+    const [password, setPassword] = useState(null)
+    const [cnpass, setCnpass] = useState(null)
+
+
+    const context = useContext(AppContext);
+   
+
+    const onSignupUser =()=> {
+
+        let data = {
+            image: image,
+            username: username,
+            number: number,
+            
+            email: email,
+            dateofbirth: datebirth,
+            password: password,
+            cnpass:cnpass
+        }
+      axiosconfig
+      .post('/register', data).then((res: any) => {
+            // setLoader(false)
+            if (res.data.status == 'error') {
+                console.log('error hai');
+                return false;
+            } else {
+                storeData(res.data.access_token)
+            }
+        }).catch((err) => {
+
+            console.log('error', err.response.data.messsage);
+            //   setLoader(false)
+        })
+    }
+
+    // const onSignupUser = () => {
+
+
+    //     if (image && username && number && email && datebirth && password) {
+
+    //         let data = {
+    //             image: image,
+    //             username: username,
+    //             number: number,
+
+    //             email: email,
+    //             dateofbirth: datebirth,
+    //             password: password
+    //         }
+    //         axiosconfig
+    //             .post('/signup', data)
+    //             .then((res: any) => {
+    //                 //   setLoader(false);
+    //                 if (res.data.error) {
+    //                     console.log('Eroro', res)
+    //                     // showToast('login error', res.data.error_description);
+    //                 } else {
+    //                     console.log("Got it", res.data)
+
+    //                     storeData(res.data);
+
+
+    //                 }
+    //             })
+    //             .catch(err => {
+    //                 console.log('error', 'Invalid Credentials', err);
+    //             });
+    //     }
+
+    // }
+
+
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('@auth_token', value);
+          context.setuserToken(value);
+          setTimeout(() => {
+            navigation.navigate('Home')
+          }, 1000);
+        } catch (e) {
+    
+        }
+      }
+
+
+    const openCamer = c => {
+
+        if (c == 'g') {
+            launchImageLibrary({
+                width: 300,
+                height: 400,
+                cropping: true,
+                freeStyleCropEnabled: true,
+                saveToPhotos: true
+            })
+                .then(image => {
+                    myContext.setprofileImagee(image.assets[0].uri);
+
+                    imageUpload(image);
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        } else if (c == 'c') {
+            launchCamera({
+
+                cropping: true,
+                freeStyleCropEnabled: true,
+                saveToPhotos: true
+            })
+                .then(image => {
+
+                    myContext.setprofileImagee(image.assets[0].uri);
+                    imageUpload(image);
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        }
+        // refRBSheet.current.close();
+    };
 
 
     return (
@@ -97,8 +230,14 @@ export default function SignupScreen(props) {
                             source={require('../assets/profile.png')}
                         />
                     </View>
-                    <Text style={styles.takePhoto}>Take a photo</Text>
-                    <Text style={styles.uploadPhoto}>Upload Photo</Text>
+                    <TouchableOpacity onPress={() => openCamer('c')}>
+                        <Text style={styles.takePhoto}>Take a photo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => openCamer('g')}>
+                        <Text style={styles.uploadPhoto}>Upload Photo</Text>
+                    </TouchableOpacity>
+
+
 
                     <View style={styles.sectionStyle}>
 
@@ -161,62 +300,64 @@ export default function SignupScreen(props) {
 
 
                     <Text style={styles.profileText}>Profile Background color</Text>
-                    <SafeAreaView style={{flex: 1}}>
-                    <FlatList
-                        horizontal={true}
-                        data={COLORS}
-                        keyExtractor={(item, index) => index.toString()}
-                        style={{ alignSelf: 'center', }}
-                        renderItem={({ item, index }) => (
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <FlatList
+                            horizontal={true}
+                            data={COLORS}
+                            keyExtractor={(item, index) => index.toString()}
+                            style={{ alignSelf: 'center', }}
+                            renderItem={({ item, index }) => (
 
-                            <TouchableOpacity
-                                onPress={() => questionPick(item)}
-                                style={{ marginTop: 5, padding: 0, marginTop: 20, }}
-                            >
-                                <View style={{ flexDirection: 'row', width: '100%' }}>
-                                    {press === item.id ?
+                                <TouchableOpacity
+                                    onPress={() => questionPick(item)}
+                                    style={{ marginTop: 5, padding: 0, marginTop: 20, }}
+                                >
+                                    <View style={{ flexDirection: 'row', width: '100%' }}>
+                                        {press === item.id ?
 
-                                        <TouchableOpacity onPress={() => setPress('')}  >
+                                            <TouchableOpacity onPress={() => setPress('')}  >
+
+                                                <LinearGradient
+                                                    colors={[item.color[0], item.color[1]]}
+
+                                                    style={styles.withBorder}>
+
+                                                </LinearGradient>
+
+                                            </TouchableOpacity>
+
+                                            :
 
                                             <LinearGradient
-                                                colors={[item.color[0], item.color[1]]}
 
-                                            style={styles.withBorder}>
+                                                colors={[item.color[0], item.color[1]]}
+                                                style={styles.withOutBorder}>
 
                                             </LinearGradient>
+                                        }
+                                    </View>
 
-                                        </TouchableOpacity>
+                                </TouchableOpacity>
 
-                                        :
-
-                                        <LinearGradient
-                                        
-                                            colors={[item.color[0], item.color[1]]}
-                                        style={styles.withOutBorder}>
-
-                                        </LinearGradient>
-                                    }
-                                </View>
-
-                            </TouchableOpacity>
-
-                        )}
-                    />
+                            )}
+                        />
                     </SafeAreaView>
 
 
 
 
-                 
 
-                    <LinearGradient
-                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                        colors={['#FF7474', '#E20303']}
-                        style={styles.linearGradient}>
-                        <Text style={styles.loginButtonText}>
-                            Sign Up
-                        </Text>
-                    </LinearGradient>
+                    <TouchableOpacity onPress={() => onSignupUser()}>
+
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                            colors={['#FF7474', '#E20303']}
+                            style={styles.linearGradient}>
+                            <Text style={styles.loginButtonText}>
+                                Sign Up
+                            </Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
                     {/* <TouchableOpacity style={styles.loginButton}>
           <Text style={styles.loginButtonText}>Sign in</Text>
         </TouchableOpacity> */}
@@ -230,7 +371,7 @@ export default function SignupScreen(props) {
                     </View>
                     <View style={styles.signUpTextView}>
                         <Text style={styles.signUpText}>Already have an account?</Text>
-                        <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                        <TouchableOpacity onPress={() => navigation.navigate('login')}>
                             <Text style={[styles.signUpText, { color: '#00A8FF' }]}>
                                 {' Sign In'}
                             </Text>
@@ -368,7 +509,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: Platform.OS ==='ios' ? 65 :30,
+        paddingTop: Platform.OS === 'ios' ? 65 : 30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff'
     },
@@ -439,7 +580,7 @@ const styles = StyleSheet.create({
 
     signUpTextView: {
 
-        
+
         marginBottom: 60,
         flexDirection: 'row',
         justifyContent: 'center',
@@ -454,7 +595,7 @@ const styles = StyleSheet.create({
     profileText: {
         color: '#ffff',
         fontSize: 16,
-        marginTop:20,
+        marginTop: 20,
         alignSelf: "center",
         fontFamily: "Poppins-Regular",
     },

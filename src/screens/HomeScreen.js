@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 
 // import all the components we are going to use
 import {
@@ -19,8 +19,9 @@ import {
     LayoutAnimation,
     Platform,
     UIManager,
-    TouchableHighlight
-
+    TouchableHighlight,
+    BackHandler,
+    Alert,
 
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -51,9 +52,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-
-
-
 
 
 
@@ -279,6 +277,28 @@ const Pings = [
 
 
 const HomeScreen = (props) => {
+
+
+    useEffect(() => {
+        const backAction = () => {
+          Alert.alert("Hold on!", "Are you sure you want to go back?", [
+            {
+              text: "Cancel",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "YES", onPress: () => BackHandler.exitApp() }
+          ]);
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          backAction
+        );
+    
+        return () => backHandler.remove();
+      }, []);
 
 
     const { state } = useContext(NotesContext)
@@ -619,6 +639,18 @@ const HomeScreen = (props) => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
+                <View style={styles.TopHeader}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
+                        <Text style={{ fontSize: 20, fontFamily: "Poppins-Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => props.navigation.navigate('personalprofiledetails')}>
+
+                        <Image style={styles.imgSetting}
+                            source={require("../assets/setting.png")}
+                        ></Image>
+                    </TouchableOpacity>
+                </View>
                 <ScrollView>
 
                     <Modal
@@ -665,18 +697,7 @@ const HomeScreen = (props) => {
                         </View>
 
                     </Modal>
-                    <View style={styles.TopHeader}>
-                        <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                            <Text style={{ fontSize: 20, fontFamily: "Poppins-Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
-                        </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => props.navigation.navigate('personalprofiledetails')}>
-
-                            <Image style={styles.imgSetting}
-                                source={require("../assets/setting.png")}
-                            ></Image>
-                        </TouchableOpacity>
-                    </View>
                     {/* 
                     <Accordion
 
@@ -842,7 +863,7 @@ const HomeScreen = (props) => {
                         </Modal>
                     </View>
                     <View style={styles.PrePlainDate}>
-                        <Text style={styles.PrePlanText}> Pre-plan Dates</Text>
+                        <Text style={styles.PrePlanText}> Pre-Planned Dates</Text>
 
 
 
@@ -893,7 +914,7 @@ const HomeScreen = (props) => {
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.linearGradient} >
                                 <Text style={styles.AddButtonText}>
-                                    Add New person
+                                    Add Person 1
                                 </Text>
                             </LinearGradient>
                         </TouchableOpacity>
@@ -902,7 +923,7 @@ const HomeScreen = (props) => {
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.linearGradient} >
                                 <Text style={styles.AddButtonText}>
-                                    Add New person
+                                    Add Person 2
                                 </Text>
                             </LinearGradient>
                         </TouchableOpacity>
@@ -955,8 +976,8 @@ const HomeScreen = (props) => {
 
                                             />
 
-                                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: 2, left: 4 }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: -2, right: 6 }}>N</Text>
+                                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(0, 0.1), right: moderateScale(5, 0.1) }}>N</Text>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', marginBottom: 20, marginTop: 20 }}>
@@ -1026,7 +1047,7 @@ const HomeScreen = (props) => {
 
 
                                                 :
-                                                <Text style={styles.zipCode}>  Current Location </Text>
+                                                <Text style={styles.zipCode}> Use Current Location </Text>
 
                                         }
 
@@ -1686,7 +1707,7 @@ const styles = StyleSheet.create({
     },
     zipCode: {
         fontSize: 18,
-        alignSelf: "center",
+        alignSelf: "flex-start",
 
         color: "#9f9f9f",
         fontFamily: "Poppins-Regular",

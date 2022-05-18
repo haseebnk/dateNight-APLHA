@@ -19,6 +19,9 @@ import { moderateScale } from 'react-native-size-matters';
 import ProfileDetailsCard from '../components/ProfileDetailsCard';
 import CoupleCard from '../components/CoupleCard';
 import DateTimeCard from '../components/DateTimeCard';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import SplashScreen from 'react-native-splash-screen';
 
@@ -65,6 +68,23 @@ const COLORS = [
 export default function PersonalProfileDetails(props) {
 
     const [press, setPress] = useState('');
+    const [phoneNum, setphoneNum] = useState(null);
+    const [dob, setdob] = useState('Date of birth');
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        console.warn("A date has been picked: ", date);
+        setdob(moment(date).format('MM/DD/yy'))
+        hideDatePicker();
+    };
 
     function questionPick(item) {
         setPress(item.id)
@@ -78,6 +98,37 @@ export default function PersonalProfileDetails(props) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    const onTextChange = (text) => {
+        let rg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{3}$/
+        if (rg.test(text)) {
+            setphoneNum(null)
+        }
+        else {
+            var cleaned = ('' + text).replace(/\D/g, '')
+            var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
+
+            if (match) {
+                var intlCode = (match[1] ? '+1 ' : ''),
+                    number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+
+                setphoneNum(number)
+
+                return;
+            }
+        }
+    }
+
+    const handleKeyDown = (e) => {
+        console.log(e.nativeEvent.key)
+    };
+
+
+    const onLogoutPress = async () => {
+        await AsyncStorage.removeItem('@auth_token')
+        setTimeout(() => {
+            props.navigation.navigate('login');
+          }, 1000);
+    }
 
     return (
 
@@ -102,7 +153,7 @@ export default function PersonalProfileDetails(props) {
                                 source={require("../assets/close.png")}
                             ></Image>
                         </TouchableOpacity>
-                        <Text style={styles.ProfileDetails}>Personal Profiles Details</Text>
+                        <Text style={styles.ProfileDetails}>Personal Profile Page</Text>
                     </View>
                     <View style={styles.tinyLogo}>
                         <Image style={styles.tinyLogo}
@@ -120,7 +171,6 @@ export default function PersonalProfileDetails(props) {
                             placeholder="Full Name"
                             placeholderTextColor='white'
 
-                            textContentType='password'
                         />
                     </View>
                     <View style={styles.sectionStyle}>
@@ -130,7 +180,14 @@ export default function PersonalProfileDetails(props) {
                             placeholder="Mobile Number"
                             placeholderTextColor='white'
 
-                            textContentType='password'
+                            // textContentType='password'
+                            onChangeText={(text) => onTextChange(text)}
+                            value={phoneNum}
+                            textContentType='telephoneNumber'
+                            dataDetectorTypes='phoneNumber'
+                            keyboardType='phone-pad'
+                            maxLength={14}
+                            onKeyPress={() => handleKeyDown}
                         />
                     </View>
                     <View style={styles.sectionStyle}>
@@ -142,84 +199,88 @@ export default function PersonalProfileDetails(props) {
                             placeholderTextColor='white'
                             autoCorrect={true}
                             autoCompleteType='email'
-                            keyboardType='email-address'
-                            textContentType='emailAddress'
 
                         />
                     </View>
-                    <View style={styles.sectionStyle}>
+                    <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
 
-                        <TextInput
+                        {/* <TextInput
                             style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
 
-                            placeholder='Date Of Birth'
+                            placeholder='Date of Birth'
                             placeholderTextColor='white'
                             autoCorrect={true}
                             autoCompleteType='email'
-                            keyboardType='email-address'
-                            textContentType='emailAddress'
 
-                        />
-                    </View>
-
+                        /> */}
+                        <Text style={{ color: '#fff' }}>{dob}</Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                    />
 
 
                     <Text style={styles.profileText}>Profile Background Color</Text>
 
-                    <SafeAreaView style={{flex: 1}}>
-                    <FlatList
-                        horizontal={true}
-                        data={COLORS}
-                        keyExtractor={(item, index) => index.toString()}
-                        style={{ alignSelf: 'center', }}
-                        renderItem={({ item, index }) => (
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <FlatList
+                            horizontal={true}
+                            data={COLORS}
+                            keyExtractor={(item, index) => index.toString()}
+                            style={{ alignSelf: 'center', }}
+                            renderItem={({ item, index }) => (
 
-                            <TouchableOpacity
-                                onPress={() => questionPick(item)}
-                                style={{ marginTop: 5, padding: 0, marginTop: 20, }}
-                            >
-                                <View style={{ flexDirection: 'row', width: '100%' }}>
-                                    {press === item.id ?
+                                <TouchableOpacity
+                                    onPress={() => questionPick(item)}
+                                    style={{ marginTop: 5, padding: 0, marginTop: 20, }}
+                                >
+                                    <View style={{ flexDirection: 'row', width: '100%' }}>
+                                        {press === item.id ?
 
-                                        <TouchableOpacity onPress={() => setPress('')}  >
+                                            <TouchableOpacity onPress={() => setPress('')}  >
+
+                                                <LinearGradient
+                                                    colors={[item.color[0], item.color[1]]}
+
+                                                    style={styles.withBorder}>
+
+                                                </LinearGradient>
+
+                                            </TouchableOpacity>
+
+                                            :
 
                                             <LinearGradient
-                                                colors={[item.color[0], item.color[1]]}
 
-                                                style={styles.withBorder}>
+                                                colors={[item.color[0], item.color[1]]}
+                                                style={styles.withOutBorder}>
 
                                             </LinearGradient>
+                                        }
+                                    </View>
 
-                                        </TouchableOpacity>
+                                </TouchableOpacity>
 
-                                        :
-
-                                        <LinearGradient
-
-                                            colors={[item.color[0], item.color[1]]}
-                                            style={styles.withOutBorder}>
-
-                                        </LinearGradient>
-                                    }
-                                </View>
-
-                            </TouchableOpacity>
-
-                        )}
-                    />
+                            )}
+                        />
                     </SafeAreaView>
 
 
                     <Text style={styles.ReminderText}>Reminders</Text>
 
 
-                    <View style={{ }}>
-                      
+                    <View style={{}}>
+
                         <ProfileDetailsCard></ProfileDetailsCard>
-                           
+
 
                     </View>
-                    <View style={{ marginTop:-20}}>
+
+                    <Text style={styles.ReminderText}>Scheduled Dates</Text>
+                    <View style={{ }}>
 
                         <DateTimeCard></DateTimeCard>
 
@@ -260,6 +321,13 @@ export default function PersonalProfileDetails(props) {
 
                             <Text style={styles.cancelButtonText}>
                                 Cancel
+                            </Text>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => onLogoutPress()}>
+
+                            <Text style={styles.logoutButtonText}>
+                                Logout
                             </Text>
 
                         </TouchableOpacity>
@@ -323,6 +391,14 @@ const styles = StyleSheet.create({
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 25,
+        marginBottom: 20
+    },
+    logoutButtonText: {
+        fontSize: 16,
+        fontFamily: "Poppins-Regular",
+        color: '#fafafa',
+        alignSelf: 'center',
+        marginTop: 0,
         marginBottom: 30
     },
     saveButtonText: {
@@ -420,7 +496,7 @@ const styles = StyleSheet.create({
     sectionStyle: {
         alignSelf: "center",
         flexDirection: 'row',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#363143',
         borderRadius: 18,
@@ -443,7 +519,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: Platform.OS ==='ios' ? 65 :30,
+        paddingTop: Platform.OS === 'ios' ? 65 : 30,
 
         backgroundColor: '#ffff',
 
@@ -531,7 +607,8 @@ const styles = StyleSheet.create({
         color: '#ffff',
         fontSize: 16,
         fontFamily: "Poppins-Regular",
-        alignSelf: "center",
-        marginTop: 20,
+        alignSelf: "flex-start",
+        marginTop: moderateScale(35),
+        paddingLeft:moderateScale(20)
     },
 });

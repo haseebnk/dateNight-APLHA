@@ -120,11 +120,11 @@ function ProfileDetailsCard() {
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                            style={{ margin: 3, marginRight: 0, marginTop: 6, height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                            style={{ margin: 3, marginRight: 1, marginTop: moderateScale(12, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                         </TouchableOpacity>
 
-                        <MaterialIcons style={{ marginBottom: 5 , marginLeft:12 }} name='more-vert' size={hp('4%')} color="white" />
+                        <MaterialIcons style={{ marginBottom: moderateScale(15, 0.1) , marginLeft:12 }} name='more-vert' size={hp('4%')} color="white" />
                     </View>
                 </LinearGradient>
 
@@ -157,7 +157,7 @@ function ProfileDetailsCard() {
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                            style={{  marginTop: moderateScale(13, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                         </TouchableOpacity>
                         <MaterialIcons style={{ marginLeft:15, marginBottom: 0 }} name='mode-edit' size={hp('3%')} color="white" />
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
         fontWeight:'700',
         fontSize: 18,
         marginLeft: 25,
-        marginTop:10
+        marginTop:moderateScale(18, 0.1)
 
 
 

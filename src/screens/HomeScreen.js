@@ -1046,7 +1046,7 @@ const HomeScreen = (props) => {
 
                                 </View>
 
-                                <TouchableOpacity onPress={()=> setEvent(true)}>
+                                <TouchableOpacity onPress={() => setEvent(true)}>
                                     <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                         colors={['#80D3FC', '#80D3FC']}
                                         style={styles.addEventButton} >
@@ -1055,27 +1055,33 @@ const HomeScreen = (props) => {
                                         </Text>
                                     </LinearGradient>
                                 </TouchableOpacity>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#44BEFB', '#44BEFB']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add An activity
-                                    </Text>
-                                </LinearGradient>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#0883FB', '#0883FB']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add Desert
-                                    </Text>
-                                </LinearGradient>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#0149FF', '#0149FF']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add Drink
-                                    </Text>
-                                </LinearGradient>
+                                <TouchableOpacity onPress={()=> setEvent(true)}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#44BEFB', '#44BEFB']}
+                                        style={styles.addEventButton} >
+                                        <Text style={styles.AddMeal}>
+                                            Add An activity
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={()=> setEvent(true)}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#0883FB', '#0883FB']}
+                                        style={styles.addEventButton} >
+                                        <Text style={styles.AddMeal}>
+                                            Add Desert
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={()=> setEvent(true)}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#0149FF', '#0149FF']}
+                                        style={styles.addEventButton} >
+                                        <Text style={styles.AddMeal}>
+                                            Add Drink
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
                             </View>
 
                         </View>

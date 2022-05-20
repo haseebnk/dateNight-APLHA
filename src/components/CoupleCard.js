@@ -60,7 +60,7 @@ const windowHeight = Dimensions.get('window').height;
 // }
 
 
-function CoupleCard() {
+function CoupleCard(props) {
 
     const { state } = useContext(NotesContext)
 
@@ -96,11 +96,16 @@ function CoupleCard() {
                                 </View>
                                 <View style={styles.flex3}>
                                     <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                        style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(25), width: moderateScale(25), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
+                                        style={{ marginTop: moderateScale(13, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                                     </TouchableOpacity>
 
-                                    <MaterialIcons style={{ marginBottom: 5 }} name='more-vert' size={hp('5%')} color="white" />
+                                    <TouchableOpacity onPress={()=> props.navigation.navigate("addcouple")}>
+
+                                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 0 }} name='mode-edit' size={hp('4%')} color="white" />
+
+                                    </TouchableOpacity>
+                                    <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('4%')} color="white" />
                                 </View>
 
                             </LinearGradient>
@@ -298,7 +303,7 @@ const styles = StyleSheet.create({
 
     },
     flex3: {
-        flex: .6,
+        flex: .8,
 
         borderRadius: moderateScale(18),
         flexDirection: 'column',

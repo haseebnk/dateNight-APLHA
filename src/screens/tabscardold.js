@@ -123,12 +123,7 @@ const DATA = [
         title: 'Itlian Foods',
         check: false
     },
-    {
-        Id: 12,
-        title: 'Chinese Food',
-        check: false
-
-    }
+   
 ]
 
 
@@ -275,7 +270,7 @@ function TabA() {
                     />
 
                     <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: 2, left: 4 }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: -1, right: 7 }}>N</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom:Platform.OS === 'ios' ? -1 : -1.7, right: Platform.OS === 'ios' ? 7 : 7.2 }}>N</Text>
                 </TouchableOpacity>
 
 
@@ -310,7 +305,7 @@ function TabA() {
             <View style={styles.InnerContain}>
                 <View style={styles.chooseContaine}>
                     <Text style={styles.ChooseMeal}>
-                        Choose Meal
+                    Meal Filters
 
                     </Text>
 
@@ -558,7 +553,7 @@ function TabC() {
                         <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
                             <View style={styles.placeViewc}>
                                 <View style={styles.yellowView}>
-                                    <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Sponsored</Text>
+                                    <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
                                 </View>
                                 <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -681,7 +676,7 @@ class ReactNavigationBottomTabs extends Component {
 
                             borderBottomLeftRadius: 16,
                             borderBottomRightRadius: 16,
-                            paddingTop:30
+                          
                         }
                     }
                 }
@@ -722,6 +717,7 @@ class ReactNavigationBottomTabs extends Component {
                         tabBarIcon: ({ focused, color }) => {
                             return (
                                 <Image
+                               
                                     style={{ width: 60, height: 60, }}
                                     source={(require('../assets/card1.png'))}
                                 />

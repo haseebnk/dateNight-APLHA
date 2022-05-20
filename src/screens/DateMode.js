@@ -258,8 +258,8 @@ export default function DateMode(props) {
             useNativeDriver: true,
         }).start();
     };
-    const onPress = () => setCount(count + 5);
-    const onPree = () => setCount(count > 0 ? count -5 : count - 0);
+    const onPress = () => setCount(  count < 60  ? count + 5  : 0);
+    const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 :  (count==0?60:0)  )
 
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -440,14 +440,14 @@ export default function DateMode(props) {
                             PauseActive == false
                                 ?
                                 <TouchableOpacity onPress={onPause}>
+                                    <MaterialIcons style={{ margin: 10, }} name='pause' size={hp('5%')} color="yellow" />
 
-                                    <MaterialIcons style={{ margin: 10, }} name='play-arrow' size={hp('5%')} color="#74FF82" />
 
                                 </TouchableOpacity>
                                 :
                                 <TouchableOpacity onPress={onPause2}  >
 
-                                    <MaterialIcons style={{ margin: 10, }} name='pause' size={hp('5%')} color="yellow" />
+                                    <MaterialIcons style={{ margin: 10, }} name='play-arrow' size={hp('5%')} color="#74FF82" />
 
                                 </TouchableOpacity>
                         }
@@ -546,17 +546,19 @@ export default function DateMode(props) {
                         onPress={() => setModalStart(true)}
                         onPressOut={onPressOut}>
 
-<View style={{width:30 ,  
-        marginRight: 28,
-        margin: 15, }}>
-                        <Text style={styles.count}>{count}</Text>
-</View>
+                        <View style={{
+                            width: 30,
+                            marginRight: 28,
+                            margin: 15,
+                        }}>
+                            <Text style={styles.count}>{count}</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
 
 
-                <View style={{width:30 , alignSelf: 'flex-end', marginRight: 28, bottom: 23, }}>
-                    <Text style={{ color: 'white', fontSize: 10,textAlign:'center'}}>min</Text>
+                <View style={{ width: 30, alignSelf: 'flex-end', marginRight: 28, bottom: 23, }}>
+                    <Text style={{ color: 'white', fontSize: 10, textAlign: 'center' }}>min</Text>
                 </View>
             </LinearGradient>
         </ScrollView>
@@ -627,7 +629,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: 20,
         alignSelf: "center",
-        
+
 
 
     },
@@ -805,7 +807,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 17,
         alignSelf: 'center',
-       
+
     },
     thirdText: {
         fontSize: 20,
@@ -838,11 +840,11 @@ const styles = StyleSheet.create({
 
     },
     count: {
-        color: 'white', fontSize: 20,textAlign:'center'
-       
+        color: 'white', fontSize: 20, textAlign: 'center'
+
         // textAlign:'center',
 
-        ,fontFamily: "Poppins-Regular",
+        , fontFamily: "Poppins-Regular",
     },
     BottomHeader: {
         alignSelf: "center",
@@ -896,7 +898,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-   
+
     // PingPlayed: {
     //     width: 89,
     //     height: 90,
@@ -915,7 +917,7 @@ const styles = StyleSheet.create({
     //     fontFamily: "Poppins-Regular",
 
     // },
-   
+
     PingText: {
         fontSize: 12,
         color: "white",
@@ -937,7 +939,7 @@ const styles = StyleSheet.create({
         borderWidth: 2.5,
         borderRadius: 20,
         marginTop: 20,
-        
+
 
     },
 
@@ -946,7 +948,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "white",
         fontFamily: "Poppins-Regular",
-        marginTop: Platform.OS ==='ios' ? 45 :15,
+        marginTop: Platform.OS === 'ios' ? 45 : 15,
 
     },
 
@@ -954,7 +956,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-     
+
 
         paddingHorizontal: 0,
         backgroundColor: '#ffff',

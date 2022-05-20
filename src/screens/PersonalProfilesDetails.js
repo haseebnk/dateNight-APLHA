@@ -279,7 +279,7 @@ export default function PersonalProfileDetails(props) {
 
                     </View>
 
-                    <Text style={styles.ReminderText}>Scheduled Dates</Text>
+                    <Text style={styles.ReminderText2}>Scheduled Dates</Text>
                     <View style={{ }}>
 
                         <DateTimeCard></DateTimeCard>
@@ -602,6 +602,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Poppins-Regular",
         alignSelf: "center",
+        marginTop:10
     },
     ReminderText: {
         color: '#ffff',
@@ -609,6 +610,14 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins-Regular",
         alignSelf: "flex-start",
         marginTop: moderateScale(35),
+        paddingLeft:moderateScale(20)
+    },
+    ReminderText2: {
+        color: '#ffff',
+        fontSize: 16,
+        fontFamily: "Poppins-Regular",
+        alignSelf: "flex-start",
+        marginTop: moderateScale(15),
         paddingLeft:moderateScale(20)
     },
 });

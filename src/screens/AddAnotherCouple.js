@@ -629,5 +629,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Poppins-Regular",
         alignSelf: "center",
+        marginTop:10
     },
 });

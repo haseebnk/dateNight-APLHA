@@ -58,7 +58,7 @@ const COLORS = [
 
 ]
 
-export default function SignupScreen({navigation}) {
+export default function SignupScreen({ navigation }) {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -79,43 +79,88 @@ export default function SignupScreen({navigation}) {
 
 
     const [image, setImage] = useState(null)
-    const [username, setUserName] = useState(null)
-    const [number, setNumber] = useState(null)
+    const [name, setUserName] = useState(null)
+    const [phone_number, setphone_number] = useState(null)
     const [email, setEmail] = useState(null)
-    const [datebirth, setBirth] = useState(null)
+    const [date_of_birth, setdate_of_birth] = useState(null)
     const [password, setPassword] = useState(null)
-    const [cnpass, setCnpass] = useState(null)
+    const [confirm_password, setconfirm_password] = useState(null)
+    const [profile_background_color, setprofile_background_color] = useState(null)
+    const [type, settype] = useState(null)
+
+
+
+    
 
 
     const context = useContext(AppContext);
-   
 
-    const onSignupUser =()=> {
+    const handleKeyDown = (e) => {
+        console.log(e.nativeEvent.key)
+    };
 
-        let data = {
-            image: image,
-            username: username,
-            number: number,
-            
-            email: email,
-            dateofbirth: datebirth,
-            password: password,
-            cnpass:cnpass
+    const onTextChange = (text) => {
+        let rg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{3}$/
+        if (rg.test(text)) {
+            setphone_number(null)
         }
-      axiosconfig
-      .post('/register', data).then((res: any) => {
-            // setLoader(false)
-            if (res.data.status == 'error') {
-                console.log('error hai');
-                return false;
-            } else {
-                storeData(res.data.access_token)
-            }
-        }).catch((err) => {
+        else {
+            var cleaned = ('' + text).replace(/\D/g, '')
+            var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
 
-            console.log('error', err.response.data.messsage);
-            //   setLoader(false)
-        })
+            if (match) {
+                var intlCode = (match[1] ? '+1 ' : ''),
+                    number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+
+                    setphone_number(number)
+
+                return;
+            }
+        }
+    }
+
+
+    const onSignupUser = () => {
+        // setLoader(true)
+
+      
+
+            var data = {
+                name: name,
+                email: email,
+                password: password,
+                confirm_password: confirm_password,
+                type: 'user',
+                date_of_birth: date_of_birth,
+                phone_number: phone_number,
+                image: require('../assets/1.png'),
+
+                profile_background_color: '#FFFFF'
+            }
+            axiosconfig
+           .post('/register', data)
+            .then((res: any) => {
+            //   setLoader(false);
+            if(email=== null && password=== null)
+            {
+                console.log('Empty credentials') 
+            }
+              if (res.data.error) {
+                  alert('invalid credentials')
+                // showToast('login error', res.data.error_description);
+              } else {
+                  alert("registered successfully", res)
+                
+                storeData(res.data.access_token);
+
+                
+              }
+            })
+            .catch(err => {
+              console.log('error', 'Invalid Credentials', err);
+            });
+        
+
     }
 
     // const onSignupUser = () => {
@@ -157,15 +202,15 @@ export default function SignupScreen({navigation}) {
 
     const storeData = async (value) => {
         try {
-          await AsyncStorage.setItem('@auth_token', value);
-          context.setuserToken(value);
-          setTimeout(() => {
-            navigation.navigate('Home')
-          }, 1000);
+            await AsyncStorage.setItem('@auth_token', value);
+            context.setuserToken(value);
+            setTimeout(() => {
+                navigation.navigate('login')
+            }, 1000);
         } catch (e) {
-    
+
         }
-      }
+    }
 
 
     const openCamer = c => {
@@ -245,8 +290,8 @@ export default function SignupScreen({navigation}) {
                             style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
                             placeholder="Full Name"
                             placeholderTextColor='white'
+                            onChangeText={(text) => setUserName(text)}
 
-                            textContentType='password'
                         />
                     </View>
                     <View style={styles.sectionStyle}>
@@ -256,7 +301,14 @@ export default function SignupScreen({navigation}) {
                             placeholder="Mobile Number"
                             placeholderTextColor='white'
 
-                            textContentType='password'
+                           
+                            onChangeText={(text) => onTextChange(text)}
+                            value={phone_number}
+                            textContentType='telephoneNumber'
+                            dataDetectorTypes='phoneNumber'
+                            keyboardType='phone-pad'
+                            maxLength={14}
+                            onKeyPress={() => handleKeyDown}
                         />
                     </View>
                     <View style={styles.sectionStyle}>
@@ -270,6 +322,7 @@ export default function SignupScreen({navigation}) {
                             autoCompleteType='email'
                             keyboardType='email-address'
                             textContentType='emailAddress'
+                            onChangeText={(text) => setEmail(text)}
 
                         />
                     </View>
@@ -281,9 +334,8 @@ export default function SignupScreen({navigation}) {
                             placeholder='Date Of Birth'
                             placeholderTextColor='white'
                             autoCorrect={true}
-                            autoCompleteType='email'
-                            keyboardType='email-address'
-                            textContentType='emailAddress'
+
+                            onChangeText={(text) => setdate_of_birth(text)}
 
                         />
                     </View>
@@ -294,7 +346,9 @@ export default function SignupScreen({navigation}) {
                             placeholder="Password"
                             placeholderTextColor='white'
                             secureTextEntry={true}
-                            textContentType='password'
+                            autoCompleteType='email'
+                            keyboardType='email-address'
+                            onChangeText={(text) => setPassword(text)}
                         />
                     </View>
 
@@ -319,7 +373,7 @@ export default function SignupScreen({navigation}) {
 
                                                 <LinearGradient
                                                     colors={[item.color[0], item.color[1]]}
-
+                                                    onChangeText={(text) => setprofile_background_color(text)}
                                                     style={styles.withBorder}>
 
                                                 </LinearGradient>

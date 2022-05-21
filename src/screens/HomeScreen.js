@@ -691,6 +691,8 @@ const HomeScreen = (props) => {
     //  animation = new Animated.Value(menuToggled ? 0 : 1);
     const [modalOpenn, setModalOpenn] = useState(false);
 
+    const [checked, setChecked] = React.useState(false);
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -825,8 +827,8 @@ const HomeScreen = (props) => {
                                                         {/* <AntDesign name="caretdown" size={16} color="black"/> */}
                                                         <TouchableOpacity>
                                                             <View style={styles.RadioView2}>
-                                                                <View style={onPress == item ? styles.RadioInnerViewNormal : styles.RadioInnerView} >
-                                                                </View>
+                                                                {/* <View style={onPress == item ? styles.RadioInnerViewNormal : styles.RadioInnerView} >
+                                                                </View> */}
                                                             </View>
                                                         </TouchableOpacity>
                                                     </LinearGradient>
@@ -842,8 +844,20 @@ const HomeScreen = (props) => {
                                                     </View>
                                                     <TouchableOpacity>
                                                         <View style={styles.RadioView2}>
-                                                            <View style={onPress == item ? styles.RadioInnerView : styles.RadioInnerViewNormal} >
-                                                            </View>
+                                                            <TouchableOpacity 
+                                                            // onPress={() => checked ? setChecked(false) : setChecked(true)}
+                                                                onPress={() => setChecked(item)}
+                                                                style={{ 
+                                                                     marginTop: moderateScale(4.5, 0.1),  
+                                                                     width: moderateScale(35),
+                                                                    height: moderateScale(35),
+                                                                    backgroundColor: '#00B712',
+                                                                    borderRadius: 120,
+                                                                    alignSelf: "center",
+                                                                     borderRadius: moderateScale(20),
+                                                                     backgroundColor: checked.id == item.id ? '#00B712' : 'white', borderWidth: 2, borderColor: 'white' }} >
+
+                                                            </TouchableOpacity>
                                                         </View>
                                                     </TouchableOpacity>
 
@@ -991,7 +1005,7 @@ const HomeScreen = (props) => {
 
 
                     <View style={styles.AddCouple}>
-                       
+
                         <Text style={styles.choosePersonText}>   Add Another Couple</Text>
                         <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
                             <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
@@ -1138,7 +1152,7 @@ const HomeScreen = (props) => {
                                                 />
 
                                                 <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
-                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute',  bottom:moderateScale(Platform.OS === 'ios' ? -1 : -2.3), right: moderateScale(Platform.OS === 'ios' ? 7 : 6 )}}>N</Text>
+                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(Platform.OS === 'ios' ? -1 : -2.3), right: moderateScale(Platform.OS === 'ios' ? 7 : 6) }}>N</Text>
                                             </TouchableOpacity>
                                         </View>
 

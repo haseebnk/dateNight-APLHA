@@ -43,9 +43,9 @@ const App = () => {
   const [userToken, setuserToken] = useState(null);
 
 
-const userSettings = {
-  userToken: userToken,
-}
+  const userSettings = {
+    userToken: userToken,
+  }
 
 
 
@@ -75,44 +75,45 @@ const userSettings = {
     }
   }
 
-  function AuthStack() {
+  // function AuthStack() {
+  //   return (
+
+  //     <NavigationContainer>
+  //       <Stack.Navigator initialRouteName="splash">
+
+  //         <Stack.Screen name="splash" options={{ headerShown: false }} component={Splash} />
+  //         <Stack.Screen name="login" options={{ headerShown: false }} component={LoginScreen2} />
+  //         <Stack.Screen name="signup" options={{ headerShown: false }} component={SignupScreen} />
+  //         <Stack.Screen name="slider" options={{ headerShown: false }} component={Slider} />
+  //         <Stack.Screen name="forgotpassword" options={{ headerShown: false }} component={ForgotPassword} />
+  //         <Stack.Screen name="changepassword" options={{ headerShown: false }} component={ChangePassword} />
+
+
+  //         <Stack.Screen name="home" options={{ headerShown: false }} component={HomeScreen} />
+  //         {/* <Stack.Screen name="splash" options={{ headerShown: false }} component={Splash} /> */}
+  //         <Stack.Screen name="addcouple" options={{ headerShown: false }} component={AddAnotherCouple} />
+  //         <Stack.Screen name="addpartnersdetails" options={{ headerShown: false }} component={AddPartnersDetails} />
+  //         <Stack.Screen name="faqscreen" options={{ headerShown: false }} component={FAQScreen} />
+  //         <Stack.Screen name="mealcard" options={{ headerShown: false }} component={MealCard} />
+  //         <Stack.Screen name="personalprofiledetails" options={{ headerShown: false }} component={PersonalProfileDetails} />
+  //         {/* <Stack.Screen name="tabscard" options={{ headerShown: false }} component={ReactNavigationBottomTabs} /> */}
+  //         <Stack.Screen name="donefornow" options={{ headerShown: false }} component={DoneForNow} />
+  //         <Stack.Screen name="datemode" options={{ headerShown: false }} component={DateMode} />
+  //         {/* <Stack.Screen name="modal" options={{ headerShown: false }} component={ModalEg} /> */}
+  //         <Stack.Screen name="couplecard" options={{ headerShown: false }} component={CoupleCard} />
+
+  //       </Stack.Navigator>
+  //     </NavigationContainer>
+
+  //   )
+  // }
+
+  function MyStack(intialRoute) {
+    console.log("Got is : ", intialRoute.intialRoute)
     return (
-     
+
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="splash">
-
-          <Stack.Screen name="splash" options={{ headerShown: false }} component={Splash} />
-          <Stack.Screen name="login" options={{ headerShown: false }} component={LoginScreen2} />
-          <Stack.Screen name="signup" options={{ headerShown: false }} component={SignupScreen} />
-          <Stack.Screen name="slider" options={{ headerShown: false }} component={Slider} />
-          <Stack.Screen name="forgotpassword" options={{ headerShown: false }} component={ForgotPassword} />
-          <Stack.Screen name="changepassword" options={{ headerShown: false }} component={ChangePassword} />
-
-
-          <Stack.Screen name="home" options={{ headerShown: false }} component={HomeScreen} />
-          {/* <Stack.Screen name="splash" options={{ headerShown: false }} component={Splash} /> */}
-          <Stack.Screen name="addcouple" options={{ headerShown: false }} component={AddAnotherCouple} />
-          <Stack.Screen name="addpartnersdetails" options={{ headerShown: false }} component={AddPartnersDetails} />
-          <Stack.Screen name="faqscreen" options={{ headerShown: false }} component={FAQScreen} />
-          <Stack.Screen name="mealcard" options={{ headerShown: false }} component={MealCard} />
-          <Stack.Screen name="personalprofiledetails" options={{ headerShown: false }} component={PersonalProfileDetails} />
-          {/* <Stack.Screen name="tabscard" options={{ headerShown: false }} component={ReactNavigationBottomTabs} /> */}
-          <Stack.Screen name="donefornow" options={{ headerShown: false }} component={DoneForNow} />
-          <Stack.Screen name="datemode" options={{ headerShown: false }} component={DateMode} />
-          {/* <Stack.Screen name="modal" options={{ headerShown: false }} component={ModalEg} /> */}
-          <Stack.Screen name="couplecard" options={{ headerShown: false }} component={CoupleCard} />
-
-        </Stack.Navigator>
-      </NavigationContainer>
-      
-    )
-  }
-
-  function MyStack() {
-    return (
-    
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="home">
+        <Stack.Navigator initialRouteName={intialRoute.intialRoute}>
 
 
           {/* <Stack.Screen name="splash" options={{ headerShown: false }} component={Splash} /> */}
@@ -139,18 +140,16 @@ const userSettings = {
 
         </Stack.Navigator>
       </NavigationContainer>
- 
+
     )
   }
 
   return (
     <AppContext.Provider value={userSettings}>
       <NotesProvider>
-
-      
-      {user ? <MyStack /> : <AuthStack />}
+        <MyStack intialRoute={user ? 'home' : 'splash'} />
       </NotesProvider>
-   </AppContext.Provider>
+    </AppContext.Provider>
   )
 }
 

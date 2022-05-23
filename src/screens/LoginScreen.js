@@ -21,6 +21,7 @@ import axios from 'axios';
 import axiosconfig from '../services/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from './loader';
+import { moderateScale } from 'react-native-size-matters';
 
 
 
@@ -208,8 +209,8 @@ export default function LoginScreen2(props) {
 
                             />
 
-                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: 2, left: 4 }}> Y</Text>
-                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: -2.5, right: 6 }}>N</Text>
+                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
+                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom:  moderateScale(0, 0.1), right:  moderateScale(5, 0.1) }}>N</Text>
                         </TouchableOpacity>
 
                     </View>

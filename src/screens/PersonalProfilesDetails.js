@@ -532,9 +532,9 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: Platform.OS === 'ios' ? 65 : 30,
+        paddingTop: Platform.OS === 'ios' ? 30 : 30,
 
-        backgroundColor: '#ffff',
+        backgroundColor: '#24202f',
 
     },
     tinyLogo: {

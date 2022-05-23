@@ -336,7 +336,7 @@ const HomeScreen = (props) => {
     const [addEvent, setEvent] = useState(false);
 
     const [toggleActive, setToggle] = useState(false);
-    //fahas faq
+    
 
 
     const [press, setPress] = useState('');
@@ -1155,7 +1155,7 @@ const HomeScreen = (props) => {
                                                 />
 
                                                 <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
-                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(Platform.OS === 'ios' ? -1 : -2.3), right: moderateScale(Platform.OS === 'ios' ? 7 : 6) }}>N</Text>
+                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(0, 0.1), right: moderateScale(5 , 0.1) }}>N</Text>
                                             </TouchableOpacity>
                                         </View>
 

@@ -340,6 +340,7 @@ const HomeScreen = (props) => {
 
 
     const [press, setPress] = useState('');
+    
 
     function questionPick(item) {
         setPress(item.id)
@@ -848,14 +849,16 @@ const HomeScreen = (props) => {
                                                             // onPress={() => checked ? setChecked(false) : setChecked(true)}
                                                                 onPress={() => setChecked(item)}
                                                                 style={{ 
-                                                                     marginTop: moderateScale(4.5, 0.1),  
+                                                                     marginTop: moderateScale(4, 0.1),  
                                                                      width: moderateScale(35),
                                                                     height: moderateScale(35),
                                                                     backgroundColor: '#00B712',
                                                                     borderRadius: 120,
                                                                     alignSelf: "center",
                                                                      borderRadius: moderateScale(20),
-                                                                     backgroundColor: checked.id == item.id ? '#00B712' : 'white', borderWidth: 2, borderColor: 'white' }} >
+                                                                     backgroundColor: checked.id == item.id ? '#00B712' : 'white', 
+                                                                     borderWidth: 2.5, 
+                                                                     borderColor: 'white' }} >
 
                                                             </TouchableOpacity>
                                                         </View>

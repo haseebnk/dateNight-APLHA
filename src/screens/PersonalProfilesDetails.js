@@ -22,7 +22,7 @@ import DateTimeCard from '../components/DateTimeCard';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Loader from './loader';
 // import SplashScreen from 'react-native-splash-screen';
 
 
@@ -67,6 +67,8 @@ const COLORS = [
 
 export default function PersonalProfileDetails(props) {
 
+
+    const [loader, setLoader] = useState(false);
     const [press, setPress] = useState('');
     const [phoneNum, setphoneNum] = useState(null);
     const [dob, setdob] = useState('Date of birth');
@@ -124,14 +126,23 @@ export default function PersonalProfileDetails(props) {
 
 
     const onLogoutPress = async () => {
+
+      
+
         await AsyncStorage.removeItem('@auth_token')
+        setLoader(true);
         setTimeout(() => {
             props.navigation.navigate('login');
           }, 1000);
     }
 
     return (
-
+        <View style={styles.container}>
+ {loader ? (
+                    <>
+                        <Loader />
+                    </>
+                ) : null}
         <ScrollView nestedScrollEnabled={true}>
 
             <TouchableWithoutFeedback
@@ -146,6 +157,7 @@ export default function PersonalProfileDetails(props) {
                     colors={['#24202f', '#24202f', '#24202f']}
                     style={styles.container}
                 >
+                    
                     <View style={{ flexDirection: "row", justifyContent: 'space-evenly' }}>
                         <TouchableOpacity onPress={() => props.navigation.goBack()}>
 
@@ -341,6 +353,7 @@ export default function PersonalProfileDetails(props) {
                 </LinearGradient>
             </TouchableWithoutFeedback>
         </ScrollView>
+        </View>
 
     );
 }

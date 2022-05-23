@@ -22,18 +22,21 @@ export default Loader;
 
 const styles = StyleSheet.create({
     logo: {
-      width: moderateScale(120,0.1),
-      height: moderateScale(128,0.1),
+      width: moderateScale(140,0.1),
+      height: moderateScale(148,0.1),
     },
     cont:{
-        backgroundColor:'#00000045',
+        backgroundColor:'#000000d1',
         position:'absolute',
-        zIndex:1,
+        zIndex:111,
         top:0,
         left:0,
-        height:'100%',
+        bottom:0,
+        right:0,
+        height:windowHeight,
         width:windowWidth,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        alignSelf:'center'
     }
   });

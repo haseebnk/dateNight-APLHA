@@ -336,7 +336,7 @@ const HomeScreen = (props) => {
     const [addEvent, setEvent] = useState(false);
 
     const [toggleActive, setToggle] = useState(false);
-    //fahas faq
+    
 
 
     const [press, setPress] = useState('');

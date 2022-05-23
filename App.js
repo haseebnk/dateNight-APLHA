@@ -15,6 +15,7 @@ import AddPartnersDetails from './src/screens/AddPartnersDetails';
 import MealCard from './src/screens/MealCard';
 import FAQScreen from './src/screens/FaqScreen';
 import PersonalProfileDetails from './src/screens/PersonalProfilesDetails';
+import chooseYourDate from './src/screens/chooseyourdate';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import ReactNavigationBottomTabs from './src/screens/TabsCard';
 import DoneForNow from './src/screens/DoneForNow';
@@ -130,6 +131,7 @@ const App = () => {
           <Stack.Screen name="faqscreen" options={{ headerShown: false }} component={FAQScreen} />
           <Stack.Screen name="mealcard" options={{ headerShown: false }} component={MealCard} />
           <Stack.Screen name="personalprofiledetails" options={{ headerShown: false }} component={PersonalProfileDetails} />
+          <Stack.Screen name="choosedate" options={{ headerShown: false }} component={chooseYourDate} />
           {/* <Stack.Screen name="tabscard" options={{ headerShown: false }} component={ReactNavigationBottomTabs} /> */}
           <Stack.Screen name="donefornow" options={{ headerShown: false }} component={DoneForNow} />
           <Stack.Screen name="datemode" options={{ headerShown: false }} component={DateMode} />

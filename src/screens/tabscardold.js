@@ -311,8 +311,8 @@ function TabA() {
 
                     />
 
-                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(2, 0.1), left: moderateScale(4, 0.1) }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom:moderateScale(1, 0.1), right: moderateScale(6, 0.1) }}>N</Text>
+                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom:  Platform.OS ==='ios' ? moderateScale(2, 0.1) : moderateScale(2, 0.1) , left: moderateScale(4, 0.1) }}> Y</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS ==='ios' ? moderateScale(1, 0.1) :moderateScale(-1.5,0), right: Platform.OS ==='ios' ? moderateScale(6, 0.1): moderateScale(7.5,0)}}>N</Text>
                 </TouchableOpacity>
 
 

@@ -987,7 +987,7 @@ const HomeScreen = (props) => {
                             {/* <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
                                 <Text style={{ bottom: -7, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
                             </TouchableOpacity> */}
-                            <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
+                            <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
                                     style={styles.linearGradient} >
@@ -1154,8 +1154,8 @@ const HomeScreen = (props) => {
 
                                                 />
 
-                                                <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
-                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(0, 0.1), right: moderateScale(5 , 0.1) }}>N</Text>
+                                                <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: Platform.OS ==='ios' ? moderateScale(3, 0.1)  : moderateScale(3.5,0.1)}}> Y</Text>
+                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute',bottom: Platform.OS ==='ios' ? moderateScale(0, 0.1) :moderateScale(-2.5,0), right: Platform.OS ==='ios' ? moderateScale(5, 0.1): moderateScale(6.2,0)}}>N</Text>
                                             </TouchableOpacity>
                                         </View>
 

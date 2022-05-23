@@ -69,38 +69,38 @@ const PlaceData = [
 const DATA = [
     {
         Id: 1,
-        title: 'Barbeque',
+        title: 'Asian Food',
         check: false
     },
     {
         Id: 2,
-        title: 'Breakfast food',
+        title: 'Barbeque',
         check: false
     },
     {
         Id: 3,
-        title: 'Buffets',
+        title: 'Breakfast Food',
         check: false
     },
     {
         Id: 4,
-        title: 'Burgers & Fries',
+        title: 'Buffets',
         check: false
     },
     {
         Id: 5,
-        title: 'Chinese Food',
+        title: 'Burger & Fries',
         check: false
     },
     {
 
         Id: 6,
-        title: 'Fast Food',
+        title: 'Fine Dining',
         check: false
     },
     {
         Id: 7,
-        title: 'Fine Dining',
+        title: 'Fondue',
         check: false
     },
     {
@@ -110,22 +110,58 @@ const DATA = [
     },
     {
         Id: 9,
-        title: 'Greek food',
+        title: 'Hawaiian & Island Food',
         check: false
     },
     {
         Id: 10,
-        title: 'Hot Dogs ',
+        title: 'Greek Food',
         check: false
     },
     {
         Id: 11,
-        title: 'Itlian Foods',
+        title: 'Hot Dogs',
         check: false
     },
     {
         Id: 12,
-        title: 'Chinese Food',
+        title: 'Italian Food',
+        check: false
+
+    },
+    {
+        Id: 12,
+        title: 'Maxican Food',
+        check: false
+
+    },
+    {
+        Id: 13,
+        title: 'Pizza',
+        check: false
+
+    },
+    {
+        Id: 14,
+        title: 'Sandwiches',
+        check: false
+
+    },
+    {
+        Id: 15,
+        title: 'Soup & Salads',
+        check: false
+
+    },
+    {
+        Id: 16,
+        title: 'Sushi & Seafood',
+        check: false
+
+    },
+    {
+        Id: 17,
+        title: 'Steak',
         check: false
 
     }
@@ -274,8 +310,8 @@ function TabA() {
 
                     />
 
-                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: 2, left: 4 }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: -1, right: 7 }}>N</Text>
+                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(2, 0.1), left: moderateScale(4, 0.1) }}> Y</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(1, 0.1), right: moderateScale(6, 0.1) }}>N</Text>
                 </TouchableOpacity>
 
 
@@ -310,7 +346,7 @@ function TabA() {
             <View style={styles.InnerContain}>
                 <View style={styles.chooseContaine}>
                     <Text style={styles.ChooseMeal}>
-                        Choose Meal
+                        Meal Filter
 
                     </Text>
 
@@ -677,11 +713,15 @@ class ReactNavigationBottomTabs extends Component {
                         tabBarInactiveTintColor: '#363143',
 
                         tabBarStyle: {
-                            marginBottom: 50, width: moderateScale(windowWidth - 61, 0.1), height: 100, marginHorizontal: 30, backgroundColor: '#363143',
+                            marginBottom: 50, 
+                            width: moderateScale(windowWidth - 61, 0.1), 
+                            height: moderateScale(90), 
+                            marginHorizontal: 30, 
+                            backgroundColor: '#363143',
 
                             borderBottomLeftRadius: 16,
                             borderBottomRightRadius: 16,
-                            paddingTop:30
+                            paddingTop:0
                         }
                     }
                 }

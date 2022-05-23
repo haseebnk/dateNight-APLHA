@@ -111,7 +111,7 @@ export default function MealCard() {
             <View style={styles.MainView}>
                 <View style={styles.InnerView}>
                     <Text style={styles.ChooseMeal}>
-                        Choose Meal
+                        Meal Filter
 
                     </Text>
 

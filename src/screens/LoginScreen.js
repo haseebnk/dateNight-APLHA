@@ -192,8 +192,12 @@ export default function LoginScreen2(props) {
                 <Text style={{ color: 'white', fontSize: 12, marginLeft: 70, marginTop: 4, fontFamily: "Poppins-Regular", }}>Remember</Text>
                 <TouchableOpacity onPress={() => props.navigation.navigate("forgotpassword")}>
                     <Text style={styles.fpText} >Forgot Password?</Text>
-               </TouchableOpacity>
-                <TouchableOpacity onPress={() => props.navigation.navigate("indicator")}>
+                </TouchableOpacity>
+
+                {/* <TouchableOpacity style={styles.loginButton}>
+          <Text style={styles.loginButtonText}>Sign in</Text>
+        </TouchableOpacity> */}
+                <TouchableOpacity onPress={() => onLoginUser()}>
                     <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                         colors={['#FF7474', '#E20303']}
                         style={styles.linearGradient} >

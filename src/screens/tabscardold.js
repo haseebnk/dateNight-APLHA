@@ -129,6 +129,7 @@ const DATA = [
         check: false
 
     },
+<<<<<<< HEAD
     {
         Id: 12,
         title: 'Maxican Food',
@@ -165,6 +166,9 @@ const DATA = [
         check: false
 
     }
+=======
+   
+>>>>>>> 49be1e066dcded06f39f3d19f8df5e19534d6b6b
 ]
 
 
@@ -310,8 +314,13 @@ function TabA() {
 
                     />
 
+<<<<<<< HEAD
                     <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(2, 0.1), left: moderateScale(4, 0.1) }}> Y</Text>
                     <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(1, 0.1), right: moderateScale(6, 0.1) }}>N</Text>
+=======
+                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: 2, left: 4 }}> Y</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom:Platform.OS === 'ios' ? -1 : -1.7, right: Platform.OS === 'ios' ? 7 : 7.2 }}>N</Text>
+>>>>>>> 49be1e066dcded06f39f3d19f8df5e19534d6b6b
                 </TouchableOpacity>
 
 
@@ -346,7 +355,11 @@ function TabA() {
             <View style={styles.InnerContain}>
                 <View style={styles.chooseContaine}>
                     <Text style={styles.ChooseMeal}>
+<<<<<<< HEAD
                         Meal Filter
+=======
+                    Meal Filters
+>>>>>>> 49be1e066dcded06f39f3d19f8df5e19534d6b6b
 
                     </Text>
 
@@ -594,7 +607,7 @@ function TabC() {
                         <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
                             <View style={styles.placeViewc}>
                                 <View style={styles.yellowView}>
-                                    <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Sponsored</Text>
+                                    <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
                                 </View>
                                 <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -721,7 +734,11 @@ class ReactNavigationBottomTabs extends Component {
 
                             borderBottomLeftRadius: 16,
                             borderBottomRightRadius: 16,
+<<<<<<< HEAD
                             paddingTop:0
+=======
+                          
+>>>>>>> 49be1e066dcded06f39f3d19f8df5e19534d6b6b
                         }
                     }
                 }
@@ -762,6 +779,7 @@ class ReactNavigationBottomTabs extends Component {
                         tabBarIcon: ({ focused, color }) => {
                             return (
                                 <Image
+                               
                                     style={{ width: 60, height: 60, }}
                                     source={(require('../assets/card1.png'))}
                                 />

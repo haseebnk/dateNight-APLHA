@@ -27,6 +27,9 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 // const [Mystate, NewState] = useState(0);
 
+// const fields = ["Edit", "Delete"]
+
+
 
 const Data = [{
     id: 1,
@@ -59,7 +62,7 @@ const renderData = () => {
                     <Text style={styles.cardTextHead}>{v.name}</Text>
                     <Text style={styles.cardText}>{v.Gname}</Text>
                     <Text style={styles.cardText}>{v.date}</Text>
-                  
+
                     <Text style={styles.cardText}>{v.time}</Text>
                     <Text style={styles.cardText}>{v.Frequency}</Text>
                 </View>
@@ -80,7 +83,7 @@ const renderGift = () => {
                     <Text style={styles.cardTextHead}>{v.name}</Text>
                     <Text style={styles.cardText}>{v.Gname}</Text>
                     <Text style={styles.cardText}>{v.date}</Text>
-                   
+
                     <Text style={styles.cardText}>{v.time}</Text>
                     <Text style={styles.cardText}>{v.Frequency}</Text>
                 </View>
@@ -94,6 +97,7 @@ const renderGift = () => {
 
 function DateTimeCard() {
 
+   
 
 
 
@@ -130,10 +134,17 @@ function DateTimeCard() {
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ margin: 3, marginRight: 1, marginTop: moderateScale(9, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                            style={{ margin: 0, marginRight: 1, marginTop: moderateScale(9, 0.1), height: moderateScale(32), width: moderateScale(32), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                         </TouchableOpacity>
-                        <MaterialIcons style={{ marginBottom: moderateScale(15, 0.1) , marginLeft:12 }} name='more-vert' size={hp('4%')} color="white" />
+
+                       
+                        <MaterialIcons style={{ marginLeft:7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
+
+                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
+                 
+                        
+                       
                         {/* <MaterialIcons style={{ marginLeft: 15, marginBottom: 0 }} name='mode-edit' size={hp('3%')} color="white" />
 
                         <MaterialIcons style={{ marginLeft: 15, marginBottom: 25 }} name='delete-outline' size={hp('3%')} color="white" /> */}
@@ -155,7 +166,7 @@ function DateTimeCard() {
                     start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
                     colors={['#7AC9FD', '#0071BC']}
 
-                    style={styles.container}>
+                    style={styles.container2}>
                     {/* <View style={styles.flex1}>
                         <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
                     </View> */}
@@ -169,10 +180,12 @@ function DateTimeCard() {
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                            style={{ margin: 3, marginRight: 1, marginTop: moderateScale(13, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                            style={{ margin: 0, marginRight: 1, marginTop: moderateScale(9, 0.1), height: moderateScale(32), width: moderateScale(32), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
 
                         </TouchableOpacity>
-                        <MaterialIcons style={{ marginBottom: moderateScale(15, 0.1) , marginLeft:12 }} name='more-vert' size={hp('4%')} color="white" />
+                        <MaterialIcons style={{ marginLeft:7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
+
+<MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
                         {/* <MaterialIcons style={{ marginLeft: 15, marginBottom: 0 }} name='mode-edit' size={hp('3%')} color="white" />
 
                         <MaterialIcons style={{ marginLeft: 15, marginBottom: 25 }} name='delete-outline' size={hp('3%')} color="white" /> */}
@@ -236,7 +249,19 @@ const styles = StyleSheet.create({
 
     },
 
+    container2: {
+        flex: 1,
+       
+        height: moderateScale(165),
+        width: moderateScale(318),
+        marginVertical: 30,
+        marginRight: 30,
+        flexDirection: "row",
+        borderRadius: moderateScale(18),
+        marginLeft: 20,
+    
 
+    },
 
 
 
@@ -247,7 +272,7 @@ const styles = StyleSheet.create({
     cardTextHead: {
         color: 'white',
         fontFamily: "Poppins-Regular",
-        fontWeight:'700',
+        fontWeight: '700',
         fontSize: 18,
         marginLeft: 25,
         marginTop: moderateScale(15, 0.1)

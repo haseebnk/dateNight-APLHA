@@ -25,7 +25,7 @@ import {
 
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Carousel from 'react-native-snap-carousel';
+// import Carousel from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -52,7 +52,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-
+import Carousel from 'react-native-snap-carousel';
 
 
 
@@ -63,12 +63,6 @@ if (Platform.OS === 'android') {
 }
 const inActiveColor = 'white';
 const activeColor = '#00B712';
-
-
-
-
-
-
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -107,6 +101,41 @@ const windowHeight = Dimensions.get('window').height;
 //             'It may, or may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
 //     },
 // ];
+
+
+const activeIndex = 0
+
+const carouselItems = [
+    {
+        slide: "1",
+
+    },
+    {
+        slide: "2",
+
+    },
+    // {
+    //     title: "Item 3",
+    //     text: "Text 3",
+    // },
+    // {
+    //     title: "Item 4",
+    //     text: "Text 4",
+    // },
+    // {
+    //     title: "Item 5",
+    //     text: "Text 5",
+    // },
+]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -279,26 +308,27 @@ const Pings = [
 const HomeScreen = (props) => {
 
 
+
     useEffect(() => {
         const backAction = () => {
-          Alert.alert("Hold on!", "Are you sure you want to go back?", [
-            {
-              text: "Cancel",
-              onPress: () => null,
-              style: "cancel"
-            },
-            { text: "YES", onPress: () => BackHandler.exitApp() }
-          ]);
-          return true;
+            Alert.alert("Hold on!", "Are you sure you want to go back?", [
+                {
+                    text: "Cancel",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "YES", onPress: () => BackHandler.exitApp() }
+            ]);
+            return true;
         };
-    
+
         const backHandler = BackHandler.addEventListener(
-          "hardwareBackPress",
-          backAction
+            "hardwareBackPress",
+            backAction
         );
-    
+
         return () => backHandler.remove();
-      }, []);
+    }, []);
 
 
     const { state } = useContext(NotesContext)
@@ -310,6 +340,7 @@ const HomeScreen = (props) => {
 
 
     const [press, setPress] = useState('');
+    
 
     function questionPick(item) {
         setPress(item.id)
@@ -325,6 +356,31 @@ const HomeScreen = (props) => {
     const xyz = (type) => {
         type == 'lock' ? setModalOpenn(true) : null
     }
+
+
+
+
+    const _renderItem = (item, index) => {
+        return (
+            <View style={{
+                backgroundColor: 'pink',
+                borderRadius: 5,
+                height: 600,
+                width: 750,
+                alignSelf: 'center'
+
+
+            }}>
+                <Text style={{ fontSize: 30 }}>{item.title}</Text>
+                <Text>{item.text}</Text>
+            </View>
+
+        )
+    }
+
+
+
+
 
 
 
@@ -374,7 +430,7 @@ const HomeScreen = (props) => {
     };
 
 
-    const [count, setCount] = useState(0);
+
 
 
     // const While = () => {
@@ -415,9 +471,10 @@ const HomeScreen = (props) => {
         setShow(false)
     };
 
+    const [count, setCount] = useState(0);
 
-    const onPress = () => setCount(count + 5);
-    const onPree = () => setCount(count > 0 ? count - 5 : count - 0);
+    const onPress = () => setCount(count < 60 ? count + 5 : 0);
+    const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
     // // Default active selector
     // const [activeSections, setActiveSections] = useState([]);
@@ -635,6 +692,8 @@ const HomeScreen = (props) => {
     //  animation = new Animated.Value(menuToggled ? 0 : 1);
     const [modalOpenn, setModalOpenn] = useState(false);
 
+    const [checked, setChecked] = React.useState(false);
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -767,13 +826,15 @@ const HomeScreen = (props) => {
                                                         <Text style={{ padding: 5, color: 'white', marginLeft: -20, fontFamily: "Poppins-Regular", fontSize: 16, width: moderateScale(180) }}>{item.title}</Text>
 
                                                         {/* <AntDesign name="caretdown" size={16} color="black"/> */}
-
-                                                        <View style={styles.RadioView2}>
-                                                            <View style={onPress == item ? styles.RadioInnerViewNormal : styles.RadioInnerView} >
+                                                        <TouchableOpacity>
+                                                            <View style={styles.RadioView2}>
+                                                                {/* <View style={onPress == item ? styles.RadioInnerViewNormal : styles.RadioInnerView} >
+                                                                </View> */}
                                                             </View>
-                                                        </View>
+                                                        </TouchableOpacity>
                                                     </LinearGradient>
                                                 </Pressable>
+
                                                 :
                                                 <LinearGradient
                                                     colors={[item.color[0], item.color[1]]}
@@ -782,11 +843,26 @@ const HomeScreen = (props) => {
                                                     <View >
                                                         <Text style={{ padding: 5, marginLeft: -20, fontFamily: "Poppins-Regular", color: "white", fontSize: 16, width: moderateScale(180), }}>{item.title}</Text>
                                                     </View>
+                                                    <TouchableOpacity>
+                                                        <View style={styles.RadioView2}>
+                                                            <TouchableOpacity 
+                                                            // onPress={() => checked ? setChecked(false) : setChecked(true)}
+                                                                onPress={() => setChecked(item)}
+                                                                style={{ 
+                                                                     marginTop: moderateScale(4, 0.1),  
+                                                                     width: moderateScale(35),
+                                                                    height: moderateScale(35),
+                                                                    backgroundColor: '#00B712',
+                                                                    borderRadius: 120,
+                                                                    alignSelf: "center",
+                                                                     borderRadius: moderateScale(20),
+                                                                     backgroundColor: checked.id == item.id ? '#00B712' : 'white', 
+                                                                     borderWidth: 2.5, 
+                                                                     borderColor: 'white' }} >
 
-                                                    <View style={styles.RadioView2}>
-                                                        <View style={onPress == item ? styles.RadioInnerView : styles.RadioInnerViewNormal} >
+                                                            </TouchableOpacity>
                                                         </View>
-                                                    </View>
+                                                    </TouchableOpacity>
 
                                                 </LinearGradient>
                                             }
@@ -891,13 +967,38 @@ const HomeScreen = (props) => {
                                     </Text>
                                 </LinearGradient> */}
                                     <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
-                                        <Text style={{ bottom: -7, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
+                                        <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
                                     </TouchableOpacity>
-                                    <CoupleCard></CoupleCard>
+
+                                    <CoupleCard navigation={props.navigation}></CoupleCard>
                                     {/* </TouchableOpacity> */}
                                 </View>
                             </>
-                        ) : null
+                        ) : <View style={styles.AddPersonView5}>
+                            <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
+                            {/* <TouchableOpacity onPress={() => props.navigation.navigate("addpartnersdetails")}> */}
+                            {/* <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                        colors={['#FF7474', '#E20303']}
+                        style={styles.linearGradient} >
+                        <Text style={styles.AddButtonText}>
+                            Add New Person
+                        </Text>
+                    </LinearGradient> */}
+                            {/* <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
+                                <Text style={{ bottom: -7, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
+                            </TouchableOpacity> */}
+                            <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
+                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                    colors={['#FF7474', '#E20303']}
+                                    style={styles.linearGradient} >
+                                    <Text style={styles.AddButtonText}>
+                                        Add Person
+                                    </Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+
+                            {/* </TouchableOpacity> */}
+                        </View>
                     }
 
 
@@ -909,6 +1010,9 @@ const HomeScreen = (props) => {
                     <View style={styles.AddCouple}>
 
                         <Text style={styles.choosePersonText}>   Add Another Couple</Text>
+                        <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
+                            <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
@@ -931,7 +1035,7 @@ const HomeScreen = (props) => {
                     <ScrollView horizontal={true} >
 
 
-                        <View style={styles.addEvent}>
+                        <View style={styles.addEvent} >
                             {addEvent ?
                                 (
                                     <>
@@ -946,6 +1050,7 @@ const HomeScreen = (props) => {
                                 ) : null
                             }
 
+
                             <View style={styles.mealView} >
 
 
@@ -955,32 +1060,8 @@ const HomeScreen = (props) => {
 
 
                                 <View>
-                                    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                                        <TouchableOpacity
-                                            style={[
-                                                styles.toggleContainer,
-                                                { borderColor: null ? activeColor : null, },
-                                            ]}
-                                            onPress={() => {
-                                                LayoutAnimation.easeInEaseOut();
-                                                setToggle(!toggleActive);
-                                            }}
-                                            activeOpacity={1}>
-                                            <View
-                                                style={[
-                                                    styles.toggleBtn,
-                                                    toggleActive
-                                                        ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
-                                                        : { backgroundColor: activeColor, borderRadius: 25, },
-                                                ]}
 
-                                            />
-
-                                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(0, 0.1), right: moderateScale(5, 0.1) }}>N</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', marginBottom: 20, marginTop: 20 }}>
+                                    <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20, marginBottom: 20 }}>
 
 
                                         {
@@ -1006,13 +1087,13 @@ const HomeScreen = (props) => {
                                                     styles={{
                                                         textInput: {
                                                             backgroundColor: "#4D4D4D",
-                                                            paddingHorizontal: 20,
-                                                            marginHorizontal: 0,
-                                                            borderRadius: 18,
+                                                            marginLeft: 0,
+                                                            marginHorizontal: 90,
+                                                            borderRadius: 6,
 
-                                                            height: 42,
+                                                            height: 32,
                                                             color: '#5d5d5d',
-                                                            fontSize: 16,
+                                                            fontSize: 17,
                                                             color: 'white',
                                                             shadowColor: "#000",
                                                             shadowOffset: {
@@ -1034,7 +1115,8 @@ const HomeScreen = (props) => {
                                                         },
                                                         container: {
                                                             flex: 1,
-                                                            marginHorizontal: 30,
+                                                            marginLeft: 10,
+
                                                         },
 
 
@@ -1047,9 +1129,35 @@ const HomeScreen = (props) => {
 
 
                                                 :
-                                                <Text style={styles.zipCode}> Use Current Location </Text>
+                                                <Text style={styles.zipCode}> Use Current Location ? </Text>
 
                                         }
+
+                                        <View style={{ flexDirection: 'row', position: 'absolute', right: 10, marginTop: 3 }}>
+                                            <TouchableOpacity
+                                                style={[
+                                                    styles.toggleContainer,
+                                                    { borderColor: null ? activeColor : null, },
+                                                ]}
+                                                onPress={() => {
+                                                    LayoutAnimation.easeInEaseOut();
+                                                    setToggle(!toggleActive);
+                                                }}
+                                                activeOpacity={1}>
+                                                <View
+                                                    style={[
+                                                        styles.toggleBtn,
+                                                        toggleActive
+                                                            ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
+                                                            : { backgroundColor: activeColor, borderRadius: 25, },
+                                                    ]}
+
+                                                />
+
+                                                <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
+                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(Platform.OS === 'ios' ? -1 : -2.3), right: moderateScale(Platform.OS === 'ios' ? 7 : 6) }}>N</Text>
+                                            </TouchableOpacity>
+                                        </View>
 
                                     </View>
                                     {/* <GooglePlacesAutocomplete
@@ -1067,7 +1175,7 @@ const HomeScreen = (props) => {
 
                                 </View>
 
-                                <TouchableOpacity onPress={() => setEvent(true)}>
+                                <TouchableOpacity onPress={() => { setEvent(true), LayoutAnimation.easeInEaseOut(); }}>
                                     <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                         colors={['#80D3FC', '#80D3FC']}
                                         style={styles.addEventButton} >
@@ -1076,31 +1184,49 @@ const HomeScreen = (props) => {
                                         </Text>
                                     </LinearGradient>
                                 </TouchableOpacity>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#44BEFB', '#44BEFB']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add An activity
-                                    </Text>
-                                </LinearGradient>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#0883FB', '#0883FB']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add Desert
-                                    </Text>
-                                </LinearGradient>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#0149FF', '#0149FF']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add Drink
-                                    </Text>
-                                </LinearGradient>
+                                <TouchableOpacity onPress={() => setEvent(true)}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#44BEFB', '#44BEFB']}
+                                        style={styles.addEventButton} >
+                                        <Text style={styles.AddMeal}>
+                                            Add An activity
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => setEvent(true)}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#0883FB', '#0883FB']}
+                                        style={styles.addEventButton} >
+                                        <Text style={styles.AddMeal}>
+                                            Add Dessert
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => setEvent(true)}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#0149FF', '#0149FF']}
+                                        style={styles.addEventButton} >
+                                        <Text style={styles.AddMeal}>
+                                            Add Drink
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
                             </View>
 
                         </View>
                     </ScrollView>
+
+
+                    {/* <View style={{ width: '100%', height: 600, backgroundColor: 'grey' }}>
+                        <Carousel
+                            layout={"default"}
+
+                            data={carouselItems}
+                            sliderWidth={800}
+                            itemWidth={300}
+                            renderItem={_renderItem}
+                        />
+                    </View> */}
 
                     <View style={{ height: moderateScale(430), backgroundColor: '#4D4D4D' }}>
                         <Text style={styles.SelectYourPingText}>   Select Your Ping Frequency</Text>
@@ -1288,7 +1414,7 @@ const styles = StyleSheet.create({
 
     },
     toggleContainer: {
-        marginTop: 20,
+
         height: 23,
         width: 45,
         borderRadius: 19,
@@ -1434,7 +1560,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         width: scale(350),
-
+        animation: LayoutAnimation.easeInEaseOut(),
 
 
 
@@ -1701,7 +1827,7 @@ const styles = StyleSheet.create({
     },
     zipCode: {
         fontSize: 18,
-        alignSelf: "flex-start",
+
 
         color: "#9f9f9f",
         fontFamily: "Poppins-Regular",
@@ -1748,7 +1874,7 @@ const styles = StyleSheet.create({
         height: 74,
     },
     AddCouple: {
-        height: 392,
+        height: 372,
         backgroundColor: '#4D4D4D',
 
     },
@@ -1790,6 +1916,14 @@ const styles = StyleSheet.create({
     },
     AddPersonView: {
         marginTop: 20,
+
+
+        backgroundColor: 'black',
+
+    },
+    AddPersonView5: {
+        marginTop: 30,
+        marginBottom: 60,
 
         backgroundColor: 'black',
 

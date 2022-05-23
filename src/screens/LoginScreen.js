@@ -17,11 +17,10 @@ import {
     Alert
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { moderateScale } from 'react-native-size-matters';
 import axios from 'axios';
 import axiosconfig from '../services/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Loader from './loader';
 
 
 
@@ -35,7 +34,7 @@ const activeColor = '#00B712';
 
 
 export default function LoginScreen2(props) {
-
+    const [loader, setLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     const [email, setEmail] = useState('')
@@ -46,67 +45,89 @@ export default function LoginScreen2(props) {
 
     useEffect(() => {
         const backAction = () => {
-          Alert.alert("Hold on!", "Are you sure you want to go back?", [
-            {
-              text: "Cancel",
-              onPress: () => null,
-              style: "cancel"
-            },
-            { text: "YES", onPress: () => BackHandler.exitApp() }
-          ]);
-          return true;
+            Alert.alert("Hold on!", "Are you sure you want to go back?", [
+                {
+                    text: "Cancel",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "YES", onPress: () => BackHandler.exitApp() }
+            ]);
+            return true;
         };
-    
+
         const backHandler = BackHandler.addEventListener(
-          "hardwareBackPress",
-          backAction
+            "hardwareBackPress",
+            backAction
         );
-    
+
         return () => backHandler.remove();
-      }, []);
+    }, []);
 
 
     const onLoginUser = () => {
+        setLoader(true);
 
+        
 
-        if (email && password) {
+            
 
-        var data = {
-            email: email,
-            password: password
-        }
-        axiosconfig
-           .post('/login', data)
-            .then((res: any) => {
-            //   setLoader(false);
-              if (res.data.error) {
-                  console.log('Eroro',res)
-                // showToast('login error', res.data.error_description);
-              } else {
-                  console.log("Got it", res.data.access_token)
-                
-                storeData(res.data.access_token);
+            var data = {
+                email: email,
+                password: password
+            }
 
-                
+            var emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            setLoader(false);
+            if (!emailReg.test(data.email)) {
+                // alert('Invalid credentials')
+            }
+
+            if (data.email == '' || data.email == null) {
+                alert( 'Email Required!');
+                return false;
               }
-            })
-            .catch(err => {
-              console.log('error', 'Invalid Credentials', err);
-            });
-        }
+              if (data.password == '' || data.password == null) {
+                alert( 'Password Required!');
+                return false;
+              }
+
+              setLoader(true);
+
+            axiosconfig
+                .post('/login', data)
+                .then((res: any) => {
+                    setLoader(false);
+                    
+                    if (res.data.error) {
+                        alert('invalid credentials')
+                        // showToast('login error', res.data.error_description);
+                    } else {
+                        console.log("Got it", res.data.access_token)
+
+                        storeData(res.data.access_token);
+
+
+                    }
+                })
+                .catch(err => {
+                    setLoader(false);
+                    console.log( 'Invalid Credentials', err);
+                });
+        
 
     }
 
     const storeData = async value => {
         try {
-          await AsyncStorage.setItem('@auth_token', value);
+            await AsyncStorage.setItem('@auth_token', value);
 
-        //   context.setuserToken(value);
-          setTimeout(() => {
-            props.navigation.navigate('home');
-          }, 1000);
-        } catch (e) {}
-      };
+            //   context.setuserToken(value);
+            setTimeout(() => {
+                props.navigation.navigate('home');
+            }, 1000);
+        } catch (e) { }
+    };
 
     return (
         <TouchableWithoutFeedback
@@ -118,6 +139,11 @@ export default function LoginScreen2(props) {
                 colors={['#24202f', '#24202f', '#24202f']}
                 style={styles.container}
             >
+                {loader ? (
+                    <>
+                        <Loader />
+                    </>
+                ) : null}
                 <View style={styles.tinyLogo}>
                     <Image style={styles.tinyLogo}
 
@@ -182,8 +208,8 @@ export default function LoginScreen2(props) {
 
                             />
 
-                            <Text style={{ color: 'white', fontSize: moderateScale(15, 0.1), position: 'absolute', bottom:  moderateScale(1, 0.1), left:  moderateScale(3, 0.1) }}> Y</Text>
-                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize:  moderateScale(15, 0.1), fontFamily: 'Poppins-Regular', position: 'absolute', bottom:  moderateScale(0, 0.1), right:  moderateScale(5, 0.1) }}>N</Text>
+                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: 2, left: 4 }}> Y</Text>
+                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: -2.5, right: 6 }}>N</Text>
                         </TouchableOpacity>
 
                     </View>

@@ -839,6 +839,7 @@ const HomeScreen = (props) => {
                                     {
                                         toggleActive == true ?
                                             <GooglePlacesAutocomplete
+                                            
                                                 placeholder='Enter Location'
                                                 minLength={2}
                                                 autoFocus={false}
@@ -855,6 +856,7 @@ const HomeScreen = (props) => {
 
                                                 styles={{
                                                     textInput: {
+                                                        
                                                         backgroundColor: "#4D4D4D",
                                                         marginLeft: 0,
                                                         marginHorizontal: 90,
@@ -874,6 +876,7 @@ const HomeScreen = (props) => {
 
                                                         elevation: 9,
                                                     },
+                                                    
                                                     predefinedPlacesDescription: {
                                                         color: '#000',
                                                     },
@@ -887,6 +890,7 @@ const HomeScreen = (props) => {
                                                         marginLeft: 10,
 
                                                     },
+                                                   
 
 
 
@@ -921,7 +925,7 @@ const HomeScreen = (props) => {
                                             />
 
                                             <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(3.5, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15,  position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(0.9, 0.1) : moderateScale(2, 0), right: Platform.OS === 'ios' ? moderateScale(5.9, 0.1) : moderateScale(6, 0) }}>N</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15,  position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(6, 0) }}>N</Text>
 
                                         </TouchableOpacity>
                                     </View>

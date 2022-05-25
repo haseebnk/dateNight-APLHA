@@ -210,7 +210,7 @@ export default function LoginScreen2(props) {
                             />
 
                             <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
-                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS ==='ios' ? moderateScale(1, 0.1) :moderateScale(-2.5,0), right: Platform.OS ==='ios' ? moderateScale(5, 0.1): moderateScale(5.8,0)}}>N</Text>
+                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS ==='ios' ? moderateScale(0.9, 0.1) :moderateScale(-2.5,0), right: Platform.OS ==='ios' ? moderateScale(5.9, 0.1): moderateScale(5.8,0)}}>N</Text>
                         </TouchableOpacity>
 
                     </View>

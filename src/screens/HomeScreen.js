@@ -26,7 +26,7 @@ import {
 
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -104,45 +104,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 const activeIndex = 0
-
-const carouselItems = [
-    {
-        slide: "1",
-
-    },
-    {
-        slide: "2",
-
-    },
-    {
-        slide: "3",
-
-    },
-
-    // {
-    //     title: "Item 3",
-    //     text: "Text 3",
-    // },
-    // {
-    //     title: "Item 4",
-    //     text: "Text 4",
-    // },
-    // {
-    //     title: "Item 5",
-    //     text: "Text 5",
-    // },
-]
-
-
-
-
-
-
-
-
-
-
-
+const { width: screenWidth } = Dimensions.get('window');
 
 const PreData = [
     {
@@ -198,15 +160,6 @@ const PreData = [
             'Date 07',
     },
 ]
-
-
-
-
-
-
-
-
-
 const data = [
     {
 
@@ -245,8 +198,6 @@ const data = [
             'It may,  may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
     },
 ];
-
-
 
 const Pings = [
     {
@@ -308,13 +259,10 @@ const Pings = [
 
 ]
 
-
-
 const HomeScreen = (props) => {
 
-
-
     useEffect(() => {
+        setEntries([{ type: 'add' }]);
         const backAction = () => {
             Alert.alert("Hold on!", "Are you sure you want to go back?", [
                 {
@@ -335,17 +283,29 @@ const HomeScreen = (props) => {
         return () => backHandler.remove();
     }, []);
 
-
     const { state } = useContext(NotesContext)
-
     const [addEvent, setEvent] = useState(false);
-
     const [toggleActive, setToggle] = useState(false);
-
-
-
     const [press, setPress] = useState('');
+    const [isDateSelected, setIsDateSelected] = useState(false);
+    const [isTimeSelected, setIsTimeSelected] = useState(false)
+    const [date, setDate] = useState(new Date(Date.now()));
+    const [time, setTime] = useState(new Date(Date.now()));
+    const [mode, setMode] = useState('date');
+    const [isDatePickerVisible, setShow] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpenn, setModalOpenn] = useState(false);
 
+    const [entries, setEntries] = useState([]);
+    const carouselRef = useRef(null);
+
+    const goForward = () => {
+        carouselRef.current.snapToNext();
+    };
+
+    const [checked, setChecked] = React.useState(false);
+
+    const animation = useRef(new Animated.Value(0)).current;
 
     function questionPick(item) {
         setPress(item.id)
@@ -356,63 +316,74 @@ const HomeScreen = (props) => {
     }
 
     //modal
-
-
     const xyz = (type) => {
         type == 'lock' ? setModalOpenn(true) : null
     }
 
-
-
-
-    const _renderItem = (item, index) => {
-        return (
-          
-            <View style={{
-                marginHorizontal:30,
-             
-                backgroundColor: 'pink',
-                borderRadius: 2,
-                width: windowWidth-60,
-                height:500,
-               
-               
-
-
-
-
-            }}>
-                <Text style={{ fontSize: 30 }}>{item.title}</Text>
-                <Text>{item.text}</Text>
-            </View>
-
-            
-            
-
-        )
+    const addEventCard = (t) => {
+        entries.unshift({ type: t })
+        setEntries([...entries]);
+        LayoutAnimation.easeInEaseOut();
     }
 
+    const renderItem = ({ item, index }, parallaxProps) => {
+        console.log(entries)
+        return (
+            <View style={styles.item}>
+                {
+                    item.type == 'add' ? (
+                        <>
+                            
+                            <TouchableOpacity onPress={() => addEventCard('meal')}>
+                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                    colors={['#80D3FC', '#80D3FC']}
+                                    style={styles.addEventButton} >
+                                    <Text style={styles.AddMeal}>
+                                        Add a meal
+                                    </Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => addEventCard('activity')}>
+                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                    colors={['#44BEFB', '#44BEFB']}
+                                    style={styles.addEventButton} >
+                                    <Text style={styles.AddMeal}>
+                                        Add An activity
+                                    </Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => addEventCard('desert')}>
+                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                    colors={['#0883FB', '#0883FB']}
+                                    style={styles.addEventButton} >
+                                    <Text style={styles.AddMeal}>
+                                        Add Dessert
+                                    </Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => addEventCard('drink')}>
+                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                    colors={['#0149FF', '#0149FF']}
+                                    style={styles.addEventButton} >
+                                    <Text style={styles.AddMeal}>
+                                        Add Drink
+                                    </Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                        </>
+                    ) : (
+                        <>
+                            <View style={styles.mealView2} >
+                                <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
+                            </View>
+                        </>
+                    )
+                }
 
 
-
-
-
-
-
-
-
-    const [isDateSelected, setIsDateSelected] = useState(false);
-    const [isTimeSelected, setIsTimeSelected] = useState(false)
-
-
-
-    const [date, setDate] = useState(new Date(Date.now()));
-
-    const [time, setTime] = useState(new Date(Date.now()));
-
-    const [mode, setMode] = useState('date');
-    const [isDatePickerVisible, setShow] = useState(false);
-
+            </View>
+        );
+    };
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -420,7 +391,6 @@ const HomeScreen = (props) => {
         setDate(currentDate);
         setShow(false)
     };
-
 
     const onChangeTime = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -443,20 +413,6 @@ const HomeScreen = (props) => {
         showMode('time');
     };
 
-
-
-
-
-    // const While = () => {
-    //     while(count==0)
-    //     return (
-    //     count-5
-    //     );
-    // }
-
-
-
-    const animation = useRef(new Animated.Value(0)).current;
     const scale = animation.interpolate({ inputRange: [0, 1], outputRange: [1, 0.9] });
 
     const onPressIn = () => {
@@ -490,67 +446,7 @@ const HomeScreen = (props) => {
     const onPress = () => setCount(count < 60 ? count + 5 : 0);
     const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
-    // // Default active selector
-    // const [activeSections, setActiveSections] = useState([]);
-    // // Collapsed condition for the single collapsible
-    // const [collapsed, setCollapsed] = useState(true);
-    // // MultipleSelect is for the Multiple Expand allowed
-    // // True: Expand multiple at a time
-    // // False: One can be expand at a time
-    // const [multipleSelect, setMultipleSelect] = useState(false);
-
-    // const toggleExpanded = () => {
-    //     // Toggling the state of single Collapsible
-    //     setCollapsed(!collapsed);
-    // };
-
-    // const setSections = (sections) => {
-    //     // Setting up a active section state
-    //     setActiveSections(
-    //         sections.includes(undefined) ? [] : sections
-    //     );
-    // };
-
-    // const renderHeader = (section, _, isActive) => {
-    //     // Accordion header view
-    //     return (
-
-    //         <View style={{ height: 100, }} >
-    //             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-    //                 colors={['#399ADA', '#0883FB']}
-    //                 style={styles.header} >
-    //                 <Animatable.View
-
-    //                     duration={400}
-
-    //                     transition="backgroundColor">
-
-    //                     <Text style={styles.headerText}>
-    //                         {section.title}
-    //                     </Text>
-
-
-    //                 </Animatable.View>
-    //             </LinearGradient >
-
-    //         </View>
-
-
-    //     );
-    // };
-
-
-    const [modalOpen, setModalOpen] = useState(false);
-
-
-
-
-
     const rendenPlanPing = () => {
-
-
-
-
         return (
             PreData.map((v, i) => {
                 return (
@@ -558,11 +454,6 @@ const HomeScreen = (props) => {
                         <View style={styles.ping}
                             key={i}
                         >
-
-
-
-
-
                             <TouchableOpacity
 
                                 onPress={() => setModalOpen(true)}
@@ -570,8 +461,6 @@ const HomeScreen = (props) => {
                                 type={PreData}
 
                             >
-
-
                                 <Text style={styles.PingText1}>
                                     {v.title}
                                 </Text>
@@ -580,9 +469,6 @@ const HomeScreen = (props) => {
                                 </Text>
 
                             </TouchableOpacity>
-
-
-
                         </View>
                     </View>
 
@@ -593,26 +479,14 @@ const HomeScreen = (props) => {
 
     }
 
-
     const rendenPing = () => {
-
-
-
         const [myArray, setMyArray] = useState([]);
-
         function onlclick() {
-
-
-
-
             let myLocalArray = []
             myLocalArray = Pings.splice(0, 1)
             setMyArray(myLocalArray)
             { Pings[0].type == 'lock' ? setModalOpenn(true) : null }
         }
-
-
-
         return (
             Pings.map((v, i) => {
                 return (
@@ -656,58 +530,6 @@ const HomeScreen = (props) => {
         )
 
     }
-
-    // <View style={styles.ping}>
-    //     <TouchableOpacity >
-    //         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-    //             colors={['#FF2B25', '#FF2B25']}
-    //             style={styles.btn1}
-    //             type={Pings}>
-    //             <Text style={styles.btn1Text}>
-
-    //             </Text>
-    //         </LinearGradient>
-    //     </TouchableOpacity>
-
-
-
-    // </View>
-
-
-
-    // const renderContent = (section, _, isActive) => {
-    //     // Accordion Content view
-    //     return (
-
-    //         <Animatable.View
-    //             duration={400}
-    //             style={[
-    //                 styles.contentHead,
-    //                 isActive ? styles.inactive : styles.inactive
-    //             ]}
-    //             transition="backgroundColor">
-
-
-
-    //             <Animatable.Text
-    //                 animation={isActive ? '' : undefined}
-    //                 style={{ textAlign: 'center', margin: 8, }}>
-    //                 {section.content}
-    //             </Animatable.Text>
-
-    //         </Animatable.View>
-    //     );
-    // };
-
-
-    // const [menuToggled, setmenuToggled] = (useState())
-
-    //  animation = new Animated.Value(0);
-    //  animation = new Animated.Value(menuToggled ? 0 : 1);
-    const [modalOpenn, setModalOpenn] = useState(false);
-
-    const [checked, setChecked] = React.useState(false);
-
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -770,33 +592,6 @@ const HomeScreen = (props) => {
                         </View>
 
                     </Modal>
-
-                    {/* 
-                    <Accordion
-
-
-                        activeSections={activeSections}
-                        // For any default active section
-                        sections={CONTENT}
-                        // Title and content of accordion
-                        touchableComponent={TouchableOpacity}
-                        // Which type of touchable component you want
-                        // It can be the following Touchables
-                        // TouchableHighlight, TouchableNativeFeedback
-                        // TouchableOpacity , TouchableWithoutFeedback
-                        expandMultiple={multipleSelect}
-                        // If you want to expand multiple at a time
-                        renderHeader={renderHeader}
-                        // Header Component(View) to render
-                        renderContent={renderContent}
-                        // Content Component(View) to render
-                        duration={300}
-                        // Duration for Collapse and expand
-                        onChange={setSections}
-                    // Setting the state of active sections
-                    /> */}
-
-
 
                     <View >
 
@@ -955,17 +750,9 @@ const HomeScreen = (props) => {
                     </View>
                     <View style={styles.PrePlainDate}>
                         <Text style={styles.PrePlanText}> Pre-Planned Dates</Text>
-
-
-
                         <ScrollView horizontal={true}>
                             {rendenPlanPing()}
                         </ScrollView>
-
-
-
-
-
                     </View>
 
                     {
@@ -1015,13 +802,6 @@ const HomeScreen = (props) => {
                             {/* </TouchableOpacity> */}
                         </View>
                     }
-
-
-
-
-
-
-
                     <View style={styles.AddCouple}>
 
                         <Text style={styles.choosePersonText}>   Add Another Couple</Text>
@@ -1047,214 +827,120 @@ const HomeScreen = (props) => {
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
-                    <ScrollView horizontal={true} >
+                    <View style={styles.addEvent} >
+                        {/* <View style={styles.mealView2} >
+                            <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
+                        </View> */}
+                        <View style={styles.mealView} >
+                            <Text style={styles.choosePersonText}>  Add An Event</Text>
+                            <View>
+                                <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20, marginBottom: 20 }}>
 
-
-                        <View style={styles.addEvent} >
-                            {addEvent ?
-                                (
-                                    <>
-                                        <View style={styles.mealView2} >
-
-
-                                            <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
-
-
-                                        </View>
-                                    </>
-                                ) : null
-                            }
-
-
-                            <View style={styles.mealView} >
-
-
-
-                                <Text style={styles.choosePersonText}>  Add An Event</Text>
-
-
-
-                                <View>
-
-                                    <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20, marginBottom: 20 }}>
-
-
-                                        {
-                                            toggleActive == true ?
-
-
-                                                <GooglePlacesAutocomplete
-
-                                                    placeholder='Enter Location'
-                                                    minLength={2}
-                                                    autoFocus={false}
-                                                    returnKeyType={'default'}
-                                                    fetchDetails={true}
-                                                    onPress={(data, details = null) => {
-                                                        // 'details' is provided when fetchDetails = true
-                                                        this.getPysicalAddress(data)
-                                                    }}
-                                                    query={{
-                                                        key: 'AIzaSyDpjC5dmFxhdUHi24y0ZH6PGD_NhOLFCMA',
-                                                        language: 'en',
-                                                    }}
-
-                                                    styles={{
-                                                        textInput: {
-                                                            backgroundColor: "#4D4D4D",
-                                                            marginLeft: 0,
-                                                            marginHorizontal: 90,
-                                                            borderRadius: 6,
-
-                                                            height: 32,
-                                                            color: '#5d5d5d',
-                                                            fontSize: 17,
-                                                            color: 'white',
-                                                            shadowColor: "#000",
-                                                            shadowOffset: {
-                                                                width: 0,
-                                                                height: 4,
-                                                            },
-                                                            shadowOpacity: 0.32,
-                                                            shadowRadius: 5.46,
-
-                                                            elevation: 9,
-                                                        },
-                                                        predefinedPlacesDescription: {
-                                                            color: '#000',
-                                                        },
-                                                        description: {
-                                                            color: 'black',
-
-
-                                                        },
-                                                        container: {
-                                                            flex: 1,
-                                                            marginLeft: 10,
-
-                                                        },
-
-
-
-                                                    }}
-
-
-                                                />
-
-
-
-                                                :
-                                                <Text style={styles.zipCode}> Use Current Location ? </Text>
-
-                                        }
-
-                                        <View style={{ flexDirection: 'row', position: 'absolute', right: 10, marginTop: 3 }}>
-                                            <TouchableOpacity
-                                                style={[
-                                                    styles.toggleContainer,
-                                                    { borderColor: null ? activeColor : null, },
-                                                ]}
-                                                onPress={() => {
-                                                    LayoutAnimation.easeInEaseOut();
-                                                    setToggle(!toggleActive);
+                                    {
+                                        toggleActive == true ?
+                                            <GooglePlacesAutocomplete
+                                                placeholder='Enter Location'
+                                                minLength={2}
+                                                autoFocus={false}
+                                                returnKeyType={'default'}
+                                                fetchDetails={true}
+                                                onPress={(data, details = null) => {
+                                                    // 'details' is provided when fetchDetails = true
+                                                    this.getPysicalAddress(data)
                                                 }}
-                                                activeOpacity={1}>
-                                                <View
-                                                    style={[
-                                                        styles.toggleBtn,
-                                                        toggleActive
-                                                            ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
-                                                            : { backgroundColor: activeColor, borderRadius: 25, },
-                                                    ]}
+                                                query={{
+                                                    key: 'AIzaSyDpjC5dmFxhdUHi24y0ZH6PGD_NhOLFCMA',
+                                                    language: 'en',
+                                                }}
 
-                                                />
+                                                styles={{
+                                                    textInput: {
+                                                        backgroundColor: "#4D4D4D",
+                                                        marginLeft: 0,
+                                                        marginHorizontal: 90,
+                                                        borderRadius: 6,
 
-                                                <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(3.5, 0.1) }}> Y</Text>
-                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(0, 0.1) : moderateScale(-2.5, 0), right: Platform.OS === 'ios' ? moderateScale(5, 0.1) : moderateScale(6.2, 0) }}>N</Text>
-                                            </TouchableOpacity>
-                                        </View>
+                                                        height: 32,
+                                                        color: '#5d5d5d',
+                                                        fontSize: 17,
+                                                        color: 'white',
+                                                        shadowColor: "#000",
+                                                        shadowOffset: {
+                                                            width: 0,
+                                                            height: 4,
+                                                        },
+                                                        shadowOpacity: 0.32,
+                                                        shadowRadius: 5.46,
 
+                                                        elevation: 9,
+                                                    },
+                                                    predefinedPlacesDescription: {
+                                                        color: '#000',
+                                                    },
+                                                    description: {
+                                                        color: 'black',
+
+
+                                                    },
+                                                    container: {
+                                                        flex: 1,
+                                                        marginLeft: 10,
+
+                                                    },
+
+
+
+                                                }}
+
+
+                                            />
+                                            :
+                                            <Text style={styles.zipCode}> Use Current Location ? </Text>
+
+                                    }
+
+                                    <View style={{ flexDirection: 'row', position: 'absolute', right: 10, marginTop: 3 }}>
+                                        <TouchableOpacity
+                                            style={[
+                                                styles.toggleContainer,
+                                                { borderColor: null ? activeColor : null, },
+                                            ]}
+                                            onPress={() => {
+                                                LayoutAnimation.easeInEaseOut();
+                                                setToggle(!toggleActive);
+                                            }}
+                                            activeOpacity={1}>
+                                            <View
+                                                style={[
+                                                    styles.toggleBtn,
+                                                    toggleActive
+                                                        ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
+                                                        : { backgroundColor: activeColor, borderRadius: 25, },
+                                                ]}
+
+                                            />
+
+                                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(3.5, 0.1) }}> Y</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(0.9, 0.1) : moderateScale(-2.5, 0), right: Platform.OS === 'ios' ? moderateScale(5.9, 0.1) : moderateScale(6.2, 0) }}>N</Text>
+
+                                        </TouchableOpacity>
                                     </View>
-                                    {/* <GooglePlacesAutocomplete
-
-                                        placeholder='Search'
-                                        onPress={(data, details = null) => {
-                                            // 'details' is provided when fetchDetails = true
-                                            console.log(data, details);
-                                        }}
-                                        query={{
-                                            key: 'AIzaSyCab5ahH6KkodUavDwBCigXTL7ZbrkzS94',
-                                            language: 'en',
-                                        }}
-                                    /> */}
 
                                 </View>
-
-                                <TouchableOpacity onPress={() => { setEvent(true), LayoutAnimation.easeInEaseOut(); }}>
-                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                        colors={['#80D3FC', '#80D3FC']}
-                                        style={styles.addEventButton} >
-                                        <Text style={styles.AddMeal}>
-                                            Add a meal
-                                        </Text>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setEvent(true)}>
-                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                        colors={['#44BEFB', '#44BEFB']}
-                                        style={styles.addEventButton} >
-                                        <Text style={styles.AddMeal}>
-                                            Add An activity
-                                        </Text>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setEvent(true)}>
-                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                        colors={['#0883FB', '#0883FB']}
-                                        style={styles.addEventButton} >
-                                        <Text style={styles.AddMeal}>
-                                            Add Dessert
-                                        </Text>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setEvent(true)}>
-                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                        colors={['#0149FF', '#0149FF']}
-                                        style={styles.addEventButton} >
-                                        <Text style={styles.AddMeal}>
-                                            Add Drink
-                                        </Text>
-                                    </LinearGradient>
-                                </TouchableOpacity>
                             </View>
 
+                            <Carousel
+                                ref={carouselRef}
+                                sliderWidth={screenWidth}
+                                // sliderHeight={screenWidth+200}
+                                itemWidth={screenWidth - 60}
+                                data={entries}
+                                renderItem={renderItem}
+                                hasParallaxImages={true}
+                            />
+
                         </View>
-                    </ScrollView>
 
-
-                    <View style={{ backgroundColor: 'grey', width:windowWidth ,}}>
-                        <Carousel
-
-                        
-
-                            layout={"stack"}
-
-                            data={carouselItems}
-                            sliderWidth={windowWidth }
-                            itemWidth={windowWidth }
-                            renderItem={_renderItem}
-                            layoutCardOffset={320}
-                            
-                           
-                           
-                        
-                            
-                         
-                           
-                          
-                            
-                            
-                        />
                     </View>
 
                     <View style={{ height: moderateScale(430), backgroundColor: '#4D4D4D' }}>
@@ -1362,15 +1048,6 @@ const HomeScreen = (props) => {
                     </View>
 
                 </ScrollView>
-                {/* <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    isVisible={show}
-                    is24Hour={true}
-                    display="default"
-                    onChange={mode == 'date' ? onChange : onChangeTime}
-                /> */}
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode={mode}
@@ -1387,6 +1064,20 @@ const HomeScreen = (props) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+    item: {
+        width: screenWidth - 60,
+        // height: screenWidth - 60,
+    },
+    imageContainer: {
+        flex: 1,
+        marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+        backgroundColor: 'white',
+        borderRadius: 8,
+    },
+    image: {
+        ...StyleSheet.absoluteFillObject,
+        resizeMode: 'cover',
+    },
     textStyleNo1: {
         color: "white",
         fontFamily: 'Poppins-Regular',
@@ -1455,32 +1146,17 @@ const styles = StyleSheet.create({
 
     },
     toggleBtn: { height: '100%', width: '50%' },
-
-
-
-
-
-
-
-
-
-
     borderColor1: {
         borderColor: 'white',
         borderWidth: 2
     },
     RadioInnerViewNormal: {
-
-
         width: moderateScale(30),
         height: moderateScale(30),
         backgroundColor: 'white',
         borderRadius: 120,
         alignSelf: "center",
         margin: 6.5,
-
-
-
     },
     modalText: {
         fontSize: 14,
@@ -1508,20 +1184,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 10
-
-
     },
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#000000e0',
-
     },
     modalView: {
         width: moderateScale(310),
-
-
         margin: 10,
         backgroundColor: "#00000087",
         borderRadius: 20,
@@ -1538,39 +1209,27 @@ const styles = StyleSheet.create({
     },
 
     RadioInnerView: {
-
         width: moderateScale(30),
         height: moderateScale(30),
         backgroundColor: '#00B712',
         borderRadius: 120,
         alignSelf: "center",
         margin: 6.5,
-
-
     },
 
     RadioInnerView2: {
-
         width: moderateScale(30),
         height: moderateScale(30),
         backgroundColor: 'white',
         borderRadius: 120,
         alignSelf: "center",
         margin: 6.5,
-
-
     },
     RadioView2: {
-
-
         width: moderateScale(42),
         height: moderateScale(42),
-
         backgroundColor: 'white',
         borderRadius: 120,
-
-
-
     },
 
     RadioView: {
@@ -1590,18 +1249,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: scale(350),
         animation: LayoutAnimation.easeInEaseOut(),
-
-
-
     },
     mealView2: {
-        flex: 1,
-        flexDirection: 'column',
-        width: scale(350),
+        // flex: 1,
+        // flexDirection: 'column',
+        // width: scale(350),
         animation: LayoutAnimation.easeInEaseOut(),
-
-
-
+        height: 435
     },
     ModeHeading: {
         color: 'white',
@@ -1872,12 +1526,10 @@ const styles = StyleSheet.create({
 
     },
     addEvent: {
-        height: scale(600),
+        // height: scale(600),
         backgroundColor: '#0000',
         width: '100%',
         flexDirection: 'row',
-
-
     },
     tinyLogo: {
         width: 23,

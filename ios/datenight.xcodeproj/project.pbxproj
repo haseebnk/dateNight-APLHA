@@ -17,9 +17,9 @@
 		2A5F9BF5282E70EB00F7FC19 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A5F9BF4282E70EB00F7FC19 /* Poppins-Regular.ttf */; };
 		2A97510D283362E400900AE6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3D31ECE6427D2C26854CE477 /* libPods-datenight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89121B3D987A2DDB06336D71 /* libPods-datenight.a */; };
+		3FDEF696955E4BA4865D01D8 /* buttershine-serif.otf in Resources */ = {isa = PBXBuildFile; fileRef = ED2093820AB046B99BD77EFE /* buttershine-serif.otf */; };
 		533D168CF49218A65B1D33CE /* libPods-datenight-datenightTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543DCA1D0A210F3EEF4AB96E /* libPods-datenight-datenightTests.a */; };
 		9BE80DF2B0364A23B6B29FD6 /* Buttershine-Serif.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5AF967BE7A74816B24424B5 /* Buttershine-Serif.otf */; };
-		3FDEF696955E4BA4865D01D8 /* buttershine-serif.otf in Resources */ = {isa = PBXBuildFile; fileRef = ED2093820AB046B99BD77EFE /* buttershine-serif.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,12 +81,12 @@
 		D8F26F17131D00DD12A52101 /* Pods-datenight-datenightTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-datenight-datenightTests.debug.xcconfig"; path = "Target Support Files/Pods-datenight-datenightTests/Pods-datenight-datenightTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9DD0305103846C58150D222 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		EB03BD8FF9B942EE840BF6D6 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		ED2093820AB046B99BD77EFE /* buttershine-serif.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "buttershine-serif.otf"; path = "../src/assets/fonts/buttershine-serif.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F1798439DD17C28096E28CB4 /* Pods-datenight.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-datenight.release.xcconfig"; path = "Target Support Files/Pods-datenight/Pods-datenight.release.xcconfig"; sourceTree = "<group>"; };
 		F8C2BA5C0C3C4BBA893427A5 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		FC6814FBBFAC4BCC80ECE48C /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		FD4B568D43BA4AF8A5B05336 /* BUTTERSHINE SCRIPT.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BUTTERSHINE SCRIPT.ttf"; path = "../src/assets/fonts/BUTTERSHINE SCRIPT.ttf"; sourceTree = "<group>"; };
-		ED2093820AB046B99BD77EFE /* buttershine-serif.otf */ = {isa = PBXFileReference; name = "buttershine-serif.otf"; path = "../src/assets/fonts/buttershine-serif.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

@@ -155,8 +155,6 @@ const renderPlace = () => {
                         {v.title}
                     </Text>
 
-
-
                 </View>
             )
         })
@@ -173,7 +171,6 @@ function TabA() {
     const [checkedd, setCheckedd] = React.useState(false);
     const [mainData, setMainData] = useState(DATA);
 
-
     const setToggle = (item, id) => {
         mainData.map((v, i) => {
             if (v.Id == id) {
@@ -183,7 +180,6 @@ function TabA() {
             }
         })
     }
-
 
     const Item = ({ title, isEnabled, setIsEnabled, Id, index }) => {
 
@@ -213,22 +209,16 @@ function TabA() {
 
                     />
                     <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(2, 0.1), left: moderateScale(4, 0.1) }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(1, 0.1) : moderateScale(-1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, 0) }}>N</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0.1) : moderateScale(-1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6.7, 0.1) : moderateScale(7.5, 0) }}>N</Text>
                 </TouchableOpacity>
             </View>
         )
     }
-
-
-
     const [isEnabled, setIsEnabled] = useState(false);
-
 
     const renderItem = ({ item, i }) => (
         <Item title={item.title} isEnabled={item.check} setIsEnabled={setIsEnabled} Id={item.Id} index={i} />
-
     );
-
 
     return (
         <View style={styles.Contain}>
@@ -245,7 +235,7 @@ function TabA() {
                     </TouchableOpacity>
                 </View>
                 <ScrollView nestedScrollEnabled={true}>
-                    <View style={{ height: 1000, width: windowWidth, marginTop: 30, }}>
+                    <View style={{  width: windowWidth, marginTop: 30, }}>
                         <SafeAreaView style={{ flex: 1 }}>
                             <FlatList
                                 nestedScrollEnabled={true}
@@ -263,53 +253,10 @@ function TabA() {
     )
 }
 function TabB() {
-
-    // const radioData = [
-    //     { value: 'Place A' }, ];
-
-
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
-
-
-
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-
-
-
-
-
-    // const Item = ({ title }) => (
-
-
-
-
-
-    // <View style={styles.item}>
-
-
-    //     <Text style={styles.title}>{title}</Text>
-
-    //     <Switch
-    //         style={{ top: -27, right: 340 }}
-    //         trackColor={{ false: "#24202F", true: "#24202F" }}
-    //         thumbColor={isEnabled ? "white" : "#00B712"}
-    //         ios_backgroundColor="#3e3e3e"
-    //         onValueChange={toggleSwitch}
-    //         value={isEnabled}
-
-    //     />
-    // </View>
-    // );
-
-
-
-    // const renderItem = ({ item }) => (
-    //     <Item title={item.title} />
-    // );
-
 
     return (
         <View style={styles.Contain}>
@@ -382,16 +329,6 @@ function TabB() {
 }
 function TabC() {
 
-
-
-
-
-
-
-
-
-
-
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
     const [checkei, setCheckei] = React.useState(false);
@@ -399,42 +336,6 @@ function TabC() {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-
-
-
-
-
-    // const Item = ({ title }) => (
-
-
-
-
-
-
-    //     <View style={styles.item}>
-
-
-    //         <Text style={styles.title}>{title}</Text>
-
-    //         <Switch
-    //             style={{ top: -27, right: 340 }}
-    //             trackColor={{ false: "#24202F", true: "#24202F" }}
-    //             thumbColor={isEnabled ? "white" : "#00B712"}
-    //             ios_backgroundColor="#3e3e3e"
-    //             onValueChange={toggleSwitch}
-    //             value={isEnabled}
-
-    //         />
-    // //     </View>
-    // );
-
-
-
-    // const renderItem = ({ item }) => (
-    //     <Item title={item.title} />
-    // );
-
 
     return (
         <View style={styles.Contain}>
@@ -468,7 +369,7 @@ function TabC() {
                         /> */}
                 </SafeAreaView>
                 <ScrollView nestedScrollEnabled={true}>
-                    <View style={{ height: 800, }}>
+                    <View >
                         <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
                             <View style={styles.placeViewc}>
                                 <View style={styles.yellowView}>
@@ -592,9 +493,9 @@ class ReactNavigationBottomTabs extends Component {
 
                         tabBarStyle: {
                             marginBottom: 50,
-                            width: moderateScale(windowWidth - 61, 0.1),
+                            width: '100%',
                             height: moderateScale(90),
-                            marginHorizontal: 30,
+                            // marginHorizontal: 30,
                             backgroundColor: '#363143',
 
                             borderBottomLeftRadius: 16,
@@ -733,21 +634,10 @@ const styles = StyleSheet.create({
     },
     toggleBtn: { height: '100%', width: '50%' },
 
-
-
-
-
-
-
-
-
     chooseContaine: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
-        borderBottomLeftRadius: 16,
-        borderBottomRightRadius: 16,
+        borderRadius:20,
         height: moderateScale(70),
         width: moderateScale(windowWidth - 61, 0.1),
         backgroundColor: '#534C64',
@@ -757,17 +647,17 @@ const styles = StyleSheet.create({
     InnerContain: {
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        width: moderateScale(windowWidth - 61, 0.1),
-        top: 80,
+        // width: moderateScale(windowWidth - 61, 0.1),
+        // top: 80,
         alignSelf: 'center',
-        height: moderateScale(700),
+        // height: moderateScale(700),
         backgroundColor: '#363143'
 
 
     },
     Contain: {
-        width: moderateScale(windowWidth, 0.1),
-        height: moderateScale(700),
+        // width: moderateScale(windowWidth, 0.1),
+        // height: moderateScale(700),
         backgroundColor: 'black'
 
 

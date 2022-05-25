@@ -921,7 +921,7 @@ const HomeScreen = (props) => {
                                             />
 
                                             <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(3.5, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(0.9, 0.1) : moderateScale(-2.5, 0), right: Platform.OS === 'ios' ? moderateScale(5.9, 0.1) : moderateScale(6.2, 0) }}>N</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15,  position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(0.9, 0.1) : moderateScale(2, 0), right: Platform.OS === 'ios' ? moderateScale(5.9, 0.1) : moderateScale(6, 0) }}>N</Text>
 
                                         </TouchableOpacity>
                                     </View>
@@ -1249,13 +1249,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: scale(350),
         animation: LayoutAnimation.easeInEaseOut(),
+        marginBottom:30
     },
     mealView2: {
         // flex: 1,
         // flexDirection: 'column',
         // width: scale(350),
         animation: LayoutAnimation.easeInEaseOut(),
-        height: 435
+        height: 420
     },
     ModeHeading: {
         color: 'white',

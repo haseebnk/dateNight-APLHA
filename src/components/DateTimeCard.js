@@ -33,7 +33,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const Data = [{
     id: 1,
-    name: 'Sheduled Date 1',
+    name: 'Schedule Date 1',
     Gname: 'Alvina Taichi',
     date: 'Date :  01 | 07 | 2022:',
     day: 'Day:  Wednesday:',
@@ -44,7 +44,7 @@ const Data = [{
 
 const Data2 = [{
     id: 1,
-    name: 'Sheduled Date 2',
+    name: 'Schedule Date 2',
     Gname: 'Alvina Taichi',
     date: 'Date :  01 | 12 | 2022:',
     day: 'Day:  Wednesday:',

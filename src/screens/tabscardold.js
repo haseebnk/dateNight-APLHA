@@ -19,8 +19,6 @@ import { moderateScale } from 'react-native-size-matters';
 
 
 
-
-
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
         UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -28,30 +26,6 @@ if (Platform.OS === 'android') {
 }
 const inActiveColor = 'white';
 const activeColor = '#00B712';
-
-
-
-
-
-
-var radio_props = [
-    { label: 'Place A', value: 0 },
-
-];
-
-
-var radio_props2 = [
-    { label: 'Place A', value: 0 },
-    // { label: 'Place b', value: 1 },
-    // { label: 'Place c', value: 2 },
-    // { label: 'Place d', value: 3 },
-    // { label: 'Place e', value: 4 },
-    // { label: 'Place f', value: 5 },
-    // { label: 'Place g', value: 6 },
-
-
-];
-
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -130,7 +104,7 @@ const DATA = [
 
     },
     {
-        Id: 12,
+        Id: 19,
         title: 'Maxican Food',
         check: false
 
@@ -165,42 +139,8 @@ const DATA = [
         check: false
 
     }
-   
+
 ]
-
-
-
-
-
-// const radioData = [
-//     { value: 'Apple' },
-//     { value: 'Samsung' },
-//     { value: 'Blackberry' },
-// ];
-
-// const Switches = () => {
-//     const [isEnabled, setIsEnabled] = useState(false);
-//     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-//     return (
-//         DATA.map((v,i) => {
-//             return (
-//                 <Switch
-//                    style={{top:-60}}
-//                     trackColor={{ false: "#24202F", true: "#24202F" }}
-//                     thumbColor={isEnabled ? "white" : "#00B712"}
-//                     ios_backgroundColor="#3e3e3e"
-//                     onValueChange={toggleSwitch}
-//                     value={isEnabled}
-
-
-//                 />
-
-//             )
-//         })
-//     )
-
-// }
 
 
 const renderPlace = () => {
@@ -226,25 +166,12 @@ const renderPlace = () => {
 
 
 
-
-
 function TabA() {
 
 
-
-    // const [toggleActive, setToggle] = useState(false);
-
-
-
-    // const [isEnabled, setIsEnabled] = useState(false);
-    // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
-
-
     const [mainData, setMainData] = useState(DATA);
-
 
 
     const setToggle = (item, id) => {
@@ -258,39 +185,14 @@ function TabA() {
     }
 
 
-
-
-
     const Item = ({ title, isEnabled, setIsEnabled, Id, index }) => {
-
-        //    const toggleSwitch = () => {
-        //         console.log('check')
-        //         setMainData(
-        //             mainData.map(item =>
-        //                 item.Id === Id
-        //                     ? { ...item, check: isEnabled ? false : true }
-        //                     : item
-        //             ))
-        //     }
-
-
-
-
-
-        // const toggleSwitch = () => console.log('hello')
 
 
         return (
-
-
             <View >
-
                 <TouchableOpacity  >
                     <Text style={styles.title}>{title}</Text>
                 </TouchableOpacity>
-
-
-
                 <TouchableOpacity
                     style={[
                         styles.toggleContainer,
@@ -310,24 +212,10 @@ function TabA() {
                         ]}
 
                     />
-
-                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom:  Platform.OS ==='ios' ? moderateScale(2, 0.1) : moderateScale(2, 0.1) , left: moderateScale(4, 0.1) }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS ==='ios' ? moderateScale(1, 0.1) :moderateScale(-1.5,0), right: Platform.OS ==='ios' ? moderateScale(6, 0.1): moderateScale(7.5,0)}}>N</Text>
+                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(2, 0.1), left: moderateScale(4, 0.1) }}> Y</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(1, 0.1) : moderateScale(-1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, 0) }}>N</Text>
                 </TouchableOpacity>
-
-
-                {/* <Switch
-                    style={{ top: moderateScale(-27) , left: moderateScale(-290) }}
-                    trackColor={{ false: "#24202F", true: "#24202F" }}
-                    thumbColor={isEnabled ? "white" : "#00B712"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
-
-                /> */}
             </View>
-
-
         )
     }
 
@@ -347,39 +235,28 @@ function TabA() {
             <View style={styles.InnerContain}>
                 <View style={styles.chooseContaine}>
                     <Text style={styles.ChooseMeal}>
-                    Meal Filters
-
+                        Meal Filters
                     </Text>
 
                     <TouchableOpacity>
-
-
                         <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
                             style={{ marginRight: 10, top: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
-
                         </TouchableOpacity>
-
                     </TouchableOpacity>
-
                 </View>
-
                 <ScrollView nestedScrollEnabled={true}>
-
                     <View style={{ height: 1000, width: windowWidth, marginTop: 30, }}>
-
-
-                    <SafeAreaView style={{flex: 1}}>
-                        <FlatList
-                            nestedScrollEnabled={true}
-                            data={mainData}
-                            renderItem={(item, i) => renderItem(item, i)}
-                            keyExtractor={items => items.Id}
-                        />
+                        <SafeAreaView style={{ flex: 1 }}>
+                            <FlatList
+                                nestedScrollEnabled={true}
+                                data={mainData}
+                                renderItem={(item, i) => renderItem(item, i)}
+                                keyExtractor={items => items.Id}
+                            />
                         </SafeAreaView>
                     </View>
 
                 </ScrollView>
-
             </View>
         </View>
 
@@ -706,43 +583,43 @@ class ReactNavigationBottomTabs extends Component {
         return (
             <Tab.Navigator
 
-            tabBarOptions={{ showLabel: false }}
+                tabBarOptions={{ showLabel: false }}
                 screenOptions={
                     {
 
-                        tabBarActiveTintColor:  '#363143',
+                        tabBarActiveTintColor: '#363143',
                         tabBarInactiveTintColor: '#363143',
 
                         tabBarStyle: {
-                            marginBottom: 50, 
-                            width: moderateScale(windowWidth - 61, 0.1), 
-                            height: moderateScale(90), 
-                            marginHorizontal: 30, 
+                            marginBottom: 50,
+                            width: moderateScale(windowWidth - 61, 0.1),
+                            height: moderateScale(90),
+                            marginHorizontal: 30,
                             backgroundColor: '#363143',
 
                             borderBottomLeftRadius: 16,
                             borderBottomRightRadius: 16,
-                          
+
                         }
                     }
                 }
 
-               
-                // tabBarOptions={
+
+            // tabBarOptions={
 
 
 
-                //     {
+            //     {
 
 
-                //         // Default Color is blue you can change it by following props
-                //         activeTintColor: '#363143',
-                //         inactiveTintColor: '#363143',
-                //         // Default Background Color is white you can change it by following props
+            //         // Default Color is blue you can change it by following props
+            //         activeTintColor: '#363143',
+            //         inactiveTintColor: '#363143',
+            //         // Default Background Color is white you can change it by following props
 
-                //     }
+            //     }
 
-                // }
+            // }
 
 
             >
@@ -763,7 +640,7 @@ class ReactNavigationBottomTabs extends Component {
                         tabBarIcon: ({ focused, color }) => {
                             return (
                                 <Image
-                               
+
                                     style={{ width: 60, height: 60, }}
                                     source={(require('../assets/card1.png'))}
                                 />

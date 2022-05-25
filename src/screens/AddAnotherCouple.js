@@ -257,7 +257,7 @@ export default function AddAnotherCouple(props) {
                                     style={{ color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginHorizontal: 20, }}
                                     onPress={showDatepicker}
                                 >
-                                    {isDateSelected ? `${date.getDate().toString() + ' | ' + date.getMonth().toString() + ' | ' + date.getFullYear().toString()}` : "Select Date"}
+                                    {isDateSelected ? `${date.getDate().toString() + ' | ' + date.getMonth().toString() + ' | ' + date.getFullYear().toString()}` : "Date of birth"}
                                 </Text>
                                 
 

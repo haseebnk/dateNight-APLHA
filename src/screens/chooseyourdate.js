@@ -71,7 +71,7 @@ const COLORS = [
 
 
 
-export default function AddAnotherCouple(props) {
+export default function chooseYourDate(props) {
 
 
 
@@ -203,7 +203,7 @@ export default function AddAnotherCouple(props) {
                                 source={require("../assets/close.png")}
                             ></Image>
                         </TouchableOpacity>
-                        <Text style={styles.ProfileDetails}>Add Another Couple</Text>
+                        <Text style={styles.ProfileDetails}>Choose Your Date</Text>
                     </View>
                     <View style={styles.tinyLogo}>
                         <Image style={styles.tinyLogo}
@@ -257,7 +257,7 @@ export default function AddAnotherCouple(props) {
                                     style={{ color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginHorizontal: 20, }}
                                     onPress={showDatepicker}
                                 >
-                                    {isDateSelected ? `${date.getDate().toString() + ' | ' + date.getMonth().toString() + ' | ' + date.getFullYear().toString()}` : "Date of birth"}
+                                    {isDateSelected ? `${date.getDate().toString() + ' | ' + date.getMonth().toString() + ' | ' + date.getFullYear().toString()}` : "Select Date"}
                                 </Text>
                                 
 

@@ -23,9 +23,10 @@ import {
     BackHandler,
     Alert,
 
+
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-// import Carousel from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -52,7 +53,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-import Carousel from 'react-native-snap-carousel';
 
 
 
@@ -114,6 +114,11 @@ const carouselItems = [
         slide: "2",
 
     },
+    {
+        slide: "3",
+
+    },
+
     // {
     //     title: "Item 3",
     //     text: "Text 3",
@@ -336,11 +341,11 @@ const HomeScreen = (props) => {
     const [addEvent, setEvent] = useState(false);
 
     const [toggleActive, setToggle] = useState(false);
-    
+
 
 
     const [press, setPress] = useState('');
-    
+
 
     function questionPick(item) {
         setPress(item.id)
@@ -362,18 +367,27 @@ const HomeScreen = (props) => {
 
     const _renderItem = (item, index) => {
         return (
+          
             <View style={{
+                marginHorizontal:30,
+             
                 backgroundColor: 'pink',
-                borderRadius: 5,
-                height: 600,
-                width: 750,
-                alignSelf: 'center'
+                borderRadius: 2,
+                width: windowWidth-60,
+                height:500,
+               
+               
+
+
 
 
             }}>
                 <Text style={{ fontSize: 30 }}>{item.title}</Text>
                 <Text>{item.text}</Text>
             </View>
+
+            
+            
 
         )
     }
@@ -845,20 +859,21 @@ const HomeScreen = (props) => {
                                                     </View>
                                                     <TouchableOpacity>
                                                         <View style={styles.RadioView2}>
-                                                            <TouchableOpacity 
-                                                            // onPress={() => checked ? setChecked(false) : setChecked(true)}
+                                                            <TouchableOpacity
+                                                                // onPress={() => checked ? setChecked(false) : setChecked(true)}
                                                                 onPress={() => setChecked(item)}
-                                                                style={{ 
-                                                                     marginTop: moderateScale(4, 0.1),  
-                                                                     width: moderateScale(35),
+                                                                style={{
+                                                                    marginTop: moderateScale(4, 0.1),
+                                                                    width: moderateScale(35),
                                                                     height: moderateScale(35),
                                                                     backgroundColor: '#00B712',
                                                                     borderRadius: 120,
                                                                     alignSelf: "center",
-                                                                     borderRadius: moderateScale(20),
-                                                                     backgroundColor: checked.id == item.id ? '#00B712' : 'white', 
-                                                                     borderWidth: 2.5, 
-                                                                     borderColor: 'white' }} >
+                                                                    borderRadius: moderateScale(20),
+                                                                    backgroundColor: checked.id == item.id ? '#00B712' : 'white',
+                                                                    borderWidth: 2.5,
+                                                                    borderColor: 'white'
+                                                                }} >
 
                                                             </TouchableOpacity>
                                                         </View>
@@ -987,7 +1002,7 @@ const HomeScreen = (props) => {
                             {/* <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
                                 <Text style={{ bottom: -7, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
                             </TouchableOpacity> */}
-                            <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
+                            <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
                                     style={styles.linearGradient} >
@@ -1039,7 +1054,7 @@ const HomeScreen = (props) => {
                             {addEvent ?
                                 (
                                     <>
-                                        <View style={styles.mealView} >
+                                        <View style={styles.mealView2} >
 
 
                                             <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
@@ -1154,8 +1169,8 @@ const HomeScreen = (props) => {
 
                                                 />
 
-                                                <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
-                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: moderateScale(0, 0.1), right: moderateScale(5 , 0.1) }}>N</Text>
+                                                <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(3.5, 0.1) }}> Y</Text>
+                                                <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(0, 0.1) : moderateScale(-2.5, 0), right: Platform.OS === 'ios' ? moderateScale(5, 0.1) : moderateScale(6.2, 0) }}>N</Text>
                                             </TouchableOpacity>
                                         </View>
 
@@ -1217,16 +1232,30 @@ const HomeScreen = (props) => {
                     </ScrollView>
 
 
-                    {/* <View style={{ width: '100%', height: 600, backgroundColor: 'grey' }}>
+                    <View style={{ backgroundColor: 'grey', width:windowWidth ,}}>
                         <Carousel
-                            layout={"default"}
+
+                        
+
+                            layout={"stack"}
 
                             data={carouselItems}
-                            sliderWidth={800}
-                            itemWidth={300}
+                            sliderWidth={windowWidth }
+                            itemWidth={windowWidth }
                             renderItem={_renderItem}
+                            layoutCardOffset={320}
+                            
+                           
+                           
+                        
+                            
+                         
+                           
+                          
+                            
+                            
                         />
-                    </View> */}
+                    </View>
 
                     <View style={{ height: moderateScale(430), backgroundColor: '#4D4D4D' }}>
                         <Text style={styles.SelectYourPingText}>   Select Your Ping Frequency</Text>
@@ -1557,6 +1586,15 @@ const styles = StyleSheet.create({
 
     },
     mealView: {
+        flex: 1,
+        flexDirection: 'column',
+        width: scale(350),
+        animation: LayoutAnimation.easeInEaseOut(),
+
+
+
+    },
+    mealView2: {
         flex: 1,
         flexDirection: 'column',
         width: scale(350),

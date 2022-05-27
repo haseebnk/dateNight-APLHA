@@ -25,10 +25,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-// const [Mystate, NewState] = useState(0);
-
-// const fields = ["Edit", "Delete"]
-
 
 
 const Data = [{
@@ -52,8 +48,6 @@ const Data2 = [{
     Frequency: 'Frequency:  10 min'
 
 }]
-
-
 const renderData = () => {
     return (
         Data.map((v, i) => {
@@ -72,9 +66,6 @@ const renderData = () => {
 
     )
 }
-
-
-
 const renderGift = () => {
     return (
         Data2.map((v, i) => {
@@ -97,109 +88,57 @@ const renderGift = () => {
 
 function DateTimeCard() {
 
-   
-
-
-
-
 
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
 
     return (
         <ScrollView horizontal={true}>
-
-
-
-
             <TouchableOpacity activeOpacity={.9} onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}>
-
-
                 <LinearGradient
 
                     start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }}
                     colors={['#F11775', '#FB6580']}
-
                     style={styles.container}>
-                    {/* <View style={styles.flex1}>
-                        <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
-                    </View> */}
                     <View style={styles.flex2}>
                         {renderData()}
                     </View>
                     <View style={styles.flex1}>
                         <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" />
 
-                        {/* <MaterialIcons style={{ marginLeft: -45, marginBottom: 40 }} name='expand-more' size={hp('3%')} color="white" /> */}
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
                             style={{ margin: 0, marginRight: 1, marginTop: moderateScale(9, 0.1), height: moderateScale(32), width: moderateScale(32), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
-
                         </TouchableOpacity>
-
-                       
-                        <MaterialIcons style={{ marginLeft:7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
-
+                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
                         <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
-                 
-                        
-                       
-                        {/* <MaterialIcons style={{ marginLeft: 15, marginBottom: 0 }} name='mode-edit' size={hp('3%')} color="white" />
-
-                        <MaterialIcons style={{ marginLeft: 15, marginBottom: 25 }} name='delete-outline' size={hp('3%')} color="white" /> */}
                     </View>
                 </LinearGradient>
 
             </TouchableOpacity>
 
-
-
-
-
-
             <TouchableOpacity activeOpacity={.9} onPress={() => checked ? setChecked(false) : setChecked(true)}>
-
-
-                <LinearGradient
+               <LinearGradient
 
                     start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
                     colors={['#7AC9FD', '#0071BC']}
-
                     style={styles.container2}>
-                    {/* <View style={styles.flex1}>
-                        <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
-                    </View> */}
                     <View style={styles.flex2}>
                         {renderGift()}
                     </View>
                     <View style={styles.flex1}>
                         <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" />
-
-                        {/* <MaterialIcons style={{ marginLeft: -45, marginBottom: 40 }} name='expand-more' size={hp('3%')} color="white" /> */}
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
                             style={{ margin: 0, marginRight: 1, marginTop: moderateScale(9, 0.1), height: moderateScale(32), width: moderateScale(32), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
-
                         </TouchableOpacity>
-                        <MaterialIcons style={{ marginLeft:7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
-
-<MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
-                        {/* <MaterialIcons style={{ marginLeft: 15, marginBottom: 0 }} name='mode-edit' size={hp('3%')} color="white" />
-
-                        <MaterialIcons style={{ marginLeft: 15, marginBottom: 25 }} name='delete-outline' size={hp('3%')} color="white" /> */}
+                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
+                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
                     </View>
                 </LinearGradient>
-
             </TouchableOpacity >
-
-
-
-
-
-
-
         </ScrollView>
 
     );
@@ -228,16 +167,13 @@ const styles = StyleSheet.create({
     },
     flex1: {
         flex: .5,
-
-        borderRadius: moderateScale(18),
-        // backgroundColor:'red',
+        borderRadius: moderateScale(18),    
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
 
     container: {
         flex: 1,
-
         height: moderateScale(165),
         width: moderateScale(318),
         marginVertical: 30,
@@ -251,7 +187,6 @@ const styles = StyleSheet.create({
 
     container2: {
         flex: 1,
-       
         height: moderateScale(165),
         width: moderateScale(318),
         marginVertical: 30,
@@ -259,16 +194,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: moderateScale(18),
         marginLeft: 20,
-    
+
 
     },
-
-
-
-
-
-
-
     cardTextHead: {
         color: 'white',
         fontFamily: "Poppins-Regular",
@@ -277,10 +205,6 @@ const styles = StyleSheet.create({
         marginLeft: 25,
         marginTop: moderateScale(15, 0.1)
 
-
-
-
-
     },
     cardText: {
         color: 'white',
@@ -288,13 +212,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         marginTop: 7,
         marginLeft: 25
-
-
     },
-
-
-
-
 
 });
 

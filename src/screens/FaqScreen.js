@@ -44,17 +44,12 @@ const FAQScreen = (props) => {
 
     return (
 
-
-
         <LinearGradient
             colors={['#24202f', '#24202f', '#24202f']}
             style={styles.container}
         >
             <SafeAreaView>
                 <View >
-
-                    {/* <NavHeader title="FAQ" /> */}
-
                     <View style={{ alignItems: 'center', }}>
 
 
@@ -88,10 +83,7 @@ const FAQScreen = (props) => {
                                             <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} >
                                                 <View style={{ borderColor: 'white', borderWidth: 0.9, flexDirection: 'row', alignItems: 'center', backgroundColor: '#363143', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White" }}>
                                                     <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
-                                                    <Text style={{ color: 'white', fontFamily: "Poppins-Regular", fontSize: 16 }}>{item.title}</Text>
-                                                    {/* <AntDesign name="caretdown" size={16} color="black"/> */}
-
-
+                                                    <Text style={{ color: 'white', fontFamily: "Poppins-Regular", fontSize: 16 }}>{item.title}</Text>       
                                                 </View>
                                             </TouchableOpacity>
                                             :

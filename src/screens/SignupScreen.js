@@ -88,11 +88,6 @@ export default function SignupScreen({ navigation }) {
     const [profile_background_color, setprofile_background_color] = useState(null)
     const [type, settype] = useState(null)
 
-
-
-    
-
-
     const context = useContext(AppContext);
 
     const handleKeyDown = (e) => {
@@ -112,93 +107,50 @@ export default function SignupScreen({ navigation }) {
                 var intlCode = (match[1] ? '+1 ' : ''),
                     number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
 
-                    setphone_number(number)
+                setphone_number(number)
 
                 return;
             }
         }
     }
 
-
     const onSignupUser = () => {
-        // setLoader(true)
+        var data = {
+            name: name,
+            email: email,
+            password: password,
+            confirm_password: confirm_password,
+            type: 'user',
+            date_of_birth: date_of_birth,
+            phone_number: phone_number,
+            image: require('../assets/1.png'),
 
-      
-
-            var data = {
-                name: name,
-                email: email,
-                password: password,
-                confirm_password: confirm_password,
-                type: 'user',
-                date_of_birth: date_of_birth,
-                phone_number: phone_number,
-                image: require('../assets/1.png'),
-
-                profile_background_color: '#FFFFF'
-            }
-            axiosconfig
-           .post('/register', data)
+            profile_background_color: '#FFFFF'
+        }
+        axiosconfig
+            .post('/register', data)
             .then((res: any) => {
-            //   setLoader(false);
-            if(email=== null && password=== null)
-            {
-                console.log('Empty credentials') 
-            }
-              if (res.data.error) {
-                  alert('invalid credentials')
-                // showToast('login error', res.data.error_description);
-              } else {
-                  alert("registered successfully", res)
-                
-                storeData(res.data.access_token);
+                //   setLoader(false);
+                if (email === null && password === null) {
+                    console.log('Empty credentials')
+                }
+                if (res.data.error) {
+                    alert('invalid credentials')
+                    // showToast('login error', res.data.error_description);
+                } else {
+                    alert("registered successfully", res)
 
-                
-              }
+                    storeData(res.data.access_token);
+
+
+                }
             })
             .catch(err => {
-              console.log('error', 'Invalid Credentials', err);
+                console.log('error', 'Invalid Credentials', err);
             });
-        
+
 
     }
-
-    // const onSignupUser = () => {
-
-
-    //     if (image && username && number && email && datebirth && password) {
-
-    //         let data = {
-    //             image: image,
-    //             username: username,
-    //             number: number,
-
-    //             email: email,
-    //             dateofbirth: datebirth,
-    //             password: password
-    //         }
-    //         axiosconfig
-    //             .post('/signup', data)
-    //             .then((res: any) => {
-    //                 //   setLoader(false);
-    //                 if (res.data.error) {
-    //                     console.log('Eroro', res)
-    //                     // showToast('login error', res.data.error_description);
-    //                 } else {
-    //                     console.log("Got it", res.data)
-
-    //                     storeData(res.data);
-
-
-    //                 }
-    //             })
-    //             .catch(err => {
-    //                 console.log('error', 'Invalid Credentials', err);
-    //             });
-    //     }
-
-    // }
-
 
     const storeData = async (value) => {
         try {
@@ -250,7 +202,6 @@ export default function SignupScreen({ navigation }) {
         // refRBSheet.current.close();
     };
 
-
     return (
         <ScrollView>
 
@@ -259,9 +210,6 @@ export default function SignupScreen({ navigation }) {
                     Keyboard.dismiss();
                 }}
             >
-
-
-
                 <LinearGradient
                     colors={['#24202f', '#24202f', '#24202f']}
                     style={styles.container}
@@ -281,27 +229,19 @@ export default function SignupScreen({ navigation }) {
                     <TouchableOpacity onPress={() => openCamer('g')}>
                         <Text style={styles.uploadPhoto}>Upload Photo</Text>
                     </TouchableOpacity>
-
-
-
                     <View style={styles.sectionStyle}>
-
                         <TextInput
                             style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
                             placeholder="Full Name"
                             placeholderTextColor='white'
                             onChangeText={(text) => setUserName(text)}
-
                         />
                     </View>
                     <View style={styles.sectionStyle}>
-
                         <TextInput
                             style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
                             placeholder="Mobile Number"
                             placeholderTextColor='white'
-
-                           
                             onChangeText={(text) => onTextChange(text)}
                             value={phone_number}
                             textContentType='telephoneNumber'
@@ -312,10 +252,8 @@ export default function SignupScreen({ navigation }) {
                         />
                     </View>
                     <View style={styles.sectionStyle}>
-
                         <TextInput
                             style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
-
                             placeholder='Email'
                             placeholderTextColor='white'
                             autoCorrect={true}
@@ -323,24 +261,18 @@ export default function SignupScreen({ navigation }) {
                             keyboardType='email-address'
                             textContentType='emailAddress'
                             onChangeText={(text) => setEmail(text)}
-
                         />
                     </View>
                     <View style={styles.sectionStyle}>
-
                         <TextInput
                             style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
-
                             placeholder='Date Of Birth'
                             placeholderTextColor='white'
                             autoCorrect={true}
-
                             onChangeText={(text) => setdate_of_birth(text)}
-
                         />
                     </View>
                     <View style={styles.sectionStyle}>
-
                         <TextInput
                             style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8, }}
                             placeholder="Password"
@@ -351,8 +283,6 @@ export default function SignupScreen({ navigation }) {
                             onChangeText={(text) => setPassword(text)}
                         />
                     </View>
-
-
                     <Text style={styles.profileText}>Profile Background color</Text>
                     <SafeAreaView style={{ flex: 1 }}>
                         <FlatList
@@ -361,48 +291,31 @@ export default function SignupScreen({ navigation }) {
                             keyExtractor={(item, index) => index.toString()}
                             style={{ alignSelf: 'center', }}
                             renderItem={({ item, index }) => (
-
                                 <TouchableOpacity
                                     onPress={() => questionPick(item)}
                                     style={{ marginTop: 5, padding: 0, marginTop: 20, }}
                                 >
                                     <View style={{ flexDirection: 'row', width: '100%' }}>
                                         {press === item.id ?
-
                                             <TouchableOpacity onPress={() => setPress('')}  >
-
                                                 <LinearGradient
                                                     colors={[item.color[0], item.color[1]]}
                                                     onChangeText={(text) => setprofile_background_color(text)}
                                                     style={styles.withBorder}>
-
                                                 </LinearGradient>
-
                                             </TouchableOpacity>
-
                                             :
-
                                             <LinearGradient
-
                                                 colors={[item.color[0], item.color[1]]}
                                                 style={styles.withOutBorder}>
-
                                             </LinearGradient>
                                         }
                                     </View>
-
                                 </TouchableOpacity>
-
                             )}
                         />
                     </SafeAreaView>
-
-
-
-
-
                     <TouchableOpacity onPress={() => onSignupUser()}>
-
                         <LinearGradient
                             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                             colors={['#FF7474', '#E20303']}
@@ -411,17 +324,10 @@ export default function SignupScreen({ navigation }) {
                                 Sign Up
                             </Text>
                         </LinearGradient>
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Sign in</Text>
-        </TouchableOpacity> */}
-
+                    </TouchableOpacity>              
                     <View style={styles.loginWithBar}>
                         <TouchableOpacity>
-
                         </TouchableOpacity>
-
-
                     </View>
                     <View style={styles.signUpTextView}>
                         <Text style={styles.signUpText}>Already have an account?</Text>

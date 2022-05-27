@@ -1,11 +1,5 @@
-// React Native App Intro Slider using AppIntroSlider
-// https://aboutreact.com/react-native-app-intro-slider/
-// Simple Intro Slider
 
-// import React in our code
 import React, { useState } from 'react';
-
-// import all the components we are going to use
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,7 +9,6 @@ import {
   Button,
 } from 'react-native';
 
-//import AppIntroSlider to use it
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
@@ -36,22 +29,6 @@ const renderNextButton = () => {
   );
 }
 
-// const renderDoneButton = () => {
-//   return (
-//     <>
-//     <TouchableOpacity onPress={()=>  props.navigation.navigate("login") } >
-//       <View style={{backgroundColor:'yellow'}}>
-//         <Text style={{ fontSize: 15 , backgroundColor:'yello'}}>
-//           Done
-//         </Text>
-//       </View>
-//       </TouchableOpacity>
-//     </>
-//   );
-// }
-
-
-
 const SliderScreen = (props) => {
 
 
@@ -70,8 +47,6 @@ const SliderScreen = (props) => {
       </>
     );
   }
-
-
 
   const renderSkipButton =(props)=>{
     return (

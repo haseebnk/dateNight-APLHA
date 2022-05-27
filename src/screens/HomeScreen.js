@@ -31,26 +31,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { moderateScale } from 'react-native-size-matters';
-
-// import for the animation of Collapse and Expand
-import * as Animatable from 'react-native-animatable';
-
-// import for the collapsible/Expandable view
-import Collapsible from 'react-native-collapsible';
-
-// import for the Accordion view
-import Accordion from 'react-native-collapsible/Accordion';
-import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 import moment from 'moment';
-import TabsCardComponent from '../components/TabsCard';
 import ReactNavigationBottomTabs from './tabscardold';
 import { scale } from "react-native-size-matters";
 import CoupleCard from '../components/CoupleCard';
-import { sortBy } from 'lodash';
-
+import { indexOf, sortBy } from 'lodash';
 import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
 
@@ -67,40 +54,6 @@ const activeColor = '#00B712';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-
-
-
-
-
-
-
-// import RadioComponent from '../components/RadioButton';
-
-// Dummy content to show
-// You can also use dynamic data by calling web service
-// const CONTENT = [
-//     {
-//         title: 'First Date Mode',
-//         content:
-//             'It may, or may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
-//     },
-//     {
-//         title: 'Casual Date Mode',
-//         content:
-//             'It may, or may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
-//     },
-//     {
-//         title: 'Exclusive Date Mode',
-//         content:
-//             'It may, or may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
-//     },
-//     {
-//         title: 'Married Date Mode',
-//         content:
-//             'It may, or may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
-//     },
-// ];
 
 
 const activeIndex = 0
@@ -220,7 +173,7 @@ const Pings = [
         id: "Item 3",
         key: "3",
         type: "unlock",
-        text: "Truth and dare",
+        text: "Truth  or  Dare",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         selected: false,
     },
@@ -262,7 +215,11 @@ const Pings = [
 const HomeScreen = (props) => {
 
     useEffect(() => {
+
         setEntries([{ type: 'add' }]);
+
+
+
         const backAction = () => {
             Alert.alert("Hold on!", "Are you sure you want to go back?", [
                 {
@@ -284,20 +241,57 @@ const HomeScreen = (props) => {
     }, []);
 
     const { state } = useContext(NotesContext)
+
+
+    const [count, setCount] = useState(0);
     const [addEvent, setEvent] = useState(false);
     const [toggleActive, setToggle] = useState(false);
     const [press, setPress] = useState('');
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [isTimeSelected, setIsTimeSelected] = useState(false)
-    const [date, setDate] = useState(new Date(Date.now()));
-    const [time, setTime] = useState(new Date(Date.now()));
     const [mode, setMode] = useState('date');
-    const [isDatePickerVisible, setShow] = useState(false);
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+    const [dob, setdob] = useState('Select Date');
+    const [time, settime] = useState('Select Time');
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpenn, setModalOpenn] = useState(false);
-
+    const [typee, setType] = useState('inactive')
     const [entries, setEntries] = useState([]);
+
+
     const carouselRef = useRef(null);
+
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        console.warn("A date has been picked: ", date);
+        setdob(moment(date).format('MM/DD/yy'))
+        hideDatePicker();
+    };
+
+
+    const showTimePicker = () => {
+        setTimePickerVisibility(true);
+    };
+
+    const hideTimePicker = () => {
+        setTimePickerVisibility(false);
+    };
+
+    const handleConfirm2 = (time) => {
+        console.warn("A time has been picked: ", time);
+        settime(moment(time).format('hh:mm A'))
+        hideTimePicker();
+    };
+
 
     const goForward = () => {
         carouselRef.current.snapToNext();
@@ -315,13 +309,22 @@ const HomeScreen = (props) => {
         setPress(item.id)
     }
 
-    //modal
-    const xyz = (type) => {
+    const xyz = (type, selected) => {
+
+
         type == 'lock' ? setModalOpenn(true) : null
+        type == 'unlock' && selected == true
+
     }
 
     const addEventCard = (t) => {
         entries.unshift({ type: t })
+        setEntries([...entries]);
+        LayoutAnimation.easeInEaseOut();
+    }
+    const RemoveEventCard = (item) => {
+        
+        entries.splice(item.id)
         setEntries([...entries]);
         LayoutAnimation.easeInEaseOut();
     }
@@ -333,7 +336,7 @@ const HomeScreen = (props) => {
                 {
                     item.type == 'add' ? (
                         <>
-                            
+
                             <TouchableOpacity onPress={() => addEventCard('meal')}>
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#80D3FC', '#80D3FC']}
@@ -352,7 +355,7 @@ const HomeScreen = (props) => {
                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => addEventCard('desert')}>
+                            <TouchableOpacity onPress={() =>   addEventCard('desert')}>
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#0883FB', '#0883FB']}
                                     style={styles.addEventButton} >
@@ -373,7 +376,10 @@ const HomeScreen = (props) => {
                         </>
                     ) : (
                         <>
-                            <View style={styles.mealView2} >
+                            <View style={styles.mealView2}   >
+                                {/* <TouchableHighlight onPress={() => RemoveEventCard()}>
+                                    <MaterialIcons style={{marginLeft: 7, marginTop: 12 }} name='delete-outline' size={hp('5.5%')} color="white" />
+                                </TouchableHighlight> */}
                                 <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
                             </View>
                         </>
@@ -383,34 +389,6 @@ const HomeScreen = (props) => {
 
             </View>
         );
-    };
-
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setIsDateSelected(true)
-        setDate(currentDate);
-        setShow(false)
-    };
-
-    const onChangeTime = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setIsTimeSelected(true)
-        setTime(currentDate);
-        setShow(false)
-    };
-
-    const showMode = (currentMode) => {
-        console.log(currentMode,)
-        setShow(true);
-        setMode(currentMode);
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
-
-    const showTimepicker = () => {
-        showMode('time');
     };
 
     const scale = animation.interpolate({ inputRange: [0, 1], outputRange: [1, 0.9] });
@@ -437,12 +415,6 @@ const HomeScreen = (props) => {
         }).start();
     };
 
-    const hideDatePicker = () => {
-        setShow(false)
-    };
-
-    const [count, setCount] = useState(0);
-
     const onPress = () => setCount(count < 60 ? count + 5 : 0);
     const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
@@ -455,11 +427,9 @@ const HomeScreen = (props) => {
                             key={i}
                         >
                             <TouchableOpacity
-
                                 onPress={() => setModalOpen(true)}
                                 style={styles.PingPlayed}
                                 type={PreData}
-
                             >
                                 <Text style={styles.PingText1}>
                                     {v.title}
@@ -467,12 +437,9 @@ const HomeScreen = (props) => {
                                 <Text style={styles.pinLockUnclock2}>
                                     {v.description}
                                 </Text>
-
                             </TouchableOpacity>
                         </View>
                     </View>
-
-
                 )
             })
         )
@@ -493,34 +460,46 @@ const HomeScreen = (props) => {
                     <View style={styles.ping}
                         key={i}
                     >
-                        <TouchableOpacity
-
-
-                            onPress={() => xyz(v.type)}
-
-                            style={v.type == "unlock" && v.selected == true ? styles.PingPlayed : styles.PingUnlock && v.type == 'lock' ? styles.PingLock : styles.PingUnlock}
-                            type={Pings}
-
-                        >
-
-
-                            <Text style={styles.PingText}>
-                                {v.text}
-
-                            </Text>
-                            {/* <Text style={styles.pinLockUnclock}></Text> */}
-                            {
-                                v.type == 'lock' ? (
-                                    <>
+                        <TouchableOpacity onPress={() => xyz(v.type, v.selected, v.key)}>
+                            {v.type == 'lock' ?
+                                (<>
+                                    <View style={styles.PingLock}>
+                                        <View style={{ height: 60 }}>
+                                            <Text style={styles.PingText11}>{v.text}</Text>
+                                        </View>
                                         <View style={styles.pinLockPicback}>
-                                            {/* {v.type} */}
                                             <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
                                         </ View>
-                                    </>
-                                ) : null
-                            }
+                                    </View>
+                                </>) : null}
+                        </TouchableOpacity>
+                        {v.type == 'unlock' && v.selected == true ?
+                            (<>
+                                <View style={styles.PingPlayed}>
+                                    <View style={{ height: 65 }}>
+                                        <Text style={styles.PingText11}>{v.text}</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.activeText} >Active</Text>
+                                    </ View>
+                                </View>
+                            </>) : null}
+                        <TouchableOpacity onPress={() => setType('inactive')}>
+                            {v.type == 'unlock' && v.selected == false ?
+                                (<>
+                                    <View style={styles.PingUnlock}>
+                                        <View style={{ height: 65 }}>
+                                            <Text style={styles.PingText11}>{v.text}</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.activeText} >Inactive</Text>
+                                        </ View>
+                                    </View>
+                                </>) : null}
 
                         </TouchableOpacity>
+
+
 
 
 
@@ -568,7 +547,7 @@ const HomeScreen = (props) => {
                                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.modalViewH}>
-                                <Text style={styles.modalText2}>This Ping is currently locked would you like to permanently unlocked it for just $0.99 ?</Text>
+                                <Text style={styles.modalText2}>This Ping is currently locked, Would you like to permanently unlocked it for just $0.99 ?</Text>
 
                                 <View style={styles.modalButtons2} >
                                     <Pressable
@@ -594,9 +573,6 @@ const HomeScreen = (props) => {
                     </Modal>
 
                     <View >
-
-                        {/* <NavHeader title="FAQ" /> */}
-
                         <View style={{ alignItems: 'center', }}>
 
                             <View>
@@ -760,14 +736,6 @@ const HomeScreen = (props) => {
                             <>
                                 <View style={styles.AddPersonView}>
                                     <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
-                                    {/* <TouchableOpacity onPress={() => props.navigation.navigate("addpartnersdetails")}> */}
-                                    {/* <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#FF7474', '#E20303']}
-                                    style={styles.linearGradient} >
-                                    <Text style={styles.AddButtonText}>
-                                        Add New Person
-                                    </Text>
-                                </LinearGradient> */}
                                     <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
                                         <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
                                     </TouchableOpacity>
@@ -778,17 +746,7 @@ const HomeScreen = (props) => {
                             </>
                         ) : <View style={styles.AddPersonView5}>
                             <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
-                            {/* <TouchableOpacity onPress={() => props.navigation.navigate("addpartnersdetails")}> */}
-                            {/* <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                        colors={['#FF7474', '#E20303']}
-                        style={styles.linearGradient} >
-                        <Text style={styles.AddButtonText}>
-                            Add New Person
-                        </Text>
-                    </LinearGradient> */}
-                            {/* <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
-                                <Text style={{ bottom: -7, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
-                            </TouchableOpacity> */}
+
                             <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
@@ -798,8 +756,6 @@ const HomeScreen = (props) => {
                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-
-                            {/* </TouchableOpacity> */}
                         </View>
                     }
                     <View style={styles.AddCouple}>
@@ -828,9 +784,6 @@ const HomeScreen = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.addEvent} >
-                        {/* <View style={styles.mealView2} >
-                            <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
-                        </View> */}
                         <View style={styles.mealView} >
                             <Text style={styles.choosePersonText}>  Add An Event</Text>
                             <View>
@@ -839,7 +792,7 @@ const HomeScreen = (props) => {
                                     {
                                         toggleActive == true ?
                                             <GooglePlacesAutocomplete
-                                            
+
                                                 placeholder='Enter Location'
                                                 minLength={2}
                                                 autoFocus={false}
@@ -856,7 +809,7 @@ const HomeScreen = (props) => {
 
                                                 styles={{
                                                     textInput: {
-                                                        
+
                                                         backgroundColor: "#4D4D4D",
                                                         marginLeft: 0,
                                                         marginHorizontal: 90,
@@ -876,7 +829,7 @@ const HomeScreen = (props) => {
 
                                                         elevation: 9,
                                                     },
-                                                    
+
                                                     predefinedPlacesDescription: {
                                                         color: '#000',
                                                     },
@@ -890,12 +843,8 @@ const HomeScreen = (props) => {
                                                         marginLeft: 10,
 
                                                     },
-                                                   
-
-
 
                                                 }}
-
 
                                             />
                                             :
@@ -925,7 +874,7 @@ const HomeScreen = (props) => {
                                             />
 
                                             <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(3.5, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15,  position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(6, 0) }}>N</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(6, 0) }}>N</Text>
 
                                         </TouchableOpacity>
                                     </View>
@@ -936,11 +885,11 @@ const HomeScreen = (props) => {
                             <Carousel
                                 ref={carouselRef}
                                 sliderWidth={screenWidth}
-                                // sliderHeight={screenWidth+200}
                                 itemWidth={screenWidth - 60}
                                 data={entries}
                                 renderItem={renderItem}
                                 hasParallaxImages={true}
+                               
                             />
 
                         </View>
@@ -988,18 +937,13 @@ const HomeScreen = (props) => {
                     </View>
                     <View style={styles.ScheduleView}>
                         <Text style={styles.chooseDateText}> Schedule Your Date</Text>
-
-                        {/* <Pressable onPress={showDatepicker} >
-                            
-                        </Pressable> */}
-                        <TouchableOpacity onPress={() => showDatepicker()}>
+                        <TouchableOpacity onPress={() => showDatePicker()}>
                             <View style={styles.sectionStyle2}>
-
                                 <Text
                                     style={{ color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginHorizontal: 20, }}
 
                                 >
-                                    {isDateSelected ? `${date.getDate() + ' | ' + date.getMonth() + ' | ' + date.getFullYear()}` : "Select Date"}
+                                    {dob}
                                 </Text>
                                 <View style={{ marginHorizontal: 20, backgroundColor: 'white', height: moderateScale(45), width: moderateScale(45), borderRadius: 55 }}>
                                     <Image
@@ -1007,23 +951,14 @@ const HomeScreen = (props) => {
                                         style={styles.imageStyle}
                                     />
                                 </View>
-
-
-
                             </View>
-                        </TouchableOpacity>
-
-                        <Pressable onPress={showTimepicker} >
+                        </TouchableOpacity >
+                        <TouchableOpacity onPress={() => showTimePicker()} >
                             <View style={styles.sectionStyle2}>
-
                                 <Text
                                     style={{ color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginHorizontal: 10, }}
 
-                                    onPress={showTimepicker}
-
-
-                                >  {isTimeSelected ? `${time.getHours() + ' : ' + time.getMinutes()} ${time.getHours() > 11 ? 'PM' : 'AM'}  ` : "Select Time"} </Text>
-
+                                >  {time}</Text>
 
                                 <View style={{ marginHorizontal: 20, backgroundColor: 'white', height: moderateScale(45), width: moderateScale(45), borderRadius: 55 }}>
                                     <Image
@@ -1031,13 +966,8 @@ const HomeScreen = (props) => {
                                         style={styles.imageStyle}
                                     />
                                 </View>
-
-
                             </View>
-                        </Pressable>
-
-
-
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={() => props.navigation.navigate('donefornow')}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
@@ -1046,19 +976,22 @@ const HomeScreen = (props) => {
                                     Send Invitation
                                 </Text>
                             </LinearGradient>
-
                         </TouchableOpacity>
-
                     </View>
-
                 </ScrollView>
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
-                    mode={mode}
-                    onConfirm={mode == 'date' ? onChange : onChangeTime}
+                    mode="date"
+                    onConfirm={handleConfirm}
                     onCancel={hideDatePicker}
-                    display="default"
-                    is24Hour={true}
+
+                />
+                <DateTimePickerModal
+                    isVisible={isTimePickerVisible}
+                    mode="time"
+                    onConfirm={handleConfirm2}
+                    onCancel={hideTimePicker}
+
                 />
             </View>
         </SafeAreaView>
@@ -1068,9 +1001,16 @@ const HomeScreen = (props) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+    activeText: {
+        color: 'white',
+        fontFamily: 'Poppins-Regular',
+        alignSelf: 'center',
+        textAlign: 'center',
+        fontSize: 12,
+        marginTop: 2
+    },
     item: {
         width: screenWidth - 60,
-        // height: screenWidth - 60,
     },
     imageContainer: {
         flex: 1,
@@ -1087,8 +1027,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Regular',
         fontSize: 18,
         textAlign: "center",
-
-
     },
     buttonH: {
         borderRadius: 10,
@@ -1113,8 +1051,6 @@ const styles = StyleSheet.create({
     modalViewH: {
         width: 310,
         height: 209,
-
-        // backgroundColor: "red",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -1244,21 +1180,15 @@ const styles = StyleSheet.create({
 
         backgroundColor: 'white',
         borderRadius: 120,
-
-
-
     },
     mealView: {
         flex: 1,
         flexDirection: 'column',
         width: scale(350),
         animation: LayoutAnimation.easeInEaseOut(),
-        marginBottom:30
+        marginBottom: 30
     },
     mealView2: {
-        // flex: 1,
-        // flexDirection: 'column',
-        // width: scale(350),
         animation: LayoutAnimation.easeInEaseOut(),
         height: 420
     },
@@ -1304,8 +1234,6 @@ const styles = StyleSheet.create({
         width: 25,
         alignSelf: 'center'
 
-
-
     },
     sectionStyle2: {
         flexDirection: 'row',
@@ -1346,11 +1274,7 @@ const styles = StyleSheet.create({
         margin: 15,
         backgroundColor: "#FF2B25",
         fontFamily: "Poppins-Regular",
-
-
     },
-
-
     PingUnlock: {
         width: 90,
         height: 90,
@@ -1358,8 +1282,6 @@ const styles = StyleSheet.create({
         margin: 15,
         backgroundColor: "#FF2B25",
         fontFamily: "Poppins-Regular",
-
-
     },
     PingLock: {
         width: 90,
@@ -1400,13 +1322,22 @@ const styles = StyleSheet.create({
 
 
     },
+    PingText11: {
+        fontSize: 11.5,
+        color: "white",
+        alignSelf: "center",
+        fontFamily: 'Poppins-SemiBold',
+        textAlign: "center",
+        marginTop: moderateScale(20),
+        marginHorizontal: 6,
+
+
+    },
     pinLockPic: {
         height: 12,
         width: 12,
         alignSelf: 'center',
         top: 2,
-
-
     },
     pinLockPicback: {
         height: 17,
@@ -1442,11 +1373,7 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins-Regular",
         textAlign: "center",
 
-
-
     },
-
-
     mins: {
         fontSize: 14,
         alignSelf: "center",
@@ -1507,10 +1434,6 @@ const styles = StyleSheet.create({
 
         width: (windowWidth - 50),
         alignSelf: 'center'
-
-
-
-
     },
     AddMeal: {
         color: "white",
@@ -1524,14 +1447,12 @@ const styles = StyleSheet.create({
     },
     zipCode: {
         fontSize: 18,
-
-
         color: "#9f9f9f",
         fontFamily: "Poppins-Regular",
 
     },
     addEvent: {
-        // height: scale(600),
+
         backgroundColor: '#0000',
         width: '100%',
         flexDirection: 'row',
@@ -1559,12 +1480,8 @@ const styles = StyleSheet.create({
         height: 70,
     },
     linearGradient: {
-
-
         width: 354,
-
         borderRadius: 16,
-
         alignSelf: 'center',
         height: 74,
     },
@@ -1590,14 +1507,9 @@ const styles = StyleSheet.create({
         marginTop: 27,
         alignSelf: "center",
         color: '#FFFF',
-
-
     },
     linearGradient: {
-
-
         width: 314,
-
         borderRadius: 16,
         marginTop: 40,
         alignSelf: 'center',
@@ -1611,15 +1523,12 @@ const styles = StyleSheet.create({
     },
     AddPersonView: {
         marginTop: 20,
-
-
         backgroundColor: 'black',
 
     },
     AddPersonView5: {
         marginTop: 30,
         marginBottom: 60,
-
         backgroundColor: 'black',
 
     },
@@ -1667,8 +1576,6 @@ const styles = StyleSheet.create({
         color: "#FFFF",
         alignSelf: "center",
         fontFamily: "Poppins-Regular",
-
-
     }
     ,
     contentHead: {
@@ -1677,15 +1584,10 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 22,
         height: 70,
         marginBottom: 20,
-
-
-
     },
     container: {
         flex: 1,
         backgroundColor: 'black',
-
-
     },
     title: {
         textAlign: 'center',
@@ -1704,8 +1606,6 @@ const styles = StyleSheet.create({
         height: 76,
         marginBottom: 5,
         top: 35,
-
-
     },
     headerText: {
         textAlign: 'center',

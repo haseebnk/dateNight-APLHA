@@ -1,70 +1,26 @@
 import React, { Component, useState, useContext } from "react";
 import {
-    Alert,
-    Modal,
     StyleSheet,
-    Text, Pressable,
+    Text,
     View, Image,
-    ScrollView,
     TouchableOpacity,
-    TouchableHighlight,
     Dimensions,
-    TouchableWithoutFeedback,
     FlatList
 } from "react-native";
-
-
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import LinearGradient from "react-native-linear-gradient";
 import { scale } from "react-native-size-matters";
 import { moderateScale } from "react-native-size-matters";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import { NotesContext } from "../context/NotesContext";
-
-
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-// const [Mystate, NewState] = useState(0);
-
-
-// const Data = [{
-//     id: 1,
-//     name: "",
-//     phone: "Phone:",
-//     email: "Email:",
-//     Number: 'Number:'
-// }]
-
-
-// const renderData = () => {
-//     return (
-//         Data.map((v, i ) => {
-
-//             const { state } = useContext(NotesContext)
-
-//             return (
-//                 // <View key={i} style={{ flexDirection: 'column', marginTop: 20, }}>
-//                 //     <Text style={styles.cardTextHead}>{v.name} </Text>
-//                 //     <Text style={styles.cardText}>{v.phone}</Text>
-//                 //     <Text style={styles.cardText}>{v.email}</Text>
-//                 //     <Text style={styles.cardText}>{v.Number}</Text>
-//                 // </View>
-
-//             )
-//         })
-
-//     )
-// }
-
 
 function CoupleCard(props) {
 
     const { state } = useContext(NotesContext)
-
-
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
 
@@ -79,10 +35,6 @@ function CoupleCard(props) {
                         <View style={styles.container2} >
                             {console.log(item)}
                             <LinearGradient style={styles.withBorder} colors={[item.color[0], item.color[1]]} title="Welcome">
-
-                                {/* <Text style={{ alignSelf: 'center', fontSize: 22, color: 'white', }} >{item.name}</Text>
-                            <Text style={{ alignSelf: 'center', fontSize: 22, color: 'white', }} >{item.number}</Text>
-                            <Text style={{ alignSelf: 'center', fontSize: 22, color: 'white', }} >{item.email}</Text> */}
                                 <View style={styles.flex1}>
                                     <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
                                 </View>
@@ -116,98 +68,7 @@ function CoupleCard(props) {
                 }}
             />
         </View>
-        // <ScrollView horizontal={true}>
-
-
-
-
-        //     <TouchableHighlight activeOpacity={.9} onPress={() => checked ? setChecked(false) : setChecked(true)}>
-
-
-        //         <LinearGradient
-        //             start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }}
-        //             colors={['#F11775', '#FB6580']}
-
-
-        //             style={styles.container}>
-        //             <View style={styles.flex1}>
-        //                 <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
-        //             </View>
-        //             <View style={styles.flex2}>
-        //                 {renderData()}
-        //             </View>
-        //             <View style={styles.flex3}>
-        //                 <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-        //                     style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(25), width: moderateScale(25), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-        //                 </TouchableOpacity>
-
-        //                 <MaterialIcons style={{ marginBottom: 5 }} name='more-vert' size={hp('5%')} color="white" />
-        //             </View>
-        //         </LinearGradient>
-
-        //     </TouchableHighlight>
-
-
-
-
-
-
-        //     <TouchableHighlight activeOpacity={.9} onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}>
-
-
-        //         <LinearGradient
-        //             start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
-        //             colors={['#7AC9FD', '#0071BC']}
-
-
-        //             style={styles.container}>
-        //             <View style={styles.flex1}>
-        //                 <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
-        //             </View>
-        //             <View style={styles.flex2}>
-        //                 {renderData()}
-        //             </View>
-        //             <View style={styles.flex3}>
-        //                 <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-        //                     style={{ margin: 3, marginRight: 1, marginTop: 6, height: moderateScale(25), width: moderateScale(25), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-        //                 </TouchableOpacity>
-
-        //                 <MaterialIcons style={{ marginBottom: 5 }} name='more-vert' size={hp('5%')} color="white" />
-        //             </View>
-        //         </LinearGradient>
-
-        //     </TouchableHighlight>
-
-
-
-
-
-        //     {/* <TouchableHighlight activeOpacity={.9} onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}>
-        //         <View style={styles.MainView}>
-        //             <View style={styles.picStyle}>
-
-        //                 <Image style={styles.dpStyle} source={require('../assets/girl.png')}></Image>
-
-        //                 {renderData()}
-
-        //                 <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-        //                     style={{ marginTop: moderateScale(-10), height: moderateScale(30), width: moderateScale(30), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
-
-        //                 </TouchableOpacity>
-        //             </View>
-
-
-        //         </View>
-
-        //     </TouchableHighlight> */}
-
-
-
-
-        // </ScrollView>
-
+ 
     );
 
 }
@@ -222,13 +83,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         flexDirection: "row",
         borderRadius: moderateScale(18),
-
-
-
     },
-
-
-
 
     withOutBorder:
     {
@@ -245,8 +100,6 @@ const styles = StyleSheet.create({
     withBorder:
     {
         borderRadius: moderateScale(18),
-
-
         height: moderateScale(185),
         width: moderateScale(324),
         alignSelf: 'center',

@@ -63,8 +63,6 @@ const COLORS = [
 
 
 
-
-
 export default function PersonalProfileDetails(props) {
 
 
@@ -119,16 +117,11 @@ export default function PersonalProfileDetails(props) {
             }
         }
     }
-
     const handleKeyDown = (e) => {
         console.log(e.nativeEvent.key)
     };
 
-
     const onLogoutPress = async () => {
-
-      
-
         await AsyncStorage.removeItem('@auth_token')
         setLoader(true);
         setTimeout(() => {
@@ -150,9 +143,6 @@ export default function PersonalProfileDetails(props) {
                     Keyboard.dismiss();
                 }}
             >
-
-
-
                 <LinearGradient
                     colors={['#24202f', '#24202f', '#24202f']}
                     style={styles.container}
@@ -191,8 +181,6 @@ export default function PersonalProfileDetails(props) {
                             style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
                             placeholder="Mobile Number"
                             placeholderTextColor='white'
-
-                            // textContentType='password'
                             onChangeText={(text) => onTextChange(text)}
                             value={phoneNum}
                             textContentType='telephoneNumber'
@@ -216,15 +204,6 @@ export default function PersonalProfileDetails(props) {
                     </View>
                     <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
 
-                        {/* <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
-
-                            placeholder='Date of Birth'
-                            placeholderTextColor='white'
-                            autoCorrect={true}
-                            autoCompleteType='email'
-
-                        /> */}
                         <Text style={{ color: '#fff' }}>{dob}</Text>
                     </TouchableOpacity>
                     <DateTimePickerModal
@@ -233,8 +212,6 @@ export default function PersonalProfileDetails(props) {
                         onConfirm={handleConfirm}
                         onCancel={hideDatePicker}
                     />
-
-
                     <Text style={styles.profileText}>Profile Background Color</Text>
 
                     <SafeAreaView style={{ flex: 1 }}>
@@ -244,80 +221,41 @@ export default function PersonalProfileDetails(props) {
                             keyExtractor={(item, index) => index.toString()}
                             style={{ alignSelf: 'center', }}
                             renderItem={({ item, index }) => (
-
                                 <TouchableOpacity
                                     onPress={() => questionPick(item)}
                                     style={{ marginTop: 5, padding: 0, marginTop: 20, }}
                                 >
                                     <View style={{ flexDirection: 'row', width: '100%' }}>
                                         {press === item.id ?
-
                                             <TouchableOpacity onPress={() => setPress('')}  >
-
                                                 <LinearGradient
                                                     colors={[item.color[0], item.color[1]]}
-
                                                     style={styles.withBorder}>
-
                                                 </LinearGradient>
-
                                             </TouchableOpacity>
-
                                             :
-
                                             <LinearGradient
-
                                                 colors={[item.color[0], item.color[1]]}
                                                 style={styles.withOutBorder}>
-
                                             </LinearGradient>
                                         }
                                     </View>
-
                                 </TouchableOpacity>
-
                             )}
                         />
                     </SafeAreaView>
-
-
                     <Text style={styles.ReminderText}>Reminders</Text>
-
-
                     <View style={{}}>
-
                         <ProfileDetailsCard></ProfileDetailsCard>
-
-
                     </View>
-
                     <Text style={styles.ReminderText2}>Scheduled Dates</Text>
                     <View style={{ }}>
-
                         <DateTimeCard></DateTimeCard>
-
-
                     </View>
-
-
-
-
-
-
-
-
                     <TouchableOpacity onPress={() => props.navigation.navigate("changepassword")}>
-
                         <Text style={styles.changePass} >
-
                             Change Password</Text>
-
-
-
                     </TouchableOpacity>
-
-
-
                     <View style={styles.Cont}>
                         <TouchableOpacity>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
@@ -328,28 +266,17 @@ export default function PersonalProfileDetails(props) {
                                 </Text>
                             </LinearGradient>
                         </TouchableOpacity>
-
                         <TouchableOpacity onPress={() => props.navigation.goBack()}>
-
                             <Text style={styles.cancelButtonText}>
                                 Cancel
                             </Text>
-
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => onLogoutPress()}>
-
                             <Text style={styles.logoutButtonText}>
                                 Logout
                             </Text>
-
                         </TouchableOpacity>
-                    </View>
-                    {/* <TouchableOpacity style={styles.loginButton}>
-             <Text style={styles.loginButtonText}>Sign in</Text>
-         </TouchableOpacity> */}
-
-
-
+                    </View>                 
                 </LinearGradient>
             </TouchableWithoutFeedback>
         </ScrollView>

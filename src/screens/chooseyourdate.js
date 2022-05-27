@@ -13,16 +13,16 @@ import {
     ScrollView,
     FlatList,
     SafeAreaView,
-    Pressable, 
+    Pressable,
     Dimensions
 } from 'react-native';
 import { moderateScale } from "react-native-size-matters";
 import LinearGradient from 'react-native-linear-gradient';
 // import SplashScreen from 'react-native-splash-screen';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { NotesContext } from "../context/NotesContext"
-
-
+import { NotesContext } from "../context/NotesContext";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -77,60 +77,38 @@ export default function chooseYourDate(props) {
 
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [isTimeSelected, setIsTimeSelected] = useState(false)
-
-
-
     const [date, setDate] = useState(new Date(Date.now()));
-
     const [time, setTime] = useState(new Date(Date.now()));
-
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
-
-
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setIsDateSelected(true)
-        setDate(currentDate);
-    };
-    const onChangeTime = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setIsTimeSelected(true)
-        setTime(currentDate);
-    };
-
-    
-    const showMode = (currentMode) => {
-        setShow(true);
-        setMode(currentMode);
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
-
-    const showTimepicker = () => {
-        showMode('time');
-    };
-   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
     const [press, setPress] = useState('');
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const { state, dispatch } = useContext(NotesContext)
+    const [name, setName] = useState("")
+    const [number, setNumber] = useState("")
+    const [age, setAge] = useState("")
+    const [email, setEmail] = useState("")
+    const [dateb, setDateb] = useState("")
+    const [password, setPass] = useState("")
+    const [dob, setdob] = useState('Date of birth');
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [color, setColor] = useState([])
+    const [phoneNum, setphoneNum] = useState(null);
+
+const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        console.warn("A date has been picked: ", date);
+        setdob(moment(date).format('MM/DD/yy'))
+        hideDatePicker();
+    };
 
     function questionPick(item) {
         setPress(item.id)
@@ -141,43 +119,29 @@ export default function chooseYourDate(props) {
         setPress(item.id)
     }
 
+    const onTextChange = (text) => {
+        let rg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{3}$/
+        if (rg.test(text)) {
+            setphoneNum(null)
+        }
+        else {
+            var cleaned = ('' + text).replace(/\D/g, '')
+            var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
 
-    const { state, dispatch } = useContext(NotesContext)
+            if (match) {
+                var intlCode = (match[1] ? '+1 ' : ''),
+                    number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
 
-    const [name, setName] = useState("")
-    const [number, setNumber] = useState("")
-    const [age, setAge] = useState("")
-    const [email, setEmail] = useState("")
-    const [dateb, setDateb] = useState("")
-    const [password, setPass] = useState("")
+                setphoneNum(number)
 
-    const [color, setColor] = useState([])
+                return;
+            }
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    // function questionPick(item) {
-    //     setPress(item.id)
-    // }
-
-    // function questionClose(item) {
-    //     setPress(item.id)
-    // }
-
-
-
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+    const handleKeyDown = (e) => {
+        console.log(e.nativeEvent.key)
+    };
 
     return (
 
@@ -188,182 +152,144 @@ export default function chooseYourDate(props) {
                     Keyboard.dismiss();
                 }}
             >
-
-
-
                 <LinearGradient
                     colors={['#24202f', '#24202f', '#24202f']}
                     style={styles.container}
                 >
-                    <SafeAreaView style={{flex:1}}>
-                    <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity onPress={() => props.navigation.goBack()}>
-
-                            <Image style={styles.imgClose}
-                                source={require("../assets/close.png")}
-                            ></Image>
-                        </TouchableOpacity>
-                        <Text style={styles.ProfileDetails}>Choose Your Date</Text>
-                    </View>
-                    <View style={styles.tinyLogo}>
-                        <Image style={styles.tinyLogo}
-
-                            source={require('../assets/profile.png')}
-                        />
-                    </View>
-                    <Text style={styles.takePhoto}>Take a photo</Text>
-                    <Text style={styles.uploadPhoto}>Upload Photo</Text>
-
-                    <View style={styles.sectionStyle}>
-
-                        <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
-                            placeholder="Full Name"
-                            placeholderTextColor='white'
-                            value={name}
-                            onChangeText={(text) => (setName(text))}
-                        />
-                    </View>
-                    <View style={styles.sectionStyle}>
-
-                        <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
-                            placeholder="Mobile Number"
-                            placeholderTextColor='white'
-
-                            value={number}
-                            onChangeText={(text) => (setNumber(text))}
-                        />
-                    </View>
-                    <View style={styles.sectionStyle}>
-
-                        <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
-
-                            placeholder='Email'
-                            placeholderTextColor='white'
-                         
-                            value={email}
-                            onChangeText={(text) => (setEmail(text))}
-
-                        />
-                    </View>
-                    <Pressable onPress={showDatepicker} >
-                            <View style={styles.sectionStyle2}>
-
-                                <Text
-                                 value={dateb}
-                                 onChangeText={(text) => (setDateb(text))}
-                                    style={{ color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginHorizontal: 20, }}
-                                    onPress={showDatepicker}
-                                >
-                                    {isDateSelected ? `${date.getDate().toString() + ' | ' + date.getMonth().toString() + ' | ' + date.getFullYear().toString()}` : "Select Date"}
-                                </Text>
-                                
-
-
-                                {show && (
-                                    <DateTimePicker
-                                        testID="dateTimePicker"
-                                        
-                                        // placeholderText='Date Of Birth'
-                                        value={date}
-                                        mode={mode}
-                                        is24Hour={true}
-                                        display="default"
-                                        onChange={mode == 'date' ? onChange : onChangeTime}
-                                    />
-                                )}
-                            </View>
-                        </Pressable>
-
-
-
-                    <Text style={styles.profileText}>Profile Background Color</Text>
-
                     <SafeAreaView style={{ flex: 1 }}>
-                        <FlatList
-                            horizontal={true}
-                            data={COLORS}
-                            keyExtractor={(item, index) => index.toString()}
-                            style={{ alignSelf: 'center', }}
-                            renderItem={({ item, index }) => (
+                        <View style={{ flexDirection: "row" }}>
+                            <TouchableOpacity onPress={() => props.navigation.goBack()}>
 
-                                <TouchableOpacity
-                                    onPress={() => questionPick(item)}
-                                    style={{ marginTop: 5, padding: 0, marginTop: 20, }}
-                                >
-                                    <View style={{ flexDirection: 'row', width: '100%' }}>
-                                        {press === item.id ?
+                                <Image style={styles.imgClose}
+                                    source={require("../assets/close.png")}
+                                ></Image>
+                            </TouchableOpacity>
+                            <Text style={styles.ProfileDetails}>Choose Your Date</Text>
+                        </View>
+                        <View style={styles.tinyLogo}>
+                            <Image style={styles.tinyLogo}
 
-                                            <TouchableOpacity onPress={() => setPress('')}  >
+                                source={require('../assets/profile.png')}
+                            />
+                        </View>
+                        <Text style={styles.takePhoto}>Take a photo</Text>
+                        <Text style={styles.uploadPhoto}>Upload Photo</Text>
 
-                                                <LinearGradient
-                                                    colors={[item.color[0], item.color[1]]}
+                        <View style={styles.sectionStyle}>
 
-                                                    style={styles.withBorder}>
+                            <TextInput
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
+                                placeholder="Full Name"
+                                placeholderTextColor='white'
+                                value={name}
+                                onChangeText={(text) => (setName(text))}
+                            />
+                        </View>
+                        <View style={styles.sectionStyle}>
 
-                                                </LinearGradient>
+                            <TextInput
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
+                                placeholder="Mobile Number"
+                            placeholderTextColor='white'
 
-                                            </TouchableOpacity>
+                            // textContentType='password'
+                            onChangeText={(text) => onTextChange(text)}
+                            value={phoneNum}
+                            textContentType='telephoneNumber'
+                            dataDetectorTypes='phoneNumber'
+                            keyboardType='phone-pad'
+                            maxLength={14}
+                            onKeyPress={() => handleKeyDown}
+                            />
+                        </View>
+                        <View style={styles.sectionStyle}>
 
-                                            :
+                            <TextInput
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
 
-                                            <LinearGradient
+                                placeholder='Email'
+                                placeholderTextColor='white'
 
-                                                colors={[item.color[0], item.color[1]]}
-                                                style={styles.withOutBorder}>
+                                value={email}
+                                onChangeText={(text) => (setEmail(text))}
 
-                                            </LinearGradient>
-                                        }
-                                    </View>
-
-                                </TouchableOpacity>
-
-                            )}
-                        />
-                    </SafeAreaView>
-                
-                    <TouchableOpacity 
-                    onPress={() => {
-                        dispatch({ type: "Add", payload: { name, number ,email, dateb ,color } ,  } , props.navigation.navigate('home'))
-                        }}
-                    >
-
-
-                       
+                            />
+                        </View>
+                        <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
+                        <Text style={{ color: '#fff' }}>{dob}</Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Sign in</Text>
-        </TouchableOpacity> */}
-   <View style={styles.Cont}>
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                    />
+                        <Text style={styles.profileText}>Profile Background Color</Text>
+                        <SafeAreaView style={{ flex: 1 }}>
+                            <FlatList
+                                horizontal={true}
+                                data={COLORS}
+                                keyExtractor={(item, index) => index.toString()}
+                                style={{ alignSelf: 'center', }}
+                                renderItem={({ item, index }) => (
+                                    <TouchableOpacity
+                                        onPress={() => questionPick(item)}
+                                        style={{ marginTop: 5, padding: 0, marginTop: 20, }}
+                                    >
+                                        <View style={{ flexDirection: 'row', width: '100%' }}>
+                                            {press === item.id ?
+
+                                                <TouchableOpacity onPress={() => setPress('')}  >
+
+                                                    <LinearGradient
+                                                        colors={[item.color[0], item.color[1]]}
+
+                                                        style={styles.withBorder}>
+
+                                                    </LinearGradient>
+
+                                                </TouchableOpacity>
+                                                :
+                                                <LinearGradient
+
+                                                    colors={[item.color[0], item.color[1]]}
+                                                    style={styles.withOutBorder}>
+                                                </LinearGradient>
+                                            }
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                            />
+                        </SafeAreaView>
+
                         <TouchableOpacity
-                        
-                        onPress={() => {
-                            dispatch({ type: "Add", payload: { name, number ,email, dateb ,color } ,  } , props.navigation.navigate('home'))
+                            onPress={() => {
+                                dispatch({ type: "Add", payload: { name, number, email, dateb, color }, }, props.navigation.navigate('home'))
                             }}
-
                         >
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                colors={['#FF7474', '#E20303']}
-                                style={styles.linearGradient} >
-                                <Text style={styles.saveButtonText} >
-                                    Save
+                        </TouchableOpacity>              
+                        <View style={styles.Cont}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    dispatch({ type: "Add", payload: { name, number, email, dateb, color }, }, props.navigation.navigate('home'))
+                                }}
+
+                            >
+                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                    colors={['#FF7474', '#E20303']}
+                                    style={styles.linearGradient} >
+                                    <Text style={styles.saveButtonText} >
+                                        Save
+                                    </Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                                <Text style={styles.cancelButtonText}>
+                                    Cancel
                                 </Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => props.navigation.goBack()}>
-
-                            <Text style={styles.cancelButtonText}>
-                                Cancel
-                            </Text>
-
-                        </TouchableOpacity>
-                    </View>
-
-                   </SafeAreaView>
-                   
+                            </TouchableOpacity>
+                        </View>
+                    </SafeAreaView>
                 </LinearGradient>
             </TouchableWithoutFeedback>
         </ScrollView>
@@ -518,7 +444,7 @@ const styles = StyleSheet.create({
     sectionStyle: {
         alignSelf: "center",
         flexDirection: 'row',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#363143',
         borderRadius: 18,
@@ -540,8 +466,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     container: {
-        
-        paddingTop: Platform.OS ==='ios' ? 60 :20,
+
+        paddingTop: Platform.OS === 'ios' ? 60 : 20,
         paddingHorizontal: 20,
         backgroundColor: '#ffff',
 
@@ -629,6 +555,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Poppins-Regular",
         alignSelf: "center",
-        marginTop:10
+        marginTop: 10
     },
 });

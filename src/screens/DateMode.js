@@ -4,13 +4,7 @@ import {
     Image,
     Text,
     View,
-    TextInput,
-    StatusBar,
-    Keyboard,
-    TouchableWithoutFeedback,
     TouchableOpacity,
-    Switch,
-    ListViewComponent,
     ScrollView,
     Animated,
     Modal,
@@ -20,30 +14,10 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import ModalComponent from '../components/modalQuit';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import { types } from '@babel/core';
-import UnlockModal from '../components/unlockModal';
-import { set } from 'lodash';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-
-const DATA = [
-    {
-        Id: 1,
-        title: 'truth or date',
-        Description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,'
-    },
-    {
-        Id: 2,
-        title: 'selfie challenge',
-        Description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum hello.'
-    },
-
-]
-
 
 
 const Pings = [
@@ -64,7 +38,7 @@ const Pings = [
     {
         id: "Item 2",
         type: "unlock",
-        text: "Truth and dare",
+        text: "Truth or Dare",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,",
         selected: false,
     },
@@ -99,59 +73,19 @@ const Pings = [
 
 ]
 
-
-
-
-
-
-
-// const rendenText = () => {
-//     return (
-//         Pings.map((v, i) => {
-//             return (
-//                 <View style={styles.ping}
-//                     key={i}
-//                 >
-
-
-//                     {v.text == 'selfie challenge' ?
-//                         <Text style={styles.secondText}>{v.text}</Text>
-//                         :
-//                         <Text></Text>
-//                     }
-
-
-
-//                 </View>
-//             )
-//         })
-//     )
-
-// }
-
-
-
-
-// const renderPause = () => {
-
-//     return(
-//         <MaterialIcons style={{ alignItems: 'center', justifyContent: 'space-between', top: 15, }} name='play-arrow' size={hp('5%')} color="yellow" />
-//     )
-// }
-
-
-
-
-
 export default function DateMode(props) {
 
 
     const [PauseActive, setPause] = useState(false);
-
     const onPause = () => setPause(true);
-
     const onPause2 = () => setPause(false);
-
+    const [count, setCount] = useState(0);
+    const [myArray, setMyArray] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpenn, setModalOpenn] = useState(false);
+    const [modalStart, setModalStart] = useState(false);
+    const animation = useRef(new Animated.Value(0)).current;
+    const scale = animation.interpolate({ inputRange: [0, 1], outputRange: [1, 0.9] });
 
     const xyz = (type) => {
         console.log(type)
@@ -162,8 +96,6 @@ export default function DateMode(props) {
     const rendenPing = (props) => {
 
         const [modalOpenn, setModalOpenn] = useState(false);
-
-
 
         return (
             Pings.map((v, i) => {
@@ -188,7 +120,6 @@ export default function DateMode(props) {
                             <Text style={styles.PingText}>
                                 {v.text}
                             </Text>
-                            {/* <Text style={styles.pinLockUnclock}></Text> */}
                             {
                                 v.type == 'lock' ? (
                                     <>
@@ -213,12 +144,7 @@ export default function DateMode(props) {
 
 
 
-    const [myArray, setMyArray] = useState([]);
-
     function onlclick() {
-
-
-
 
         let myLocalArray = []
         myLocalArray = Pings.splice(0, 1)
@@ -226,16 +152,6 @@ export default function DateMode(props) {
         console.log(myLocalArray)
         { (Pings[0]).type == 'lock' ? setModalOpenn(true) : null }
     }
-
-
-
-
-
-
-
-    const [count, setCount] = useState(0);
-    const animation = useRef(new Animated.Value(0)).current;
-    const scale = animation.interpolate({ inputRange: [0, 1], outputRange: [1, 0.9] });
 
     const onPressIn = () => {
         Animated.spring(animation, {
@@ -258,27 +174,17 @@ export default function DateMode(props) {
             useNativeDriver: true,
         }).start();
     };
-    const onPress = () => setCount(  count < 60  ? count + 5  : 0);
-    const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 :  (count==0?60:0)  )
-
-
-    const [modalOpen, setModalOpen] = useState(false);
-
-    const [modalOpenn, setModalOpenn] = useState(false);
-
-    const [modalStart, setModalStart] = useState(false);
+    const onPress = () => setCount(count < 60 ? count + 5 : 0);
+    const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
     return (
         <ScrollView >
-
             <Modal
 
                 transparent={true}
 
                 visible={modalOpenn}
                 animationType='fade'
-
-
             >
                 <View style={{
                     flex: 1,
@@ -309,28 +215,17 @@ export default function DateMode(props) {
                             </Pressable>
 
                         </View>
-
-
                     </LinearGradient>
                 </View>
 
             </Modal>
-
-
             <LinearGradient
                 colors={['#24202f', '#24202f', '#24202f']}
                 style={styles.container}
             >
                 <View>
-
-
-
                     <Text style={styles.CasualModeText}>Casual Date Mode</Text>
-
                 </View>
-
-
-
                 <View style={styles.ChallengeContainer}>
 
                     <Text style={styles.firstText}>
@@ -339,24 +234,16 @@ export default function DateMode(props) {
 
                     <View style={styles.secondText}>
                         <View style={styles.ping}
-
                         >
                             <View style={{ alignSelf: 'center', }}>
-
                                 <Text style={styles.secondText}>{Pings[0].text}</Text>
-
                             </View>
-
-
-
                         </View>
                     </View>
 
                     <Text style={styles.thirdText}>
                         Are You Ready?
                     </Text>
-
-
                     <View style={styles.InnerContainer}>
                         <ScrollView nestedScrollEnabled={true}>
                             <Text style={styles.dareText}>
@@ -364,19 +251,12 @@ export default function DateMode(props) {
                             </Text>
                         </ScrollView>
                     </View>
-
-
-
                 </View>
                 <Modal
-
                     transparent={true}
-
                     visible={modalOpen}
                     animationType='fade'
-
                     navigation={props.navigation}
-
                 >
                     <View style={styles.centeredView}>
                         <LinearGradient
@@ -400,40 +280,21 @@ export default function DateMode(props) {
                                     <Text style={styles.textStyleNo}>No</Text>
                                 </Pressable>
                             </View>
-
-
                         </LinearGradient>
                     </View>
-
                 </Modal>
-
                 <ScrollView nestedScrollEnabled={true} horizontal={true}>
-
                     {
                         rendenPing()
                     }
-
                 </ScrollView>
-
-
                 <View style={styles.BottomHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
                         <Text style={{ fontSize: 23, color: "white", alignSelf: "flex-start", margin: 20, fontFamily: "Poppins-Regular", marginLeft: 25, top: -5, }}> FAQ</Text>
                     </TouchableOpacity>
-
-
                     <View style={{ flexDirection: 'row', width: moderateScale(50), marginRight: 110 }}>
                         <TouchableOpacity onPress={() => setModalOpen(true)}>
-
                             <MaterialIcons style={{ margin: 10 }} name='stop' size={hp('5%')} color="#E20303" />
-
-                            {/* 
-                        <ModalComponent
-                        
-                        style={{ alignItems: 'center', left: -10 }} navigation={props.navigation} >
-
-                        </ModalComponent> */}
-
                         </TouchableOpacity>
 
                         {
@@ -441,37 +302,20 @@ export default function DateMode(props) {
                                 ?
                                 <TouchableOpacity onPress={onPause}>
                                     <MaterialIcons style={{ margin: 10, }} name='pause' size={hp('5%')} color="yellow" />
-
-
                                 </TouchableOpacity>
                                 :
                                 <TouchableOpacity onPress={onPause2}  >
-
                                     <MaterialIcons style={{ margin: 10, }} name='play-arrow' size={hp('5%')} color="#74FF82" />
-
                                 </TouchableOpacity>
                         }
-
                         <TouchableOpacity onPress={onlclick} >
-
-
-
-
                             <MaterialIcons style={{ margin: 10, top: 3 }} name='double-arrow' size={hp('4%')} color="#0379FF" />
-
                         </TouchableOpacity>
-
                     </View>
-
-
                     <Modal
-
                         transparent={true}
-
                         visible={modalStart}
                         animationType='fade'
-
-
                     >
                         <View style={{
                             flex: 1,
@@ -485,8 +329,6 @@ export default function DateMode(props) {
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.modalView3}>
                                 <Text style={styles.modalText3}>Set Ping Frequency</Text>
-
-
                                 <View style={styles.ping3}>
                                     <TouchableOpacity onPressIn={onPressMius}
                                         onPress={onPree}
@@ -514,9 +356,6 @@ export default function DateMode(props) {
                                         </LinearGradient>
                                     </TouchableOpacity>
                                 </View>
-
-
-
                                 <View style={styles.modalButtons3} >
                                     <Pressable
                                         style={styles.button}
@@ -524,28 +363,19 @@ export default function DateMode(props) {
                                     >
                                         <Text style={styles.textStyleNo1}>Save</Text>
                                     </Pressable>
-
                                     <Pressable
                                         style={styles.button}
                                         onPress={() => setModalStart(false)}
                                     >
                                         <Text style={styles.textStyleNo1}>Cancel</Text>
                                     </Pressable>
-
                                 </View>
-
-
                             </LinearGradient>
                         </View>
-
                     </Modal>
-
-
-
                     <TouchableOpacity onPressIn={onPressIn}
                         onPress={() => setModalStart(true)}
                         onPressOut={onPressOut}>
-
                         <View style={{
                             width: 30,
                             marginRight: 28,
@@ -555,8 +385,6 @@ export default function DateMode(props) {
                         </View>
                     </TouchableOpacity>
                 </View>
-
-
                 <View style={{ width: 30, alignSelf: 'flex-end', marginRight: 28, bottom: 23, }}>
                     <Text style={{ color: 'white', fontSize: 10, textAlign: 'center' }}>min</Text>
                 </View>
@@ -568,12 +396,9 @@ export default function DateMode(props) {
 
 const styles = StyleSheet.create({
 
-    //ping modalll
     count1: {
         fontSize: 30,
         color: "white",
-
-
         fontFamily: "Poppins-Regular",
         alignSelf: 'center'
     },
@@ -582,20 +407,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
 
-
-
-
     },
     modalText3: {
         marginBottom: -50,
-
         textAlign: "center",
         fontFamily: 'Poppins-Regular',
         color: 'white',
         fontSize: 18
     },
-
-
     btn1Text: {
         fontSize: 41,
         alignSelf: "center",
@@ -629,15 +448,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: 20,
         alignSelf: "center",
-
-
-
     },
     modalView3: {
         width: 310,
-        height: 249,
-
-        // backgroundColor: "red",
+        height: 249,   
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -651,14 +465,6 @@ const styles = StyleSheet.create({
         elevation: 5
     },
 
-
-
-    //ping modall close
-
-
-
-
-
     buttonNo: {
         backgroundColor: 'white',
         margin: 20,
@@ -671,21 +477,16 @@ const styles = StyleSheet.create({
         margin: 20,
         width: 74,
         height: 44,
-
     },
     modalButtons2: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 0,
-
-
     },
     modalButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 20,
-
-
     },
     centeredView: {
         flex: 1,
@@ -697,9 +498,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         width: 310,
-        height: 209,
-
-        // backgroundColor: "red",
+        height: 209,   
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -790,16 +589,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Regular',
         textAlign: 'center'
     },
-
-
-
     dareText: {
         fontSize: 12.7,
         fontFamily: "Poppins-Light",
         alignSelf: 'center',
         margin: 18,
         color: '#24202F',
-
     },
     InnerContainer: {
         height: scale(280),
@@ -814,9 +609,7 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins-Regular",
         alignSelf: 'center',
         color: '#74FF82',
-
         marginBottom: 10
-
     },
     secondText: {
         fontSize: 25,
@@ -825,11 +618,8 @@ const styles = StyleSheet.create({
         color: '#74FF82',
         marginTop: -5,
         marginBottom: 5,
-
         justifyContent: 'center',
         textAlign: 'center'
-
-
     },
     firstText: {
         fontSize: 20,
@@ -837,14 +627,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#74FF82',
         marginTop: 20
-
     },
     count: {
-        color: 'white', fontSize: 20, textAlign: 'center'
-
-        // textAlign:'center',
-
-        , fontFamily: "Poppins-Regular",
+        color: 'white', fontSize: 20, textAlign: 'center',
+        fontFamily: "Poppins-Regular",
     },
     BottomHeader: {
         alignSelf: "center",
@@ -856,11 +642,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 36,
         borderTopRightRadius: 36,
         bottom: -14,
-
-
-
-
-
     },
     PingUnlock: {
         width: 90,
@@ -869,8 +650,6 @@ const styles = StyleSheet.create({
         margin: 15,
         backgroundColor: "#FF2B25",
         fontFamily: "Poppins-Regular",
-
-
     },
     PingLock: {
         width: 90,
@@ -879,7 +658,6 @@ const styles = StyleSheet.create({
         margin: 15,
         backgroundColor: "#C5C5C5",
         fontFamily: "Poppins-Regular",
-
     },
     PingPlayed: {
         width: 90,
@@ -888,7 +666,6 @@ const styles = StyleSheet.create({
         margin: 15,
         backgroundColor: "#1AC72B",
         fontFamily: "Poppins-Regular",
-
     },
     ping3: {
         flexDirection: "row",
@@ -899,25 +676,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    // PingPlayed: {
-    //     width: 89,
-    //     height: 90,
-    //     borderRadius: 12,
-    //     margin: 15,
-    //     backgroundColor: "#1AC72B",
-    //     fontFamily: "Poppins-Regular",
-
-    // },
-    // PingLock: {
-    //     width: 89,
-    //     height: 90,
-    //     borderRadius: 12,
-    //     margin: 15,
-    //     backgroundColor: "#C5C5C5",
-    //     fontFamily: "Poppins-Regular",
-
-    // },
-
     PingText: {
         fontSize: 12,
         color: "white",
@@ -926,8 +684,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 27,
         marginHorizontal: 4,
-
-
     },
     ChallengeContainer: {
 
@@ -939,25 +695,16 @@ const styles = StyleSheet.create({
         borderWidth: 2.5,
         borderRadius: 20,
         marginTop: 20,
-
-
     },
-
     CasualModeText: {
         alignSelf: "center",
         fontSize: 20,
         color: "white",
         fontFamily: "Poppins-Regular",
         marginTop: Platform.OS === 'ios' ? 45 : 15,
-
     },
-
-
-
     container: {
         flex: 1,
-
-
         paddingHorizontal: 0,
         backgroundColor: '#ffff',
 

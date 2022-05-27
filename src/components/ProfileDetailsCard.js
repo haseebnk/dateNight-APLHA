@@ -89,99 +89,52 @@ const renderGift = () => {
 
 function ProfileDetailsCard() {
 
-
-
-
-
-
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
 
     return (
         <ScrollView horizontal={true}>
-
-
-
-
             <TouchableOpacity activeOpacity={.9} onPress={() => checked ? setChecked(false) : setChecked(true)}>
-
-
-                <LinearGradient 
-                
+                <LinearGradient                
                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                    colors={['#0071BC', '#7AC9FD']}
-                
+                    colors={['#0071BC', '#7AC9FD']}               
                 style={styles.container}>
-                    {/* <View style={styles.flex1}>
-                        <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
-                    </View> */}
                     <View style={styles.flex2}>
                         {renderData()}
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
                             style={{ margin: 0, marginRight: 1, marginTop: moderateScale(12, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
-
                         </TouchableOpacity>
-
                         <MaterialIcons style={{ marginLeft:7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
-
                         <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
                     </View>
                 </LinearGradient>
-
             </TouchableOpacity>
-
-
-
-
-
-
             <TouchableOpacity activeOpacity={.9} onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}>
-
-
                 <LinearGradient
-
                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                     colors={['#534C64', '#534C64']}
-
-                    style={styles.container2}>
-                    {/* <View style={styles.flex1}>
-                        <Image style={styles.picSize} source={require('../assets/girl.png')}></Image>
-                    </View> */}
+                    style={styles.container2}>                
                     <View style={styles.flex2}>
                         {renderGift()}
                     </View>
                     <View style={styles.flex1}>
                         <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" />
-
                         <MaterialIcons style={{ marginLeft: -45, marginBottom: 40 }} name='expand-more' size={hp('3%')} color="white" />
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
                             style={{  marginTop: moderateScale(13, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
-
-                        </TouchableOpacity>
+                       </TouchableOpacity>
                         <MaterialIcons style={{ marginLeft:7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
-
-                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
+                       <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
                     </View>
                 </LinearGradient>
-
-            </TouchableOpacity >
-
-
-
-
-
-          
-
+           </TouchableOpacity >
         </ScrollView>
-
     );
-
 }
-
 const styles = StyleSheet.create({
     picSize: {
 
@@ -192,41 +145,25 @@ const styles = StyleSheet.create({
         borderRadius: 14,
         alignItems: 'center'
 
-
-
-
-
-
-
     },
     flex3: {
         flex: .7,
-
         borderRadius: moderateScale(18),
         flexDirection: 'column',
-        justifyContent: 'space-between',
-     
+        justifyContent: 'space-between', 
     },
     flex2: {
         flex: 4,
-
-       
-
-
-
     },
     flex1: {
         flex: .5,
-
         borderRadius: moderateScale(18),
-        // backgroundColor:'red',
         flexDirection:'column',
         justifyContent:'space-between'
     },
 
     container: {
         flex: 1,
-       
         height: moderateScale(165),
         width: moderateScale(318),
         marginVertical: 30,
@@ -234,12 +171,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: moderateScale(18),
         marginLeft: 20,
-    
-
     },
     container2: {
-        flex: 1,
-       
+        flex: 1,     
         height: moderateScale(165),
         width: moderateScale(318),
         marginVertical: 30,
@@ -247,18 +181,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: moderateScale(18),
         marginLeft: 20,
-    
-
     },
-
-
-
-
-
-
-
-
-
     cardTextHead: {
         color: 'white',
         fontFamily: "Poppins-Regular",
@@ -266,11 +189,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 25,
         marginTop:moderateScale(18, 0.1)
-
-
-
-       
-
     },
     cardText: {
         color: 'white',
@@ -278,14 +196,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
        marginTop:7,
        marginLeft:25
-
-
     },
-
-
-
-
-
 });
 
 export default ProfileDetailsCard;

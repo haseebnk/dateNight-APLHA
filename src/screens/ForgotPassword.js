@@ -5,14 +5,12 @@ import {
     Text,
     View,
     TextInput,
-    StatusBar,
     Keyboard,
     TouchableWithoutFeedback,
     TouchableOpacity,
-    Switch,
+
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
 
 
 
@@ -25,7 +23,6 @@ export default function ForgotPassword(props) {
                 Keyboard.dismiss();
             }}
         >
-
             <LinearGradient
                 colors={['#24202f', '#24202f', '#24202f']}
                 style={styles.container}
@@ -41,16 +38,16 @@ export default function ForgotPassword(props) {
 
                     <Text style={styles.ForgotPassHeading}>Forgot Password</Text>
                 </View>
-<View>
+                <View>
                     <Text
-                        style={{ color: "#C2C2C2", marginBottom: 15, marginLeft: 15, fontSize: 12, fontFamily: "Poppins-Regular",}}
+                        style={{ color: "#C2C2C2", marginBottom: 15, marginLeft: 15, fontSize: 12, fontFamily: "Poppins-Regular", }}
                     >Please enter your email address or Phone Number to change your Password</Text>
-</View>
+                </View>
 
                 <View style={styles.sectionStyle}>
-                   
+
                     <TextInput
-                        style={{ flex: 1, color: 'white', fontFamily: "Poppins-Regular", fontSize:15 }}
+                        style={{ flex: 1, color: 'white', fontFamily: "Poppins-Regular", fontSize: 15 }}
 
                         placeholder='Email Address or Phone Number'
                         placeholderTextColor='white'
@@ -61,24 +58,24 @@ export default function ForgotPassword(props) {
 
                     />
                 </View>
-<View style={styles.Cont}>
-                <TouchableOpacity onPress={() => props.navigation.navigate("changepassword")}>
-                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                        colors={['#FF7474', '#E20303']}
-                        style={styles.linearGradient} >
-                        <Text style={styles.saveButtonText} >
-                           Save
-                        </Text>
-                    </LinearGradient>
-                </TouchableOpacity>
+                <View style={styles.Cont}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("changepassword")}>
+                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                            colors={['#FF7474', '#E20303']}
+                            style={styles.linearGradient} >
+                            <Text style={styles.saveButtonText} >
+                                Save
+                            </Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => props.navigation.navigate("login")}>
-                   
+
                         <Text style={styles.cancelButtonText}>
                             Cancel
                         </Text>
-                    
-                </TouchableOpacity>
+
+                    </TouchableOpacity>
                 </View>
             </LinearGradient>
 
@@ -90,10 +87,7 @@ export default function ForgotPassword(props) {
 
 }
 
-
-
-
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     viewStyle: {
         flexDirection: "row",
     },
@@ -103,8 +97,8 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginLeft: 5,
     },
-    Cont:{
-        marginTop:250,
+    Cont: {
+        marginTop: 250,
 
     },
     cancelButtonText: {
@@ -160,7 +154,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        paddingTop: Platform.OS ==='ios' ? 65 :30,
+        paddingTop: Platform.OS === 'ios' ? 65 : 30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff'
     },

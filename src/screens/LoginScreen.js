@@ -35,14 +35,6 @@ const activeColor = '#00B712';
 
 
 export default function LoginScreen2(props) {
-    const [loader, setLoader] = useState(false);
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
-    const [toggleActive, setToggle] = useState(false);
-
 
     useEffect(() => {
         const backAction = () => {
@@ -56,22 +48,25 @@ export default function LoginScreen2(props) {
             ]);
             return true;
         };
-
         const backHandler = BackHandler.addEventListener(
             "hardwareBackPress",
             backAction
         );
-
         return () => backHandler.remove();
     }, []);
 
 
+    const [loader, setLoader] = useState(false);
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [toggleActive, setToggle] = useState(false);
+
+
+
     const onLoginUser = () => {
         setLoader(true);
-
-        
-
-            
 
             var data = {
                 email: email,
@@ -147,13 +142,9 @@ export default function LoginScreen2(props) {
                 ) : null}
                 <View style={styles.tinyLogo}>
                     <Image style={styles.tinyLogo}
-
                         source={require('../assets/imglogo.png')}
                     /></View>
-
                 <Text style={styles.loginText}>Please Sign into your account</Text>
-
-
                 <View style={styles.sectionStyle}>
                     <Image
                         source={require('../assets/pass.png')} //Change your icon image here
@@ -186,7 +177,6 @@ export default function LoginScreen2(props) {
                         onChangeText={(text) => setPassword(text)}
                     />
                 </View>
-
                 <TouchableOpacity>
                     <View style={styles.tog}>
                         <TouchableOpacity
@@ -208,22 +198,15 @@ export default function LoginScreen2(props) {
                                 ]}
 
                             />
-
                             <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
                             <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15,  position: 'absolute', bottom: Platform.OS ==='ios' ? moderateScale(2, 0.1) :moderateScale(1.2,0), right: Platform.OS ==='ios' ? moderateScale(6, 0.1): moderateScale(6,0)}}>N</Text>
                         </TouchableOpacity>
-
                     </View>
-
                 </TouchableOpacity>
                 <Text style={{ color: 'white', fontSize: 12, marginLeft: 70, marginTop: 4, fontFamily: "Poppins-Regular", }}>Remember</Text>
                 <TouchableOpacity onPress={() => props.navigation.navigate("forgotpassword")}>
                     <Text style={styles.fpText} >Forgot Password?</Text>
                 </TouchableOpacity>
-
-                {/* <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Sign in</Text>
-        </TouchableOpacity> */}
                 <TouchableOpacity onPress={() => onLoginUser()}>
                     <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                         colors={['#FF7474', '#E20303']}
@@ -233,7 +216,6 @@ export default function LoginScreen2(props) {
                         </Text>
                     </LinearGradient>
                 </TouchableOpacity>
-
                 <View style={styles.signUpTextView}>
                     <Text style={styles.signUpText}>Don't have an account?</Text>
                     <TouchableOpacity onPress={() => props.navigation.navigate("signup")}>

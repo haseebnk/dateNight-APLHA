@@ -14,8 +14,6 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 
-
-
 export default function ChangePassword(props) {
 
     return (
@@ -24,37 +22,31 @@ export default function ChangePassword(props) {
                 Keyboard.dismiss();
             }}
         >
-
-
             <LinearGradient
                 colors={['#24202f', '#24202f', '#24202f']}
                 style={styles.container}
             >
 
-                <View  style={styles.viewStyle}>
-                    <TouchableOpacity onPress={() => props.navigation.goBack()}> 
+                <View style={styles.viewStyle}>
+                    <TouchableOpacity onPress={() => props.navigation.goBack()}>
 
                         <Image style={styles.imgClose}
                             source={require("../assets/close.png")}
                         ></Image>
                     </TouchableOpacity>
-                   
+
                     <Text style={styles.changePassHeading}>Change password</Text>
                 </View>
-
                 <View style={styles.sectionStyle}>
-
                     <TextInput
-                        style={{ flex: 1, color: 'white', fontFamily: "Poppins-Regular", fontSize: 15}}
+                        style={{ flex: 1, color: 'white', fontFamily: "Poppins-Regular", fontSize: 15 }}
                         placeholder="New Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
                         textContentType='password'
                     />
                 </View>
-
                 <View style={styles.sectionStyle}>
-
                     <TextInput
                         style={{ flex: 1, color: 'white', fontFamily: "Poppins-Regular", fontSize: 15 }}
                         placeholder="Confirm Password"
@@ -76,33 +68,26 @@ export default function ChangePassword(props) {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => props.navigation.navigate("forgotpassword")}>
-
                         <Text style={styles.cancelButtonText}>
                             Cancel
                         </Text>
-
-
                     </TouchableOpacity>
                 </View>
             </LinearGradient>
-
-
         </TouchableWithoutFeedback>
     )
 
 }
 
-
-
 const styles = StyleSheet.create({
-    viewStyle:{
-        flexDirection:"row",
+    viewStyle: {
+        flexDirection: "row",
     },
-    imgClose:{
-height:19,
-width:19,
-marginTop:5,
-marginLeft:5,
+    imgClose: {
+        height: 19,
+        width: 19,
+        marginTop: 5,
+        marginLeft: 5,
     },
     Cont: {
         marginTop: 200,
@@ -110,7 +95,7 @@ marginLeft:5,
     },
     cancelButtonText: {
         fontSize: 16,
-        
+
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 22,
@@ -151,16 +136,15 @@ marginLeft:5,
         color: '#fff',
         fontSize: 18,
         fontFamily: "Poppins-Regular",
-        alignSelf:'center',
+        alignSelf: 'center',
         marginTop: 2,
         marginBottom: 30,
         textAlign: 'center',
-        marginHorizontal:80,
+        marginHorizontal: 80,
     },
-
     container: {
         flex: 1,
-        paddingTop: Platform.OS ==='ios' ? 65 :30,
+        paddingTop: Platform.OS === 'ios' ? 65 : 30,
         paddingHorizontal: 20,
         backgroundColor: '#ffff'
     },

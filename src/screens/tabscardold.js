@@ -1,9 +1,15 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { filter } from 'lodash';
+import { delay, entries, filter } from 'lodash';
 import React, { useEffect, useState, Component } from "react";
 import {
     View, Image, Text, StyleSheet, TouchableOpacity,
-    TouchableHighlight, ScrollView, FlatList, SafeAreaView, StatusBar, Switch, ImageBackground,
+    TouchableHighlight,
+    ScrollView,
+    FlatList,
+    SafeAreaView,
+    StatusBar,
+    Switch,
+    ImageBackground,
     Dimensions,
     LayoutAnimation,
     Platform,
@@ -12,7 +18,8 @@ import {
 
 } from "react-native";
 import { Badge } from 'react-native-paper';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 import { scale } from 'react-native-size-matters';
@@ -45,6 +52,9 @@ const DATA = [
     {
         Id: 1,
         title: 'Asian Food',
+        meal: 'chicken',
+        dessert: 'lava',
+        drink: 'dew',
         check: false
     },
     {
@@ -78,11 +88,7 @@ const DATA = [
         title: 'Fondue',
         check: false
     },
-    {
-        Id: 8,
-        title: 'Fondue',
-        check: false
-    },
+
     {
         Id: 9,
         title: 'Hawaiian & Island Food',
@@ -106,7 +112,7 @@ const DATA = [
     },
     {
         Id: 19,
-        title: 'Maxican Food',
+        title: 'Mexican Food',
         check: false
 
     },
@@ -143,326 +149,7 @@ const DATA = [
 
 ]
 
-
-
-
-
-
-function TabA() {
-
-
-    const [checked, setChecked] = React.useState(false);
-    const [checkedd, setCheckedd] = React.useState(false);
-    const [mainData, setMainData] = useState(DATA);
-
-    const setToggle = (item, id) => {
-        mainData.map((v, i) => {
-            if (v.Id == id) {
-                console.log(mainData[i].check)
-                mainData[i].check = !mainData[i].check;
-                setMainData([...mainData])
-            }
-        })
-    }
-
-    const Item = ({ title, isEnabled, setIsEnabled, Id, index }) => {
-
-
-        return (
-            <View >
-                <TouchableOpacity  >
-                    <Text style={styles.title}>{title}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[
-                        styles.toggleContainer,
-                        { borderColor: null ? activeColor : null, },
-                    ]}
-                    onPress={() => {
-                        LayoutAnimation.easeInEaseOut();
-                        setToggle(isEnabled, Id);
-                    }}
-                    activeOpacity={1}>
-                    <View
-                        style={[
-                            styles.toggleBtn,
-                            isEnabled
-                                ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
-                                : { backgroundColor: activeColor, borderRadius: 25, },
-                        ]}
-
-                    />
-                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(2, 0.1), left: moderateScale(4, 0.1) }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15,  position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0.1) : moderateScale(1.8, 0), right: Platform.OS === 'ios' ? moderateScale(6.7, 0.1) : moderateScale(7, 0) }}>p</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-    const [isEnabled, setIsEnabled] = useState(false);
-
-    const renderItem = ({ item, i }) => (
-        <Item title={item.title} isEnabled={item.check} setIsEnabled={setIsEnabled} Id={item.Id} index={i} />
-    );
-
-    return (
-        <View style={styles.Contain}>
-            <View style={styles.InnerContain}>
-                <View style={styles.chooseContaine}>
-                    <Text style={styles.ChooseMeal}>
-                        Meal Filters
-                    </Text>
-
-                    <TouchableOpacity>
-                        <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ marginRight: 10, top: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
-                        </TouchableOpacity>
-                    </TouchableOpacity>
-                </View>
-                <ScrollView nestedScrollEnabled={true}>
-                    <View style={{ width: windowWidth, marginTop: 30, }}>
-                        <SafeAreaView style={{ flex: 1 }}>
-                            <FlatList
-                                nestedScrollEnabled={true}
-                                data={mainData}
-                                renderItem={(item, i) => renderItem(item, i)}
-                                keyExtractor={items => items.Id}
-                            />
-                        </SafeAreaView>
-                    </View>
-
-                </ScrollView>
-            </View>
-        </View>
-
-    )
-}
-function TabB() {
-    const [checked, setChecked] = React.useState(false);
-    const [checkedd, setCheckedd] = React.useState(false);
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-    return (
-        <View style={styles.Contain}>
-            <View style={styles.InnerContain}>
-                <View style={styles.chooseContaine}>
-                    <Text style={styles.ChooseMeal}>
-                        Choose Place
-
-                    </Text>
-
-                    <TouchableOpacity>
-
-
-                        <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ marginRight: 10, top: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
-
-                        </TouchableOpacity>
-
-                    </TouchableOpacity>
-
-                </View>
-                <ScrollView>
-                    <SafeAreaView style={styles.container}>
-                        {/* 
-                        <FlatList
-
-                            data={DATA}
-                            renderItem={renderItem}
-                            keyExtractor={items => items.id}
-
-
-                        /> */}
-                    </SafeAreaView>
-
-                    <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-
-                        <View style={styles.placeView2}>
-
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
-                                <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                    style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-                                </TouchableOpacity>
-
-                                <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                    <View style={{ top: 4 }}>{renderPlace()}</View>
-                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                    </View>
-                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                    </View>
-                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                    </View>
-                                </View>
-
-                            </View>
-
-                        </View>
-                    </TouchableOpacity>
-                </ScrollView>
-
-            </View>
-        </View>
-
-    )
-}
-function TabC() {
-
-    const [checked, setChecked] = React.useState(false);
-    const [checkedd, setCheckedd] = React.useState(false);
-    const [checkei, setCheckei] = React.useState(false);
-    const [checkes, setCheckes] = React.useState(false);
-
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-    return (
-        <View style={styles.Contain}>
-            <View style={styles.InnerContain}>
-                <View style={styles.chooseContaine}>
-                    <Text style={styles.ChooseMeal}>
-                        Choose Place
-
-                    </Text>
-
-                    <TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ marginRight: 10, top: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
-
-                        </TouchableOpacity>
-                    </TouchableOpacity>
-
-                </View>
-
-
-                <SafeAreaView style={styles.container}>
-                    {/* 
-                        <FlatList
-
-                            data={DATA}
-                            renderItem={renderItem}
-                            keyExtractor={items => items.id}
-
-
-                        /> */}
-                </SafeAreaView>
-                <ScrollView nestedScrollEnabled={true}>
-                    <View >
-                        <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
-                            <View style={styles.placeViewc}>
-                                <View style={styles.yellowView}>
-                                    <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
-                                </View>
-                                <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-
-                                    <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
-                                        style={{ top: 25, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkes ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-                                    </TouchableOpacity>
-
-                                    <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                        <View>{renderPlace()}</View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                        </View>
-                                    </View>
-
-
-
-                                </View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
-
-                                </View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
-
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, alignSelf: 'center' }}></View>
-                        <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-                            <View style={styles.placeView2}>
-
-
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
-                                    <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                        style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-                                    </TouchableOpacity>
-
-                                    <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                        <View style={{ top: 4 }}>{renderPlace()}</View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                        </View>
-                                    </View>
-
-                                </View>
-
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => checkei ? setCheckei(false) : setCheckei(true)}>
-                            <View style={styles.placeView2}>
-
-
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
-                                    <TouchableOpacity onPress={() => checkei ? setCheckei(false) : setCheckei(true)}
-                                        style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkei ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-                                    </TouchableOpacity>
-
-                                    <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                        <View style={{ top: 4 }}>{renderPlace()}</View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                        </View>
-                                    </View>
-
-                                </View>
-
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-
-
-            </View>
-        </View>
-    )
-}
-
-const Tab = createBottomTabNavigator();
-
-const ReactNavigationBottomTabs = () => {
+const ReactNavigationBottomTabs = (item, id) => {
 
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
@@ -478,8 +165,6 @@ const ReactNavigationBottomTabs = () => {
     const [tabState, setTabstate] = useState('yes')
 
 
-
-
     const setToggle = (item, id) => {
         mainData.map((v, i) => {
             if (v.Id == id) {
@@ -490,13 +175,26 @@ const ReactNavigationBottomTabs = () => {
         })
     }
 
-    const Item = ({ title, isEnabled, setIsEnabled, Id, index }) => {
+    const toggleInvert = (item, id) => {
+        mainData.map((v, i) => {
+            if (v.check != id) {
+                console.log(mainData[i].check)
+                mainData[i].check = !mainData[i].check;
+                setMainData([...mainData])
+            }
+        })
+
+    }
+
+    const Item = ({ title, drink, isEnabled, setIsEnabled, Id, index }) => {
 
 
         return (
             <View >
                 <TouchableOpacity  >
+
                     <Text style={styles.title}>{title}</Text>
+
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[
@@ -555,14 +253,18 @@ const ReactNavigationBottomTabs = () => {
 
 
                     <View style={styles.chooseContaine}>
+                    <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
+                                style={{ marginLeft: 10, top: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
+                            </TouchableOpacity>
                         <Text style={styles.ChooseMeal}>
                             Meal Filters
                         </Text>
 
                         <TouchableOpacity>
-                            <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                                style={{ marginRight: 10, top: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
-                            </TouchableOpacity>
+                          
+                            <TouchableHighlight onPress={() => entries.splice()}>
+                            <MaterialIcons style={{ marginRight: 10, marginTop: 12 }} name='close' size={hp('5.5%')} color="white" />
+                        </TouchableHighlight>
                         </TouchableOpacity>
                     </View>
                     <ScrollView nestedScrollEnabled={true}>
@@ -665,15 +367,10 @@ const ReactNavigationBottomTabs = () => {
                                                 <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, marginHorizontal: moderateScale(28), marginBottom: 15 }}></View>
                                                 <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
                                                     <View style={styles.placeView2}>
-
-
                                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
                                                             <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
                                                                 style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
                                                             </TouchableOpacity>
-
                                                             <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
                                                                 <View style={{ top: 4 }}>{renderPlace()}</View>
                                                                 <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
@@ -686,17 +383,12 @@ const ReactNavigationBottomTabs = () => {
                                                                     <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
                                                                 </View>
                                                             </View>
-
                                                         </View>
-
                                                     </View>
                                                 </TouchableOpacity>
-
                                                 <TouchableOpacity style={{ marginTop: 5, }} onPress={() => checkei ? setCheckei(false) : setCheckei(true)}>
                                                     <View style={styles.placeView2}>
-
-
-                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 ,}}>
+                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5, }}>
 
                                                             <TouchableOpacity onPress={() => checkei ? setCheckei(false) : setCheckei(true)}
                                                                 style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkei ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
@@ -724,17 +416,11 @@ const ReactNavigationBottomTabs = () => {
                                         </ScrollView>
                                     </>
                                 ) : null
-
-
-
-
-
                             }
                         </View>
-
                     </ScrollView>
                     <View style={styles.bottomTab}>
-                        <TouchableOpacity onPress={() => setTabstate('yes')}>
+                        <TouchableOpacity onPress={() => setTabstate('yes')} onPressIn={()=>toggleInvert()}  >
                             <Image style={{ width: 60, height: 60 }} source={require('../assets/card1.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setTabstate('place')}>
@@ -743,7 +429,6 @@ const ReactNavigationBottomTabs = () => {
                         <TouchableOpacity onPress={() => setTabstate('recomended')}>
                             <Image style={{ width: 60, height: 60 }} source={require('../assets/card3.png')}></Image>
                         </TouchableOpacity>
-
                     </View>
                 </View>
             </View >
@@ -793,7 +478,7 @@ const styles = StyleSheet.create({
         height: moderateScale(70),
         width: moderateScale(windowWidth - 61, 0.1),
         backgroundColor: '#534C64',
-        alignSelf: 'center'
+
 
     },
     InnerContain: {
@@ -820,9 +505,9 @@ const styles = StyleSheet.create({
         width: moderateScale(270),
         backgroundColor: '#24202F',
         // marginHorizontal: moderateScale(23),
-        marginBottom:10,
+        marginBottom: 10,
         // alignSelf: 'center',
-        alignSelf:'center'
+        alignSelf: 'center'
 
     },
     yellowView: {
@@ -834,14 +519,14 @@ const styles = StyleSheet.create({
 
     },
     placeViewc: {
-      
+
         borderRadius: 18,
         height: moderateScale(152),
         width: moderateScale(270),
         backgroundColor: '#24202F',
-        alignSelf:'center',
-        marginBottom:10,
-       
+        alignSelf: 'center',
+        marginBottom: 10,
+
 
     },
     placeView: {
@@ -954,7 +639,7 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins-Regular",
         color: 'white',
 
-        marginLeft: 30,
+
         marginTop: 22,
 
 

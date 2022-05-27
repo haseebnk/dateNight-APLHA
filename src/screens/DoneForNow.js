@@ -4,13 +4,7 @@ import {
     Image,
     Text,
     View,
-    TextInput,
-    StatusBar,
-    Keyboard,
-    TouchableWithoutFeedback,
     TouchableOpacity,
-    Switch,
-    ListViewComponent,
     Dimensions,
     ScrollView
 } from 'react-native';
@@ -45,14 +39,14 @@ export default function DoneForNow(props) {
                         ></Image>
 
                         <Text style={styles.YouAre}>You're all set!</Text>
-                        <Text style={styles.YourDate}>Your date is all planned out! We’ll send you a reminder 30 minutes before its time for your date to start.</Text>
+                        <Text style={styles.YourDate}>Your date is all planned out, and an invitation has been sent to your partner. We’ll send you a reminder 30 minutes before it’s time for your date to start</Text>
                     </View>
                     <View style={{marginTop:40}}>
 
                         <TouchableOpacity onPress={() => props.navigation.navigate("home")}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FFFF', '#FFFF']}
-                                style={styles.linearGradient} >
+                                style={styles.linearGradient2} >
                                 <Text style={styles.DoneButton}>
                                     Done For Now
                                 </Text>
@@ -107,6 +101,17 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         height: moderateScale(60),
     },
+    linearGradient2: {
+
+        marginTop: 5,
+
+        width: 300,
+        paddingVertical: 12,
+        borderRadius: 11,
+       
+        alignSelf: 'center',
+        height: moderateScale(60),
+    },
     YourDate: {
         alignSelf: "center",
         fontSize: 14,
@@ -114,6 +119,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-ExtraLight',
        marginHorizontal:30,
         textAlign: "center",
+        marginTop:5,
      
        
     },
@@ -141,10 +147,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-      
-       
-       
-     
 
     },
 })

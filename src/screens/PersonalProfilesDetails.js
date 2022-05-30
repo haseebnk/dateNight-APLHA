@@ -61,10 +61,11 @@ const COLORS = [
 
 ]
 
-
+const CPF_MASK = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
 
 export default function PersonalProfileDetails(props) {
 
+    
 
     const [loader, setLoader] = useState(false);
     const [press, setPress] = useState('');
@@ -177,18 +178,17 @@ export default function PersonalProfileDetails(props) {
                     </View>
                     <View style={styles.sectionStyle}>
 
-                        <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
-                            placeholder="Mobile Number"
-                            placeholderTextColor='white'
-                            onChangeText={(text) => onTextChange(text)}
-                            value={phoneNum}
-                            textContentType='telephoneNumber'
-                            dataDetectorTypes='phoneNumber'
-                            keyboardType='phone-pad'
-                            maxLength={14}
-                            onKeyPress={() => handleKeyDown}
-                        />
+                    <MaskInput
+      value={phoneNum}
+      onChangeText={setphoneNum}
+      mask={(text) => {
+        if (text.replace(/\D+/g, "").length <= 11) {
+          return CPF_MASK
+        } else {
+          return CNPJ_MASK
+        }
+      }}
+    />
                     </View>
                     <View style={styles.sectionStyle}>
 

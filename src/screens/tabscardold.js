@@ -146,7 +146,7 @@ const DATA = [
 
 ]
 
-const ReactNavigationBottomTabs = (item, id) => {
+const ReactNavigationBottomTabs = ({item}) => {
 
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
@@ -254,7 +254,7 @@ const ReactNavigationBottomTabs = (item, id) => {
                                 style={{ marginLeft: 10, top: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
                             </TouchableOpacity>
                         <Text style={styles.ChooseMeal}>
-                            Meal Filters
+                            {item.type+' Filter'}
                         </Text>
 
                         <TouchableOpacity>
@@ -634,7 +634,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Poppins-Regular",
         color: 'white',
-
+        textTransform:'capitalize',
 
         marginTop: 22,
 

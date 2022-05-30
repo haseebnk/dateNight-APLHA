@@ -150,7 +150,7 @@ const data = [
     },
 ];
 
-const Pings = [
+const pink = [
     {
         id: "1",
         key: "1",
@@ -214,12 +214,8 @@ const Pings = [
 const HomeScreen = (props) => {
 
     useEffect(() => {
-
+        setPings(pink)
         setEntries([{ type: 'add' }]);
-     
-
-
-
         const backAction = () => {
             Alert.alert("Hold on!", "Are you sure you want to go back?", [
                 {
@@ -242,7 +238,7 @@ const HomeScreen = (props) => {
 
     const { state } = useContext(NotesContext)
 
-
+    const [Pings, setPings] = useState([])
     const [count, setCount] = useState(0);
     const [addEvent, setEvent] = useState(false);
     const [toggleActive, setToggle] = useState(false);
@@ -259,8 +255,8 @@ const HomeScreen = (props) => {
     // const [typee, setType] = useState(true)
     const [entries, setEntries] = useState([]);
 
-    const [xy , setXy] = useState('inactive')
-    const [vy , setVy] = useState('active')
+    const [xy, setXy] = useState('inactive')
+    const [vy, setVy] = useState('active')
 
     const carouselRef = useRef(null);
 
@@ -311,7 +307,7 @@ const HomeScreen = (props) => {
         setPress(item.id)
     }
 
-    const xyz = (type, selected , Id) => {
+    const xyz = (type, selected, Id) => {
 
 
         type == 'lock' ? setModalOpenn(true) : null
@@ -319,22 +315,25 @@ const HomeScreen = (props) => {
 
     }
 
-    
+
 
     const addEventCard = (t) => {
-        entries.push({ type: t })
+        // entries.push({ type: t })
+        entries.splice(1, 0, { type: t })
         setEntries([...entries]);
-        LayoutAnimation.easeInEaseOut();
+        setTimeout(() => {
+            goForward()
+        }, 100);
     }
     const RemoveEventCard = (b) => {
-        
-        entries.splice({ type : b})
+
+        entries.splice({ type: b })
         setEntries([...entries]);
         LayoutAnimation.easeInEaseOut();
     }
 
     const renderItem = ({ item, index }, parallaxProps) => {
-        console.log(entries)
+        // console.log(entries)
         return (
             <View style={styles.item}>
                 {
@@ -358,7 +357,7 @@ const HomeScreen = (props) => {
                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() =>   addEventCard('desert')}>
+                            <TouchableOpacity onPress={() => addEventCard('desert')}>
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#0883FB', '#0883FB']}
                                     style={styles.addEventButton} >
@@ -383,7 +382,7 @@ const HomeScreen = (props) => {
                                 {/* <TouchableHighlight onPress={() => RemoveEventCard()}>
                                     <MaterialIcons style={{marginLeft: 7, marginTop: 12 }} name='delete-outline' size={hp('5.5%')} color="white" />
                                 </TouchableHighlight> */}
-                                <ReactNavigationBottomTabs nestedScrollEnabled={true}></ReactNavigationBottomTabs>
+                                <ReactNavigationBottomTabs nestedScrollEnabled={true} item={item}></ReactNavigationBottomTabs>
                             </View>
                         </>
                     )
@@ -447,6 +446,12 @@ const HomeScreen = (props) => {
 
     }
 
+    const setActive = (i) => {
+        Pings[i].selected = !Pings[i].selected;
+        console.log(Pings[i])
+        setPings([...Pings])
+    }
+
     const rendenPing = () => {
         const [myArray, setMyArray] = useState([]);
         function onlclick() {
@@ -473,19 +478,21 @@ const HomeScreen = (props) => {
                                         </ View>
                                     </View>
                                 </>) : null}
-                        </TouchableOpacity>
+                        </TouchableOpacity >
                         {v.type == 'unlock' && v.selected == true ?
                             (<>
-                                <View style={styles.PingPlayed}>
-                                    <View style={{ height: 65 }}>
-                                        <Text style={styles.PingText11}>{v.text}</Text>
+                                <TouchableOpacity onPress={() => setActive(i)}>
+                                    <View style={styles.PingPlayed}>
+                                        <View style={{ height: 65 }}>
+                                            <Text style={styles.PingText11}>{v.text}</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.activeText} >Active</Text>
+                                        </ View>
                                     </View>
-                                    <View>
-                                        <Text style={styles.activeText} >Active</Text>
-                                    </ View>
-                                </View>
+                                </TouchableOpacity>
                             </>) : null}
-                        <TouchableOpacity onPress={() => setActive()}>
+                        <TouchableOpacity onPress={() => setActive(i)}>
                             {v.type == 'unlock' && v.selected == false ?
                                 (<>
                                     <View style={styles.PingUnlock}>
@@ -544,7 +551,7 @@ const HomeScreen = (props) => {
                                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.modalViewH}>
-                                <Text style={styles.modalText2}>This Ping is currently locked, Would you like to permanently unlocked it for just $0.99 ?</Text>
+                                <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just $0.99 ?</Text>
 
                                 <View style={styles.modalButtons2} >
                                     <Pressable
@@ -886,7 +893,6 @@ const HomeScreen = (props) => {
                                 data={entries}
                                 renderItem={renderItem}
                                 hasParallaxImages={true}
-                               
                             />
 
                         </View>
@@ -907,9 +913,9 @@ const HomeScreen = (props) => {
                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-                    
+
                             <Text style={styles.count}>{count}</Text>
-                            
+
                             <TouchableOpacity onPressIn={onPressIn}
                                 onPress={onPress}
                                 onPressOut={onPressOut}>
@@ -1324,7 +1330,7 @@ const styles = StyleSheet.create({
         fontSize: 11.5,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-SemiBold',
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
         marginTop: moderateScale(20),
         marginHorizontal: 6,

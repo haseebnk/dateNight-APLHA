@@ -156,7 +156,7 @@ export default function AddAnotherCouple(props) {
                                     source={require("../assets/close.png")}
                                 ></Image>
                             </TouchableOpacity>
-                            <Text style={styles.ProfileDetails}>Add Another Couple</Text>
+                            <Text style={styles.ProfileDetails}>Add Date Info</Text>
                         </View>
                         <View style={styles.tinyLogo}>
                             <Image style={styles.tinyLogo}
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginTop: 0,
-        marginHorizontal: 65,
+        marginHorizontal: 85,
         marginBottom: 20,
         fontFamily: "Poppins-Regular",
         textAlign: 'center',

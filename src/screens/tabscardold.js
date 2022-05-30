@@ -15,7 +15,6 @@ import {
     Platform,
     UIManager,
 
-
 } from "react-native";
 import { Badge } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -24,8 +23,6 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'reac
 
 import { scale } from 'react-native-size-matters';
 import { moderateScale } from 'react-native-size-matters';
-
-
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -321,7 +318,6 @@ const ReactNavigationBottomTabs = (item, id) => {
 
                                 (
                                     <>
-
                                         <ScrollView nestedScrollEnabled={true} >
                                             <View >
                                                 <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>

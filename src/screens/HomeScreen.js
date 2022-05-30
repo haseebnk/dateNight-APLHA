@@ -23,7 +23,6 @@ import {
     BackHandler,
     Alert,
 
-
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
@@ -40,7 +39,6 @@ import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-
 
 
 if (Platform.OS === 'android') {
@@ -154,23 +152,23 @@ const data = [
 
 const Pings = [
     {
-        id: "Item 1",
+        id: "1",
         key: "1",
         type: "unlock",
         text: "Selfie challenge",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: true,
+        selected: false,
     },
     {
-        id: "Item 2",
+        id: "2",
         key: "2",
         type: "unlock",
         text: " Compliment your date ",
         Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: true,
+        selected: false,
     },
     {
-        id: "Item 3",
+        id: "3",
         key: "3",
         type: "unlock",
         text: "Truth  or  Dare",
@@ -178,7 +176,7 @@ const Pings = [
         selected: false,
     },
     {
-        id: "Item 4",
+        id: "4",
         key: "4",
         type: "unlock",
         text: " Compliment your date ",
@@ -186,7 +184,7 @@ const Pings = [
         selected: false,
     },
     {
-        id: "Item 5",
+        id: "5",
         key: "5",
         type: "lock",
         text: " Compliment your date ",
@@ -194,7 +192,7 @@ const Pings = [
         selected: false,
     },
     {
-        id: "Item 6",
+        id: "6",
         key: "6",
         type: "lock",
         text: " Compliment your date ",
@@ -202,7 +200,7 @@ const Pings = [
         selected: false,
     },
     {
-        id: "Item 2",
+        id: "7",
         key: "7",
         type: "lock",
         text: " Compliment your date ",
@@ -212,11 +210,13 @@ const Pings = [
 
 ]
 
+
 const HomeScreen = (props) => {
 
     useEffect(() => {
 
         setEntries([{ type: 'add' }]);
+     
 
 
 
@@ -256,9 +256,11 @@ const HomeScreen = (props) => {
     const [time, settime] = useState('Select Time');
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpenn, setModalOpenn] = useState(false);
-    const [typee, setType] = useState('inactive')
+    // const [typee, setType] = useState(true)
     const [entries, setEntries] = useState([]);
 
+    const [xy , setXy] = useState('inactive')
+    const [vy , setVy] = useState('active')
 
     const carouselRef = useRef(null);
 
@@ -309,7 +311,7 @@ const HomeScreen = (props) => {
         setPress(item.id)
     }
 
-    const xyz = (type, selected) => {
+    const xyz = (type, selected , Id) => {
 
 
         type == 'lock' ? setModalOpenn(true) : null
@@ -317,14 +319,16 @@ const HomeScreen = (props) => {
 
     }
 
+    
+
     const addEventCard = (t) => {
-        entries.unshift({ type: t })
+        entries.push({ type: t })
         setEntries([...entries]);
         LayoutAnimation.easeInEaseOut();
     }
-    const RemoveEventCard = (item) => {
+    const RemoveEventCard = (b) => {
         
-        entries.splice(item.id)
+        entries.splice({ type : b})
         setEntries([...entries]);
         LayoutAnimation.easeInEaseOut();
     }
@@ -336,7 +340,6 @@ const HomeScreen = (props) => {
                 {
                     item.type == 'add' ? (
                         <>
-
                             <TouchableOpacity onPress={() => addEventCard('meal')}>
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#80D3FC', '#80D3FC']}
@@ -385,8 +388,6 @@ const HomeScreen = (props) => {
                         </>
                     )
                 }
-
-
             </View>
         );
     };
@@ -484,7 +485,7 @@ const HomeScreen = (props) => {
                                     </ View>
                                 </View>
                             </>) : null}
-                        <TouchableOpacity onPress={() => setType('inactive')}>
+                        <TouchableOpacity onPress={() => setActive()}>
                             {v.type == 'unlock' && v.selected == false ?
                                 (<>
                                     <View style={styles.PingUnlock}>
@@ -498,10 +499,6 @@ const HomeScreen = (props) => {
                                 </>) : null}
 
                         </TouchableOpacity>
-
-
-
-
 
                     </View>
                 )
@@ -910,8 +907,9 @@ const HomeScreen = (props) => {
                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
+                    
                             <Text style={styles.count}>{count}</Text>
-
+                            
                             <TouchableOpacity onPressIn={onPressIn}
                                 onPress={onPress}
                                 onPressOut={onPressOut}>
@@ -1410,6 +1408,7 @@ const styles = StyleSheet.create({
         margin: 25,
         borderRadius: 18,
         fontFamily: "Poppins-Regular",
+
 
     },
     btn2Text: {

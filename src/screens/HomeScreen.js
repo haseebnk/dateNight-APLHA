@@ -323,7 +323,11 @@ const HomeScreen = (props) => {
         setEntries([...entries]);
         setTimeout(() => {
             goForward()
+<<<<<<< HEAD
         }, 100);
+=======
+        }, 500);
+>>>>>>> 920080e9adb9cbfc71fcfbe3e8c5dcc13879e45e
     }
     const RemoveEventCard = (b) => {
 

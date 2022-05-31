@@ -23,7 +23,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { NotesContext } from "../context/NotesContext";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
-
+import MaskInput from 'react-native-mask-input';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -73,6 +73,9 @@ const COLORS = [
 
 export default function chooseYourDate(props) {
 
+    useEffect(() => {
+        console.log(socialSec);
+    }, [socialSec]);
 
 
     const [isDateSelected, setIsDateSelected] = useState(false);
@@ -91,10 +94,11 @@ export default function chooseYourDate(props) {
     const [email, setEmail] = useState("")
     const [dateb, setDateb] = useState("")
     const [password, setPass] = useState("")
-    const [dob, setdob] = useState('Date of birth');
+    const [dob, setdob] = useState('Date Birth');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [color, setColor] = useState([])
     const [phoneNum, setphoneNum] = useState(null);
+    const [socialSec, setsocialSec] = useState('');
 
 const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -187,19 +191,33 @@ const showDatePicker = () => {
                         </View>
                         <View style={styles.sectionStyle}>
 
-                            <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
-                                placeholder="Mobile Number"
-                            placeholderTextColor='white'
+                        <MaskInput
+                                placeholderTextColor={'white'}
+                                placeholder={'Mobile Number'}
+                                style={{ color: 'white' }}
+                                value={socialSec}
+                                onChangeText={(masked, unmasked) => {
+                                    setsocialSec(masked);
 
-                            // textContentType='password'
-                            onChangeText={(text) => onTextChange(text)}
-                            value={phoneNum}
-                            textContentType='telephoneNumber'
-                            dataDetectorTypes='phoneNumber'
-                            keyboardType='phone-pad'
-                            maxLength={14}
-                            onKeyPress={() => handleKeyDown}
+                                    console.log(masked);
+                                    console.log(unmasked);
+                                }}
+                                mask={[
+                                    '(',
+                                    /\d/,
+                                    /\d/,
+                                    /\d/,
+                                    ')',
+                                    ' ',
+                                    /\d/,
+                                    /\d/,
+                                    /\d/,
+                                    '-',
+                                    /\d/,
+                                    /\d/,
+                                    /\d/,
+                                    /\d/,
+                                ]}
                             />
                         </View>
                         <View style={styles.sectionStyle}>

@@ -17,11 +17,14 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-// import SplashScreen from 'react-native-splash-screen';
+import moment from 'moment';
+
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AppContext from '../components/appcontext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import axiosconfig from '../services/axios';
+import MaskInput from 'react-native-mask-input';
 
 const COLORS = [
     {
@@ -60,6 +63,11 @@ const COLORS = [
 
 export default function SignupScreen({ navigation }) {
 
+    useEffect(() => {
+        console.log(socialSec);
+    }, [socialSec]);
+
+
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -68,6 +76,20 @@ export default function SignupScreen({ navigation }) {
     const myContext = useContext(AppContext);
 
     const [press, setPress] = useState('');
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        console.warn("A date has been picked: ", date);
+        setdob(moment(date).format('MM/DD/yy'))
+        hideDatePicker();
+    };
 
     function questionPick(item) {
         setPress(item.id)
@@ -84,9 +106,12 @@ export default function SignupScreen({ navigation }) {
     const [email, setEmail] = useState(null)
     const [date_of_birth, setdate_of_birth] = useState(null)
     const [password, setPassword] = useState(null)
+    const [dob, setdob] = useState('Date Birth');
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [confirm_password, setconfirm_password] = useState(null)
     const [profile_background_color, setprofile_background_color] = useState(null)
     const [type, settype] = useState(null)
+    const [socialSec, setsocialSec] = useState('');
 
     const context = useContext(AppContext);
 
@@ -238,17 +263,33 @@ export default function SignupScreen({ navigation }) {
                         />
                     </View>
                     <View style={styles.sectionStyle}>
-                        <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
-                            placeholder="Mobile Number"
-                            placeholderTextColor='white'
-                            onChangeText={(text) => onTextChange(text)}
-                            value={phone_number}
-                            textContentType='telephoneNumber'
-                            dataDetectorTypes='phoneNumber'
-                            keyboardType='phone-pad'
-                            maxLength={14}
-                            onKeyPress={() => handleKeyDown}
+                        <MaskInput
+                            placeholderTextColor={'white'}
+                            placeholder={'Mobile Number'}
+                            style={{ color: 'white' }}
+                            value={socialSec}
+                            onChangeText={(masked, unmasked) => {
+                                setsocialSec(masked);
+
+                                console.log(masked);
+                                console.log(unmasked);
+                            }}
+                            mask={[
+                                '(',
+                                /\d/,
+                                /\d/,
+                                /\d/,
+                                ')',
+                                ' ',
+                                /\d/,
+                                /\d/,
+                                /\d/,
+                                '-',
+                                /\d/,
+                                /\d/,
+                                /\d/,
+                                /\d/,
+                            ]}
                         />
                     </View>
                     <View style={styles.sectionStyle}>
@@ -263,15 +304,18 @@ export default function SignupScreen({ navigation }) {
                             onChangeText={(text) => setEmail(text)}
                         />
                     </View>
-                    <View style={styles.sectionStyle}>
-                        <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
-                            placeholder='Date Of Birth'
-                            placeholderTextColor='white'
-                            autoCorrect={true}
-                            onChangeText={(text) => setdate_of_birth(text)}
-                        />
-                    </View>
+                    <TouchableOpacity  onPress={() => showDatePicker()}>
+                        <View style={styles.sectionStyle}>
+
+                            <Text style={{ color: 'white' }}>{dob}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                    />
                     <View style={styles.sectionStyle}>
                         <TextInput
                             style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8, }}
@@ -324,7 +368,7 @@ export default function SignupScreen({ navigation }) {
                                 Sign Up
                             </Text>
                         </LinearGradient>
-                    </TouchableOpacity>              
+                    </TouchableOpacity>
                     <View style={styles.loginWithBar}>
                         <TouchableOpacity>
                         </TouchableOpacity>
@@ -446,7 +490,7 @@ const styles = StyleSheet.create({
     sectionStyle: {
         alignSelf: "center",
         flexDirection: 'row',
-        justifyContent: 'center',
+
         alignItems: 'center',
         backgroundColor: '#363143',
         borderRadius: 18,

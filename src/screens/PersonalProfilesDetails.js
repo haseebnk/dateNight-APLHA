@@ -134,6 +134,7 @@ export default function PersonalProfileDetails(props) {
     }
 
     return (
+        <SafeAreaView style={{flex:1}} >
         <View style={styles.container}>
             {loader ? (
                 <>
@@ -284,8 +285,11 @@ export default function PersonalProfileDetails(props) {
                         </View>
                     </LinearGradient>
                 </TouchableWithoutFeedback>
+                
             </ScrollView>
         </View>
+        
+        </SafeAreaView>
 
     );
 }

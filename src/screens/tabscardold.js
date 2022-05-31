@@ -259,7 +259,7 @@ const ReactNavigationBottomTabs = ({item}) => {
 
                         <TouchableOpacity>
                           
-                            <TouchableHighlight onPress={() => entries.splice()}>
+                        <TouchableHighlight >
                             <MaterialIcons style={{ marginRight: 10, marginTop: 12 }} name='close' size={hp('5.5%')} color="white" />
                         </TouchableHighlight>
                         </TouchableOpacity>

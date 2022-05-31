@@ -23,8 +23,9 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from './loader';
+import MaskInput from 'react-native-mask-input';
 // import SplashScreen from 'react-native-splash-screen';
-import PhoneInput from 'react-native-phone-input'
+// import PhoneInput from 'react-native-phone-input'
 
 
 const COLORS = [
@@ -65,15 +66,25 @@ const COLORS = [
 
 export default function PersonalProfileDetails(props) {
 
+    useEffect(() => {
+        console.log(socialSec);
+    }, [socialSec]);
 
     const phonenum = useRef();
 
     const [loader, setLoader] = useState(false);
     const [press, setPress] = useState('');
     const [phoneNum, setphoneNum] = useState(null);
-    const [dob, setdob] = useState('Date of birth');
+    const [dob, setdob] = useState('Date Birth');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [socialSec, setsocialSec] = useState('');
 
+
+    const masking = e => {
+        if (e.length < 11) {
+            setsocialSec('');
+        }
+    };
 
 
     const showDatePicker = () => {
@@ -180,8 +191,35 @@ export default function PersonalProfileDetails(props) {
                             />
                         </View>
                         <View style={styles.sectionStyle}>
+                            <MaskInput
+                                placeholderTextColor={'white'}
+                                placeholder={'Mobile Number'}
+                                style={{ color: 'white' }}
+                                value={socialSec}
+                                onChangeText={(masked, unmasked) => {
+                                    setsocialSec(masked);
 
-                            <PhoneInput
+                                    console.log(masked);
+                                    console.log(unmasked);
+                                }}
+                                mask={[
+                                    '(',
+                                    /\d/,
+                                    /\d/,
+                                    /\d/,
+                                    ')',
+                                    ' ',
+                                    /\d/,
+                                    /\d/,
+                                    /\d/,
+                                    '-',
+                                    /\d/,
+                                    /\d/,
+                                    /\d/,
+                                    /\d/,
+                                ]}
+                            />
+                            {/* <PhoneInput
                                 initialCountry={'us'}
                                 textProps={{
                                     placeholder: 'Enter a phone number...',
@@ -191,7 +229,7 @@ export default function PersonalProfileDetails(props) {
                                 isValidNumber={e => console.log(e)}
                                 ref={phonenum}
                                 textStyle={{color:'white'}}                                
-                            />
+                            /> */}
 
                         </View>
 

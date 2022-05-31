@@ -902,32 +902,36 @@ const HomeScreen = (props) => {
                     <View style={{ height: moderateScale(430), backgroundColor: '#4D4D4D' }}>
                         <Text style={styles.SelectYourPingText}>   Select Your Ping Frequency</Text>
                         <View style={styles.ping}>
-                            <TouchableOpacity onPressIn={onPressMius}
-                                onPress={onPree}
-                                onPressOut={onPree}>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#FF2B25', '#FF2B25']}
-                                    style={styles.btn1} >
-                                    <Text style={styles.btn1Text}>
-                                        -
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
+                            <View style={{width:100}}>
+                                <TouchableOpacity onPressIn={onPressMius}
+                                    onPress={onPree}
+                                    onPressOut={onPree}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#FF2B25', '#FF2B25']}
+                                        style={styles.btn1} >
+                                        <Text style={styles.btn1Text}>
+                                            -
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{width:100 , }} >
+                                <Text style={styles.count}>{count}</Text>
+                            </View>
+                            <View style={{width:100}}>
+                                <TouchableOpacity onPressIn={onPressIn}
+                                    onPress={onPress}
+                                    onPressOut={onPressOut}>
+                                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                        colors={['#FF2B25', '#FF2B25']}
+                                        style={styles.btn2} >
+                                        <Text style={styles.btn2Text}>
+                                            +
+                                        </Text>
 
-                            <Text style={styles.count}>{count}</Text>
-
-                            <TouchableOpacity onPressIn={onPressIn}
-                                onPress={onPress}
-                                onPressOut={onPressOut}>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#FF2B25', '#FF2B25']}
-                                    style={styles.btn2} >
-                                    <Text style={styles.btn2Text}>
-                                        +
-                                    </Text>
-
-                                </LinearGradient>
-                            </TouchableOpacity>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
                         <Text style={styles.mins}>mins</Text>
@@ -1382,7 +1386,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         alignSelf: "center",
         color: "#B8B8B8",
-        bottom: 50,
+        bottom: 30,
         fontFamily: "Poppins-Regular",
 
     },
@@ -1390,14 +1394,15 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: "white",
         alignSelf: "center",
-        marginHorizontal: 55,
+        marginTop:moderateScale(30),
+       
         fontFamily: "Poppins-Regular",
     },
     ping: {
         flexDirection: "row",
         marginTop: 20,
         alignSelf: "center",
-        top: -20,
+       
 
 
     },

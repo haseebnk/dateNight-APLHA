@@ -106,7 +106,7 @@ export default function SignupScreen({ navigation }) {
     const [email, setEmail] = useState(null)
     const [date_of_birth, setdate_of_birth] = useState(null)
     const [password, setPassword] = useState(null)
-    const [dob, setdob] = useState('Date Birth');
+    const [dob, setdob] = useState('Birth Date ');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [confirm_password, setconfirm_password] = useState(null)
     const [profile_background_color, setprofile_background_color] = useState(null)

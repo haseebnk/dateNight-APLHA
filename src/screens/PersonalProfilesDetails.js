@@ -75,7 +75,7 @@ export default function PersonalProfileDetails(props) {
     const [loader, setLoader] = useState(false);
     const [press, setPress] = useState('');
     const [phoneNum, setphoneNum] = useState(null);
-    const [dob, setdob] = useState('Date Birth');
+    const [dob, setdob] = useState('Birth Date ');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [socialSec, setsocialSec] = useState('');
 

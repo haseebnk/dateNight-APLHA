@@ -94,7 +94,7 @@ export default function chooseYourDate(props) {
     const [email, setEmail] = useState("")
     const [dateb, setDateb] = useState("")
     const [password, setPass] = useState("")
-    const [dob, setdob] = useState('Date Birth');
+    const [dob, setdob] = useState('Birth Date ');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [color, setColor] = useState([])
     const [phoneNum, setphoneNum] = useState(null);

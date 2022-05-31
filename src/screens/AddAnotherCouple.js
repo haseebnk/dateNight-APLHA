@@ -85,7 +85,7 @@ export default function AddAnotherCouple(props) {
     const [dateb, setDateb] = useState("")
     const [password, setPass] = useState("")
     const [color, setColor] = useState([])
-    const [dob, setdob] = useState('Date Birth');
+    const [dob, setdob] = useState('Birth Date ');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [socialSec, setsocialSec] = useState('');
     const [phoneNum, setphoneNum] = useState(null);

@@ -146,7 +146,7 @@ const DATA = [
 
 ]
 
-const ReactNavigationBottomTabs = ({item}) => {
+const ReactNavigationBottomTabs = ({ item }) => {
 
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
@@ -248,21 +248,17 @@ const ReactNavigationBottomTabs = ({item}) => {
             <View style={styles.InnerContain}>
                 <View>
 
-
                     <View style={styles.chooseContaine}>
-                    <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                                style={{ marginLeft: 10, top: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
-                            </TouchableOpacity>
-                        <Text style={styles.ChooseMeal}>
-                            {item.type+' Filter'}
-                        </Text>
-
-                        <TouchableOpacity>
-                          
-                        <TouchableHighlight >
-                            <MaterialIcons style={{ marginRight: 10, marginTop: 12 }} name='close' size={hp('5.5%')} color="white" />
-                        </TouchableHighlight>
+                        <TouchableOpacity  >
+                            <MaterialIcons style={{ marginLeft: 10, marginTop: 15 }} name='delete-outline' size={hp('5.5%')} color="white" />
                         </TouchableOpacity>
+                        <Text style={styles.ChooseMeal}>
+                            {item.type + ' Filter'}
+                        </Text>
+                        <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
+                            style={{ marginRight: 15, marginTop: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
+                        </TouchableOpacity>
+
                     </View>
                     <ScrollView nestedScrollEnabled={true}>
                         <View style={{ marginTop: 30, }}>
@@ -416,7 +412,7 @@ const ReactNavigationBottomTabs = ({item}) => {
                         </View>
                     </ScrollView>
                     <View style={styles.bottomTab}>
-                        <TouchableOpacity onPress={() => setTabstate('yes')} onPressIn={()=>toggleInvert()}  >
+                        <TouchableOpacity onPress={() => setTabstate('yes')} onPressIn={() => toggleInvert()}  >
                             <Image style={{ width: 60, height: 60 }} source={require('../assets/card1.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setTabstate('place')}>
@@ -634,7 +630,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Poppins-Regular",
         color: 'white',
-        textTransform:'capitalize',
+        textTransform: 'capitalize',
 
         marginTop: 22,
 

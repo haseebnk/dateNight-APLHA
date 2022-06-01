@@ -327,8 +327,8 @@ const HomeScreen = (props) => {
     }
     const RemoveEventCard = (b) => {
 
-        entries.splice({ type: b })
-        setEntries([...entries]);
+        entries.pop(indexOf, { type: b })
+       
         LayoutAnimation.easeInEaseOut();
     }
 
@@ -372,7 +372,7 @@ const HomeScreen = (props) => {
                                     style={styles.addEventButton} >
                                     <Text style={styles.AddMeal}>
                                         Add Drink
-                                    </Text>
+                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
                         </>
@@ -380,7 +380,7 @@ const HomeScreen = (props) => {
                         <>
                             <View style={styles.mealView2}   >
                                 {/* <TouchableHighlight onPress={() => RemoveEventCard()}>
-                                    <MaterialIcons style={{marginLeft: 7, marginTop: 12 }} name='delete-outline' size={hp('5.5%')} color="white" />
+                                <MaterialIcons style={{ marginLeft: 10, marginTop: 35 }} name='delete-outline' size={hp('5.5%')} color="white" />
                                 </TouchableHighlight> */}
                                 <ReactNavigationBottomTabs nestedScrollEnabled={true} item={item}></ReactNavigationBottomTabs>
                             </View>
@@ -899,7 +899,7 @@ const HomeScreen = (props) => {
 
                     </View>
 
-                    <View style={{ height: moderateScale(430), backgroundColor: '#4D4D4D' }}>
+                    <View style={{ height: moderateScale(400), backgroundColor: '#4D4D4D' }}>
                         <Text style={styles.SelectYourPingText}>   Select Your Ping Frequency</Text>
                         <View style={styles.ping}>
                             <View style={{width:100}}>
@@ -1377,6 +1377,8 @@ const styles = StyleSheet.create({
     selectPngText: {
         fontSize: 20,
         color: "white",
+        marginTop:10,
+        marginBottom:-25,
         alignSelf: "center",
         fontFamily: "Poppins-Regular",
         textAlign: "center",
@@ -1563,7 +1565,7 @@ const styles = StyleSheet.create({
     },
     PrePlanText: {
         marginTop: 30,
-        marginBottom: 20,
+        
 
         fontSize: 20,
         color: "#FFFF",

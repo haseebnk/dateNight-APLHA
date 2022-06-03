@@ -75,20 +75,24 @@ export default function AddAnotherCouple(props) {
 
 
     const { state, dispatch } = useContext(NotesContext)
-    const [press, setPress] = useState('');
+    
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    const [name, setName] = useState("")
+   
     const [number, setNumber] = useState("")
     const [age, setAge] = useState("")
-    const [email, setEmail] = useState("")
+
     const [dateb, setDateb] = useState("")
     const [password, setPass] = useState("")
-    const [color, setColor] = useState([])
+ 
+    const [press, setPress] = useState('');
+    const [phoneNum, setphoneNum] = useState(null);
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [socialSec, setsocialSec] = useState('');
     const [dob, setdob] = useState('Birth Date ');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [socialSec, setsocialSec] = useState('');
-    const [phoneNum, setphoneNum] = useState(null);
+    const [color, setColor] = useState([])
 
     const masking = e => {
         if (e.length < 11) {
@@ -169,7 +173,7 @@ export default function AddAnotherCouple(props) {
                                     source={require("../assets/close.png")}
                                 ></Image>
                             </TouchableOpacity>
-                            <Text style={styles.ProfileDetails}>Add Date Info</Text>
+                            <Text style={styles.ProfileDetails}>Add Person's Info</Text>
                         </View>
                         <View style={styles.tinyLogo}>
                             <Image style={styles.tinyLogo}
@@ -298,8 +302,8 @@ export default function AddAnotherCouple(props) {
                         <View style={styles.Cont}>
                             <TouchableOpacity
 
-                                onPress={() => {
-                                    dispatch({ type: "Add", payload: { name, number, email, dateb, color }, }, props.navigation.navigate('home'))
+                                onPress={() => { press == false  ? alert('Choose background color ') :
+                                    dispatch({ type: "Add", payload: { name, socialSec, email, dob, color }, }, props.navigation.navigate('home'))
                                 }}
 
                             >
@@ -388,7 +392,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginTop: 0,
-        marginHorizontal: 85,
+        marginHorizontal: 60,
         marginBottom: 20,
         fontFamily: "Poppins-Regular",
         textAlign: 'center',

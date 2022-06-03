@@ -197,7 +197,7 @@ export default function DateMode(props) {
                         start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                         colors={['#FF7474', '#E20303']}
                         style={styles.modalView}>
-                        <Text style={styles.modalText2}>This Ping is currently locked would you like to permanently unlocked it for just $0.99 ?</Text>
+                        <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just $0.99 ?</Text>
 
                         <View style={styles.modalButtons2} >
                             <Pressable
@@ -330,31 +330,36 @@ export default function DateMode(props) {
                                 style={styles.modalView3}>
                                 <Text style={styles.modalText3}>Set Ping Frequency</Text>
                                 <View style={styles.ping3}>
-                                    <TouchableOpacity onPressIn={onPressMius}
-                                        onPress={onPree}
-                                        onPressOut={onPree}>
-                                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                            colors={['white', 'white']}
-                                            style={styles.btn1} >
-                                            <Text style={styles.btn1Text}>
-                                                -
-                                            </Text>
-                                        </LinearGradient>
-                                    </TouchableOpacity>
+                                    <View style={{width:100}}>
+                                        <TouchableOpacity onPressIn={onPressMius}
+                                            onPress={onPree}
+                                            onPressOut={onPree}>
+                                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                                colors={['white', 'white']}
+                                                style={styles.btn1} >
+                                                <Text style={styles.btn1Text}>
+                                                    -
+                                                </Text>
+                                            </LinearGradient>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={{width:100 , }} >
                                     <Text style={styles.count1}>{count}</Text>
+                                    </View>
+                                    <View style={{width:100}}>
+                                        <TouchableOpacity onPressIn={onPressIn}
+                                            onPress={onPress}
+                                            onPressOut={onPressOut}>
+                                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                                colors={['white', 'white']}
+                                                style={styles.btn2} >
+                                                <Text style={styles.btn2Text}>
+                                                    +
+                                                </Text>
 
-                                    <TouchableOpacity onPressIn={onPressIn}
-                                        onPress={onPress}
-                                        onPressOut={onPressOut}>
-                                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                            colors={['white', 'white']}
-                                            style={styles.btn2} >
-                                            <Text style={styles.btn2Text}>
-                                                +
-                                            </Text>
-
-                                        </LinearGradient>
-                                    </TouchableOpacity>
+                                            </LinearGradient>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                                 <View style={styles.modalButtons3} >
                                     <Pressable
@@ -379,14 +384,14 @@ export default function DateMode(props) {
                         <View style={{
                             width: 30,
                             marginRight: 28,
-                            margin: 15,
+                            margin: 13,
                         }}>
                             <Text style={styles.count}>{count}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ width: 30, alignSelf: 'flex-end', marginRight: 28, bottom: 23, }}>
-                    <Text style={{ color: 'white', fontSize: 10, textAlign: 'center' }}>min</Text>
+                    <Text style={{ color: 'white', fontSize: 10, textAlign: 'center',  }}>min</Text>
                 </View>
             </LinearGradient>
         </ScrollView>
@@ -400,7 +405,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: "white",
         fontFamily: "Poppins-Regular",
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginTop:moderateScale(30),
     },
 
     modalButtons3: {
@@ -451,7 +457,7 @@ const styles = StyleSheet.create({
     },
     modalView3: {
         width: 310,
-        height: 249,   
+        height: 249,
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -498,7 +504,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         width: 310,
-        height: 209,   
+        height: 209,
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -629,7 +635,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     count: {
-        color: 'white', fontSize: 20, textAlign: 'center',
+        color: 'white', fontSize: 19, textAlign: 'center',
         fontFamily: "Poppins-Regular",
     },
     BottomHeader: {
@@ -671,9 +677,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: 45,
         alignSelf: "center",
-        marginBottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center'
+     
     },
 
     PingText: {

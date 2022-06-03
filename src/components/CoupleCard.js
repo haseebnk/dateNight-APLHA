@@ -18,12 +18,12 @@ import { NotesContext } from "../context/NotesContext";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-function CoupleCard(props) {
+function CoupleCard({navigation}) {
 
-    const { state } = useContext(NotesContext)
+    // const { state } = useContext(NotesContext)
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
-
+    const { state, dispatch } = useContext(NotesContext)
     return (
         <View >
             <FlatList
@@ -41,9 +41,9 @@ function CoupleCard(props) {
                                 <View style={styles.flex2}>
                                     <View style={{ flexDirection: 'column', marginTop: 20, }}>
                                         <Text style={styles.cardTextHead}>{item.name} </Text>
-                                        <Text style={styles.cardText}>Phone:  {item.number}</Text>
+                                        <Text style={styles.cardText}>Phone:  {item.socialSec}</Text>
                                         <Text style={styles.cardText}>Email:  {item.email}</Text>
-                                        <Text style={styles.cardText}>Date 0f birth:  {item.dateb}</Text>
+                                        <Text style={styles.cardText}>Date 0f birth:  {item.dob}</Text>
                                     </View>
                                 </View>
                                 <View style={styles.flex3}>
@@ -52,12 +52,20 @@ function CoupleCard(props) {
 
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={()=> props.navigation.navigate("addcouple")}>
+                                    <TouchableOpacity
+
+                                        onPress={() => {
+                                            dispatch({ type: "Update", payload: { } })
+                                            navigation.navigate('choosedate')
+                                        }}
+                                    >
 
                                         <MaterialIcons style={{ marginLeft: 7, marginBottom: 0 }} name='mode-edit' size={hp('4%')} color="white" />
 
                                     </TouchableOpacity>
-                                    <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('4%')} color="white" />
+                                    <TouchableOpacity onPress={() => dispatch({ type: 'Remove', payload: item.id })}>
+                                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('4%')} color="white" />
+                                    </TouchableOpacity>
                                 </View>
 
                             </LinearGradient>
@@ -68,7 +76,7 @@ function CoupleCard(props) {
                 }}
             />
         </View>
- 
+
     );
 
 }
@@ -210,7 +218,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Poppins-Regular',
         fontSize: 11,
-        marginLeft: 4,
+        marginLeft: 13,
         marginTop: 16,
 
 

@@ -24,7 +24,7 @@ export default function DoneForNow(props) {
                 style={styles.container}
             >
                  <ScrollView>
-                <View style={{  }}>
+                <View style={{  marginBottom:30}}>
                     <View>
 
 

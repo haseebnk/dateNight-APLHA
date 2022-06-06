@@ -7,7 +7,9 @@ export const initialState = [
 export const reducer = (state,{type,payload}) => {
     switch(type){
         case"Add" :
-            return[...state,{id:Math.random(),name:payload.name , number:payload.number ,  dateb:payload.dateb , email:payload.email , color:payload.color}] 
+       
+            return[...state,{id:Math.random(),name:payload.name , socialSec:payload.socialSec ,  dob:payload.dob , email:payload.email , color:payload.color}] 
+            
 
         case"Remove":
         return state.filter((note)=>payload !== note.id)

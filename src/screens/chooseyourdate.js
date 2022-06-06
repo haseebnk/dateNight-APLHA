@@ -168,7 +168,7 @@ const showDatePicker = () => {
                                     source={require("../assets/close.png")}
                                 ></Image>
                             </TouchableOpacity>
-                            <Text style={styles.ProfileDetails}>Choose Your Date</Text>
+                            <Text style={styles.ProfileDetails}>Add Date Info</Text>
                         </View>
                         <View style={styles.tinyLogo}>
                             <Image style={styles.tinyLogo}
@@ -288,9 +288,8 @@ const showDatePicker = () => {
                         </TouchableOpacity>              
                         <View style={styles.Cont}>
                             <TouchableOpacity
-                                onPress={() => {
-                                    dispatch({ type: "Add", payload: { name, number, email, dateb, color }, }, props.navigation.navigate('home'))
-                                }}
+                               onPress={() => {   press ==  false ? alert('Choose background color') :  dispatch( { type: "Add", payload: { name, socialSec, email, dob, color }, } ,  props.navigation.navigate('home'))
+                        }}
 
                             >
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
@@ -373,7 +372,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginTop: 0,
-        marginHorizontal: 65,
+        marginHorizontal: 85,
         marginBottom: 20,
         fontFamily: "Poppins-Regular",
         textAlign: 'center',

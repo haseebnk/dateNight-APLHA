@@ -740,7 +740,7 @@ const HomeScreen = (props) => {
                             <>
                                 <View style={styles.AddPersonView}>
                                     <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
-                                    <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
+                                    <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
                                         <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
                                     </TouchableOpacity>
 

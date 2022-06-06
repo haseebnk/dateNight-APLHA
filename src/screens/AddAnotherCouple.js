@@ -24,6 +24,10 @@ import { NotesContext } from "../context/NotesContext"
 import moment from 'moment';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import MaskInput from 'react-native-mask-input';
+import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
+import Toast from 'react-native-toast-message';
+
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -72,10 +76,16 @@ export default function AddAnotherCouple(props) {
         console.log(socialSec);
     }, [socialSec]);
 
+    const showToast = (t, e) => {
+        Toast.show({
+          type: t,
+          text1: e,
+        });
+      };
 
 
     const { state, dispatch } = useContext(NotesContext)
-    const [press, setPress] = useState('');
+    const [press, setPress] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     const [name, setName] = useState("")
@@ -84,11 +94,13 @@ export default function AddAnotherCouple(props) {
     const [email, setEmail] = useState("")
     const [dateb, setDateb] = useState("")
     const [password, setPass] = useState("")
-    const [color, setColor] = useState([])
+    const [color, setColor] = useState([""])
     const [dob, setdob] = useState('Birth Date ');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [socialSec, setsocialSec] = useState('');
-    const [phoneNum, setphoneNum] = useState(null);
+    const [socialSec, setsocialSec] = useState("");
+    const [phoneNum, setphoneNum] = useState("");
+    
+
 
     const masking = e => {
         if (e.length < 11) {
@@ -111,10 +123,12 @@ export default function AddAnotherCouple(props) {
     };
 
 
-    
+
     function questionPick(item) {
+        
         setPress(item.id)
         setColor(item.color)
+       
     }
 
     function questionClose(item) {
@@ -148,6 +162,7 @@ export default function AddAnotherCouple(props) {
     return (
 
         <ScrollView>
+           
 
             <TouchableWithoutFeedback
                 onPress={() => {
@@ -169,7 +184,7 @@ export default function AddAnotherCouple(props) {
                                     source={require("../assets/close.png")}
                                 ></Image>
                             </TouchableOpacity>
-                            <Text style={styles.ProfileDetails}>Add Date Info</Text>
+                            <Text style={styles.ProfileDetails}>Add Person’s Info</Text>
                         </View>
                         <View style={styles.tinyLogo}>
                             <Image style={styles.tinyLogo}
@@ -192,7 +207,7 @@ export default function AddAnotherCouple(props) {
                         </View>
                         <View style={styles.sectionStyle}>
 
-                        <MaskInput
+                            <MaskInput
                                 placeholderTextColor={'white'}
                                 placeholder={'Mobile Number'}
                                 style={{ color: 'white' }}
@@ -236,15 +251,15 @@ export default function AddAnotherCouple(props) {
                         </View>
                         <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
 
-                        <Text style={{ color: '#fff' }}>{dob}</Text>
-                    </TouchableOpacity>
-                    <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        onConfirm={handleConfirm}
-                        onCancel={hideDatePicker}
-                    />
-                       <Text style={styles.profileText}>Profile Background Color</Text>
+                            <Text style={{ color: '#fff' }}>{dob}</Text>
+                        </TouchableOpacity>
+                        <DateTimePickerModal
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            onConfirm={handleConfirm}
+                            onCancel={hideDatePicker}
+                        />
+                        <Text style={styles.profileText}>Profile Background Color</Text>
 
                         <SafeAreaView style={{ flex: 1 }}>
                             <FlatList
@@ -291,15 +306,15 @@ export default function AddAnotherCouple(props) {
 
                         <TouchableOpacity
                             onPress={() => {
-                                dispatch({ type: "Add", payload: { name, number, email, dateb, color }, }, props.navigation.navigate('home'))
+                                dispatch({ type: "Add", payload: { name, socialSec, email, dob, color },}, props.navigation.navigate('home'))
                             }}
                         >
-                        </TouchableOpacity>                   
+                        </TouchableOpacity>
                         <View style={styles.Cont}>
                             <TouchableOpacity
 
-                                onPress={() => {
-                                    dispatch({ type: "Add", payload: { name, number, email, dateb, color }, }, props.navigation.navigate('home'))
+                                onPress={() => {   press ==  false ? alert('Choose background color') :  dispatch( { type: "Add", payload: { name, socialSec, email, dob, color }, } ,  props.navigation.navigate('home'))
+                                   
                                 }}
 
                             >
@@ -388,7 +403,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginTop: 0,
-        marginHorizontal: 85,
+        marginHorizontal: 70,
         marginBottom: 20,
         fontFamily: "Poppins-Regular",
         textAlign: 'center',

@@ -41,9 +41,9 @@ function CoupleCard(props) {
                                 <View style={styles.flex2}>
                                     <View style={{ flexDirection: 'column', marginTop: 20, }}>
                                         <Text style={styles.cardTextHead}>{item.name} </Text>
-                                        <Text style={styles.cardText}>Phone:  {item.number}</Text>
+                                        <Text style={styles.cardText}>Phone:  {item.socialSec}</Text>
                                         <Text style={styles.cardText}>Email:  {item.email}</Text>
-                                        <Text style={styles.cardText}>Date 0f birth:  {item.dateb}</Text>
+                                        <Text style={styles.cardText}>Date 0f birth:  {item.dob}</Text>
                                     </View>
                                 </View>
                                 <View style={styles.flex3}>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Poppins-Regular',
         fontSize: 11,
-        marginLeft: 4,
+        marginLeft: 12,
         marginTop: 16,
 
 

@@ -43,7 +43,7 @@ function CoupleCard({navigation}) {
                                         <Text style={styles.cardTextHead}>{item.name} </Text>
                                         <Text style={styles.cardText}>Phone:  {item.socialSec}</Text>
                                         <Text style={styles.cardText}>Email:  {item.email}</Text>
-                                        <Text style={styles.cardText}>Date 0f birth:  {item.dob}</Text>
+                                        <Text style={styles.cardText}>Date of Birth:  {item.dob}</Text>
                                     </View>
                                 </View>
                                 <View style={styles.flex3}>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
 
     cardTextHead: {
         color: 'white',
-        fontFamily: 'Poppins-Bold',
+        fontFamily: "Gazpacho Bold",
         fontSize: 18,
         marginLeft: moderateScale(3),
         alignSelf: 'center'
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     },
     cardText: {
         color: 'white',
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         fontSize: 11,
         marginLeft: 13,
         marginTop: 16,
@@ -183,108 +183,6 @@ const styles = StyleSheet.create({
 
 
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // RadioInnerViewNormal: {
-
-
-    //     height: 18,
-    //     width: 18,
-    //     backgroundColor: 'white',
-    //     borderRadius: 50,
-    //     alignSelf: 'center',
-    //     top: 3.5
-
-
-
-    // },
-    // RadioInnerView: {
-
-    //     height: 18,
-    //     width: 18,
-    //     backgroundColor: '#00b611',
-    //     borderRadius: 50,
-    //     alignSelf: 'center',
-    //     top: 3.5
-
-
-    // },
-    // RadioView: {
-
-    //     height: 25,
-    //     width: 25,
-    //     backgroundColor: 'white',
-    //     borderRadius: 50,
-    //     margin: 10,
-    //     alignSelf: 'flex-end'
-
-    // },
-
-    // DataView: {
-
-    //     flexDirection: 'column',
-    //     marginLeft: moderateScale(10),
-    //     width: moderateScale(130),
-
-    // },
-    // dpStyle: {
-
-    //     width: moderateScale(126),
-    //     height: moderateScale(152),
-    //     backgroundColor: '#F11775'
-
-
-
-    // },
-    // picStyle: {
-
-    //     width: moderateScale(windowWidth - 70),
-    //     height: moderateScale(152),
-    //     borderRadius: 18,
-    //     flexDirection: 'row',
-    //     backgroundColor: 'white',
-    //     alignSelf: 'center',
-    //     justifyContent: 'space-between',
-    //     backgroundColor: '#F11775',
-    //     marginTop: 16
-
-
-    // },
-
-    // MainView: {
-    //     height: moderateScale(185),
-    //     width:moderateScale(windowWidth - 50),
-    //     backgroundColor: '#F11775',
-    //     alignSelf: 'center',
-    //     borderRadius: moderateScale(18),
-    //     margin: 10,
-    //     marginBottom: 20,
-    //     justifyContent: 'space-between',
-
-
-
-
-    // }
 
 });
 

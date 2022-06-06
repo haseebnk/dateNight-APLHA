@@ -20,9 +20,6 @@ import { moderateScale } from "react-native-size-matters";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
-
-
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 // const [Mystate, NewState] = useState(0);
@@ -184,15 +181,15 @@ const styles = StyleSheet.create({
     },
     cardTextHead: {
         color: 'white',
-        fontFamily: "Poppins-Regular",
-        fontWeight:'700',
+        fontFamily: "Gazpacho Bold",
+      
         fontSize: 18,
         marginLeft: 25,
         marginTop:moderateScale(18, 0.1)
     },
     cardText: {
         color: 'white',
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         fontSize: 13,
        marginTop:7,
        marginLeft:25

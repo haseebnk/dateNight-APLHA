@@ -256,17 +256,20 @@ export default function SignupScreen({ navigation }) {
                     </TouchableOpacity>
                     <View style={styles.sectionStyle}>
                         <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
+                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Gazpacho Regular", marginTop: 8 }}
                             placeholder="Full Name"
                             placeholderTextColor='white'
                             onChangeText={(text) => setUserName(text)}
                         />
                     </View>
-                    <View style={styles.sectionStyle}>
+                    <View style={styles.sectionStyle2}>
                         <MaskInput
                             placeholderTextColor={'white'}
-                            placeholder={'Mobile Number'}
-                            style={{ color: 'white' }}
+                            placeholder={'Mobile Number      '}
+                            
+                            placeholderFillCharacter={true}
+                            
+                            style={{ color: 'white' , fontFamily: "Gazpacho Regular", }}
                             value={socialSec}
                             onChangeText={(masked, unmasked) => {
                                 setsocialSec(masked);
@@ -294,7 +297,7 @@ export default function SignupScreen({ navigation }) {
                     </View>
                     <View style={styles.sectionStyle}>
                         <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8 }}
+                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Gazpacho Regular", marginTop: 8 }}
                             placeholder='Email'
                             placeholderTextColor='white'
                             autoCorrect={true}
@@ -307,7 +310,7 @@ export default function SignupScreen({ navigation }) {
                     <TouchableOpacity  onPress={() => showDatePicker()}>
                         <View style={styles.sectionStyle}>
 
-                            <Text style={{ color: 'white' }}>{dob}</Text>
+                            <Text style={{ color: 'white' , fontFamily: "Gazpacho Regular", }}>{dob}</Text>
                         </View>
                     </TouchableOpacity>
                     <DateTimePickerModal
@@ -318,7 +321,7 @@ export default function SignupScreen({ navigation }) {
                     />
                     <View style={styles.sectionStyle}>
                         <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Poppins-Regular", marginTop: 8, }}
+                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Gazpacho Regular", marginTop: 8, }}
                             placeholder="Password"
                             placeholderTextColor='white'
                             secureTextEntry={true}
@@ -418,7 +421,7 @@ const styles = StyleSheet.create({
         marginTop: -15,
         marginBottom: 25,
         textAlign: 'center',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     takePhoto: {
@@ -429,7 +432,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     uploadPhoto: {
         color: '#fff',
@@ -437,7 +440,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 10,
         textAlign: 'center',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     backContainer: {
         alignSelf: "center",
@@ -486,6 +489,22 @@ const styles = StyleSheet.create({
         width: 18,
         resizeMode: 'stretch',
         alignItems: 'center',
+    },
+    sectionStyle2: {
+        alignSelf: "center",
+        flexDirection: 'row',
+
+       
+        backgroundColor: '#363143',
+        borderRadius: 18,
+        marginTop: 10,
+        paddingHorizontal: 16,
+
+        fontSize: 13,
+        width: '80%',
+        height: 63,
+
+        margin: 10,
     },
     sectionStyle: {
         alignSelf: "center",
@@ -571,7 +590,7 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -594,13 +613,13 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     profileText: {
         color: '#ffff',
         fontSize: 16,
         marginTop: 20,
         alignSelf: "center",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
 });

@@ -68,7 +68,7 @@ export default function Splashing(props) {
           <Animatable.Text delay={1500} style={styles.datingText} animation="slideInDown" >Dating just got <Animatable.Text animation="slideInDown" style={{
 
             fontSize: 20,
-            fontFamily: 'Poppins-Regular',
+            fontFamily: "Gazpacho Regular",
             fontStyle: 'italic',
             fontWeight: 'bold'
           }}>fun</Animatable.Text > again!</Animatable.Text>
@@ -102,13 +102,13 @@ const styles = StyleSheet.create({
   steps: {
     color: 'white',
     fontSize: 17,
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Gazpacho Regular",
     alignSelf: "center",
     alignContent: "center",
   },
   getStarted: {
     color: 'white',
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Gazpacho Regular",
     fontSize: 17,
     alignSelf: "center",
   },
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: 'white',
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Gazpacho Regular",
     fontSize: 17,
     alignSelf: "center",
     alignContent: "center",
@@ -133,14 +133,14 @@ const styles = StyleSheet.create({
   datenight: {
     color: '#FF2B25',
     fontSize: 43,
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Gazpacho Regular",
     alignSelf: "center",
     alignContent: "center",
   },
   datingText: {
     color: '#A5A5A5',
     fontSize: 17,
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Gazpacho Regular",
     alignSelf: "center",
     alignContent: "center",
 

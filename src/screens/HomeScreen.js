@@ -344,7 +344,7 @@ const HomeScreen = (props) => {
                                     colors={['#80D3FC', '#80D3FC']}
                                     style={styles.addEventButton} >
                                     <Text style={styles.AddMeal}>
-                                        Add a meal
+                                        Add a Meal
                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -353,7 +353,7 @@ const HomeScreen = (props) => {
                                     colors={['#44BEFB', '#44BEFB']}
                                     style={styles.addEventButton} >
                                     <Text style={styles.AddMeal}>
-                                        Add An activity
+                                        Add an Activity
                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -428,7 +428,7 @@ const HomeScreen = (props) => {
                         >
                             <TouchableOpacity
                                 onPress={() => setModalOpen(true)}
-                                style={styles.PingPlayed}
+                                style={styles.PingPlayed2}
                                 type={PreData}
                             >
                                 <Text style={styles.PingText1}>
@@ -519,7 +519,7 @@ const HomeScreen = (props) => {
             <View style={styles.container}>
                 <View style={styles.TopHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                        <Text style={{ fontSize: 20, fontFamily: "Poppins-Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
+                        <Text style={{ fontSize: 20, fontFamily: "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => props.navigation.navigate('personalprofiledetails')}>
@@ -612,7 +612,7 @@ const HomeScreen = (props) => {
                                                         }}>
 
                                                         <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
-                                                        <Text style={{ padding: 5, color: 'white', marginLeft: -20, fontFamily: "Poppins-Regular", fontSize: 16, width: moderateScale(180) }}>{item.title}</Text>
+                                                        <Text style={{ padding: 5, color: 'white', marginLeft: -20, fontFamily: "Gazpacho Regular", fontSize: 16, width: moderateScale(180) }}>{item.title}</Text>
 
                                                         {/* <AntDesign name="caretdown" size={16} color="black"/> */}
                                                         <TouchableOpacity>
@@ -630,7 +630,7 @@ const HomeScreen = (props) => {
                                                     style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
                                                     <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
                                                     <View >
-                                                        <Text style={{ padding: 5, marginLeft: -20, fontFamily: "Poppins-Regular", color: "white", fontSize: 16, width: moderateScale(180), }}>{item.title}</Text>
+                                                        <Text style={{ padding: 5, marginLeft: -20, fontFamily: "Gazpacho Regular", color: "white", fontSize: 16, width: moderateScale(180), }}>{item.title}</Text>
                                                     </View>
                                                     <TouchableOpacity>
                                                         <View style={styles.RadioView2}>
@@ -662,7 +662,7 @@ const HomeScreen = (props) => {
                                                 <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
 
                                                     <View style={{ backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, }}>
-                                                        <Text style={{ margin: 15, padding: 15, marginHorizontal: 0, marginTop: -10, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Poppins-Regular", }}>{item.description} </Text>
+                                                        <Text style={{ margin: 15, padding: 15, marginHorizontal: 0, marginTop: -10, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Gazpacho Regular", }}>{item.description} </Text>
                                                     </View>
 
 
@@ -741,7 +741,7 @@ const HomeScreen = (props) => {
                                 <View style={styles.AddPersonView}>
                                     <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
                                     <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
-                                        <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
+                                        <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: "Gazpacho Regular" }}>Add New +</Text>
                                     </TouchableOpacity>
 
                                     <CoupleCard navigation={props.navigation}></CoupleCard>
@@ -766,7 +766,7 @@ const HomeScreen = (props) => {
 
                         <Text style={styles.choosePersonText}>   Add Another Couple</Text>
                         <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
-                            <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular' }}>Add New +</Text>
+                            <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: "Gazpacho Regular" }}>Add New +</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
@@ -789,7 +789,7 @@ const HomeScreen = (props) => {
                     </View>
                     <View style={styles.addEvent} >
                         <View style={styles.mealView} >
-                            <Text style={styles.choosePersonText}>  Add An Event</Text>
+                            <Text style={styles.choosePersonText}>  Add an Event</Text>
                             <View>
                                 <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20, marginBottom: 20 }}>
 
@@ -877,8 +877,8 @@ const HomeScreen = (props) => {
 
                                             />
 
-                                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(3.5, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15, position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(6, 0) }}>N</Text>
+                                            <Text style={{ color: 'white', fontSize: 14, position: 'absolute',fontFamily: "Gazpacho Bold", bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(2.5, 0.1) }}> Y</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 14 , fontFamily: "Gazpacho Bold" , position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, -1) }}>N</Text>
 
                                         </TouchableOpacity>
                                     </View>
@@ -948,7 +948,7 @@ const HomeScreen = (props) => {
                         <TouchableOpacity onPress={() => showDatePicker()}>
                             <View style={styles.sectionStyle2}>
                                 <Text
-                                    style={{ color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginHorizontal: 20, }}
+                                    style={{ color: 'white', fontSize: 16, fontFamily: "Gazpacho Regular", marginHorizontal: 20, }}
 
                                 >
                                     {dob}
@@ -964,7 +964,7 @@ const HomeScreen = (props) => {
                         <TouchableOpacity onPress={() => showTimePicker()} >
                             <View style={styles.sectionStyle2}>
                                 <Text
-                                    style={{ color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginHorizontal: 10, }}
+                                    style={{ color: 'white', fontSize: 16, fontFamily: "Gazpacho Regular", marginHorizontal: 10, }}
 
                                 >  {time}</Text>
 
@@ -1011,7 +1011,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
     activeText: {
         color: 'white',
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         alignSelf: 'center',
         textAlign: 'center',
         fontSize: 12,
@@ -1032,7 +1032,7 @@ const styles = StyleSheet.create({
     },
     textStyleNo1: {
         color: "white",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         fontSize: 18,
         textAlign: "center",
     },
@@ -1052,7 +1052,7 @@ const styles = StyleSheet.create({
     modalText2: {
         marginBottom: 10,
         textAlign: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         color: 'white',
         fontSize: 18
     },
@@ -1109,12 +1109,12 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 14,
         color: 'white',
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
     },
     textStyleNo: {
         color: 'white',
         margin: 20,
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         fontSize: 14
     },
     buttonNo: {
@@ -1206,7 +1206,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
 
         marginBottom: 5,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center',
 
     },
@@ -1251,7 +1251,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
 
 
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1267,7 +1267,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         marginTop: 20,
 
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1281,41 +1281,50 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     PingUnlock: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     PingLock: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
+
+    },
+    PingPlayed2: {
+        width: 90,
+        height: moderateScale(85),
+        borderRadius: 12,
+        margin: 15,
+        backgroundColor: "#1AC72B",
+        fontFamily: "Gazpacho Regular",
 
     },
     PingPlayed: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#1AC72B",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     PingText1: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: "Gazpacho Bold",
         textAlign: "center",
-        marginTop: 27,
+        marginTop: 30,
         marginHorizontal: 6
 
     },
@@ -1323,23 +1332,19 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: "Gazpacho Bold",
         textAlign: "center",
         marginTop: 27,
         marginHorizontal: 4,
-
-
     },
     PingText11: {
         fontSize: 11.5,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: "Gazpacho Bold",
         textAlign: "center",
         marginTop: moderateScale(20),
         marginHorizontal: 6,
-
-
     },
     pinLockPic: {
         height: 12,
@@ -1359,7 +1364,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: "Gazpacho Bold",
         textAlign: "center",
         marginTop: -4,
         marginHorizontal: 6
@@ -1380,7 +1385,7 @@ const styles = StyleSheet.create({
         marginTop:10,
         marginBottom:-25,
         alignSelf: "center",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: "center",
 
     },
@@ -1389,7 +1394,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         color: "#B8B8B8",
         bottom: 30,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     count: {
@@ -1398,29 +1403,26 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginTop:moderateScale(30),
        
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     ping: {
         flexDirection: "row",
         marginTop: 20,
-        alignSelf: "center",
-       
-
-
+        alignSelf: "center", 
     },
     btn1Text: {
         fontSize: 41,
         alignSelf: "center",
         color: "white",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     btn1: {
         width: 58,
-        height: 58,
+        height: 56,
         margin: 25,
         borderRadius: 18,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
 
     },
@@ -1428,12 +1430,12 @@ const styles = StyleSheet.create({
         fontSize: 41,
         alignSelf: "center",
         color: "white",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     btn2: {
         width: 58,
-        height: 58,
+        height: 56,
         margin: 25,
         borderRadius: 18,
 
@@ -1454,13 +1456,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 25,
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     zipCode: {
         fontSize: 18,
         color: "#9f9f9f",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     addEvent: {
@@ -1475,7 +1477,7 @@ const styles = StyleSheet.create({
     },
     AddButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
         alignSelf: "center",
         color: '#FFFF',
@@ -1505,7 +1507,7 @@ const styles = StyleSheet.create({
     AddButtonText2: {
 
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         marginTop: 24,
         alignSelf: "center",
         color: '#FFFF',
@@ -1515,7 +1517,7 @@ const styles = StyleSheet.create({
     AddButtonText: {
         height: 76,
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         marginTop: 27,
         alignSelf: "center",
         color: '#FFFF',
@@ -1550,7 +1552,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
 
     },
@@ -1560,7 +1562,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     PrePlanText: {
@@ -1570,7 +1572,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     SelectYourPingText: {
@@ -1579,7 +1581,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     choosePersonText: {
         marginTop: 40,
@@ -1587,7 +1589,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     }
     ,
     contentHead: {
@@ -1604,7 +1606,7 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 18,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         marginBottom: 20,
     },
     header: {
@@ -1622,7 +1624,7 @@ const styles = StyleSheet.create({
     headerText: {
         textAlign: 'center',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: "white",
         alignSelf: "flex-start",
         marginTop: 15,
@@ -1651,7 +1653,7 @@ const styles = StyleSheet.create({
     },
     selectTitle: {
         fontSize: 14,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         padding: 10,
         textAlign: 'center',
     },
@@ -1664,6 +1666,6 @@ const styles = StyleSheet.create({
     multipleToggle__title: {
         fontSize: 16,
         marginRight: 8,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
 });

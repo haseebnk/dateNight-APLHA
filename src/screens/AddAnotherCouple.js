@@ -100,7 +100,7 @@ export default function AddAnotherCouple(props) {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [socialSec, setsocialSec] = useState('');
-    const [dob, setdob] = useState('Birth Date ');
+    const [dob, setdob] = useState('Birth Date');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [color, setColor] = useState([])
 
@@ -200,7 +200,7 @@ export default function AddAnotherCouple(props) {
                         <View style={styles.sectionStyle}>
 
                             <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Gazpacho Regular", }}
                                 placeholder="Full Name"
                                 placeholderTextColor='white'
                                 value={name}
@@ -211,8 +211,8 @@ export default function AddAnotherCouple(props) {
 
                             <MaskInput
                                 placeholderTextColor={'white'}
-                                placeholder={'Mobile Number'}
-                                style={{ color: 'white' }}
+                                placeholder={'Mobile Number      '}
+                                style={{ color: 'white' , fontSize: 13, fontFamily: "Gazpacho Regular", width: '80%',}}
                                 value={socialSec}
                                 onChangeText={(masked, unmasked) => {
                                     setsocialSec(masked);
@@ -241,7 +241,7 @@ export default function AddAnotherCouple(props) {
                         <View style={styles.sectionStyle}>
 
                             <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Gazpacho Regular", }}
 
                                 placeholder='Email'
                                 placeholderTextColor='white'
@@ -253,7 +253,7 @@ export default function AddAnotherCouple(props) {
                         </View>
                         <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
 
-                            <Text style={{ color: '#fff' }}>{dob}</Text>
+                            <Text style={{ color: '#fff' , fontFamily: "Gazpacho Regular",}}>{dob}</Text>
                         </TouchableOpacity>
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
 
     cancelButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 25,
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     },
     saveButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginHorizontal: 60,
         marginBottom: 20,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center',
 
 
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     uploadPhoto: {
         color: '#fff',
@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 10,
         textAlign: 'center',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     backContainer: {
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
 
 
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         fontSize: 16,
         width: '80%',
         height: 60,
@@ -575,7 +575,7 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -598,12 +598,12 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     profileText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: "center",
         marginTop: 10
     },

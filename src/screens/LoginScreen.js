@@ -68,49 +68,49 @@ export default function LoginScreen2(props) {
     const onLoginUser = () => {
         setLoader(true);
 
-            var data = {
-                email: email,
-                password: password
-            }
+        var data = {
+            email: email,
+            password: password
+        }
 
-            var emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            setLoader(false);
-            if (!emailReg.test(data.email)) {
-                // alert('Invalid credentials')
-            }
+        var emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        setLoader(false);
+        if (!emailReg.test(data.email)) {
+            // alert('Invalid credentials')
+        }
 
-            if (data.email == '' || data.email == null) {
-                alert( 'Email Required!');
-                return false;
-              }
-              if (data.password == '' || data.password == null) {
-                alert( 'Password Required!');
-                return false;
-              }
+        if (data.email == '' || data.email == null) {
+            alert('Email Required!');
+            return false;
+        }
+        if (data.password == '' || data.password == null) {
+            alert('Password Required!');
+            return false;
+        }
 
-              setLoader(true);
+        setLoader(true);
 
-            axiosconfig
-                .post('/login', data)
-                .then((res: any) => {
-                    setLoader(false);
-                    
-                    if (res.data.error) {
-                        alert('invalid credentials')
-                        // showToast('login error', res.data.error_description);
-                    } else {
-                        console.log("Got it", res.data.access_token)
+        axiosconfig
+            .post('/login', data)
+            .then((res: any) => {
+                setLoader(false);
 
-                        storeData(res.data.access_token);
+                if (res.data.error) {
+                    alert('invalid credentials')
+                    // showToast('login error', res.data.error_description);
+                } else {
+                    console.log("Got it", res.data.access_token)
+
+                    storeData(res.data.access_token);
 
 
-                    }
-                })
-                .catch(err => {
-                    setLoader(false);
-                    console.log( 'Invalid Credentials', err);
-                });
-        
+                }
+            })
+            .catch(err => {
+                setLoader(false);
+                console.log('Invalid Credentials', err);
+            });
+
 
     }
 
@@ -151,7 +151,7 @@ export default function LoginScreen2(props) {
                         style={styles.ImageStyle}
                     />
                     <TextInput
-                        style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginTop: 8 }}
+                        style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: "Gazpacho Regular", marginTop: 8 }}
                         value={email}
                         placeholder='Email'
                         placeholderTextColor='white'
@@ -169,7 +169,7 @@ export default function LoginScreen2(props) {
                     />
                     <TextInput
                         value={password}
-                        style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: "Poppins-Regular", marginTop: 8 }}
+                        style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: "Gazpacho Regular", marginTop: 8 }}
                         placeholder="Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
@@ -198,12 +198,12 @@ export default function LoginScreen2(props) {
                                 ]}
 
                             />
-                            <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: moderateScale(1, 0.1), left: moderateScale(3, 0.1) }}> Y</Text>
-                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 15,  position: 'absolute', bottom: Platform.OS ==='ios' ? moderateScale(2, 0.1) :moderateScale(1.2,0), right: Platform.OS ==='ios' ? moderateScale(6, 0.1): moderateScale(6,0)}}>N</Text>
+                            <Text style={{ color: 'white', fontSize: 14, position: 'absolute', fontFamily: "Gazpacho Bold", bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(2.5, 0.1) }}> Y</Text>
+                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 14, fontFamily: "Gazpacho Bold", position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, -1) }}>N</Text>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
-                <Text style={{ color: 'white', fontSize: 12, marginLeft: 70, marginTop: 4, fontFamily: "Poppins-Regular", }}>Remember</Text>
+                <Text style={{ color: 'white', fontSize: 12, marginLeft: 70, marginTop: 4, fontFamily: "Gazpacho Regular", }}>Remember</Text>
                 <TouchableOpacity onPress={() => props.navigation.navigate("forgotpassword")}>
                     <Text style={styles.fpText} >Forgot Password?</Text>
                 </TouchableOpacity>
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center',
         margin: 10,
         color: '#ffffff',
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     loginText: {
         color: '#fff',
         fontSize: 20,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
 
         marginTop: 20,
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         color: '#00A8FF',
         fontSize: 12,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
         marginTop: -17,
         // marginBottom:50,
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
 });

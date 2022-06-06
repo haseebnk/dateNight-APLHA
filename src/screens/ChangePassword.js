@@ -39,7 +39,7 @@ export default function ChangePassword(props) {
                 </View>
                 <View style={styles.sectionStyle}>
                     <TextInput
-                        style={{ flex: 1, color: 'white', fontFamily: "Poppins-Regular", fontSize: 15 }}
+                        style={{ flex: 1, color: 'white', fontFamily: "Gazpacho Regular", fontSize: 15 }}
                         placeholder="New Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
@@ -48,7 +48,7 @@ export default function ChangePassword(props) {
                 </View>
                 <View style={styles.sectionStyle}>
                     <TextInput
-                        style={{ flex: 1, color: 'white', fontFamily: "Poppins-Regular", fontSize: 15 }}
+                        style={{ flex: 1, color: 'white', fontFamily: "Gazpacho Regular", fontSize: 15 }}
                         placeholder="Confirm Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
@@ -99,11 +99,11 @@ const styles = StyleSheet.create({
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 22,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     saveButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     changePassHeading: {
         color: '#fff',
         fontSize: 18,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: 'center',
         marginTop: 2,
         marginBottom: 30,

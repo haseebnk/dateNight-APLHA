@@ -18,12 +18,12 @@ import { NotesContext } from "../context/NotesContext";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-function CoupleCard(props) {
+function CoupleCard({navigation}) {
 
-    const { state } = useContext(NotesContext)
+    // const { state } = useContext(NotesContext)
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
-
+    const { state, dispatch } = useContext(NotesContext)
     return (
         <View >
             <FlatList
@@ -52,12 +52,20 @@ function CoupleCard(props) {
 
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={()=> props.navigation.navigate("addcouple")}>
+                                    <TouchableOpacity
+
+                                        onPress={() => {
+                                            dispatch({ type: "Update", payload: { } })
+                                            navigation.navigate('choosedate')
+                                        }}
+                                    >
 
                                         <MaterialIcons style={{ marginLeft: 7, marginBottom: 0 }} name='mode-edit' size={hp('4%')} color="white" />
 
                                     </TouchableOpacity>
-                                    <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('4%')} color="white" />
+                                    <TouchableOpacity onPress={() => dispatch({ type: 'Remove', payload: item.id })}>
+                                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('4%')} color="white" />
+                                    </TouchableOpacity>
                                 </View>
 
                             </LinearGradient>
@@ -68,7 +76,7 @@ function CoupleCard(props) {
                 }}
             />
         </View>
- 
+
     );
 
 }
@@ -117,28 +125,6 @@ const styles = StyleSheet.create({
 
     },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     picSize: {
 
         marginLeft: 10,
@@ -147,13 +133,6 @@ const styles = StyleSheet.create({
         width: 110,
         borderRadius: 14,
         alignItems: 'center'
-
-
-
-
-
-
-
     },
     flex3: {
         flex: .8,
@@ -164,8 +143,6 @@ const styles = StyleSheet.create({
     },
     flex2: {
         flex: 2.8,
-
-
 
     },
     flex1: {
@@ -188,21 +165,11 @@ const styles = StyleSheet.create({
     },
 
 
-
-
-
-
-
-
-
     cardTextHead: {
         color: 'white',
         fontFamily: 'Poppins-Bold',
         fontSize: 18,
         marginLeft: moderateScale(3),
-
-
-
         alignSelf: 'center'
 
     },
@@ -210,7 +177,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Poppins-Regular',
         fontSize: 11,
-        marginLeft: 12,
+        marginLeft: 13,
         marginTop: 16,
 
 

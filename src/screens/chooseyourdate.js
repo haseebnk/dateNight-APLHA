@@ -288,9 +288,9 @@ const showDatePicker = () => {
                         </TouchableOpacity>              
                         <View style={styles.Cont}>
                             <TouchableOpacity
-                               onPress={() => {   press ==  false ? alert('Choose background color') :  dispatch( { type: "Add", payload: { name, socialSec, email, dob, color }, } ,  props.navigation.navigate('home'))
-                        }}
-
+                              onPress={() => { press == false  ? alert('Choose background color ') :
+                              dispatch({ type: "Add", payload: { name, socialSec, email, dob, color }, }, props.navigation.navigate('home'))
+                          }}
                             >
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginTop: 0,
-        marginHorizontal: 85,
+        marginHorizontal: 80,
         marginBottom: 20,
         fontFamily: "Poppins-Regular",
         textAlign: 'center',

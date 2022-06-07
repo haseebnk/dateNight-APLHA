@@ -84,6 +84,8 @@
 		<string>Poppins-ThinItalic.ttf</string>
 		<string>Buttershine-Serif.otf</string>
 		<string>buttershine-serif.otf</string>
+		<string>Gazpacho Bold.ttf</string>
+		<string>Gazpacho Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash</string>

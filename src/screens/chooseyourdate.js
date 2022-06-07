@@ -110,7 +110,7 @@ const showDatePicker = () => {
 
     const handleConfirm = (date) => {
         console.warn("A date has been picked: ", date);
-        setdob(moment(date).format('MM/DD/yy'))
+        setdob(moment(date).format('MM/DD/yy') +' ('+ moment().diff(date,'years')+')')
         hideDatePicker();
     };
 

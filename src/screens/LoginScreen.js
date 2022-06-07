@@ -198,8 +198,8 @@ export default function LoginScreen2(props) {
                                 ]}
 
                             />
-                            <Text style={{ color: 'white', fontSize: 14, position: 'absolute', fontFamily: "Gazpacho Bold", bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(2.5, 0.1) }}> Y</Text>
-                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 14, fontFamily: "Gazpacho Bold", position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, -1) }}>N</Text>
+                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: "Gazpacho Bold", bottom: moderateScale(3.1, 0), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: "Gazpacho Bold", position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(3.1, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, 0) }}>N</Text>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
@@ -241,15 +241,17 @@ const styles = StyleSheet.create({
         borderRadius: 19,
 
     },
+   
     toggleContainer: {
-        marginLeft: 6,
-        height: 23,
-        width: 45,
-        borderRadius: 19,
-
+      
+        marginLeft: 12,
+        height: 22,
+        width: 43,
+        borderRadius: 20,
+        borderWidth: 0,
         overflow: 'hidden',
         backgroundColor: '#363143',
-        padding: 1,
+        padding: 2,
         position: 'relative',
 
     },

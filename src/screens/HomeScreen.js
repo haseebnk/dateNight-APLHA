@@ -328,7 +328,7 @@ const HomeScreen = (props) => {
     const RemoveEventCard = (b) => {
 
         entries.pop(indexOf, { type: b })
-       
+
         LayoutAnimation.easeInEaseOut();
     }
 
@@ -372,7 +372,7 @@ const HomeScreen = (props) => {
                                     style={styles.addEventButton} >
                                     <Text style={styles.AddMeal}>
                                         Add Drink
-                                     </Text>
+                                    </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
                         </>
@@ -877,8 +877,8 @@ const HomeScreen = (props) => {
 
                                             />
 
-                                            <Text style={{ color: 'white', fontSize: 14, position: 'absolute',fontFamily: "Gazpacho Bold", bottom: moderateScale(1, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(2.5, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 14 , fontFamily: "Gazpacho Bold" , position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(1.5, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, -1) }}>N</Text>
+                                            <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: "Gazpacho Bold", bottom: moderateScale(3.1, 0), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: "Gazpacho Bold", position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(3.1, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, 0) }}>N</Text>
 
                                         </TouchableOpacity>
                                     </View>
@@ -902,7 +902,7 @@ const HomeScreen = (props) => {
                     <View style={{ height: moderateScale(400), backgroundColor: '#4D4D4D' }}>
                         <Text style={styles.SelectYourPingText}>   Select Your Ping Frequency</Text>
                         <View style={styles.ping}>
-                            <View style={{width:100}}>
+                            <View style={{ width: 100 }}>
                                 <TouchableOpacity onPressIn={onPressMius}
                                     onPress={onPree}
                                     onPressOut={onPree}>
@@ -915,10 +915,10 @@ const HomeScreen = (props) => {
                                     </LinearGradient>
                                 </TouchableOpacity>
                             </View>
-                            <View style={{width:100 , }} >
+                            <View style={{ width: 100, }} >
                                 <Text style={styles.count}>{count}</Text>
                             </View>
-                            <View style={{width:100}}>
+                            <View style={{ width: 100 }}>
                                 <TouchableOpacity onPressIn={onPressIn}
                                     onPress={onPress}
                                     onPressOut={onPressOut}>
@@ -1082,14 +1082,15 @@ const styles = StyleSheet.create({
 
     },
     toggleContainer: {
-
-        height: 23,
-        width: 45,
-        borderRadius: 19,
-
+      
+        
+        height: 22,
+        width: 43,
+        borderRadius: 20,
+        borderWidth: 0,
         overflow: 'hidden',
-        backgroundColor: '#363143',
-        padding: 1,
+        backgroundColor: '#24202F',
+        padding: 2,
         position: 'relative',
 
     },
@@ -1382,8 +1383,8 @@ const styles = StyleSheet.create({
     selectPngText: {
         fontSize: 20,
         color: "white",
-        marginTop:10,
-        marginBottom:-25,
+        marginTop: 10,
+        marginBottom: -25,
         alignSelf: "center",
         fontFamily: "Gazpacho Regular",
         textAlign: "center",
@@ -1401,14 +1402,14 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: "white",
         alignSelf: "center",
-        marginTop:moderateScale(30),
-       
+        marginTop: moderateScale(30),
+
         fontFamily: "Gazpacho Regular",
     },
     ping: {
         flexDirection: "row",
         marginTop: 20,
-        alignSelf: "center", 
+        alignSelf: "center",
     },
     btn1Text: {
         fontSize: 41,
@@ -1460,9 +1461,10 @@ const styles = StyleSheet.create({
 
     },
     zipCode: {
-        fontSize: 18,
+        fontSize: 17,
         color: "#9f9f9f",
         fontFamily: "Gazpacho Regular",
+        marginTop:3
 
     },
     addEvent: {
@@ -1567,7 +1569,7 @@ const styles = StyleSheet.create({
     },
     PrePlanText: {
         marginTop: 30,
-        
+
 
         fontSize: 20,
         color: "#FFFF",

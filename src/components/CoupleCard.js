@@ -128,26 +128,27 @@ const styles = StyleSheet.create({
     picSize: {
 
         marginLeft: 10,
-        marginTop: 22,
-        height: 150,
-        width: 110,
+       
+        height: 140,
+        width: 100,
         borderRadius: 14,
-        alignItems: 'center'
+       
     },
     flex3: {
-        flex: .8,
+        flex: .9,
 
         borderRadius: moderateScale(18),
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
     flex2: {
-        flex: 2.8,
+        flex: 3,
 
     },
     flex1: {
         flex: 2,
-
+        alignItems:'center',
+        justifyContent:'center',
         borderRadius: moderateScale(18),
     },
 
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: "Gazpacho Regular",
         fontSize: 11,
-        marginLeft: 13,
+        marginLeft: 5,
         marginTop: 16,
 
 

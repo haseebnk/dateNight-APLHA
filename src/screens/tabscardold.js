@@ -212,8 +212,8 @@ const ReactNavigationBottomTabs = ({ item }) => {
                         ]}
 
                     />
-                    <Text style={{ color: 'white', fontSize: 14, position: 'absolute',fontFamily: "Gazpacho Bold", bottom: moderateScale(2, 0.1), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 14 , fontFamily: "Gazpacho Bold" , position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(3, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(8.5, 0) }}>N</Text>
+                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute',fontFamily: "Gazpacho Bold", bottom: moderateScale(3.1, 0), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
+                                            <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12 , fontFamily: "Gazpacho Bold" , position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(3.1, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, 0) }}>N</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -450,14 +450,15 @@ const styles = StyleSheet.create({
 
     },
     toggleContainer: {
-        top: moderateScale(-18), marginLeft: 20,
-        height: 25,
-        width: 49,
-        borderRadius: 19,
+        top: moderateScale(-15), marginLeft: 20,
+        
+        height: 22,
+        width: 43,
+        borderRadius: 20,
         borderWidth: 0,
         overflow: 'hidden',
         backgroundColor: '#24202F',
-        padding: 1,
+        padding: 2,
         position: 'relative',
 
     },

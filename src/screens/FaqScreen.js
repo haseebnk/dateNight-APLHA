@@ -83,14 +83,14 @@ const FAQScreen = (props) => {
                                             <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} >
                                                 <View style={{ borderColor: 'white', borderWidth: 0.9, flexDirection: 'row', alignItems: 'center', backgroundColor: '#363143', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White" }}>
                                                     <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
-                                                    <Text style={{ color: 'white', fontFamily: "Poppins-Regular", fontSize: 16 }}>{item.title}</Text>       
+                                                    <Text style={{ color: 'white', fontFamily: "Gazpacho Regular", fontSize: 16 }}>{item.title}</Text>       
                                                 </View>
                                             </TouchableOpacity>
                                             :
                                             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#363143', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
                                                 <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
                                                 <View>
-                                                    <Text style={{ padding: 5, fontFamily: "Poppins-Regular", color: "white", fontSize: 16, }}>{item.title}</Text>
+                                                    <Text style={{ padding: 5, fontFamily: "Gazpacho Regular", color: "white", fontSize: 16, }}>{item.title}</Text>
                                                 </View>
 
 
@@ -101,7 +101,7 @@ const FAQScreen = (props) => {
 
                                             <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
                                                 <View style={{ backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, }}>
-                                                    <Text style={{ margin: 15, padding: 15, marginHorizontal: 0, marginTop: -10, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Poppins-Regular", }}>{item.description} </Text>
+                                                    <Text style={{ margin: 15, padding: 15, marginHorizontal: 0, marginTop: -10, backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, fontSize: 14, fontFamily: "Gazpacho Regular", }}>{item.description} </Text>
                                                 </View>
                                             </Pressable>
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginHorizontal: 135,
         marginBottom: 20,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center',
         marginLeft: 115,
 

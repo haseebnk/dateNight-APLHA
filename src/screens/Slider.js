@@ -21,7 +21,7 @@ const renderNextButton = () => {
       colors={['#FF7474', '#E20303']}
       style={{borderRadius:12 , marginTop:-30 }}
       >
-        <Text style={{textAlign:'center',fontSize: 16, fontFamily:'Poppins-Regular' , width:133, height:50 , paddingTop:12 , color:'white',}}>
+        <Text style={{textAlign:'center',fontSize: 16, fontFamily: "Gazpacho Regular" , width:133, height:50 , paddingTop:14 , color:'white',}}>
           Next
         </Text>
       </LinearGradient>
@@ -40,7 +40,7 @@ const SliderScreen = (props) => {
       colors={['#FF7474', '#E20303']}
       style={{borderRadius:12 ,  marginTop:-30 }}
       >
-        <Text style={{textAlign:'center',fontSize: 16, fontFamily:'Poppins-Regular' , width:133, height:50 , paddingTop:12 , color:'white',}}>
+        <Text style={{textAlign:'center',fontSize: 16, fontFamily: "Gazpacho Regular", width:133, height:50 , paddingTop:12 , color:'white',}}>
           Finish
         </Text>
       </LinearGradient>
@@ -51,7 +51,7 @@ const SliderScreen = (props) => {
   const renderSkipButton =(props)=>{
     return (
     <>
-    <Text style={{ marginTop:-30, paddingTop:12, marginLeft:25 ,textAlign:'center',fontSize: 16, fontFamily:'Poppins-Regular' , color:'white' }} >Skip</Text>
+    <Text style={{ marginTop:-30, paddingTop:12, marginLeft:25 ,textAlign:'center',fontSize: 16, fontFamily: "Gazpacho Regular" , color:'white' }} >Skip</Text>
     </>
     );
   }
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 60,
     marginBottom:20,
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Gazpacho Regular",
     top:-20,
     
   },
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   
-    fontFamily:"Poppins-Light"
+    fontFamily: "Gazpacho Regular"
  
   },
  

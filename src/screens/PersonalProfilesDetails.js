@@ -185,7 +185,7 @@ export default function PersonalProfileDetails(props) {
                         <View style={styles.sectionStyle}>
 
                             <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Gazpacho Regular", }}
                                 placeholder="Full Name"
                                 placeholderTextColor='white'
 
@@ -194,8 +194,8 @@ export default function PersonalProfileDetails(props) {
                         <View style={styles.sectionStyle}>
                             <MaskInput
                                 placeholderTextColor={'white'}
-                                placeholder={'Mobile Number'}
-                                style={{ color: 'white' }}
+                                placeholder={'Mobile Number      '}
+                                style={{ color: 'white' , fontSize: 13, fontFamily: "Gazpacho Regular", width: '80%',}}
                                 value={socialSec}
                                 onChangeText={(masked, unmasked) => {
                                     setsocialSec(masked);
@@ -237,7 +237,7 @@ export default function PersonalProfileDetails(props) {
                         <View style={styles.sectionStyle}>
 
                             <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Gazpacho Regular", }}
 
                                 placeholder='Email'
                                 placeholderTextColor='white'
@@ -248,7 +248,7 @@ export default function PersonalProfileDetails(props) {
                         </View>
                         <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
 
-                            <Text style={{ color: '#fff' }}>{dob}</Text>
+                            <Text style={{ color: '#fff' , fontFamily: "Gazpacho Regular",}}>{dob}</Text>
                         </TouchableOpacity>
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
@@ -370,11 +370,11 @@ const styles = StyleSheet.create({
 
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     cancelButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 25,
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     },
     logoutButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 0,
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
     },
     saveButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         alignSelf: 'center',
         marginBottom: 20,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center',
 
 
@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     uploadPhoto: {
         color: '#fff',
@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 10,
         textAlign: 'center',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     backContainer: {
@@ -564,7 +564,7 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -582,19 +582,19 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     profileText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: "center",
         marginTop: 10
     },
     ReminderText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: "flex-start",
         marginTop: moderateScale(35),
         paddingLeft: moderateScale(20)
@@ -602,7 +602,7 @@ const styles = StyleSheet.create({
     ReminderText2: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: "flex-start",
         marginTop: moderateScale(15),
         paddingLeft: moderateScale(20)

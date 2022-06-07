@@ -110,7 +110,7 @@ const showDatePicker = () => {
 
     const handleConfirm = (date) => {
         console.warn("A date has been picked: ", date);
-        setdob(moment(date).format('MM/DD/yy'))
+        setdob(moment(date).format('MM/DD/yy') +' ('+ moment().diff(date,'years')+')')
         hideDatePicker();
     };
 
@@ -182,19 +182,20 @@ const showDatePicker = () => {
                         <View style={styles.sectionStyle}>
 
                             <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Gazpacho Regular", }}
                                 placeholder="Full Name"
                                 placeholderTextColor='white'
                                 value={name}
                                 onChangeText={(text) => (setName(text))}
                             />
                         </View>
-                        <View style={styles.sectionStyle}>
+                        <View style={styles.sectionStyle2}>
 
                         <MaskInput
                                 placeholderTextColor={'white'}
-                                placeholder={'Mobile Number'}
-                                style={{ color: 'white' }}
+                                placeholder={'Mobile Number      '}
+                                
+                                style={{ color: 'white' , fontSize: 13, fontFamily: "Gazpacho Regular", width: '80%',}}
                                 value={socialSec}
                                 onChangeText={(masked, unmasked) => {
                                     setsocialSec(masked);
@@ -223,7 +224,7 @@ const showDatePicker = () => {
                         <View style={styles.sectionStyle}>
 
                             <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Poppins-Regular", }}
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Gazpacho Regular", }}
 
                                 placeholder='Email'
                                 placeholderTextColor='white'
@@ -234,7 +235,7 @@ const showDatePicker = () => {
                             />
                         </View>
                         <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
-                        <Text style={{ color: '#fff' }}>{dob}</Text>
+                        <Text style={{ color: '#fff' , fontFamily: "Gazpacho Regular", }}>{dob}</Text>
                     </TouchableOpacity>
                     <DateTimePickerModal
                         isVisible={isDatePickerVisible}
@@ -319,7 +320,7 @@ const styles = StyleSheet.create({
 
     cancelButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 25,
@@ -327,7 +328,7 @@ const styles = StyleSheet.create({
     },
     saveButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -374,7 +375,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginHorizontal: 85,
         marginBottom: 20,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center',
 
 
@@ -386,7 +387,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     uploadPhoto: {
         color: '#fff',
@@ -394,7 +395,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 10,
         textAlign: 'center',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     backContainer: {
@@ -443,20 +444,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     sectionStyle2: {
+        alignSelf: "center",
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        // justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#363143',
         borderRadius: 18,
+        marginTop: 10,
+        paddingHorizontal: 16,
 
-
-        fontFamily: "Poppins-Regular",
-        fontSize: 16,
+        fontSize: 13,
         width: '80%',
         height: 60,
 
         margin: 10,
-        alignSelf: "center",
     },
     sectionStyle: {
         alignSelf: "center",
@@ -542,7 +543,7 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -565,12 +566,12 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     profileText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: "center",
         marginTop: 10
     },

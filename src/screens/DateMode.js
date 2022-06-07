@@ -290,7 +290,7 @@ export default function DateMode(props) {
                 </ScrollView>
                 <View style={styles.BottomHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                        <Text style={{ fontSize: 23, color: "white", alignSelf: "flex-start", margin: 20, fontFamily: "Poppins-Regular", marginLeft: 25, top: -5, }}> FAQ</Text>
+                        <Text style={{ fontSize: 23, color: "white", alignSelf: "flex-start", margin: 20, fontFamily: "Gazpacho Regular", marginLeft: 25, top: -5, }}> FAQ</Text>
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', width: moderateScale(50), marginRight: 110 }}>
                         <TouchableOpacity onPress={() => setModalOpen(true)}>
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     count1: {
         fontSize: 30,
         color: "white",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: 'center',
         marginTop:moderateScale(30),
     },
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     modalText3: {
         marginBottom: -50,
         textAlign: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         color: 'white',
         fontSize: 18
     },
@@ -425,27 +425,27 @@ const styles = StyleSheet.create({
         fontSize: 41,
         alignSelf: "center",
         color: "black",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     btn1: {
         width: 58,
-        height: 58,
+        height: 56,
         margin: 25,
         borderRadius: 18,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     btn2Text: {
         fontSize: 41,
         alignSelf: "center",
         color: "black",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     btn2: {
         width: 58,
-        height: 58,
+        height: 56,
         margin: 25,
         borderRadius: 18,
 
@@ -525,13 +525,13 @@ const styles = StyleSheet.create({
     },
     textStyleYes1: {
         color: "white",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         fontSize: 18,
         textAlign: "center"
     },
     textStyleNo1: {
         color: "white",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         fontSize: 18,
         textAlign: "center",
 
@@ -540,13 +540,13 @@ const styles = StyleSheet.create({
 
     textStyleYes: {
         color: "white",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         fontSize: 18,
         textAlign: "center"
     },
     textStyleNo: {
         color: "#E20303",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         fontSize: 18,
         textAlign: "center",
 
@@ -555,14 +555,14 @@ const styles = StyleSheet.create({
     modalText2: {
         marginBottom: 10,
         textAlign: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         color: 'white',
         fontSize: 18
     },
     modalText: {
         marginBottom: 15,
         textAlign: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         color: 'white',
         fontSize: 18
     },
@@ -592,13 +592,14 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 18,
         color: 'white',
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center'
     },
     dareText: {
         fontSize: 12.7,
-        fontFamily: "Poppins-Light",
+        fontFamily: "Gazpacho Regular",
         alignSelf: 'center',
+        lineHeight:18,
         margin: 18,
         color: '#24202F',
     },
@@ -612,14 +613,14 @@ const styles = StyleSheet.create({
     },
     thirdText: {
         fontSize: 20,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: 'center',
         color: '#74FF82',
         marginBottom: 10
     },
     secondText: {
         fontSize: 25,
-        fontFamily: "Poppins-Bold",
+        fontFamily: "Gazpacho Bold",
         alignSelf: 'center',
         color: '#74FF82',
         marginTop: -5,
@@ -629,14 +630,14 @@ const styles = StyleSheet.create({
     },
     firstText: {
         fontSize: 20,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         alignSelf: 'center',
         color: '#74FF82',
         marginTop: 20
     },
     count: {
         color: 'white', fontSize: 19, textAlign: 'center',
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     BottomHeader: {
         alignSelf: "center",
@@ -655,7 +656,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     PingLock: {
         width: 90,
@@ -663,7 +664,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     PingPlayed: {
         width: 90,
@@ -671,7 +672,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#1AC72B",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
     },
     ping3: {
         flexDirection: "row",
@@ -684,7 +685,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: "Gazpacho Bold",
         textAlign: "center",
         marginTop: 27,
         marginHorizontal: 4,
@@ -704,7 +705,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 20,
         color: "white",
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         marginTop: Platform.OS === 'ios' ? 45 : 15,
     },
     container: {

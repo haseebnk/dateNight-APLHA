@@ -40,14 +40,14 @@ export default function ForgotPassword(props) {
                 </View>
                 <View>
                     <Text
-                        style={{ color: "#C2C2C2", marginBottom: 15, marginLeft: 15, fontSize: 12, fontFamily: "Poppins-Regular", }}
+                        style={{ color: "#C2C2C2", marginBottom: 15, marginLeft: 15, fontSize: 12, fontFamily: "Gazpacho Regular", }}
                     >Please enter your email address or Phone Number to change your Password</Text>
                 </View>
 
                 <View style={styles.sectionStyle}>
 
                     <TextInput
-                        style={{ flex: 1, color: 'white', fontFamily: "Poppins-Regular", fontSize: 15 }}
+                        style={{ flex: 1, color: 'white', fontFamily: "Gazpacho Regular", fontSize: 15 }}
 
                         placeholder='Email Address or Phone Number'
                         placeholderTextColor='white'
@@ -103,14 +103,14 @@ const styles = StyleSheet.create({
     },
     cancelButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 25
     },
     saveButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     ForgotPassHeading: {
         color: '#fff',
         fontSize: 20,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
 
 
         marginTop: 2,

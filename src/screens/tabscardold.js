@@ -212,8 +212,8 @@ const ReactNavigationBottomTabs = ({ item }) => {
                         ]}
 
                     />
-                    <Text style={{ color: 'white', fontSize: 15, position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(2, 0.1), left: moderateScale(4, 0.1) }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 15, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0.1) : moderateScale(-1.7, 0), right: Platform.OS === 'ios' ? moderateScale(6.7, 0.1) : moderateScale(7.5, 0) }}>N</Text>
+                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute',fontFamily: "Gazpacho Bold", bottom: moderateScale(3.1, 0), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
+                                            <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12 , fontFamily: "Gazpacho Bold" , position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(3.1, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, 0) }}>N</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -232,7 +232,7 @@ const ReactNavigationBottomTabs = ({ item }) => {
                         key={i}
                     >
 
-                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular' }}>
+                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: "Gazpacho Regular" }}>
                             {v.title}
                         </Text>
 
@@ -319,9 +319,9 @@ const ReactNavigationBottomTabs = ({ item }) => {
                                                 <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
                                                     <View style={styles.placeViewc}>
                                                         <View style={styles.yellowView}>
-                                                            <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
+                                                            <Text style={{ color: '#000000', fontSize: 9, fontFamily: "Gazpacho Regular", alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
                                                         </View>
-                                                        <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
+                                                        <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: "Gazpacho Regular", top: 20, left: 45 }}>Don`t eat anywhere else</Text>
                                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
                                                             <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
@@ -346,11 +346,11 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
                                                         </View>
                                                         <View style={{ flexDirection: 'row' }}>
-                                                            <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
+                                                            <Text style={{ color: 'white', fontSize: 8, fontFamily: "Gazpacho Regular", alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
 
                                                         </View>
                                                         <View style={{ flexDirection: 'row' }}>
-                                                            <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
+                                                            <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: "Gazpacho Regular", }}> 7C85A3</Badge>
 
                                                         </View>
                                                     </View>
@@ -450,14 +450,15 @@ const styles = StyleSheet.create({
 
     },
     toggleContainer: {
-        top: moderateScale(-21), marginLeft: 20,
-        height: 25,
-        width: 49,
-        borderRadius: 19,
+        top: moderateScale(-15), marginLeft: 20,
+        
+        height: 22,
+        width: 43,
+        borderRadius: 20,
         borderWidth: 0,
         overflow: 'hidden',
         backgroundColor: '#24202F',
-        padding: 1,
+        padding: 2,
         position: 'relative',
 
     },
@@ -566,14 +567,16 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         color: "white",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         left: 100,
+        top:1
+  
     },
     item: {
         marginLeft: 70,
         padding: 0,
         fontSize: 16,
-        fontFamily: 'Poppins-Regular',
+        fontFamily: "Gazpacho Regular",
         height: 60,
         color: "white",
         top: 20,
@@ -628,7 +631,7 @@ const styles = StyleSheet.create({
     },
     ChooseMeal: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: 'white',
         textTransform: 'capitalize',
 

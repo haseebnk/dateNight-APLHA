@@ -76,17 +76,17 @@ export default function DoneForNow(props) {
 const styles = StyleSheet.create({
     DoneButton: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#E71717',
         alignSelf: 'center',
-        marginTop: 6
+        marginTop: 9
     },
     saveButtonText: {
         fontSize: 16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
-        marginTop: 6,
+        marginTop: 9,
 
 
     },
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 14,
         color: "#B7B7B7",
-        fontFamily: 'Poppins-ExtraLight',
+        fontFamily: "Gazpacho Regular",
        marginHorizontal:30,
         textAlign: "center",
         marginTop:5,
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 40,
         color: "white",
-        fontFamily: "Poppins-Regular",
-        fontWeight:'700',
+        fontFamily: "Gazpacho Bold",
+        
         marginTop: 30,
     },
     winePic: {

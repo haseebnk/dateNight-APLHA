@@ -164,7 +164,7 @@ export default function PersonalProfileDetails(props) {
                         style={styles.container}
                     >
 
-                        <View style={{ flexDirection: "row", justifyContent: 'space-evenly' }}>
+                        <View style={{ flexDirection: "row", marginLeft:Platform.OS === 'ios' ?-10 :0,justifyContent: 'space-evenly' }}>
                             <TouchableOpacity onPress={() => props.navigation.goBack()}>
 
                                 <Image style={styles.imgClose}
@@ -506,7 +506,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: Platform.OS === 'ios' ? 40 : 20,
+        paddingTop: Platform.OS === 'ios' ? 20 : 20,
 
         backgroundColor: '#24202f',
 

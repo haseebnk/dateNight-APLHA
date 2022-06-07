@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginTop: 0,
-        marginHorizontal: 80,
+        marginHorizontal: 85,
         marginBottom: 20,
         fontFamily: "Poppins-Regular",
         textAlign: 'center',

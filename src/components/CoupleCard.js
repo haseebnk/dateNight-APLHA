@@ -43,7 +43,7 @@ function CoupleCard({navigation}) {
                                         <Text style={styles.cardTextHead}>{item.name} </Text>
                                         <Text style={styles.cardText}>Phone:  {item.socialSec}</Text>
                                         <Text style={styles.cardText}>Email:  {item.email}</Text>
-                                        <Text style={styles.cardText}>Date of Birth:  {item.dob}</Text>
+                                        <Text style={styles.cardText}>Date of Birth: {item.dob}</Text>
                                     </View>
                                 </View>
                                 <View style={styles.flex3}>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
 
     picSize: {
 
-        marginLeft: 10,
+        marginLeft: 3,
        
         height: 140,
         width: 100,
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: "Gazpacho Regular",
         fontSize: 11,
-        marginLeft: 5,
+        marginLeft: 2,
         marginTop: 16,
 
 

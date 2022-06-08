@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginTop: 0,
-        marginHorizontal: Platform.OS === 'ios' ? 70 : 60,
+        marginHorizontal: 60,
         marginBottom: 20,
         fontFamily: "Gazpacho Regular",
         textAlign: 'center',

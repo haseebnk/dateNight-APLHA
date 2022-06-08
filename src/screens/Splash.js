@@ -80,7 +80,7 @@ export default function Splashing(props) {
           <Animatable.Text delay={1500} style={styles.steps} animation="slideInUp"  ><Animatable.Text animation="slideInUp" style={{
             color: 'red',
             fontSize: 25,
-            fontFamily: 'Poppins',
+            fontFamily: 'Gazpacho Regular',
           }}>4</Animatable.Text > simple steps...</Animatable.Text>
         </Animated.View>
       </View>

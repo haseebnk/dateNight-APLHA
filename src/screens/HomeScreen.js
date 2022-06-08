@@ -877,8 +877,8 @@ const HomeScreen = (props) => {
 
                                             />
 
-                                            <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: "Gazpacho Bold", bottom: moderateScale(3.1, 0), left: Platform.OS === 'ios' ? moderateScale(3, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: "Gazpacho Bold", position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0.1) : moderateScale(3.1, 0), right: Platform.OS === 'ios' ? moderateScale(6, 0.1) : moderateScale(7.5, 0) }}>N</Text>
+                                            <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: "Gazpacho Bold", bottom: moderateScale(3.1, 0), left: Platform.OS === 'ios' ? moderateScale(4, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: "Gazpacho Bold", position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(3.1, 0) : moderateScale(3.1, 0), right: Platform.OS === 'ios' ? moderateScale(6.9, 0) : moderateScale(7.5, 0) }}>N</Text>
 
                                         </TouchableOpacity>
                                     </View>
@@ -1325,7 +1325,8 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontFamily: "Gazpacho Bold",
         textAlign: "center",
-        marginTop: 30,
+        marginTop: 26,
+        lineHeight:25,
         marginHorizontal: 6
 
     },

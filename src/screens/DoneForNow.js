@@ -76,14 +76,14 @@ export default function DoneForNow(props) {
 const styles = StyleSheet.create({
     DoneButton: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: '#E71717',
         alignSelf: 'center',
         marginTop: 9
     },
     saveButtonText: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 9,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 14,
         color: "#B7B7B7",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
        marginHorizontal:30,
         textAlign: "center",
         marginTop:5,

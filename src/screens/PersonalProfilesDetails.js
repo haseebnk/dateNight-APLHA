@@ -185,7 +185,7 @@ export default function PersonalProfileDetails(props) {
                         <View style={styles.sectionStyle}>
 
                             <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Gazpacho Regular", }}
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: 'Poppins-Regular', }}
                                 placeholder="Full Name"
                                 placeholderTextColor='white'
 
@@ -195,7 +195,7 @@ export default function PersonalProfileDetails(props) {
                             <MaskInput
                                 placeholderTextColor={'white'}
                                 placeholder={'Mobile Number      '}
-                                style={{ color: 'white' , fontSize: 13, fontFamily: "Gazpacho Regular", width: '80%',}}
+                                style={{ color: 'white' , fontSize: 13, fontFamily: 'Poppins-Regular', width: '80%',}}
                                 value={socialSec}
                                 onChangeText={(masked, unmasked) => {
                                     setsocialSec(masked);
@@ -237,7 +237,7 @@ export default function PersonalProfileDetails(props) {
                         <View style={styles.sectionStyle}>
 
                             <TextInput
-                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: "Gazpacho Regular", }}
+                                style={{ flex: 1, color: 'white', fontSize: 13, fontFamily: 'Poppins-Regular', }}
 
                                 placeholder='Email'
                                 placeholderTextColor='white'
@@ -248,7 +248,7 @@ export default function PersonalProfileDetails(props) {
                         </View>
                         <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
 
-                            <Text style={{ color: '#fff' , fontFamily: "Gazpacho Regular",}}>{dob}</Text>
+                            <Text style={{ color: '#fff' , fontFamily: 'Poppins-Regular',}}>{dob}</Text>
                         </TouchableOpacity>
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
 
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
     },
     cancelButtonText: {
         fontSize: 16,
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     },
     logoutButtonText: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: '#fafafa',
         alignSelf: 'center',
         marginTop: 0,
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
     },
     saveButtonText: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
     },
     uploadPhoto: {
         color: '#fff',
@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 10,
         textAlign: 'center',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
 
     },
     backContainer: {

@@ -391,7 +391,7 @@ export default function DateMode(props) {
                     </TouchableOpacity>
                 </View>
                 <View style={{ width: 30, alignSelf: 'flex-end', marginRight: 28, bottom: 23, }}>
-                    <Text style={{ color: 'white', fontSize: 10, textAlign: 'center',  }}>min</Text>
+                    <Text style={{ color: 'white', fontSize: 10, textAlign: 'center', fontFamily: 'Poppins-Regular', }}>min</Text>
                 </View>
             </LinearGradient>
         </ScrollView>
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     count1: {
         fontSize: 30,
         color: "white",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
         marginTop:moderateScale(30),
     },
@@ -417,37 +417,50 @@ const styles = StyleSheet.create({
     modalText3: {
         marginBottom: -50,
         textAlign: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: 'white',
         fontSize: 18
     },
     btn1Text: {
-        fontSize: 41,
+        textAlign: 'center', // <-- the magic
+        fontSize: 38,
+
+        marginTop: moderateScale(4),
+
         alignSelf: "center",
         color: "black",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
 
     },
     btn1: {
         width: 58,
-        height: 56,
+        height: 58,
         margin: 25,
         borderRadius: 18,
         fontFamily: "Gazpacho Regular",
 
+
     },
     btn2Text: {
-        fontSize: 41,
+        textAlign: 'center', // <-- the magic
+        fontSize: 38,
+
+        marginTop: moderateScale(4),
+
         alignSelf: "center",
         color: "black",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
 
     },
     btn2: {
         width: 58,
-        height: 56,
+        height: 58,
         margin: 25,
         borderRadius: 18,
+
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
 
     },
     ping: {
@@ -525,13 +538,13 @@ const styles = StyleSheet.create({
     },
     textStyleYes1: {
         color: "white",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         fontSize: 18,
         textAlign: "center"
     },
     textStyleNo1: {
         color: "white",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         fontSize: 18,
         textAlign: "center",
 
@@ -540,13 +553,13 @@ const styles = StyleSheet.create({
 
     textStyleYes: {
         color: "white",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         fontSize: 18,
         textAlign: "center"
     },
     textStyleNo: {
         color: "#E20303",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         fontSize: 18,
         textAlign: "center",
 
@@ -555,17 +568,17 @@ const styles = StyleSheet.create({
     modalText2: {
         marginBottom: 10,
         textAlign: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: 'white',
         fontSize: 18
     },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
-        fontFamily: "Gazpacho Regular",
-        color: 'white',
-        fontSize: 18
-    },
+    // modalText: {
+    //     marginBottom: 15,
+    //     textAlign: "center",
+    //     fontFamily: 'Poppins-Regular',
+    //     color: 'white',
+    //     fontSize: 18
+    // },
 
     centeredView: {
         flex: 1,
@@ -592,12 +605,12 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 18,
         color: 'white',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         textAlign: 'center'
     },
     dareText: {
         fontSize: 12.7,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
         lineHeight:18,
         margin: 18,
@@ -637,7 +650,7 @@ const styles = StyleSheet.create({
     },
     count: {
         color: 'white', fontSize: 19, textAlign: 'center',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
     },
     BottomHeader: {
         alignSelf: "center",
@@ -685,7 +698,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: "Gazpacho Bold",
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
         marginTop: 27,
         marginHorizontal: 4,

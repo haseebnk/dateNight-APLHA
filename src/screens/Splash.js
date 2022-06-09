@@ -102,13 +102,13 @@ const styles = StyleSheet.create({
   steps: {
     color: 'white',
     fontSize: 17,
-    fontFamily: "Gazpacho Regular",
+    fontFamily: 'Poppins-Regular',
     alignSelf: "center",
     alignContent: "center",
   },
   getStarted: {
     color: 'white',
-    fontFamily: "Gazpacho Regular",
+    fontFamily: 'Poppins-Regular',
     fontSize: 17,
     alignSelf: "center",
   },
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: 'white',
-    fontFamily: "Gazpacho Regular",
+    fontFamily: 'Poppins-Regular',
     fontSize: 17,
     alignSelf: "center",
     alignContent: "center",
@@ -133,14 +133,14 @@ const styles = StyleSheet.create({
   datenight: {
     color: '#FF2B25',
     fontSize: 43,
-    fontFamily: "Gazpacho Regular",
+    fontFamily: "Gazpacho Bold",
     alignSelf: "center",
     alignContent: "center",
   },
   datingText: {
     color: '#A5A5A5',
     fontSize: 17,
-    fontFamily: "Gazpacho Regular",
+    fontFamily: 'Poppins-Regular',
     alignSelf: "center",
     alignContent: "center",
 

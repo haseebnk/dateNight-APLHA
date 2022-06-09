@@ -188,11 +188,13 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
         return (
             <View >
+                <View style={{marginTop:moderateScale(0)}}>
                 <TouchableOpacity  >
 
                     <Text style={styles.title}>{title}</Text>
 
                 </TouchableOpacity>
+                </View>
                 <TouchableOpacity
                     style={[
                         styles.toggleContainer,
@@ -212,8 +214,8 @@ const ReactNavigationBottomTabs = ({ item }) => {
                         ]}
 
                     />
-                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute',fontFamily: "Gazpacho Bold", bottom: moderateScale(3.1, 0), left: Platform.OS === 'ios' ? moderateScale(4, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12 , fontFamily: "Gazpacho Bold" , position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(3.1, 0) : moderateScale(3.1, 0), right: Platform.OS === 'ios' ? moderateScale(6.9, 0) : moderateScale(7.5, 0) }}>N</Text>
+                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: moderateScale(0, 0), left: Platform.OS === 'ios' ? moderateScale(4.8, 0) : moderateScale(4.8, 0) }}> Y</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(1, 0) : moderateScale(1, 0), right: Platform.OS === 'ios' ? moderateScale(8.2, 0) : moderateScale(8.2, 0) }}>N</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -232,7 +234,7 @@ const ReactNavigationBottomTabs = ({ item }) => {
                         key={i}
                     >
 
-                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: "Gazpacho Regular" }}>
+                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular',}}>
                             {v.title}
                         </Text>
 
@@ -261,7 +263,7 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
                     </View>
                     <ScrollView nestedScrollEnabled={true}>
-                        <View style={{ marginTop: 30, }}>
+                        <View style={{ marginTop: 20, }}>
 
                             {tabState == 'yes' ? (
                                 <>
@@ -319,9 +321,9 @@ const ReactNavigationBottomTabs = ({ item }) => {
                                                 <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
                                                     <View style={styles.placeViewc}>
                                                         <View style={styles.yellowView}>
-                                                            <Text style={{ color: '#000000', fontSize: 9, fontFamily: "Gazpacho Regular", alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
+                                                            <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
                                                         </View>
-                                                        <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: "Gazpacho Regular", top: 20, left: 45 }}>Don`t eat anywhere else</Text>
+                                                        <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
                                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
                                                             <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
@@ -346,11 +348,11 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
                                                         </View>
                                                         <View style={{ flexDirection: 'row' }}>
-                                                            <Text style={{ color: 'white', fontSize: 8, fontFamily: "Gazpacho Regular", alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
+                                                            <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
 
                                                         </View>
                                                         <View style={{ flexDirection: 'row' }}>
-                                                            <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: "Gazpacho Regular", }}> 7C85A3</Badge>
+                                                            <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
 
                                                         </View>
                                                     </View>
@@ -450,7 +452,7 @@ const styles = StyleSheet.create({
 
     },
     toggleContainer: {
-        top: moderateScale(-15), marginLeft: 20,
+        top: moderateScale(-23), marginLeft: 20,
         
         height: 22,
         width: 43,
@@ -567,9 +569,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         color: "white",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         left: 100,
-        top:1
+        marginTop:moderateScale(1)
   
     },
     item: {
@@ -631,7 +633,7 @@ const styles = StyleSheet.create({
     },
     ChooseMeal: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: 'white',
         textTransform: 'capitalize',
 

@@ -256,7 +256,7 @@ export default function SignupScreen({ navigation }) {
                     </TouchableOpacity>
                     <View style={styles.sectionStyle}>
                         <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Gazpacho Regular", marginTop: 8 }}
+                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: 'Poppins-Regular', marginTop: 8 }}
                             placeholder="Full Name"
                             placeholderTextColor='white'
                             onChangeText={(text) => setUserName(text)}
@@ -269,7 +269,7 @@ export default function SignupScreen({ navigation }) {
                             
                             placeholderFillCharacter={true}
                             
-                            style={{ color: 'white' , fontFamily: "Gazpacho Regular", }}
+                            style={{ color: 'white' , fontFamily: 'Poppins-Regular', }}
                             value={socialSec}
                             onChangeText={(masked, unmasked) => {
                                 setsocialSec(masked);
@@ -297,7 +297,7 @@ export default function SignupScreen({ navigation }) {
                     </View>
                     <View style={styles.sectionStyle}>
                         <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Gazpacho Regular", marginTop: 8 }}
+                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: 'Poppins-Regular', marginTop: 8 }}
                             placeholder='Email'
                             placeholderTextColor='white'
                             autoCorrect={true}
@@ -310,7 +310,7 @@ export default function SignupScreen({ navigation }) {
                     <TouchableOpacity  onPress={() => showDatePicker()}>
                         <View style={styles.sectionStyle}>
 
-                            <Text style={{ color: 'white' , fontFamily: "Gazpacho Regular", }}>{dob}</Text>
+                            <Text style={{ color: 'white' , fontFamily: 'Poppins-Regular', }}>{dob}</Text>
                         </View>
                     </TouchableOpacity>
                     <DateTimePickerModal
@@ -321,7 +321,7 @@ export default function SignupScreen({ navigation }) {
                     />
                     <View style={styles.sectionStyle}>
                         <TextInput
-                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: "Gazpacho Regular", marginTop: 8, }}
+                            style={{ flex: 1, color: 'white', fontSize: 14, fontFamily: 'Poppins-Regular', marginTop: 8, }}
                             placeholder="Password"
                             placeholderTextColor='white'
                             secureTextEntry={true}
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
     },
     uploadPhoto: {
         color: '#fff',
@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 10,
         textAlign: 'center',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
     },
     backContainer: {
         alignSelf: "center",
@@ -590,7 +590,7 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -613,7 +613,7 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
     },
     profileText: {
         color: '#ffff',

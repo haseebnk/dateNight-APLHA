@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     },
     cardText: {
         color: 'white',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         fontSize: 11,
         marginLeft: 2,
         marginTop: 16,

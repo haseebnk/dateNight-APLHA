@@ -151,7 +151,7 @@ export default function LoginScreen2(props) {
                         style={styles.ImageStyle}
                     />
                     <TextInput
-                        style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: "Gazpacho Regular", marginTop: 8 }}
+                        style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginTop: 8 }}
                         value={email}
                         placeholder='Email'
                         placeholderTextColor='white'
@@ -169,7 +169,7 @@ export default function LoginScreen2(props) {
                     />
                     <TextInput
                         value={password}
-                        style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: "Gazpacho Regular", marginTop: 8 }}
+                        style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginTop: 8 }}
                         placeholder="Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
@@ -197,12 +197,12 @@ export default function LoginScreen2(props) {
                                         : { backgroundColor: activeColor, borderRadius: 25, },
                                 ]}
                             />
-                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: "Gazpacho Bold", bottom: moderateScale(3.1, 0), left: Platform.OS === 'ios' ? moderateScale(4, 0.1) : moderateScale(4, 0.1) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: "Gazpacho Bold", position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(3.1, 0) : moderateScale(3.1, 0), right: Platform.OS === 'ios' ? moderateScale(6.9, 0) : moderateScale(7.5, 0) }}>N</Text>
+                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute',fontFamily: 'Poppins-Regular', bottom: moderateScale(0, 0), left: Platform.OS === 'ios' ? moderateScale(4.8, 0) : moderateScale(4.8, 0) }}> Y</Text>
+                             <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(1, 0) : moderateScale(1, 0), right: Platform.OS === 'ios' ? moderateScale(8.2, 0) : moderateScale(8.2, 0) }}>N</Text>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
-                <Text style={{ color: 'white', fontSize: 12, marginLeft: 70, marginTop: 4, fontFamily: "Gazpacho Regular", }}>Remember</Text>
+                <Text style={{ color: 'white', fontSize: 12, marginLeft: 70, marginTop: 4, fontFamily: 'Poppins-Regular', }}>Remember</Text>
                 <TouchableOpacity onPress={() => props.navigation.navigate("forgotpassword")}>
                     <Text style={styles.fpText} >Forgot Password?</Text>
                 </TouchableOpacity>
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         color: '#00A8FF',
         fontSize: 12,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
 
         marginTop: -17,
         // marginBottom:50,
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: 'Poppins-Regular',
 
     },
 });

@@ -147,7 +147,7 @@ export default function LoginScreen2(props) {
                 <Text style={styles.loginText}>Please Sign into your account</Text>
                 <View style={styles.sectionStyle}>
                     <Image
-                        source={require('../assets/pass.png')} //Change your icon image here
+                        source={require('../assets/emailll.png')} //Change your icon image here
                         style={styles.ImageStyle}
                     />
                     <TextInput
@@ -164,7 +164,7 @@ export default function LoginScreen2(props) {
                 </View>
                 <View style={styles.sectionStyle}>
                     <Image
-                        source={require('../assets/email.png')} //Change your icon image here
+                        source={require('../assets/passs.png')} //Change your icon image here
                         style={styles.ImageStyle}
                     />
                     <TextInput
@@ -193,12 +193,12 @@ export default function LoginScreen2(props) {
                                 style={[
                                     styles.toggleBtn,
                                     toggleActive
-                                        ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
-                                        : { backgroundColor: activeColor, borderRadius: 25, },
+                                    ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
+                                    : { backgroundColor: activeColor, borderRadius: 25, },
                                 ]}
                             />
-                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute',fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(0, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(4.8, 0) }}> Y</Text>
-                             <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(1, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(8.2, 0) }}>N</Text>
+                            <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(0, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(4.8, 0) }}> Y</Text>
+                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(.8, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(8.2, 0) }}>N</Text>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
@@ -240,18 +240,19 @@ const styles = StyleSheet.create({
         borderRadius: 19,
 
     },
-   
+
     toggleContainer: {
-      
+
         marginLeft: 12,
         height: 22,
         width: 43,
         borderRadius: 20,
         borderWidth: 0,
         overflow: 'hidden',
-        backgroundColor: '#363143',
         padding: 2,
         position: 'relative',
+        backgroundColor: '#363143',
+
 
     },
     toggleBtn: { height: '100%', width: '50%' },
@@ -291,9 +292,9 @@ const styles = StyleSheet.create({
         marginRight: 10,
 
         margin: 5,
-        height: 20,
+        height: 25,
         width: 18,
-        resizeMode: 'stretch',
+        resizeMode: 'contain',
         alignItems: 'center',
     },
     sectionStyle: {

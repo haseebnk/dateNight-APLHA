@@ -188,12 +188,12 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
         return (
             <View >
-                <View style={{marginTop:moderateScale(0)}}>
-                <TouchableOpacity  >
+                <View style={{ marginTop: moderateScale(0) }}>
+                    <TouchableOpacity  >
 
-                    <Text style={styles.title}>{title}</Text>
+                        <Text style={styles.title}>{title}</Text>
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                     style={[
@@ -214,8 +214,8 @@ const ReactNavigationBottomTabs = ({ item }) => {
                         ]}
 
                     />
-                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: moderateScale(0, 0), left: Platform.OS === 'ios' ? moderateScale(4.8, 0) : moderateScale(4.8, 0) }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(1, 0) : moderateScale(1, 0), right: Platform.OS === 'ios' ? moderateScale(8.2, 0) : moderateScale(8.2, 0) }}>N</Text>
+                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(0, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(4.8, 0) }}> Y</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(1, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(8.2, 0) }}>N</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -234,7 +234,7 @@ const ReactNavigationBottomTabs = ({ item }) => {
                         key={i}
                     >
 
-                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular',}}>
+                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
                             {v.title}
                         </Text>
 
@@ -452,8 +452,8 @@ const styles = StyleSheet.create({
 
     },
     toggleContainer: {
-        top: moderateScale(-23), marginLeft: 20,
-        
+        top: moderateScale(-20), marginLeft: 20,
+
         height: 22,
         width: 43,
         borderRadius: 20,
@@ -571,8 +571,8 @@ const styles = StyleSheet.create({
         color: "white",
         fontFamily: 'Poppins-Regular',
         left: 100,
-        marginTop:moderateScale(1)
-  
+        marginTop: moderateScale(1)
+
     },
     item: {
         marginLeft: 70,

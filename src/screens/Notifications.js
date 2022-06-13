@@ -53,7 +53,7 @@ class Notifications {
   schduleNotification(date) {
     PushNotification.localNotificationSchedule({
       channelId: 'reminders',
-      title: '🔔 Reminder 🔔',
+      title: 'Reminder',
       message: 'Reminder For Next Challenge',
       date,
     });

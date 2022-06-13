@@ -22,6 +22,8 @@
 		3FDEF696955E4BA4865D01D8 /* buttershine-serif.otf in Resources */ = {isa = PBXBuildFile; fileRef = ED2093820AB046B99BD77EFE /* buttershine-serif.otf */; };
 		9BE80DF2B0364A23B6B29FD6 /* Buttershine-Serif.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5AF967BE7A74816B24424B5 /* Buttershine-Serif.otf */; };
 		FAA840A52A0DAC91117F2B7C /* libPods-datenight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E930606339A6679FEC49F30 /* libPods-datenight.a */; };
+		39B74C3E463542DDBE9433B8 /* Gazpacho Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D50A1A69F17454E906025FE /* Gazpacho Bold.ttf */; };
+		23D788C513274095A30B0AF0 /* Gazpacho Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE5577C652004A9098EE2218 /* Gazpacho Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		F8C2BA5C0C3C4BBA893427A5 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		FC6814FBBFAC4BCC80ECE48C /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		FD4B568D43BA4AF8A5B05336 /* BUTTERSHINE SCRIPT.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BUTTERSHINE SCRIPT.ttf"; path = "../src/assets/fonts/BUTTERSHINE SCRIPT.ttf"; sourceTree = "<group>"; };
+		1D50A1A69F17454E906025FE /* Gazpacho Bold.ttf */ = {isa = PBXFileReference; name = "Gazpacho Bold.ttf"; path = "../src/assets/fonts/Gazpacho Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CE5577C652004A9098EE2218 /* Gazpacho Regular.ttf */ = {isa = PBXFileReference; name = "Gazpacho Regular.ttf"; path = "../src/assets/fonts/Gazpacho Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +242,8 @@
 				2F2CE4583D9C4686906080DB /* Poppins-ThinItalic.ttf */,
 				D5AF967BE7A74816B24424B5 /* Buttershine-Serif.otf */,
 				ED2093820AB046B99BD77EFE /* buttershine-serif.otf */,
+				1D50A1A69F17454E906025FE /* Gazpacho Bold.ttf */,
+				CE5577C652004A9098EE2218 /* Gazpacho Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -346,6 +352,8 @@
 				2A5F9BF1282E70D200F7FC19 /* Poppins-Bold.ttf in Resources */,
 				2A18628828322BEA00CAC741 /* BootSplash.storyboard in Resources */,
 				3FDEF696955E4BA4865D01D8 /* buttershine-serif.otf in Resources */,
+				39B74C3E463542DDBE9433B8 /* Gazpacho Bold.ttf in Resources */,
+				23D788C513274095A30B0AF0 /* Gazpacho Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

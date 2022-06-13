@@ -661,7 +661,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderTopLeftRadius: 36,
         borderTopRightRadius: 36,
-        bottom:  -14,
+        bottom: -17,
     },
     PingUnlock: {
         width: 90,

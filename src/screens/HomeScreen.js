@@ -39,7 +39,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-// import Notifications from './Notifications';
+import Notifications from './Notifications';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -260,15 +260,15 @@ const HomeScreen = (props) => {
 
     const carouselRef = useRef(null);
     
-    // const doneNow =()=>{
-    //     props.navigation.navigate("datemode")
-    //     setNotification()
-    // }
+    const doneNow =()=>{
+        props.navigation.navigate("datemode")
+        setNotification()
+    }
 
-    // const setNotification = () => {
-    //     // Notifications.schduleNotification(date);
-    //     Notifications.schduleNotification(new Date(Date.now() + 5 * 1000));
-    //   };
+    const setNotification = () => {
+        // Notifications.schduleNotification(date);
+        Notifications.schduleNotification(new Date(Date.now() + 5 * 1000));
+      };
 
 
     const showDatePicker = () => {
@@ -1023,7 +1023,7 @@ const HomeScreen = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={
                             () => 
-                            props.navigation.navigate("donefornow")
+                            doneNow()
                             }>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}

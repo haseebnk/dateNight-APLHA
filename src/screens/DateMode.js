@@ -654,14 +654,14 @@ const styles = StyleSheet.create({
     },
     BottomHeader: {
         alignSelf: "center",
-        height: scale(68.7),
+        height: Platform.OS === 'ios' ? scale(77.7) : scale(68.7),
         backgroundColor: 'black',
         width: scale(350),
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderTopLeftRadius: 36,
         borderTopRightRadius: 36,
-        bottom: -14,
+        bottom:  -14,
     },
     PingUnlock: {
         width: 90,
@@ -723,7 +723,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingHorizontal: 0,
+        
         backgroundColor: '#ffff',
 
     },

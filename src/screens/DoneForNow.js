@@ -7,16 +7,39 @@ import {
     TouchableOpacity,
     Dimensions,
     SafeAreaView,
-    ScrollView
+    ScrollView,
+    Platform,
+    UIManager
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale } from 'react-native-size-matters';
+import Notifications from './Notifications';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+if (Platform.OS === 'android') {
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+}
+
 export default function DoneForNow(props) {
+
+
+    const doneNow =()=>{
+
+        props.navigation.navigate("datemode")
+    
+        setNotification()
+    }
+    
+    const setNotification = () => {
+        // Notifications.schduleNotification(date);
+        Notifications.schduleNotification(new Date(Date.now() + 5 * 1000));
+      };
 
     return (
         <SafeAreaView style={{flex:1 , backgroundColor:'#000'}} >
@@ -54,7 +77,7 @@ export default function DoneForNow(props) {
                             </LinearGradient>
 
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => props.navigation.navigate("datemode")}>
+                        <TouchableOpacity onPress={() => doneNow()}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.linearGradient} >

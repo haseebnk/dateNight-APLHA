@@ -652,7 +652,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     count: {
-        color: 'white', fontSize: 19, textAlign: 'center',
+        color: 'white', fontSize: 20, textAlign: 'center',
         fontFamily: 'Poppins-Regular',
     },
     BottomHeader: {
@@ -722,7 +722,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "white",
         fontFamily: "Gazpacho Regular",
-        marginTop: Platform.OS === 'ios' ? 45 : 15,
+        marginTop: Platform.OS === 'ios' ? 30 : 15,
     },
     container: {
         flex: 1,

@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
     },
     container: {
 
-        paddingTop: Platform.OS === 'ios' ? 60 : 20,
+        paddingTop: Platform.OS === 'ios' ? 30 : 20,
         paddingHorizontal: 20,
         backgroundColor: '#ffff',
 

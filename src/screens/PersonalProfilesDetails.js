@@ -146,7 +146,7 @@ export default function PersonalProfileDetails(props) {
 
     return (
         <SafeAreaView style={{flex:1 , backgroundColor:'#000'}} >
-        <View style={styles.container}>
+        
             {loader ? (
                 <>
                     <Loader />
@@ -325,7 +325,7 @@ export default function PersonalProfileDetails(props) {
                 </TouchableWithoutFeedback>
                 
             </ScrollView>
-        </View>
+       
         
         </SafeAreaView>
 
@@ -506,7 +506,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: Platform.OS === 'ios' ? 20 : 20,
+        paddingTop: Platform.OS === 'ios' ? 30 : 20,
 
         backgroundColor: '#24202f',
 

@@ -359,7 +359,7 @@ PODS:
     - React-Core
   - RNCMaskedView (0.2.6):
     - React-Core
-  - RNCPicker (1.8.1):
+  - RNCPicker (2.4.1):
     - React-Core
   - RNDateTimePicker (5.1.0):
     - React-Core
@@ -437,7 +437,7 @@ DEPENDENCIES:
   - ReactNativeGetLocation (from `../node_modules/react-native-get-location`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
-  - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -539,7 +539,7 @@ EXTERNAL SOURCES:
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
   RNCPicker:
-    :path: "../node_modules/@react-native-community/picker"
+    :path: "../node_modules/@react-native-picker/picker"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
@@ -583,10 +583,10 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 15ea57ead631a11fad57634ff69f78e797113a39
   React-jsinspector: 1e1e03345cf6d47779e2061d679d0a87d9ae73d8
   React-logger: 1e10789cb84f99288479ba5f20822ce43ced6ffe
-  react-native-geolocation: cbd9d6bd06bac411eed2671810f454d4908484a8
+  react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-geolocation-service: c0efb872258ed9240f1003a70fca9e9757e5c785
-  react-native-image-picker: eb0a159c2a00bcfb49f0469fcc6b164329e9d4ca
-  react-native-safe-area-context: 614aad9ae5eb135d8e44f888b2bdefc7c19691c2
+  react-native-image-picker: e95b4785b685cfc06609bc50ed6fb55b59990c99
+  react-native-safe-area-context: dc737e639172fa08f909d8674b907fe32c8c01f3
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   React-perflogger: 93d3f142d6d9a46e635f09ba0518027215a41098
   React-RCTActionSheet: 87327c3722203cc79cf79d02fb83e7332aeedd18
@@ -600,11 +600,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: d0361f15ea978958fab7ffb6960f475b5063d83f
   React-runtimeexecutor: af1946623656f9c5fd64ca6f36f3863516193446
   ReactCommon: 650e33cde4fb7d36781cd3143f5276da0abb2f96
-  ReactNativeGetLocation: 8517f44ae7364ac45fa3946f8bffeaa73594ff0d
-  RNCAsyncStorage: 84c57d74ba74bd2c9351b0c850bdbc694dc0b5b7
-  RNCMaskedView: d367b2a8df3992114e31b32b091a0c00dc800827
-  RNCPicker: 914b557e20b3b8317b084aca9ff4b4edb95f61e4
-  RNDateTimePicker: cad741dac386f8178bf76e86f0a3c4b22173e0e4
+  ReactNativeGetLocation: d6b15cb2a2023ab7703f756501bad86d3ecf6fea
+  RNCAsyncStorage: 9367a646dc24e3ab7b6874d79bc1bfd0832dce58
+  RNCMaskedView: c298b644a10c0c142055b3ae24d83879ecb13ccd
+  RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
+  RNDateTimePicker: 1dd15d7ed1ab7d999056bc77879a42920d139c12
   RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
   RNScreens: aa12070b21c1d6011b3627a0b1d09b627232b070
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b

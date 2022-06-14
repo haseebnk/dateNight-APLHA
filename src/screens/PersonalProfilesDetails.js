@@ -145,7 +145,7 @@ export default function PersonalProfileDetails(props) {
     }
 
     return (
-        <SafeAreaView style={{flex:1}} >
+        <SafeAreaView style={{flex:1 , backgroundColor:'#000'}} >
         <View style={styles.container}>
             {loader ? (
                 <>

@@ -163,7 +163,7 @@ export default function AddAnotherCouple(props) {
         console.log(e.nativeEvent.key)
     };
     return (
-
+        <SafeAreaView style={{ flex: 1 , backgroundColor:'#000'}}>
         <ScrollView>
            
 
@@ -179,7 +179,7 @@ export default function AddAnotherCouple(props) {
                     colors={['#24202f', '#24202f', '#24202f']}
                     style={styles.container}
                 >
-                    <SafeAreaView style={{ flex: 1 }}>
+                   
                         <View style={{ flexDirection: "row" }}>
                             <TouchableOpacity onPress={() => props.navigation.goBack()}>
 
@@ -339,11 +339,12 @@ export default function AddAnotherCouple(props) {
                             </TouchableOpacity>
                         </View>
 
-                    </SafeAreaView>
+                  
 
                 </LinearGradient>
             </TouchableWithoutFeedback>
         </ScrollView>
+        </SafeAreaView>
 
     );
 }

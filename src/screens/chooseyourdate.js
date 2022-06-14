@@ -148,6 +148,7 @@ const showDatePicker = () => {
     };
 
     return (
+        <SafeAreaView style={{ flex: 1 , backgroundColor:'#000' }}>
 
         <ScrollView>
 
@@ -160,7 +161,7 @@ const showDatePicker = () => {
                     colors={['#24202f', '#24202f', '#24202f']}
                     style={styles.container}
                 >
-                    <SafeAreaView style={{ flex: 1 }}>
+                   
                         <View style={{ flexDirection: "row" }}>
                             <TouchableOpacity onPress={() => props.navigation.goBack()}>
 
@@ -307,10 +308,11 @@ const showDatePicker = () => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                    </SafeAreaView>
+                    
                 </LinearGradient>
             </TouchableWithoutFeedback>
         </ScrollView>
+        </SafeAreaView>
 
     );
 }

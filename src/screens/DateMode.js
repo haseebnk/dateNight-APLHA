@@ -9,6 +9,7 @@ import {
     Animated,
     Modal,
     Pressable,
+    SafeAreaView,
     Dimensions
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -178,6 +179,7 @@ export default function DateMode(props) {
     const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
     return (
+        <SafeAreaView style={{flex:1 , backgroundColor:'#000'}} >
         <ScrollView >
             <Modal
 
@@ -395,6 +397,7 @@ export default function DateMode(props) {
                 </View>
             </LinearGradient>
         </ScrollView>
+        </SafeAreaView>
     )
 }
 
@@ -654,14 +657,14 @@ const styles = StyleSheet.create({
     },
     BottomHeader: {
         alignSelf: "center",
-        height: Platform.OS === 'ios' ? scale(77.7) : scale(68.7),
+        height: scale(68.7),
         backgroundColor: 'black',
         width: scale(350),
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderTopLeftRadius: 36,
         borderTopRightRadius: 36,
-        bottom: -17,
+        bottom: -14,
     },
     PingUnlock: {
         width: 90,
@@ -723,7 +726,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        
+        paddingHorizontal: 0,
         backgroundColor: '#ffff',
 
     },

@@ -6,6 +6,7 @@ import {
     View,
     TouchableOpacity,
     Dimensions,
+    SafeAreaView,
     ScrollView
 } from 'react-native';
 
@@ -18,7 +19,7 @@ const windowHeight = Dimensions.get('window').height;
 export default function DoneForNow(props) {
 
     return (
-       
+        <SafeAreaView style={{flex:1 , backgroundColor:'#000'}} >
             <LinearGradient
                 colors={['#24202f', '#24202f', '#24202f']}
                 style={styles.container}
@@ -68,6 +69,7 @@ export default function DoneForNow(props) {
                 </View>
                 </ScrollView>
             </LinearGradient>
+            </SafeAreaView>
        
     )
 }

@@ -39,7 +39,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-import Notifications from './Notifications';
+
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -259,16 +259,6 @@ const HomeScreen = (props) => {
     const [vy, setVy] = useState('active')
 
     const carouselRef = useRef(null);
-    
-    const doneNow =()=>{
-        props.navigation.navigate("datemode")
-        setNotification()
-    }
-
-    const setNotification = () => {
-        // Notifications.schduleNotification(date);
-        Notifications.schduleNotification(new Date(Date.now() + 5 * 1000));
-      };
 
 
     const showDatePicker = () => {
@@ -320,9 +310,7 @@ const HomeScreen = (props) => {
     const xyz = (type, selected, Id) => {
 
 
-       
         type == 'lock' ? setModalOpenn(true) : null
-
         type == 'unlock' && selected == true
 
     }
@@ -527,7 +515,7 @@ const HomeScreen = (props) => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 , backgroundColor:'#000'}}>
             <View style={styles.container}>
                 <View style={styles.TopHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
@@ -921,7 +909,7 @@ const HomeScreen = (props) => {
                                             />
 
                                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.6, 0) }}>N</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
 
                                         </TouchableOpacity>
                                     </View>
@@ -1021,10 +1009,7 @@ const HomeScreen = (props) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={
-                            () => 
-                            doneNow()
-                            }>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('donefornow')}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.linearGradient2} >

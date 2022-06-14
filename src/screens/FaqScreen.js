@@ -43,12 +43,12 @@ const FAQScreen = (props) => {
     }
 
     return (
-
+        <SafeAreaView style={{flex:1 , backgroundColor:'#000'}} >
         <LinearGradient
             colors={['#24202f', '#24202f', '#24202f']}
             style={styles.container}
         >
-            <SafeAreaView>
+           
                 <View >
                     <View style={{ alignItems: 'center', }}>
 
@@ -116,8 +116,9 @@ const FAQScreen = (props) => {
                         </SafeAreaView>
                     </View>
                 </View>
-            </SafeAreaView>
+           
         </LinearGradient>
+        </SafeAreaView>
     );
 }
 

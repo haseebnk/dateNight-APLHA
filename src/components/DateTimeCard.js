@@ -104,7 +104,7 @@ function DateTimeCard() {
                         {renderData()}
                     </View>
                     <View style={styles.flex1}>
-                        <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" />
+                        {/* <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" /> */}
 
                     </View>
                     <View style={styles.flex3}>
@@ -128,7 +128,7 @@ function DateTimeCard() {
                         {renderGift()}
                     </View>
                     <View style={styles.flex1}>
-                        <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" />
+                        {/* <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" /> */}
                     </View>
                     <View style={styles.flex3}>
                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     flex3: {
-        flex: .8,
+        flex: .9,
 
         borderRadius: moderateScale(18),
         flexDirection: 'column',

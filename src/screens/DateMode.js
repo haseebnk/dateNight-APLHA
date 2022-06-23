@@ -10,15 +10,34 @@ import {
     Modal,
     Pressable,
     SafeAreaView,
-    Dimensions
+    Dimensions,
+    LayoutAnimation,
+    UIManager,
+
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from "react-native-vector-icons/AntDesign"
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import * as Animatable from 'react-native-animatable';
+import { Importance } from 'react-native-push-notification';
+import { FloatingAction } from "react-native-floating-action";
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
+
+if (Platform.OS === 'android') {
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+}
 
 
 const Pings = [
@@ -74,11 +93,44 @@ const Pings = [
 
 ]
 
+
+const actions = [
+    {
+        text: "Accessibility",
+        icon: require("../assets/lock.png"),
+        name: "bt_accessibility",
+        position: 2
+    },
+    {
+        text: "Language",
+        icon: require("../assets/lock.png"),
+        name: "bt_language",
+        position: 1
+    },
+    {
+        text: "Location",
+        icon: require("../assets/lock.png"),
+        name: "bt_room",
+        position: 3
+    },
+    {
+        text: "Video",
+        icon: require("../assets/lock.png"),
+        name: "bt_videocam",
+        position: 4
+    }
+];
+
+
 export default function DateMode(props) {
 
 
     const [PauseActive, setPause] = useState(false);
+    const [onHeaderc, setHeader] = useState(false);
+
     const onPause = () => setPause(true);
+    const onHeader = () => setHeader(true);
+    const onHeaderF = () => setHeader(false);
     const onPause2 = () => setPause(false);
     const [count, setCount] = useState(0);
     const [myArray, setMyArray] = useState([]);
@@ -169,6 +221,11 @@ export default function DateMode(props) {
         }, 200);
     };
 
+ 
+   
+      
+  
+
     const onPressMius = () => {
         Animated.spring(animation, {
             toValue: -5,
@@ -178,238 +235,313 @@ export default function DateMode(props) {
     const onPress = () => setCount(count < 60 ? count + 5 : 0);
     const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
+    useEffect(() => {
+      
+        setTimeout(() => { fadeIn() }, 1000)
+        setTimeout(() => { fadeInUp() }, 1000)
+        
+       
+      }, []);
+    
+   
+  const fadeAnim = useRef(new Animated.Value(-430)).current;
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 2,
+      duration: 1000,
+      useNativeDriver: true
+
+    }).start();
+  };
+
+  const fadeAnimUp = useRef(new Animated.Value(-130)).current;
+  const fadeInUp = () => {
+    Animated.timing(fadeAnimUp, {
+      toValue: -2,
+      duration: 1000,
+      useNativeDriver: true
+
+    }).start();
+  };
+
     return (
-        <SafeAreaView style={{flex:1 , backgroundColor:'#000'}} >
-        <ScrollView >
-            <Modal
-
-                transparent={true}
-
-                visible={modalOpenn}
-                animationType='fade'
-            >
-                <View style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: -5,
-                    backgroundColor: '#000000e0',
-                }} >
-                    <LinearGradient
-                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                        colors={['#FF7474', '#E20303']}
-                        style={styles.modalView}>
-                        <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just $0.99 ?</Text>
-
-                        <View style={styles.modalButtons2} >
-                            <Pressable
-                                style={styles.button}
-                                onPress={() => ('')}
-                            >
-                                <Text style={styles.textStyleNo1}>Yes</Text>
-                            </Pressable>
-
-                            <Pressable
-                                style={styles.button}
-                                onPress={() => setModalOpenn(false)}
-                            >
-                                <Text style={styles.textStyleNo1}>No Thanks</Text>
-                            </Pressable>
-
-                        </View>
-                    </LinearGradient>
-                </View>
-
-            </Modal>
-            <LinearGradient
-                colors={['#24202f', '#24202f', '#24202f']}
-                style={styles.container}
-            >
-                <View>
-                    <Text style={styles.CasualModeText}>Casual Date Mode</Text>
-                </View>
-                <View style={styles.ChallengeContainer}>
-
-                    <Text style={styles.firstText}>
-                        Ohhh..
-                    </Text>
-
-                    <View style={styles.secondText}>
-                        <View style={styles.ping}
-                        >
-                            <View style={{ alignSelf: 'center', }}>
-                                <Text style={styles.secondText}>{Pings[0].text}</Text>
-                            </View>
-                        </View>
-                    </View>
-
-                    <Text style={styles.thirdText}>
-                        Are You Ready?
-                    </Text>
-                    <View style={styles.InnerContainer}>
-                        <ScrollView nestedScrollEnabled={true}>
-                            <Text style={styles.dareText}>
-                                {Pings[0].Description}
-                            </Text>
-                        </ScrollView>
-                    </View>
-                </View>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }} >
+            <ScrollView >
                 <Modal
+
                     transparent={true}
-                    visible={modalOpen}
+
+                    visible={modalOpenn}
                     animationType='fade'
-                    navigation={props.navigation}
                 >
-                    <View style={styles.centeredView}>
+                    <View style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: -5,
+                        backgroundColor: '#000000e0',
+                    }} >
                         <LinearGradient
                             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                             colors={['#FF7474', '#E20303']}
                             style={styles.modalView}>
-                            <Text style={styles.modalText}>Are you sure you want to quit your date?</Text>
+                            <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just $0.99 ?</Text>
 
-                            <View style={styles.modalButtons} >
+                            <View style={styles.modalButtons2} >
                                 <Pressable
-                                    style={[styles.button, styles.buttonYes]}
-                                    onPress={() => props.navigation.navigate('home')}
+                                    style={styles.button}
+                                    onPress={() => ('')}
                                 >
-                                    <Text style={styles.textStyleYes}>Yes</Text>
+                                    <Text style={styles.textStyleNo1}>Yes</Text>
                                 </Pressable>
 
                                 <Pressable
-                                    style={[styles.button, styles.buttonNo]}
-                                    onPress={() => setModalOpen(false)}
+                                    style={styles.button}
+                                    onPress={() => setModalOpenn(false)}
                                 >
-                                    <Text style={styles.textStyleNo}>No</Text>
+                                    <Text style={styles.textStyleNo1}>No Thanks</Text>
                                 </Pressable>
+
                             </View>
                         </LinearGradient>
                     </View>
-                </Modal>
-                <ScrollView nestedScrollEnabled={true} horizontal={true}>
-                    {
-                        rendenPing()
-                    }
-                </ScrollView>
-                <View style={styles.BottomHeader}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                        <Text style={{ fontSize: 23, color: "white", alignSelf: "flex-start", margin: 20, fontFamily: "Gazpacho Regular", marginLeft: 25, top: -5, }}> FAQ</Text>
-                    </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', width: moderateScale(50), marginRight: 110 }}>
-                        <TouchableOpacity onPress={() => setModalOpen(true)}>
-                            <MaterialIcons style={{ margin: 10 }} name='stop' size={hp('5%')} color="#E20303" />
-                        </TouchableOpacity>
 
-                        {
-                            PauseActive == false
-                                ?
-                                <TouchableOpacity onPress={onPause}>
-                                    <MaterialIcons style={{ margin: 10, }} name='pause' size={hp('5%')} color="yellow" />
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity onPress={onPause2}  >
-                                    <MaterialIcons style={{ margin: 10, }} name='play-arrow' size={hp('5%')} color="#74FF82" />
-                                </TouchableOpacity>
-                        }
-                        <TouchableOpacity onPress={onlclick} >
-                            <MaterialIcons style={{ margin: 10, top: 3 }} name='double-arrow' size={hp('4%')} color="#0379FF" />
-                        </TouchableOpacity>
+                </Modal>
+                <LinearGradient
+                    colors={['#24202f', '#24202f', '#24202f']}
+                    style={styles.container}
+                >
+
+                    {
+                        onHeaderc == false ? (
+                            <>
+                                <View >
+                                    <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut() , 200; onHeader() }}>
+                                        <MaterialIcons style={{ marginTop: 9 }} name='share' size={hp('5.5%')} color="#5a5761" />
+
+                                    </TouchableOpacity>
+                                </View>
+                            </>
+                        ) : <Animated.View style={{ translateX: fadeAnim }} >
+                            <View style={styles.TopHeader}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 30, marginTop: 10 }}>
+                                    <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut(); onHeaderF() }}>
+                                        <MaterialIcons name='share' size={hp('5%')} color="#5a5761" />
+                                    </TouchableOpacity>
+                                    <AntDesign name='facebook-square' size={hp('4.5%')} color="#fefefe" />
+                                    <FontAwesome5 name='facebook-messenger' size={hp('4.5%')} color="#0084fe" />
+                                    <AntDesign style={{ marginTop: 1 }} name='instagram' size={hp('4.8%')} color="#d0a800" />
+                                    <AntDesign name='twitter' size={hp('4.5%')} color="#1da1f3" />
+                                    <Ionicons name='chatbubble-sharp' size={hp('4.5%')} color="#34e228" />
+
+                                </View>
+                            </View>
+                        </Animated.View>
+                    }
+
+
+                    <View>
+                        <Text style={styles.CasualModeText}>Casual Date Mode</Text>
+                    </View>
+                    <View style={styles.ChallengeContainer}>
+
+                        <Text style={styles.firstText}>
+                            Ohhh..
+                        </Text>
+
+                        <View style={styles.secondText}>
+                            <View style={styles.ping}
+                            >
+                                <View style={{ alignSelf: 'center', }}>
+                                    <Text style={styles.secondText}>{Pings[0].text}</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        <Text style={styles.thirdText}>
+                            Are You Ready?
+                        </Text>
+                        <View style={styles.InnerContainer}>
+                            <ScrollView nestedScrollEnabled={true}>
+                                <Text style={styles.dareText}>
+                                    {Pings[0].Description}
+                                </Text>
+                            </ScrollView>
+                        </View>
                     </View>
                     <Modal
                         transparent={true}
-                        visible={modalStart}
+                        visible={modalOpen}
                         animationType='fade'
+                        navigation={props.navigation}
                     >
-                        <View style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginTop: -5,
-                            backgroundColor: '#000000e0',
-                        }} >
+                        <View style={styles.centeredView}>
                             <LinearGradient
                                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
-                                style={styles.modalView3}>
-                                <Text style={styles.modalText3}>Set Ping Frequency</Text>
-                                <View style={styles.ping3}>
-                                    <View style={{width:100}}>
-                                        <TouchableOpacity onPressIn={onPressMius}
-                                            onPress={onPree}
-                                            onPressOut={onPree}>
-                                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                                colors={['white', 'white']}
-                                                style={styles.btn1} >
-                                                <Text style={styles.btn1Text}>
-                                                    -
-                                                </Text>
-                                            </LinearGradient>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View style={{width:100 , }} >
-                                    <Text style={styles.count1}>{count}</Text>
-                                    </View>
-                                    <View style={{width:100}}>
-                                        <TouchableOpacity onPressIn={onPressIn}
-                                            onPress={onPress}
-                                            onPressOut={onPressOut}>
-                                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                                colors={['white', 'white']}
-                                                style={styles.btn2} >
-                                                <Text style={styles.btn2Text}>
-                                                    +
-                                                </Text>
+                                style={styles.modalView}>
+                                <Text style={styles.modalText}>Are you sure you want to quit your date?</Text>
 
-                                            </LinearGradient>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                                <View style={styles.modalButtons3} >
+                                <View style={styles.modalButtons} >
                                     <Pressable
-                                        style={styles.button}
-                                        onPress={() => setModalStart(false)}
+                                        style={[styles.button, styles.buttonYes]}
+                                        onPress={() => props.navigation.navigate('home')}
                                     >
-                                        <Text style={styles.textStyleNo1}>Save</Text>
+                                        <Text style={styles.textStyleYes}>Yes</Text>
                                     </Pressable>
+
                                     <Pressable
-                                        style={styles.button}
-                                        onPress={() => setModalStart(false)}
+                                        style={[styles.button, styles.buttonNo]}
+                                        onPress={() => setModalOpen(false)}
                                     >
-                                        <Text style={styles.textStyleNo1}>Cancel</Text>
+                                        <Text style={styles.textStyleNo}>No</Text>
                                     </Pressable>
                                 </View>
                             </LinearGradient>
                         </View>
                     </Modal>
-                    <TouchableOpacity onPressIn={onPressIn}
-                        onPress={() => setModalStart(true)}
-                        onPressOut={onPressOut}>
-                        <View style={{
-                            width: 30,
-                            marginRight: 28,
-                            margin: 13,
-                        }}>
-                            <Text style={styles.count}>{count}</Text>
+                    <ScrollView nestedScrollEnabled={true} horizontal={true}>
+                        {
+                            rendenPing()
+                        }
+                    </ScrollView>
+                    <View style={styles.BottomHeader}>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
+                            <Text style={{ fontSize: 23, color: "white", alignSelf: "flex-start", margin: 20, fontFamily: "Gazpacho Regular", marginLeft: 25, top: -5, }}> FAQ</Text>
+                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', width: moderateScale(50), marginRight: 110 }}>
+                            <TouchableOpacity onPress={() => setModalOpen(true)}>
+                                <MaterialIcons style={{ margin: 10 }} name='stop' size={hp('5%')} color="#E20303" />
+                            </TouchableOpacity>
+
+                            {
+                                PauseActive == false
+                                    ?
+                                    <TouchableOpacity onPress={onPause}>
+                                        <MaterialIcons style={{ margin: 10, }} name='pause' size={hp('5%')} color="yellow" />
+                                    </TouchableOpacity>
+                                    :
+                                    <TouchableOpacity onPress={onPause2}  >
+                                        <MaterialIcons style={{ margin: 10, }} name='play-arrow' size={hp('5%')} color="#74FF82" />
+                                    </TouchableOpacity>
+                            }
+                            <TouchableOpacity onPress={onlclick} >
+                                <MaterialIcons style={{ margin: 10, top: 3 }} name='double-arrow' size={hp('4%')} color="#0379FF" />
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ width: 30, alignSelf: 'flex-end', marginRight: 28, bottom: 23, }}>
-                    <Text style={{ color: 'white', fontSize: 10, textAlign: 'center', fontFamily: 'Poppins-Regular', }}>min</Text>
-                </View>
-            </LinearGradient>
-        </ScrollView>
+                        <Modal
+                            transparent={true}
+                            visible={modalStart}
+                            animationType='fade'
+                        >
+                            <View style={{
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginTop: -5,
+                                backgroundColor: '#000000e0',
+                            }} >
+                                <LinearGradient
+                                    start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                    colors={['#FF7474', '#E20303']}
+                                    style={styles.modalView3}>
+                                    <Text style={styles.modalText3}>Set Ping Frequency</Text>
+                                    <View style={styles.ping3}>
+                                        <View style={{ width: 100 }}>
+                                            <TouchableOpacity onPressIn={onPressMius}
+                                                onPress={onPree}
+                                                onPressOut={onPree}>
+                                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                                    colors={['white', 'white']}
+                                                    style={styles.btn1} >
+                                                    <Text style={styles.btn1Text}>
+                                                        -
+                                                    </Text>
+                                                </LinearGradient>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={{ width: 100, }} >
+                                            <Text style={styles.count1}>{count}</Text>
+                                        </View>
+                                        <View style={{ width: 100 }}>
+                                            <TouchableOpacity onPressIn={onPressIn}
+                                                onPress={onPress}
+                                                onPressOut={onPressOut}>
+                                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                                    colors={['white', 'white']}
+                                                    style={styles.btn2} >
+                                                    <Text style={styles.btn2Text}>
+                                                        +
+                                                    </Text>
+
+                                                </LinearGradient>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                    <View style={styles.modalButtons3} >
+                                        <Pressable
+                                            style={styles.button}
+                                            onPress={() => setModalStart(false)}
+                                        >
+                                            <Text style={styles.textStyleNo1}>Save</Text>
+                                        </Pressable>
+                                        <Pressable
+                                            style={styles.button}
+                                            onPress={() => setModalStart(false)}
+                                        >
+                                            <Text style={styles.textStyleNo1}>Cancel</Text>
+                                        </Pressable>
+                                    </View>
+                                </LinearGradient>
+                            </View>
+                        </Modal>
+                        <TouchableOpacity onPressIn={onPressIn}
+                            onPress={() => setModalStart(true)}
+                            onPressOut={onPressOut}>
+                            <View style={{
+                                width: 30,
+                                marginRight: 28,
+                                margin: 13,
+                            }}>
+                                <Text style={styles.count}>{count}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ width: 30, alignSelf: 'flex-end', marginRight: 28, bottom: 23, }}>
+                        <Text style={{ color: 'white', fontSize: 10, textAlign: 'center', fontFamily: 'Poppins-Regular', }}>min</Text>
+                    </View>
+                </LinearGradient>
+            </ScrollView>
         </SafeAreaView>
     )
 }
 
 
 const styles = StyleSheet.create({
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+    },
+
+    TopHeader: {
+        height: moderateScale(60),
+        backgroundColor: 'black',
+       
+
+        borderBottomLeftRadius: 36, zIndex: 999,
+        borderBottomRightRadius: 36,
+
+
+    },
 
     count1: {
         fontSize: 30,
         color: "white",
         fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
-        marginTop:moderateScale(30),
+        marginTop: moderateScale(30),
     },
 
     modalButtons3: {
@@ -615,7 +747,7 @@ const styles = StyleSheet.create({
         fontSize: 12.7,
         fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
-        lineHeight:18,
+        lineHeight: 18,
         margin: 18,
         color: '#24202F',
     },
@@ -664,7 +796,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderTopLeftRadius: 36,
         borderTopRightRadius: 36,
-        bottom: -14,
+        bottom: Platform.OS === 'ios' ? -14 : -18,
     },
     PingUnlock: {
         width: 90,
@@ -687,6 +819,7 @@ const styles = StyleSheet.create({
         height: 90,
         borderRadius: 12,
         margin: 15,
+        fontSize: 12,
         backgroundColor: "#1AC72B",
         fontFamily: "Gazpacho Regular",
     },
@@ -694,17 +827,18 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: 45,
         alignSelf: "center",
-     
+
     },
 
     PingText: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Poppins-Regular',
         textAlign: "center",
         marginTop: 27,
-        marginHorizontal: 4,
+        marginHorizontal: 5,
+
     },
     ChallengeContainer: {
 

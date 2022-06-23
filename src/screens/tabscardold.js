@@ -20,9 +20,11 @@ import { Badge } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-
+import axiosconfig from "../GoogleServices/googlemap"
 import { scale } from 'react-native-size-matters';
 import { moderateScale } from 'react-native-size-matters';
+import LinearGradient from 'react-native-linear-gradient';
+import HomeScreen from './HomeScreen';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -42,7 +44,16 @@ const PlaceData = [
         Id: 1,
         title: 'Place A',
 
+
     },
+    {
+        Id: 2,
+        title: 'Place B',
+
+
+    },
+
+
 ]
 
 const DATA = [
@@ -162,6 +173,27 @@ const ReactNavigationBottomTabs = ({ item }) => {
     const [tabState, setTabstate] = useState('yes')
 
 
+    const [LocationName, setLocationName] = useState("")
+
+   const  handleRestaurantSearch = () => {
+        console.log("here")
+        const url  = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
+        const location = `location=${this.state.latitude},${this.state.longitude}`;
+        const radius = '&radius=2000';
+        const type = '&keyword=restaurant';
+        const key = '&key=AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
+        const restaurantSearchUrl = url + location + radius + type + key;
+        fetch(restaurantSearchUrl)
+          .then(response => response.json())
+          .then(result => this.setState({restaurantList: result}))
+          .catch( e => console.log(e))
+      }
+
+
+
+
+
+
     const setToggle = (item, id) => {
         mainData.map((v, i) => {
             if (v.Id == id) {
@@ -183,7 +215,7 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
     }
 
-    const Item = ({ title, drink, isEnabled, setIsEnabled, Id, index }) => {
+    const Item = ({ title, meal ,  drink, isEnabled, setIsEnabled, Id, index }) => {
 
 
         return (
@@ -221,47 +253,165 @@ const ReactNavigationBottomTabs = ({ item }) => {
         )
     }
 
-
     const renderItem = ({ item, i }) => (
         <Item title={item.title} isEnabled={item.check} setIsEnabled={setIsEnabled} Id={item.Id} index={i} />
     );
 
-    const renderPlace = () => {
+    const PlaceName = () => {
+
         return (
+
             PlaceData.map((v, i) => {
+
                 return (
-                    <View
-                        key={i}
-                    >
+                    < ScrollView >
 
-                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-                            {v.title}
-                        </Text>
+                        <View key={i} style={styles.placeView2}>
+                            <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
 
-                    </View>
+                                    <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
+                                        style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+                                    </TouchableOpacity>
+                                    <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+                                        <View style={{ top: 4 }}>
+                                            <View
+                                                key={i}
+                                            >
+                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
+                                                    {v.title}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
+                                        </View>
+                                    </View>
+
+                                </View>
+
+
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
                 )
-            })
+
+            }
+
+            )
         )
 
     }
 
+    const PlaceRecommended = () => {
+
+        return (
+
+            PlaceData.map((v, i) => {
+
+                return (
+                    <ScrollView nestedScrollEnabled={true} >
+                        {
+                            v.Id == 1 ?
+                                (
+                                    <>
+                                        <View >
+                                            <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
+                                                <View style={styles.placeViewc}>
+                                                    <View style={styles.yellowView}>
+                                                        <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
+                                                    </View>
+                                                    <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
+                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                                                        <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
+                                                            style={{ top: 25, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkes ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+
+                                                        </TouchableOpacity>
+
+                                                        <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+                                                            {v.Id == 1 ? (
+                                                                <>
+                                                                    <View
+                                                                        key={i}
+                                                                    >
+                                                                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
+                                                                            {v.title}
+                                                                        </Text>
+                                                                    </View>
+                                                                </>
+                                                            ) : null}
+                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+                                                            </View>
+                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
+                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
+                                                            </View>
+                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
+                                                            </View>
+                                                        </View>
+                                                    </View>
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
+                                                    </View>
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
+
+                                            <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, marginHorizontal: moderateScale(28), marginBottom: 15 }}></View>
+
+                                        </View>
+                                    </>
+                                ) :
+                                PlaceName()
+                        }
+
+
+                    </ScrollView>
+
+                )
+
+            }
+
+            )
+        )
+
+    }
+   
+
+    const [del , setDel] = useState(false)
+
     return (
+      
         <View style={styles.Contain}>
             <View style={styles.InnerContain}>
                 <View>
 
-                    <View style={styles.chooseContaine}>
-                        <TouchableOpacity  >
-                            <MaterialIcons style={{ marginLeft: 10, marginTop: 15 }} name='delete-outline' size={hp('5.5%')} color="white" />
+                   
+                    <LinearGradient
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                            colors={ item.type == 'meal' ? ['#80D3FC', '#80D3FC'] : item.type == 'activity' ? ['#44BEFB', '#44BEFB'] : item.type == 'desert' ? ['#0883FB', '#0883FB']  :['#0149FF', '#0149FF']   }
+                            style={styles.chooseContaine}>
+                        <TouchableOpacity  onPress={()=>item.type == item.type &&  del  ? setDel(true) : setDel(false) }>
+                            <MaterialIcons style={{ marginLeft: 15, marginTop: 18 }} name='delete-outline' size={hp('4.5%')} color="white" />
                         </TouchableOpacity>
                         <Text style={styles.ChooseMeal}>
                             {item.type + ' Filter'}
                         </Text>
                         <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ marginRight: 15, marginTop: moderateScale(15), height: moderateScale(40), width: moderateScale(40), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
+                            style={{ marginRight: 15, marginTop: moderateScale(15), height: moderateScale(37), width: moderateScale(37), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
                         </TouchableOpacity>
 
-                    </View>
+                    </LinearGradient>
                     <ScrollView nestedScrollEnabled={true}>
                         <View style={{ marginTop: 20, }}>
 
@@ -277,137 +427,13 @@ const ReactNavigationBottomTabs = ({ item }) => {
                                     </SafeAreaView>
                                 </>) : tabState == 'place' ? (
                                     <>
-                                        < ScrollView >
-
-                                            <View style={styles.placeView2}>
-                                                <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-
-
-
-
-                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
-                                                        <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                                            style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-                                                        </TouchableOpacity>
-
-                                                        <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                                            <View style={{ top: 4 }}>{renderPlace()}</View>
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                                            </View>
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                                            </View>
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                                            </View>
-                                                        </View>
-
-                                                    </View>
-
-
-                                                </TouchableOpacity>
-                                            </View>
-                                        </ScrollView>
+                                        {PlaceName()}
                                     </>
                                 ) : tabState == 'recomended' ?
 
                                 (
                                     <>
-                                        <ScrollView nestedScrollEnabled={true} >
-                                            <View >
-                                                <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
-                                                    <View style={styles.placeViewc}>
-                                                        <View style={styles.yellowView}>
-                                                            <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
-                                                        </View>
-                                                        <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
-                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-
-                                                            <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
-                                                                style={{ top: 25, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkes ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-                                                            </TouchableOpacity>
-
-                                                            <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                                                <View>{renderPlace()}</View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                                                </View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                                                </View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                                                </View>
-                                                            </View>
-
-
-
-                                                        </View>
-                                                        <View style={{ flexDirection: 'row' }}>
-                                                            <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
-
-                                                        </View>
-                                                        <View style={{ flexDirection: 'row' }}>
-                                                            <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
-
-                                                        </View>
-                                                    </View>
-                                                </TouchableOpacity>
-
-                                                <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, marginHorizontal: moderateScale(28), marginBottom: 15 }}></View>
-                                                <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-                                                    <View style={styles.placeView2}>
-                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-                                                            <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                                                style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-                                                            </TouchableOpacity>
-                                                            <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                                                <View style={{ top: 4 }}>{renderPlace()}</View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                                                </View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                                                </View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                                                </View>
-                                                            </View>
-                                                        </View>
-                                                    </View>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity style={{ marginTop: 5, }} onPress={() => checkei ? setCheckei(false) : setCheckei(true)}>
-                                                    <View style={styles.placeView2}>
-                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5, }}>
-
-                                                            <TouchableOpacity onPress={() => checkei ? setCheckei(false) : setCheckei(true)}
-                                                                style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkei ? '#00B712' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-                                                            </TouchableOpacity>
-
-                                                            <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                                                <View style={{ top: 4 }}>{renderPlace()}</View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                                                </View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                                                </View>
-                                                                <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                    <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                                                </View>
-                                                            </View>
-
-                                                        </View>
-
-                                                    </View>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </ScrollView>
+                                        {PlaceRecommended()}
                                     </>
                                 ) : null
                             }
@@ -472,7 +498,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         height: moderateScale(70),
         width: moderateScale(windowWidth - 61, 0.1),
-        backgroundColor: '#534C64',
+       
 
 
     },

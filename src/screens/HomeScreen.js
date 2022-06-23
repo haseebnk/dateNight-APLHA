@@ -64,51 +64,59 @@ const PreData = [
         id: 1,
         key: "1",
         title: 'Pre-Plan',
-        description:
-            'Date 01',
+        description: 'Date 01',
+        type: "lock",
+        selected: false,
     },
     {
         id: 2,
         key: "2",
         title: 'Pre-Plan',
-        description:
-            'Date 02',
+        description:  'Date 02',
+        type: "lock",
+        selected: false,
     },
     {
         id: 3,
         key: "3",
         title: 'Pre-Plan',
-        description:
-            'Date 03',
+        description:  'Date 03',
+        type: "lock",
+        selected: false,
     },
 
     {
         id: 4,
         key: "4",
         title: 'Pre-Plan',
-        description:
-            'Date 04',
+        description: 'Date 04',
+        type: "lock",
+        selected: false,
+
     },
     {
         id: 5,
         key: "5",
         title: 'Pre-Plan',
-        description:
-            'Date 05',
+        description: 'Date 05',
+        type: "lock",
+        selected: false,
     },
     {
         id: 6,
         key: "6",
         title: 'Pre-Plan',
-        description:
-            'Date 06',
+        description: 'Date 06',
+        type: "lock",
+        selected: false,
     },
     {
         id: 7,
         key: "7",
         title: 'Pre-Plan',
-        description:
-            'Date 07',
+        description:  'Date 07',
+        type: "lock",
+        selected: false,                                                                                                                                                                                                                                                                         
     },
 ]
 const data = [
@@ -437,6 +445,16 @@ const HomeScreen = (props) => {
                                 <Text style={styles.pinLockUnclock2}>
                                     {v.description}
                                 </Text>
+                                {
+                                v.type == 'lock' ? (
+                                    <>
+                                        <View style={styles.pinLockPicback2}>
+                                            {/* {v.type} */}
+                                            <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
+                                        </ View>
+                                    </>
+                                ) : null
+                            }
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -515,7 +533,7 @@ const HomeScreen = (props) => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 , backgroundColor:'#000'}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
             <View style={styles.container}>
                 <View style={styles.TopHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
@@ -726,10 +744,7 @@ const HomeScreen = (props) => {
                                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
                                     style={styles.modalView}>
-                                    <Text style={styles.modalText}>Lorem ipsum dolor sit amet, consectetuer
-                                        adipiscing elit, sed diam nonummy nibh
-                                        euismod tincidunt ut laoreet dolore
-                                        magna aliquam erat volutpat. Ut wisi.</Text>
+                                    <Text style={styles.modalText}>This pre-planned date is currently locked.  Would you like to unlock it for just $19.99?</Text>
 
                                     <View style={styles.modalButtons} >
                                         <Pressable
@@ -970,7 +985,6 @@ const HomeScreen = (props) => {
                         <Text style={styles.mins}>mins</Text>
                         <Text style={styles.selectPngText}>Select Your Pings</Text>
                         <ScrollView horizontal={true}>
-
                             {
                                 rendenPing()
                             }
@@ -1141,15 +1155,16 @@ const styles = StyleSheet.create({
         margin: 6.5,
     },
     modalText: {
-        fontSize: 14,
+        fontSize: 18,
         color: 'white',
         fontFamily: 'Poppins-Regular',
+        textAlign: 'center'
     },
     textStyleNo: {
         color: 'white',
         margin: 20,
         fontFamily: 'Poppins-Regular',
-        fontSize: 14
+        fontSize: 16
     },
     buttonNo: {
         backgroundColor: 'white',
@@ -1319,7 +1334,7 @@ const styles = StyleSheet.create({
     },
     PingUnlock: {
         width: 90,
-        height: moderateScale(90),
+        height: 90,
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
@@ -1327,7 +1342,7 @@ const styles = StyleSheet.create({
     },
     PingLock: {
         width: 90,
-        height: moderateScale(90),
+        height: 90,
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
@@ -1339,13 +1354,13 @@ const styles = StyleSheet.create({
         height: moderateScale(85),
         borderRadius: 12,
         margin: 15,
-        backgroundColor: "#1AC72B",
+        backgroundColor: "#C5C5C5",
         fontFamily: "Gazpacho Regular",
 
     },
     PingPlayed: {
         width: 90,
-        height: moderateScale(90),
+        height: 90,
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#1AC72B",
@@ -1356,9 +1371,9 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Poppins-Regular',
         textAlign: "center",
-        marginTop: 26,
+        marginTop: 22,
         lineHeight: 25,
         marginHorizontal: 6
 
@@ -1376,7 +1391,7 @@ const styles = StyleSheet.create({
         fontSize: 11.5,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Poppins-Regular',
         textAlign: "center",
         marginTop: moderateScale(20),
         marginHorizontal: 6,
@@ -1395,11 +1410,19 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginHorizontal: 65
     },
+    pinLockPicback2: {
+        height: 17,
+        width: 17,
+        borderRadius: 20,
+        backgroundColor: 'white',
+        marginTop: 2,
+        marginHorizontal: 65
+    },
     pinLockUnclock2: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Poppins-Regular',
         textAlign: "center",
         marginTop: -4,
         marginHorizontal: 6

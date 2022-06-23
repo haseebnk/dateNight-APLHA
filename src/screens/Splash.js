@@ -62,8 +62,8 @@ export default function Splashing(props) {
   return (
     <TouchableWithoutFeedback >
       <View style={styles.container}>
-        <Animated.View style={{ translateY: fadeAnim }}>
-          <Animatable.Text delay={1500} style={styles.welcome} animation="slideInDown"  >welcome to</Animatable.Text>
+        <Animated.View  style={{ translateY: fadeAnim }}>
+          <Animatable.Text  delay={1500} style={styles.welcome} animation="slideInDown"  >welcome to</Animatable.Text>
           <Animatable.Text delay={1500} style={styles.datenight} animation="slideInDown">Date Night</Animatable.Text>
           <Animatable.Text delay={1500} style={styles.datingText} animation="slideInDown" >Dating just got <Animatable.Text animation="slideInDown" style={{
 

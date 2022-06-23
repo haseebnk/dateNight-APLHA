@@ -323,21 +323,31 @@ export default function DateMode(props) {
                                     </TouchableOpacity>
                                 </View>
                             </>
-                        ) : <Animated.View style={{ translateX: fadeAnim }} >
-                            <View style={styles.TopHeader}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 30, marginTop: 10 }}>
-                                    <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut(); onHeaderF() }}>
-                                        <MaterialIcons name='share' size={hp('5%')} color="#5a5761" />
-                                    </TouchableOpacity>
-                                    <AntDesign name='facebook-square' size={hp('4.5%')} color="#fefefe" />
-                                    <FontAwesome5 name='facebook-messenger' size={hp('4.5%')} color="#0084fe" />
-                                    <AntDesign style={{ marginTop: 1 }} name='instagram' size={hp('4.8%')} color="#d0a800" />
-                                    <AntDesign name='twitter' size={hp('4.5%')} color="#1da1f3" />
-                                    <Ionicons name='chatbubble-sharp' size={hp('4.5%')} color="#34e228" />
+                        ) :  
 
-                                </View>
-                            </View>
-                        </Animated.View>
+                        <View >
+                        <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut() , 200; onHeader() }}>
+                            <MaterialIcons style={{ marginTop: 9 }} name='share' size={hp('5.5%')} color="#5a5761" />
+
+                        </TouchableOpacity>
+                    </View>
+
+
+                        // <Animated.View style={{ translateX: fadeAnim }} >
+                        //     <View style={styles.TopHeader}>
+                        //         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 30, marginTop: 10 }}>
+                        //             <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut(); onHeaderF() }}>
+                        //                 <MaterialIcons name='share' size={hp('5%')} color="#5a5761" />
+                        //             </TouchableOpacity>
+                        //             <AntDesign name='facebook-square' size={hp('4.5%')} color="#fefefe" />
+                        //             <FontAwesome5 name='facebook-messenger' size={hp('4.5%')} color="#0084fe" />
+                        //             <AntDesign style={{ marginTop: 1 }} name='instagram' size={hp('4.8%')} color="#d0a800" />
+                        //             <AntDesign name='twitter' size={hp('4.5%')} color="#1da1f3" />
+                        //             <Ionicons name='chatbubble-sharp' size={hp('4.5%')} color="#34e228" />
+
+                        //         </View>
+                        //     </View>
+                        // </Animated.View>
                     }
 
 
@@ -844,7 +854,7 @@ const styles = StyleSheet.create({
 
         alignSelf: 'center',
         width: scale(300),
-        height: scale(475),
+    paddingVertical:20,
         backgroundColor: '#363143',
         borderColor: '#00B712',
         borderWidth: 2.5,

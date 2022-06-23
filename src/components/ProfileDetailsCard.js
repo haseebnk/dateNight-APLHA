@@ -137,7 +137,7 @@ function ProfileDetailsCard() {
                                 buttonInnerColor={'#e74c3c'}
                                 buttonSize={9}
                                 buttonOuterSize={18}
-                                labelStyle={{ fontSize: 13, top: -7, marginVertical: 5, fontFamily: 'Poppins-Regulr' }}
+                                labelStyle={{ fontSize: 13, top: -7, marginVertical: 5, fontFamily: 'Poppins-Regular' }}
                             />
                         </View>
                         <TouchableOpacity onPress={() => setModalOpenn(false)}>

@@ -739,7 +739,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.82digital.datenight;
+				PRODUCT_BUNDLE_IDENTIFIER = com.82digital.test;
 				PRODUCT_NAME = datenight;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

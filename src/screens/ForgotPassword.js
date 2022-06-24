@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     ForgotPassHeading: {
         color: '#fff',
         fontSize: 20,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
 
         marginTop: 2,

@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginHorizontal: 85,
         marginBottom: 20,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         textAlign: 'center',
 
 
@@ -545,7 +545,7 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         color: '#fafafa',
         alignSelf: 'center',
     },
@@ -568,12 +568,12 @@ const styles = StyleSheet.create({
     signUpText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     profileText: {
         color: '#ffff',
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         alignSelf: "center",
         marginTop: 10
     },

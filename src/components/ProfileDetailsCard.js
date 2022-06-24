@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     },
     cardTextHead: {
         color: 'white',
-        fontFamily: "Gazpacho Bold",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
         fontSize: 18,
         marginLeft: 25,

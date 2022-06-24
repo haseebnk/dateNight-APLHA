@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         textAlign: 'center',
         margin: 10,
         color: '#ffffff',
@@ -348,9 +348,7 @@ const styles = StyleSheet.create({
     loginText: {
         color: '#fff',
         fontSize: 20,
-        fontFamily: "Gazpacho Regular",
-
-
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         marginTop: 20,
         marginBottom: 30,
         textAlign: 'center',

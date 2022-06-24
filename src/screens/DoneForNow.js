@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 40,
         color: "white",
-        fontFamily: "Gazpacho Bold",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         
         marginTop: 30,
     },

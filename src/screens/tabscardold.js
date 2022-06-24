@@ -604,7 +604,7 @@ const styles = StyleSheet.create({
         marginLeft: 70,
         padding: 0,
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         height: 60,
         color: "white",
         top: 20,

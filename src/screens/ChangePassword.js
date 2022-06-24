@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     changePassHeading: {
         color: '#fff',
         fontSize: 18,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         alignSelf: 'center',
         marginTop: 2,
         marginBottom: 30,

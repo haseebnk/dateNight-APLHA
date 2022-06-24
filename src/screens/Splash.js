@@ -68,7 +68,7 @@ export default function Splashing(props) {
           <Animatable.Text delay={1500} style={styles.datingText} animation="slideInDown" >Dating just got <Animatable.Text animation="slideInDown" style={{
 
             fontSize: 20,
-            fontFamily: "Gazpacho Regular",
+            fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
             fontStyle: 'italic',
             fontWeight: 'bold'
           }}>fun</Animatable.Text > again!</Animatable.Text>
@@ -80,7 +80,7 @@ export default function Splashing(props) {
           <Animatable.Text delay={1500} style={styles.steps} animation="slideInUp"  ><Animatable.Text animation="slideInUp" style={{
             color: 'red',
             fontSize: 25,
-            fontFamily: 'Gazpacho Regular',
+            fontFamily: 'Gazpacho',
           }}>4</Animatable.Text > simple steps...</Animatable.Text>
         </Animated.View>
       </View>

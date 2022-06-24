@@ -791,7 +791,7 @@ const styles = StyleSheet.create({
         fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         alignSelf: 'center',
         color: '#74FF82',
-        marginTop: 20
+        marginTop: 0
     },
     count: {
         color: 'white', fontSize: 20, textAlign: 'center',
@@ -865,7 +865,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "white",
         fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
-        marginTop: Platform.OS === 'ios' ? 30 : 15,
+        marginTop: Platform.OS === 'ios' ? 30 : 30,
     },
     container: {
         flex: 1,

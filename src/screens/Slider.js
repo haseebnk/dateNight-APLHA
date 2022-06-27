@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 60,
     marginBottom:20,
-    fontFamily: "Gazpacho Regular",
+    fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     top:-20,
     
   },
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   
-    fontFamily: "Gazpacho Regular"
+    fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular"
  
   },
  

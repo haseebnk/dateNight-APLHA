@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
         marginTop: -15,
         marginBottom: 25,
         textAlign: 'center',
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     takePhoto: {
@@ -620,6 +620,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 20,
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
 });

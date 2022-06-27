@@ -314,23 +314,23 @@ export default function DateMode(props) {
                 >
 
                     {
-                        onHeaderc == false ? (
-                            <>
-                                <View >
-                                    <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut() , 200; onHeader() }}>
-                                        <MaterialIcons style={{ marginTop: 9 }} name='share' size={hp('5.5%')} color="#5a5761" />
+                    //     onHeaderc == false ? (
+                    //         <>
+                    //             <View >
+                    //                 <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut() , 200; onHeader() }}>
+                    //                     <MaterialIcons style={{ marginTop: 9 }} name='share' size={hp('5.5%')} color="#5a5761" />
 
-                                    </TouchableOpacity>
-                                </View>
-                            </>
-                        ) :  
+                    //                 </TouchableOpacity>
+                    //             </View>
+                    //         </>
+                    //     ) :  
 
-                        <View >
-                        <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut() , 200; onHeader() }}>
-                            <MaterialIcons style={{ marginTop: 9 }} name='share' size={hp('5.5%')} color="#5a5761" />
+                    //     <View >
+                    //     <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut() , 200; onHeader() }}>
+                    //         <MaterialIcons style={{ marginTop: 9 }} name='share' size={hp('5.5%')} color="#5a5761" />
 
-                        </TouchableOpacity>
-                    </View>
+                    //     </TouchableOpacity>
+                    // </View>
 
 
                         // <Animated.View style={{ translateX: fadeAnim }} >
@@ -418,7 +418,7 @@ export default function DateMode(props) {
                     </ScrollView>
                     <View style={styles.BottomHeader}>
                         <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                            <Text style={{ fontSize: 23, color: "white", alignSelf: "flex-start", margin: 20, fontFamily: "Gazpacho Regular", marginLeft: 25, top: -5, }}> FAQ</Text>
+                            <Text style={{ fontSize: 23, color: "white", alignSelf: "flex-start", margin: 20, fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular", marginLeft: 25, top: -5, }}> FAQ</Text>
                         </TouchableOpacity>
                         <View style={{ flexDirection: 'row', width: moderateScale(50), marginRight: 110 }}>
                             <TouchableOpacity onPress={() => setModalOpen(true)}>
@@ -582,7 +582,7 @@ const styles = StyleSheet.create({
         height: 58,
         margin: 25,
         borderRadius: 18,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
 
     },
@@ -771,14 +771,14 @@ const styles = StyleSheet.create({
     },
     thirdText: {
         fontSize: 20,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         alignSelf: 'center',
         color: '#74FF82',
         marginBottom: 10
     },
     secondText: {
         fontSize: 25,
-        fontFamily: "Gazpacho Bold",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         alignSelf: 'center',
         color: '#74FF82',
         marginTop: -5,
@@ -788,10 +788,10 @@ const styles = StyleSheet.create({
     },
     firstText: {
         fontSize: 20,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         alignSelf: 'center',
         color: '#74FF82',
-        marginTop: 20
+        marginTop: 0
     },
     count: {
         color: 'white', fontSize: 20, textAlign: 'center',
@@ -814,7 +814,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     PingLock: {
         width: 90,
@@ -822,7 +822,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     PingPlayed: {
         width: 90,
@@ -831,13 +831,12 @@ const styles = StyleSheet.create({
         margin: 15,
         fontSize: 12,
         backgroundColor: "#1AC72B",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     ping3: {
         flexDirection: "row",
         marginTop: 45,
         alignSelf: "center",
-
     },
 
     PingText: {
@@ -865,8 +864,8 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 20,
         color: "white",
-        fontFamily: "Gazpacho Regular",
-        marginTop: Platform.OS === 'ios' ? 30 : 15,
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        marginTop: Platform.OS === 'ios' ? 30 : 30,
     },
     container: {
         flex: 1,

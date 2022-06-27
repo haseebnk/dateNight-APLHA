@@ -537,7 +537,7 @@ const HomeScreen = (props) => {
             <View style={styles.container}>
                 <View style={styles.TopHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                        <Text style={{ fontSize: 20, fontFamily: "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
+                        <Text style={{ fontSize: 20, fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => props.navigation.navigate('personalprofiledetails')}>
@@ -641,7 +641,7 @@ const HomeScreen = (props) => {
                                                             padding: 5,
                                                             color: 'white',
                                                             marginLeft: -20,
-                                                            fontFamily: "Gazpacho Regular",
+                                                            fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
                                                             fontSize: 16,
                                                             width: moderateScale(180)
                                                         }}>{item.title}</Text>
@@ -664,7 +664,7 @@ const HomeScreen = (props) => {
                                                     <View >
                                                         <Text style={{
                                                             padding: 5, marginLeft: -20,
-                                                            fontFamily: "Gazpacho Regular",
+                                                            fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
                                                             color: "white",
                                                             fontSize: 16,
                                                             width: moderateScale(180),
@@ -1255,7 +1255,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
 
         marginBottom: 5,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular" : "Gazpacho Regular", 
         textAlign: 'center',
 
     },
@@ -1300,7 +1300,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
 
 
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1316,7 +1316,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         marginTop: 20,
 
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1330,7 +1330,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     PingUnlock: {
         width: 90,
@@ -1338,7 +1338,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     PingLock: {
         width: 90,
@@ -1346,7 +1346,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     PingPlayed2: {
@@ -1355,7 +1355,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     PingPlayed: {
@@ -1364,7 +1364,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#1AC72B",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     PingText1: {
@@ -1382,7 +1382,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: "Gazpacho Bold",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         textAlign: "center",
         marginTop: 27,
         marginHorizontal: 4,
@@ -1443,7 +1443,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: -25,
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         textAlign: "center",
 
     },
@@ -1484,7 +1484,7 @@ const styles = StyleSheet.create({
         height: 58,
         margin: 25,
         borderRadius: 18,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
 
     },
@@ -1526,7 +1526,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 25,
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     zipCode: {
@@ -1623,7 +1623,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
 
     },
@@ -1633,7 +1633,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     PrePlanText: {
@@ -1643,7 +1643,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     SelectYourPingText: {
@@ -1652,7 +1652,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     choosePersonText: {
         marginTop: 40,
@@ -1660,7 +1660,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     }
     ,
     contentHead: {
@@ -1677,7 +1677,7 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 18,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         marginBottom: 20,
     },
     header: {
@@ -1695,7 +1695,7 @@ const styles = StyleSheet.create({
     headerText: {
         textAlign: 'center',
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         color: "white",
         alignSelf: "flex-start",
         marginTop: 15,
@@ -1724,7 +1724,7 @@ const styles = StyleSheet.create({
     },
     selectTitle: {
         fontSize: 14,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         padding: 10,
         textAlign: 'center',
     },
@@ -1737,6 +1737,6 @@ const styles = StyleSheet.create({
     multipleToggle__title: {
         fontSize: 16,
         marginRight: 8,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
 });

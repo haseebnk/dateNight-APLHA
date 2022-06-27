@@ -59,7 +59,7 @@ export default function ForgotPassword(props) {
                     />
                 </View>
                 <View style={styles.Cont}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("changepassword")}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("otp")}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                             colors={['#FF7474', '#E20303']}
                             style={styles.linearGradient} >

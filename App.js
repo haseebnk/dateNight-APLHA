@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DoneForNow from './src/screens/DoneForNow';
 import DateMode from './src/screens/DateMode';
 import CoupleCard from './src/components/CoupleCard';
+import OPT from './src/screens/otp';
 import SplashScreen from "react-native-splash-screen"
 import { NotesProvider } from "./src/context/NotesContext"
 import AppContext from './src/components/appcontext';
@@ -63,6 +64,7 @@ const App = () => {
           <Stack.Screen name="signup" options={{ headerShown: false }} component={SignupScreen} />
           <Stack.Screen name="slider" options={{ headerShown: false }} component={Slider} />
           <Stack.Screen name="forgotpassword" options={{ headerShown: false }} component={ForgotPassword} />
+          <Stack.Screen name="otp" options={{ headerShown: false }} component={OPT} />
           <Stack.Screen name="changepassword" options={{ headerShown: false }} component={ChangePassword} />
           <Stack.Screen name="home" options={{ headerShown: false }} component={HomeScreen} />
           <Stack.Screen name="splash" options={{ headerShown: false }} component={Splash} />

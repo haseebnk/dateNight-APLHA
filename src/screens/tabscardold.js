@@ -40,18 +40,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 const PlaceData = [
-    {
-        Id: 1,
-        title: 'Place A',
 
-
-    },
-    {
-        Id: 2,
-        title: 'Place B',
-
-
-    },
 
 
 ]
@@ -159,6 +148,14 @@ const DATA = [
 
 const ReactNavigationBottomTabs = ({ item }) => {
 
+    useEffect(() => {
+
+        handleRestaurantSearch()
+
+    }, []);
+
+
+
     const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
     const [mainData, setMainData] = useState(DATA);
@@ -175,19 +172,27 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
     const [LocationName, setLocationName] = useState("")
 
-   const  handleRestaurantSearch = () => {
+    const [ustate, setState] = useState()
+
+    const LATITUDE = 24.860266;
+    const LONGITUDE = 67.058425;
+
+    const handleRestaurantSearch = () => {
         console.log("here")
-        const url  = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-        const location = `location=${this.state.latitude},${this.state.longitude}`;
+        const url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
+        const location = `location=${LATITUDE},${LONGITUDE}`;
         const radius = '&radius=2000';
         const type = '&keyword=restaurant';
         const key = '&key=AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
         const restaurantSearchUrl = url + location + radius + type + key;
+
         fetch(restaurantSearchUrl)
-          .then(response => response.json())
-          .then(result => this.setState({restaurantList: result}))
-          .catch( e => console.log(e))
-      }
+            .then(response => response.json())
+            .then(response=> (console.log(response)))
+            .then(response => (response.results.map((res, index) => { PlaceData.push(res.name), index == 1 ? PlaceData.unshift(res.name) : PlaceData.push(res.name) }), console.log(PlaceData)))
+            .catch(e => console.log(e))
+
+    }
 
 
 
@@ -202,6 +207,7 @@ const ReactNavigationBottomTabs = ({ item }) => {
                 setMainData([...mainData])
             }
         })
+        console.log(handleRestaurantSearch())
     }
 
     const toggleInvert = (item, id) => {
@@ -215,7 +221,7 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
     }
 
-    const Item = ({ title, meal ,  drink, isEnabled, setIsEnabled, Id, index }) => {
+    const Item = ({ title, meal, drink, isEnabled, setIsEnabled, Id, index }) => {
 
 
         return (
@@ -257,16 +263,28 @@ const ReactNavigationBottomTabs = ({ item }) => {
         <Item title={item.title} isEnabled={item.check} setIsEnabled={setIsEnabled} Id={item.Id} index={i} />
     );
 
+
+
+
+
+
+
+
+
     const PlaceName = () => {
+
 
         return (
 
-            PlaceData.map((v, i) => {
+            <FlatList
+                data={PlaceData}
+                keyExtractor={(item, index) => index}
+                renderItem={({ item, index }) => (
 
-                return (
+
                     < ScrollView >
 
-                        <View key={i} style={styles.placeView2}>
+                        <View key={index} style={styles.placeView2}>
                             <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
 
@@ -276,10 +294,14 @@ const ReactNavigationBottomTabs = ({ item }) => {
                                     <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
                                         <View style={{ top: 4 }}>
                                             <View
-                                                key={i}
+                                                key={index}
                                             >
-                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-                                                    {v.title}
+                                                {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
+                                                    {item}
+                                                </Text> */}
+                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
+                                                    (((item).substring(0, 10 - 3)) + '...') :
+                                                    item}
                                                 </Text>
                                             </View>
                                         </View>
@@ -300,25 +322,80 @@ const ReactNavigationBottomTabs = ({ item }) => {
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
-                )
 
-            }
 
-            )
+                )}
+
+            />
         )
-
     }
+
+
+
+    // const PlaceName = () => {
+
+    //     return (
+
+    //         PlaceData.map((v, i) => {
+
+    //             return (
+    //                 < ScrollView >
+
+    //                     <View key={i} style={styles.placeView2}>
+    //                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
+    //                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
+
+    //                                 <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
+    //                                     style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+    //                                 </TouchableOpacity>
+    //                                 <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+    //                                     <View style={{ top: 4 }}>
+    //                                         <View
+    //                                             key={i}
+    //                                         >
+    //                                             <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
+
+    //                                             </Text>
+    //                                         </View>
+    //                                     </View>
+    //                                     <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+    //                                         <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+    //                                     </View>
+    //                                     <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
+    //                                         <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
+    //                                     </View>
+    //                                     <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+    //                                         <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
+    //                                     </View>
+    //                                 </View>
+
+    //                             </View>
+
+
+    //                         </TouchableOpacity>
+    //                     </View>
+    //                 </ScrollView>
+    //             )
+
+    //         }
+
+    //         )
+    //     )
+
+    // }
+
 
     const PlaceRecommended = () => {
 
         return (
+            <FlatList
+                data={PlaceData}
+                keyExtractor={(item, index) => index}
+                renderItem={({ item, index }) => (
 
-            PlaceData.map((v, i) => {
-
-                return (
                     <ScrollView nestedScrollEnabled={true} >
                         {
-                            v.Id == 1 ?
+                            index == 1 ?
                                 (
                                     <>
                                         <View >
@@ -336,13 +413,14 @@ const ReactNavigationBottomTabs = ({ item }) => {
                                                         </TouchableOpacity>
 
                                                         <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                                            {v.Id == 1 ? (
+                                                            {index == 1 ? (
                                                                 <>
                                                                     <View
-                                                                        key={i}
+                                                                        key={index}
                                                                     >
-                                                                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-                                                                            {v.title}
+                                                                        <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
+                                                                            (((item).substring(0, 10 - 3)) + '...') :
+                                                                            item}
                                                                         </Text>
                                                                     </View>
                                                                 </>
@@ -378,30 +456,107 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
                     </ScrollView>
 
-                )
+                )}
 
-            }
-
-            )
+            />
         )
 
     }
-   
 
-    const [del , setDel] = useState(false)
+
+    // const PlaceRecommended = () => {
+
+    //     return (
+
+    //         PlaceData.map((v, i) => {
+
+    //             return (
+    //                 <ScrollView nestedScrollEnabled={true} >
+    //                     {
+    //                         v.Id == 1 ?
+    //                             (
+    //                                 <>
+    //                                     <View >
+    //                                         <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
+    //                                             <View style={styles.placeViewc}>
+    //                                                 <View style={styles.yellowView}>
+    //                                                     <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
+    //                                                 </View>
+    //                                                 <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
+    //                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+    //                                                     <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
+    //                                                         style={{ top: 25, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkes ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+
+    //                                                     </TouchableOpacity>
+
+    //                                                     <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+    //                                                         {v.Id == 1 ? (
+    //                                                             <>
+    //                                                                 <View
+    //                                                                     key={i}
+    //                                                                 >
+    //                                                                     <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
+    //                                                                         {v.title}
+    //                                                                     </Text>
+    //                                                                 </View>
+    //                                                             </>
+    //                                                         ) : null}
+    //                                                         <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+    //                                                             <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+    //                                                         </View>
+    //                                                         <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
+    //                                                             <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
+    //                                                         </View>
+    //                                                         <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+    //                                                             <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
+    //                                                         </View>
+    //                                                     </View>
+    //                                                 </View>
+    //                                                 <View style={{ flexDirection: 'row' }}>
+    //                                                     <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
+    //                                                 </View>
+    //                                                 <View style={{ flexDirection: 'row' }}>
+    //                                                     <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
+    //                                                 </View>
+    //                                             </View>
+    //                                         </TouchableOpacity>
+
+    //                                         <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, marginHorizontal: moderateScale(28), marginBottom: 15 }}></View>
+
+    //                                     </View>
+    //                                 </>
+    //                             ) :
+    //                             PlaceName()
+    //                     }
+
+
+    //                 </ScrollView>
+
+    //             )
+
+    //         }
+
+    //         )
+    //     )
+
+    // }
+
+
+    const [del, setDel] = useState(false)
 
     return (
-      
+
         <View style={styles.Contain}>
             <View style={styles.InnerContain}>
                 <View>
 
-                   
+
                     <LinearGradient
-                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                            colors={ item.type == 'meal' ? ['#80D3FC', '#80D3FC'] : item.type == 'activity' ? ['#44BEFB', '#44BEFB'] : item.type == 'desert' ? ['#0883FB', '#0883FB']  :['#0149FF', '#0149FF']   }
-                            style={styles.chooseContaine}>
-                        <TouchableOpacity  onPress={()=>item.type == item.type &&  del  ? setDel(true) : setDel(false) }>
+                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                        colors={item.type == 'meal' ? ['#80D3FC', '#80D3FC'] : item.type == 'activity' ? ['#44BEFB', '#44BEFB'] : item.type == 'desert' ? ['#0883FB', '#0883FB'] : ['#0149FF', '#0149FF']}
+                        style={styles.chooseContaine}>
+                        <TouchableOpacity onPress={() => item.type == item.type && del ? setDel(true) : setDel(false)}>
                             <MaterialIcons style={{ marginLeft: 15, marginTop: 18 }} name='delete-outline' size={hp('4.5%')} color="white" />
                         </TouchableOpacity>
                         <Text style={styles.ChooseMeal}>
@@ -498,7 +653,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         height: moderateScale(70),
         width: moderateScale(windowWidth - 61, 0.1),
-       
+
 
 
     },

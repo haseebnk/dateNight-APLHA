@@ -40,6 +40,8 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
 
+import GetLocation from 'react-native-get-location';
+
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -222,6 +224,8 @@ const pink = [
 const HomeScreen = (props) => {
 
     useEffect(() => {
+        getCurrentLocation();
+       
         setPings(pink)
         setEntries([{ type: 'add' }]);
         const backAction = () => {
@@ -262,11 +266,38 @@ const HomeScreen = (props) => {
     const [modalOpenn, setModalOpenn] = useState(false);
     // const [typee, setType] = useState(true)
     const [entries, setEntries] = useState([]);
-
+    const [location, setLocation] = useState()
+    const [locationon, setlocationon] = useState(true);
     const [xy, setXy] = useState('inactive')
     const [vy, setVy] = useState('active')
 
     const carouselRef = useRef(null);
+
+
+    const getCurrentLocation = () => {
+        // setLoader(true)
+        GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 15000,
+        })
+            .then(location => {
+
+                setLocation(location)
+                console.log(location)
+                getRestaurents(location)
+            })
+            .catch(error => {
+                setlocationon(false)
+                const { code, message } = error;
+
+
+                // setLoader(false)
+            })
+    }
+
+
+
+
 
 
     const showDatePicker = () => {

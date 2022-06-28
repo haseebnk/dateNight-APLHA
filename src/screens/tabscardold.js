@@ -174,8 +174,8 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
     const [ustate, setState] = useState()
 
-    const LATITUDE = 24.860266;
-    const LONGITUDE = 67.058425;
+    const LATITUDE = 24.871733;
+    const LONGITUDE = 67.359277;
 
     const handleRestaurantSearch = () => {
         console.log("here")
@@ -188,8 +188,8 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
         fetch(restaurantSearchUrl)
             .then(response => response.json())
-            .then(response=> (console.log(response)))
-            .then(response => (response.results.map((res, index) => { PlaceData.push(res.name), index == 1 ? PlaceData.unshift(res.name) : PlaceData.push(res.name) }), console.log(PlaceData)))
+           
+            .then(response => (response.results.map((res, index) => { PlaceData.push(res.name) })))
             .catch(e => console.log(e))
 
     }
@@ -278,13 +278,13 @@ const ReactNavigationBottomTabs = ({ item }) => {
 
             <FlatList
                 data={PlaceData}
-                keyExtractor={(item, index) => index}
+                keyExtractor={(item) => item}
                 renderItem={({ item, index }) => (
 
 
                     < ScrollView >
 
-                        <View key={index} style={styles.placeView2}>
+                        <View  style={styles.placeView2}>
                             <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
 
@@ -294,7 +294,7 @@ const ReactNavigationBottomTabs = ({ item }) => {
                                     <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
                                         <View style={{ top: 4 }}>
                                             <View
-                                                key={index}
+                                              
                                             >
                                                 {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
                                                     {item}
@@ -390,12 +390,12 @@ const ReactNavigationBottomTabs = ({ item }) => {
         return (
             <FlatList
                 data={PlaceData}
-                keyExtractor={(item, index) => index}
+                keyExtractor={(item) => item}
                 renderItem={({ item, index }) => (
 
                     <ScrollView nestedScrollEnabled={true} >
                         {
-                            index == 1 ?
+                            index == 0 ?
                                 (
                                     <>
                                         <View >
@@ -413,18 +413,14 @@ const ReactNavigationBottomTabs = ({ item }) => {
                                                         </TouchableOpacity>
 
                                                         <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                                            {index == 1 ? (
-                                                                <>
-                                                                    <View
-                                                                        key={index}
-                                                                    >
+                                                         
+                                                                    <View>
                                                                         <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
                                                                             (((item).substring(0, 10 - 3)) + '...') :
                                                                             item}
                                                                         </Text>
                                                                     </View>
-                                                                </>
-                                                            ) : null}
+                                                           
                                                             <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
                                                                 <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
                                                             </View>
@@ -450,7 +446,49 @@ const ReactNavigationBottomTabs = ({ item }) => {
                                         </View>
                                     </>
                                 ) :
-                                PlaceName()
+                               
+
+                                
+                    < ScrollView >
+
+                        <View  style={styles.placeView2}>
+                            <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
+
+                                    <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
+                                        style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+                                    </TouchableOpacity>
+                                    <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+                                        <View style={{ top: 4 }}>
+                                            <View
+                                              
+                                            >
+                                                {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
+                                                    {item}
+                                                </Text> */}
+                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
+                                                    (((item).substring(0, 10 - 3)) + '...') :
+                                                    item}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
+                                        </View>
+                                    </View>
+
+                                </View>
+
+
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
                         }
 
 

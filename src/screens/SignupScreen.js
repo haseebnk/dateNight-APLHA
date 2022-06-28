@@ -17,6 +17,7 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+
 import moment from 'moment';
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -191,39 +192,43 @@ export default function SignupScreen({ navigation }) {
 
 
     const openCamer = c => {
-
+        
         if (c == 'g') {
             launchImageLibrary({
-                width: 300,
-                height: 400,
-                cropping: true,
-                freeStyleCropEnabled: true,
-                saveToPhotos: true
+              width: 300,
+              height: 400,
+              cropping: true,
+              freeStyleCropEnabled: true,
+              saveToPhotos: true
             })
-                .then(image => {
-                    myContext.setprofileImagee(image.assets[0].uri);
+              .then(image => {
+                myContext.setprofileImagee(image.assets[0].uri);
+      
+                imageUpload(image);
+              })
+              .catch(error => {
+                console.log(error)
+              });
+          }
 
-                    imageUpload(image);
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-        } else if (c == 'c') {
+        else if (c == 'c')
+         {
             launchCamera({
-
-                cropping: true,
-                freeStyleCropEnabled: true,
-                saveToPhotos: true
+              width: 300,
+              height: 400,
+              cropping: true,
+              freeStyleCropEnabled: true,
+              saveToPhotos: true
             })
-                .then(image => {
-
-                    myContext.setprofileImagee(image.assets[0].uri);
-                    imageUpload(image);
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-        }
+              .then(image => {
+      
+                myContext.setprofileImagee(image.assets[0].uri);
+                imageUpload(image);
+              })
+              .catch(error => {
+                console.log(error)
+              });
+          }
         // refRBSheet.current.close();
     };
 
@@ -266,10 +271,10 @@ export default function SignupScreen({ navigation }) {
                         <MaskInput
                             placeholderTextColor={'white'}
                             placeholder={'Mobile Number      '}
-                            
+
                             placeholderFillCharacter={true}
-                            
-                            style={{ color: 'white' , fontFamily: 'Poppins-Regular', }}
+
+                            style={{ color: 'white', fontFamily: 'Poppins-Regular', }}
                             value={socialSec}
                             onChangeText={(masked, unmasked) => {
                                 setsocialSec(masked);
@@ -307,10 +312,10 @@ export default function SignupScreen({ navigation }) {
                             onChangeText={(text) => setEmail(text)}
                         />
                     </View>
-                    <TouchableOpacity  onPress={() => showDatePicker()}>
+                    <TouchableOpacity onPress={() => showDatePicker()}>
                         <View style={styles.sectionStyle}>
 
-                            <Text style={{ color: 'white' , fontFamily: 'Poppins-Regular', }}>{dob}</Text>
+                            <Text style={{ color: 'white', fontFamily: 'Poppins-Regular', }}>{dob}</Text>
                         </View>
                     </TouchableOpacity>
                     <DateTimePickerModal
@@ -494,7 +499,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         flexDirection: 'row',
 
-       
+
         backgroundColor: '#363143',
         borderRadius: 18,
         marginTop: 10,

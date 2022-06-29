@@ -25,6 +25,10 @@ import { scale } from 'react-native-size-matters';
 import { moderateScale } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import HomeScreen from './HomeScreen';
+import GetLocation from 'react-native-get-location'; 
+
+
+
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -39,11 +43,6 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-const PlaceData = [
-
-
-
-]
 
 const DATA = [
     {
@@ -146,14 +145,13 @@ const DATA = [
 
 ]
 
+
+
 const ReactNavigationBottomTabs = ({ item }) => {
 
     useEffect(() => {
-
-        handleRestaurantSearch()
-
+        getCurrentLocation()
     }, []);
-
 
 
     const [checked, setChecked] = React.useState(false);
@@ -162,42 +160,66 @@ const ReactNavigationBottomTabs = ({ item }) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [checkes, setCheckes] = React.useState(false);
     const [checkei, setCheckei] = React.useState(false);
-
     const [Place, setPlace] = useState(false)
     const [Recommended, setRecommended] = useState(false)
     const [Filters, setFilters] = useState(false)
-
     const [tabState, setTabstate] = useState('yes')
-
-
     const [LocationName, setLocationName] = useState("")
-
     const [ustate, setState] = useState()
+    const [location, setLocation] = useState()
+    const [locationon, setlocationon] = useState(true);
+    const [lat, setLat ] = useState(24.871733) 
+    const [lng, setLng ] = useState(67.359277);
+    const [PlaceData, setPlaceData] = useState([])
 
-    const LATITUDE = 24.871733;
-    const LONGITUDE = 67.359277;
+    const getCurrentLocation = () => {
+        // setLoader(true)
+        GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 15000,
+        })
+            .then(location =>  {
+                // setLocation(location)
+                console.log(location)
+                setLat(location.latitude);
+                setLng(location.longitude);
 
-    const handleRestaurantSearch = () => {
-        console.log("here")
-        const url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-        const location = `location=${LATITUDE},${LONGITUDE}`;
-        const radius = '&radius=2000';
-        const type = '&keyword=restaurant';
-        const key = '&key=AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
-        const restaurantSearchUrl = url + location + radius + type + key;
-
-        fetch(restaurantSearchUrl)
-            .then(response => response.json())
-           
-            .then(response => (response.results.map((res, index) => { PlaceData.push(res.name) })))
-            .catch(e => console.log(e))
-
+                setTimeout(() => {
+                    handleRestaurantSearch(location.latitude, location.longitude);
+                }, 1000);
+            } )
+            .catch(error => {
+                setlocationon(false)
+                const { code, message } = error;
+                // setLoader(false)
+            })
     }
 
+    const handleRestaurantSearch = async(l,ln) => {
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?`
+        const location = `location=${l},${ln}`;
+        const radius = '&radius=2000';
+        const type = '&type=restaurant';
+        // const keyword = '&keyword=Meal';
+        const key = '&key=AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
+        const restaurantSearchUrl = url + location + radius + type  + key;
+        try {
+            let response = await fetch(
+                restaurantSearchUrl
+            );
+            let json = await response.json();
+            console.log(json, 'json');
 
-
-
-
+            let a = []
+            json.results.map((v,i)=>{
+                a.push(v.name)
+            })
+            setPlaceData(a);
+          } catch (error) {
+             console.error(error);
+          }
+          
+    }
 
     const setToggle = (item, id) => {
         mainData.map((v, i) => {
@@ -207,8 +229,11 @@ const ReactNavigationBottomTabs = ({ item }) => {
                 setMainData([...mainData])
             }
         })
-        console.log(handleRestaurantSearch())
+
+        // handleRestaurantSearch(lat,lng)
     }
+
+
 
     const toggleInvert = (item, id) => {
         mainData.map((v, i) => {
@@ -262,12 +287,6 @@ const ReactNavigationBottomTabs = ({ item }) => {
     const renderItem = ({ item, i }) => (
         <Item title={item.title} isEnabled={item.check} setIsEnabled={setIsEnabled} Id={item.Id} index={i} />
     );
-
-
-
-
-
-
 
 
 
@@ -329,60 +348,6 @@ const ReactNavigationBottomTabs = ({ item }) => {
             />
         )
     }
-
-
-
-    // const PlaceName = () => {
-
-    //     return (
-
-    //         PlaceData.map((v, i) => {
-
-    //             return (
-    //                 < ScrollView >
-
-    //                     <View key={i} style={styles.placeView2}>
-    //                         <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-    //                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
-    //                                 <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-    //                                     style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
-    //                                 </TouchableOpacity>
-    //                                 <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-    //                                     <View style={{ top: 4 }}>
-    //                                         <View
-    //                                             key={i}
-    //                                         >
-    //                                             <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-
-    //                                             </Text>
-    //                                         </View>
-    //                                     </View>
-    //                                     <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-    //                                         <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-    //                                     </View>
-    //                                     <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-    //                                         <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-    //                                     </View>
-    //                                     <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-    //                                         <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-    //                                     </View>
-    //                                 </View>
-
-    //                             </View>
-
-
-    //                         </TouchableOpacity>
-    //                     </View>
-    //                 </ScrollView>
-    //             )
-
-    //         }
-
-    //         )
-    //     )
-
-    // }
 
 
     const PlaceRecommended = () => {
@@ -502,85 +467,6 @@ const ReactNavigationBottomTabs = ({ item }) => {
     }
 
 
-    // const PlaceRecommended = () => {
-
-    //     return (
-
-    //         PlaceData.map((v, i) => {
-
-    //             return (
-    //                 <ScrollView nestedScrollEnabled={true} >
-    //                     {
-    //                         v.Id == 1 ?
-    //                             (
-    //                                 <>
-    //                                     <View >
-    //                                         <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
-    //                                             <View style={styles.placeViewc}>
-    //                                                 <View style={styles.yellowView}>
-    //                                                     <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
-    //                                                 </View>
-    //                                                 <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
-    //                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-
-    //                                                     <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
-    //                                                         style={{ top: 25, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkes ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-    //                                                     </TouchableOpacity>
-
-    //                                                     <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-    //                                                         {v.Id == 1 ? (
-    //                                                             <>
-    //                                                                 <View
-    //                                                                     key={i}
-    //                                                                 >
-    //                                                                     <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-    //                                                                         {v.title}
-    //                                                                     </Text>
-    //                                                                 </View>
-    //                                                             </>
-    //                                                         ) : null}
-    //                                                         <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-    //                                                             <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-    //                                                         </View>
-    //                                                         <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-    //                                                             <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-    //                                                         </View>
-    //                                                         <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-    //                                                             <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-    //                                                         </View>
-    //                                                     </View>
-    //                                                 </View>
-    //                                                 <View style={{ flexDirection: 'row' }}>
-    //                                                     <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
-    //                                                 </View>
-    //                                                 <View style={{ flexDirection: 'row' }}>
-    //                                                     <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
-    //                                                 </View>
-    //                                             </View>
-    //                                         </TouchableOpacity>
-
-    //                                         <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, marginHorizontal: moderateScale(28), marginBottom: 15 }}></View>
-
-    //                                     </View>
-    //                                 </>
-    //                             ) :
-    //                             PlaceName()
-    //                     }
-
-
-    //                 </ScrollView>
-
-    //             )
-
-    //         }
-
-    //         )
-    //     )
-
-    // }
-
-
     const [del, setDel] = useState(false)
 
     return (
@@ -588,8 +474,6 @@ const ReactNavigationBottomTabs = ({ item }) => {
         <View style={styles.Contain}>
             <View style={styles.InnerContain}>
                 <View>
-
-
                     <LinearGradient
                         start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                         colors={item.type == 'meal' ? ['#80D3FC', '#80D3FC'] : item.type == 'activity' ? ['#44BEFB', '#44BEFB'] : item.type == 'desert' ? ['#0883FB', '#0883FB'] : ['#0149FF', '#0149FF']}
@@ -603,7 +487,6 @@ const ReactNavigationBottomTabs = ({ item }) => {
                         <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
                             style={{ marginRight: 15, marginTop: moderateScale(15), height: moderateScale(37), width: moderateScale(37), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
                         </TouchableOpacity>
-
                     </LinearGradient>
                     <ScrollView nestedScrollEnabled={true}>
                         <View style={{ marginTop: 20, }}>
@@ -650,7 +533,6 @@ const ReactNavigationBottomTabs = ({ item }) => {
     );
 }
 
-
 const styles = StyleSheet.create({
 
     bottomTab: {
@@ -659,20 +541,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         flexDirection: 'row',
         justifyContent: 'space-between'
-
     },
-
     status: {
         width: 100,
         textAlign: 'center',
         marginBottom: 20,
         fontWeight: 'bold',
         borderRadius: 19,
-
     },
     toggleContainer: {
         top: moderateScale(-20), marginLeft: 20,
-
         height: 22,
         width: 43,
         borderRadius: 20,
@@ -691,36 +569,23 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         height: moderateScale(70),
         width: moderateScale(windowWidth - 61, 0.1),
-
-
-
     },
     InnerContain: {
         borderRadius: 20,
-        // width: moderateScale(windowWidth - 61, 0.1),
-        // top: 80,
         alignSelf: 'center',
-        // height: moderateScale(700),
         backgroundColor: '#363143'
-
-
     },
     Contain: {
-        // width: moderateScale(windowWidth, 0.1),
-        // height: moderateScale(700),
+   
         backgroundColor: 'black'
-
-
     },
     placeView2: {
 
         borderRadius: 18,
         height: moderateScale(70),
         width: moderateScale(270),
-        backgroundColor: '#24202F',
-        // marginHorizontal: moderateScale(23),
-        marginBottom: 10,
-        // alignSelf: 'center',
+        backgroundColor: '#24202F',    
+        marginBottom: 10,     
         alignSelf: 'center'
 
     },
@@ -730,18 +595,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFD500',
         borderTopLeftRadius: 18,
         borderTopRightRadius: 18,
-
     },
     placeViewc: {
-
         borderRadius: 18,
         height: moderateScale(152),
         width: moderateScale(270),
         backgroundColor: '#24202F',
         alignSelf: 'center',
         marginBottom: 10,
-
-
     },
     placeView: {
         margin: 15,
@@ -750,21 +611,16 @@ const styles = StyleSheet.create({
         width: moderateScale(270),
         backgroundColor: '#24202F',
         alignSelf: 'center',
-
     },
     Baap: {
         alignSelf: 'center'
     },
 
     MainBack: {
-
         backgroundColor: '#4D4D4D',
-
         padding: moderateScale(40),
 
     },
-
-
     BtnViews: {
         flex: 1,
         flexDirection: "row",
@@ -780,18 +636,13 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 10,
         flexDirection: 'row'
-
-
-
     },
-
     title: {
         fontSize: 16,
         color: "white",
         fontFamily: 'Poppins-Regular',
         left: 100,
         marginTop: moderateScale(1)
-
     },
     item: {
         marginLeft: 70,
@@ -801,41 +652,23 @@ const styles = StyleSheet.create({
         height: 60,
         color: "white",
         top: 20,
-
-
     },
-
     container2: {
-
-
         flexDirection: 'column',
-
-
-
-
-
     },
     radiosView: {
         backgroundColor: "#363143",
         height: moderateScale(650),
         width: moderateScale(291),
-
         flexDirection: "column",
-
-
-
-
     },
     RadioInnerView: {
-
         width: 30,
         height: 30,
         backgroundColor: '#00B712',
         borderRadius: 120,
         alignSelf: "center",
         margin: 6,
-
-
     },
 
     RadioView: {
@@ -847,17 +680,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 120,
         marginTop: 13,
-
-
     },
     ChooseMeal: {
         fontSize: 16,
         fontFamily: 'Poppins-Regular',
         color: 'white',
         textTransform: 'capitalize',
-
         marginTop: 22,
-
 
     },
     MainView: {
@@ -866,15 +695,10 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         zIndex: 99,
         alignSelf: 'center'
-
-
     },
     InnerView: {
         width: moderateScale(293),
         flexDirection: "row",
-
-
-
 
     },
 

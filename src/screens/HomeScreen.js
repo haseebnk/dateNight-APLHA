@@ -40,7 +40,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
 
-import GetLocation from 'react-native-get-location';
+// import GetLocation from 'react-native-get-location';
 
 
 if (Platform.OS === 'android') {
@@ -74,7 +74,7 @@ const PreData = [
         id: 2,
         key: "2",
         title: 'Pre-Plan',
-        description:  'Date 02',
+        description: 'Date 02',
         type: "lock",
         selected: false,
     },
@@ -82,7 +82,7 @@ const PreData = [
         id: 3,
         key: "3",
         title: 'Pre-Plan',
-        description:  'Date 03',
+        description: 'Date 03',
         type: "lock",
         selected: false,
     },
@@ -116,9 +116,9 @@ const PreData = [
         id: 7,
         key: "7",
         title: 'Pre-Plan',
-        description:  'Date 07',
+        description: 'Date 07',
         type: "lock",
-        selected: false,                                                                                                                                                                                                                                                                         
+        selected: false,
     },
 ]
 const data = [
@@ -159,7 +159,6 @@ const data = [
             'It may,  may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
     },
 ];
-
 const pink = [
     {
         id: "1",
@@ -220,12 +219,11 @@ const pink = [
 
 ]
 
-
 const HomeScreen = (props) => {
 
     useEffect(() => {
-        getCurrentLocation();
-       
+        
+        // getCurrentLocation();
         setPings(pink)
         setEntries([{ type: 'add' }]);
         const backAction = () => {
@@ -264,40 +262,10 @@ const HomeScreen = (props) => {
     const [time, settime] = useState('Select Time');
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpenn, setModalOpenn] = useState(false);
-    // const [typee, setType] = useState(true)
     const [entries, setEntries] = useState([]);
-    const [location, setLocation] = useState()
-    const [locationon, setlocationon] = useState(true);
     const [xy, setXy] = useState('inactive')
     const [vy, setVy] = useState('active')
-
     const carouselRef = useRef(null);
-
-
-    const getCurrentLocation = () => {
-        // setLoader(true)
-        GetLocation.getCurrentPosition({
-            enableHighAccuracy: true,
-            timeout: 15000,
-        })
-            .then(location => {
-
-                setLocation(location)
-                console.log(location)
-                getRestaurents(location)
-            })
-            .catch(error => {
-                setlocationon(false)
-                const { code, message } = error;
-
-
-                // setLoader(false)
-            })
-    }
-
-
-
-
 
 
     const showDatePicker = () => {
@@ -418,9 +386,6 @@ const HomeScreen = (props) => {
                     ) : (
                         <>
                             <View style={styles.mealView2}   >
-                                {/* <TouchableHighlight onPress={() => RemoveEventCard()}>
-                                <MaterialIcons style={{ marginLeft: 10, marginTop: 35 }} name='delete-outline' size={hp('5.5%')} color="white" />
-                                </TouchableHighlight> */}
                                 <ReactNavigationBottomTabs nestedScrollEnabled={true} item={item}></ReactNavigationBottomTabs>
                             </View>
                         </>
@@ -457,6 +422,7 @@ const HomeScreen = (props) => {
     const onPress = () => setCount(count < 60 ? count + 5 : 0);
     const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
+
     const rendenPlanPing = () => {
         return (
             PreData.map((v, i) => {
@@ -477,15 +443,15 @@ const HomeScreen = (props) => {
                                     {v.description}
                                 </Text>
                                 {
-                                v.type == 'lock' ? (
-                                    <>
-                                        <View style={styles.pinLockPicback2}>
-                                            {/* {v.type} */}
-                                            <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
-                                        </ View>
-                                    </>
-                                ) : null
-                            }
+                                    v.type == 'lock' ? (
+                                        <>
+                                            <View style={styles.pinLockPicback2}>
+                                                {/* {v.type} */}
+                                                <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
+                                            </ View>
+                                        </>
+                                    ) : null
+                                }
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -553,9 +519,7 @@ const HomeScreen = (props) => {
                                         </ View>
                                     </View>
                                 </>) : null}
-
                         </TouchableOpacity>
-
                     </View>
                 )
             })
@@ -581,13 +545,9 @@ const HomeScreen = (props) => {
                 <ScrollView>
 
                     <Modal
-
                         transparent={true}
-
                         visible={modalOpenn}
                         animationType='fade'
-
-
                     >
                         <View style={{
                             flex: 1,
@@ -616,15 +576,10 @@ const HomeScreen = (props) => {
                                     >
                                         <Text style={styles.textStyleNo1}>No Thanks</Text>
                                     </Pressable>
-
                                 </View>
-
-
                             </LinearGradient>
                         </View>
-
                     </Modal>
-
                     <View >
                         <View style={{ alignItems: 'center', }}>
 
@@ -635,12 +590,10 @@ const HomeScreen = (props) => {
 
                             <SafeAreaView style={{ flex: 1 }}>
                                 <FlatList
-
                                     nestedScrollEnabled
                                     ListEmptyComponent={null}
                                     ListFooterComponent={null}
                                     ListHeaderComponent={null}
-
                                     data={data}
                                     keyExtractor={(item, index) => index.toString()}
                                     style={{ width: (windowWidth - 50), }}
@@ -718,18 +671,13 @@ const HomeScreen = (props) => {
                                                                     borderWidth: 2.5,
                                                                     borderColor: 'white'
                                                                 }} >
-
                                                             </TouchableOpacity>
                                                         </View>
                                                     </TouchableOpacity>
-
                                                 </LinearGradient>
                                             }
-
                                             {press === item.id ?
-
                                                 <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
-
                                                     <View style={{ backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, }}>
                                                         <Text style={{
                                                             margin: 15,
@@ -744,10 +692,7 @@ const HomeScreen = (props) => {
                                                             fontFamily: 'Poppins-Regular',
                                                         }}>{item.description} </Text>
                                                     </View>
-
-
                                                 </Pressable>
-
                                                 :
                                                 null
                                             }
@@ -758,17 +703,12 @@ const HomeScreen = (props) => {
                             </SafeAreaView>
                         </View>
                     </View>
-
                     <View >
                         <Modal
-
                             transparent={true}
-
                             visible={modalOpen}
                             animationType='fade'
-
                             navigation={props.navigation}
-
                         >
                             <View style={styles.centeredView} >
                                 <LinearGradient
@@ -798,11 +738,8 @@ const HomeScreen = (props) => {
                                             <Text style={styles.textStyleNo}>Learn More</Text>
                                         </Pressable>
                                     </View>
-
-
                                 </LinearGradient>
                             </View>
-
                         </Modal>
                     </View>
                     <View style={styles.PrePlainDate}>
@@ -811,7 +748,6 @@ const HomeScreen = (props) => {
                             {rendenPlanPing()}
                         </ScrollView>
                     </View>
-
                     {
                         state && state.length > 0 ? (
                             <>
@@ -820,9 +756,7 @@ const HomeScreen = (props) => {
                                     <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
                                         <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular', }}>Add New +</Text>
                                     </TouchableOpacity>
-
-                                    <CoupleCard navigation={props.navigation}></CoupleCard>
-                                    {/* </TouchableOpacity> */}
+                                    <CoupleCard navigation={props.navigation}></CoupleCard>                                 
                                 </View>
                             </>
                         ) : <View style={styles.AddPersonView5}>
@@ -840,7 +774,6 @@ const HomeScreen = (props) => {
                         </View>
                     }
                     <View style={styles.AddCouple}>
-
                         <Text style={styles.choosePersonText}>   Add Another Couple</Text>
                         <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
                             <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular', }}>Add New +</Text>
@@ -869,11 +802,9 @@ const HomeScreen = (props) => {
                             <Text style={styles.choosePersonText}>  Add an Event</Text>
                             <View>
                                 <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20, marginBottom: 20 }}>
-
                                     {
                                         toggleActive == true ?
                                             <GooglePlacesAutocomplete
-
                                                 placeholder='Enter Location'
                                                 minLength={2}
                                                 autoFocus={false}
@@ -930,9 +861,7 @@ const HomeScreen = (props) => {
                                             />
                                             :
                                             <Text style={styles.zipCode}> Use Current Location ? </Text>
-
                                     }
-
                                     <View style={{ flexDirection: 'row', position: 'absolute', right: 10, marginTop: 3 }}>
                                         <TouchableOpacity
                                             style={[
@@ -951,18 +880,13 @@ const HomeScreen = (props) => {
                                                         ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
                                                         : { backgroundColor: activeColor, borderRadius: 25, },
                                                 ]}
-
                                             />
-
                                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
                                             <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
-
                                         </TouchableOpacity>
                                     </View>
-
                                 </View>
                             </View>
-
                             <Carousel
                                 ref={carouselRef}
                                 sliderWidth={screenWidth}
@@ -971,11 +895,8 @@ const HomeScreen = (props) => {
                                 renderItem={renderItem}
                                 hasParallaxImages={true}
                             />
-
                         </View>
-
                     </View>
-
                     <View style={{ height: moderateScale(400), backgroundColor: '#4D4D4D' }}>
                         <Text style={styles.SelectYourPingText}>   Select Your Ping Frequency</Text>
                         <View style={styles.ping}>
@@ -1286,7 +1207,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
 
         marginBottom: 5,
-        fontFamily: Platform.OS === 'ios' ? Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular" : "Gazpacho Regular", 
+        fontFamily: Platform.OS === 'ios' ? Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular" : "Gazpacho Regular",
         textAlign: 'center',
 
     },

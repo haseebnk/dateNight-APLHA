@@ -17,14 +17,12 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-
 import moment from 'moment';
-
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AppContext from '../components/appcontext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import axiosconfig from '../services/axios';
+import axiosconfig from '../Providers/axios';
 import MaskInput from 'react-native-mask-input';
 
 const COLORS = [
@@ -65,8 +63,8 @@ const COLORS = [
 export default function SignupScreen({ navigation }) {
 
     useEffect(() => {
-        console.log(socialSec);
-    }, [socialSec]);
+        console.log(phone);
+    }, [phone]);
 
 
     const [isEnabled, setIsEnabled] = useState(false);
@@ -103,17 +101,18 @@ export default function SignupScreen({ navigation }) {
 
     const [image, setImage] = useState(null)
     const [name, setUserName] = useState(null)
-    const [phone_number, setphone_number] = useState(null)
+    const [phone, setphone_number] = useState('')
     const [email, setEmail] = useState(null)
-    const [date_of_birth, setdate_of_birth] = useState(null)
+    const [dob, setdob] = useState('Birth Date')
     const [password, setPassword] = useState(null)
-    const [dob, setdob] = useState('Birth Date ');
+    // const [dobb, setdobb] = useState('Birth Date ');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [confirm_password, setconfirm_password] = useState(null)
+    // const [confirm_password, setconfirm_password] = useState(null)
     const [profile_background_color, setprofile_background_color] = useState(null)
-    const [type, settype] = useState(null)
+    const [phone_number , setPhoneNum]   = useState(false)
+    const [roles, setRole] = useState(null)
     const [socialSec, setsocialSec] = useState('');
-
+    const [date_of_birth , setdate_of_birth] = useState(false)
     const context = useContext(AppContext);
 
     const handleKeyDown = (e) => {
@@ -140,41 +139,45 @@ export default function SignupScreen({ navigation }) {
         }
     }
 
+    
+
     const onSignupUser = () => {
+
         var data = {
             name: name,
             email: email,
             password: password,
-            confirm_password: confirm_password,
-            type: 'user',
-            date_of_birth: date_of_birth,
-            phone_number: phone_number,
-            image: require('../assets/1.png'),
+            role: 'admin',
+            dob: dob,
+            phone: phone,
+            image: 'image1',
+            
 
-            profile_background_color: '#FFFFF'
+      
         }
+
         axiosconfig
-            .post('/register', data)
+            .post('register', data)
             .then((res: any) => {
                 //   setLoader(false);
-                if (email === null && password === null) {
-                    console.log('Empty credentials')
-                }
+              
                 if (res.data.error) {
                     alert('invalid credentials')
+                    console.log(res.data)
                     // showToast('login error', res.data.error_description);
                 } else {
                     alert("registered successfully", res)
 
                     storeData(res.data.access_token);
 
-
+                    console.log(res.data)
                 }
             })
             .catch(err => {
                 console.log('error', 'Invalid Credentials', err);
             });
 
+           
 
     }
 
@@ -275,9 +278,9 @@ export default function SignupScreen({ navigation }) {
                             placeholderFillCharacter={true}
 
                             style={{ color: 'white', fontFamily: 'Poppins-Regular', }}
-                            value={socialSec}
+                            value={phone}
                             onChangeText={(masked, unmasked) => {
-                                setsocialSec(masked);
+                                setphone_number(masked);
 
                                 console.log(masked);
                                 console.log(unmasked);
@@ -335,38 +338,7 @@ export default function SignupScreen({ navigation }) {
                             onChangeText={(text) => setPassword(text)}
                         />
                     </View>
-                    <Text style={styles.profileText}>Profile Background color</Text>
-                    <SafeAreaView style={{ flex: 1 }}>
-                        <FlatList
-                            horizontal={true}
-                            data={COLORS}
-                            keyExtractor={(item, index) => index.toString()}
-                            style={{ alignSelf: 'center', }}
-                            renderItem={({ item, index }) => (
-                                <TouchableOpacity
-                                    onPress={() => questionPick(item)}
-                                    style={{ marginTop: 5, padding: 0, marginTop: 20, }}
-                                >
-                                    <View style={{ flexDirection: 'row', width: '100%' }}>
-                                        {press === item.id ?
-                                            <TouchableOpacity onPress={() => setPress('')}  >
-                                                <LinearGradient
-                                                    colors={[item.color[0], item.color[1]]}
-                                                    onChangeText={(text) => setprofile_background_color(text)}
-                                                    style={styles.withBorder}>
-                                                </LinearGradient>
-                                            </TouchableOpacity>
-                                            :
-                                            <LinearGradient
-                                                colors={[item.color[0], item.color[1]]}
-                                                style={styles.withOutBorder}>
-                                            </LinearGradient>
-                                        }
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </SafeAreaView>
+                   
                     <TouchableOpacity onPress={() => onSignupUser()}>
                         <LinearGradient
                             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}

@@ -256,7 +256,7 @@ export default function PersonalProfileDetails(props) {
                             onConfirm={handleConfirm}
                             onCancel={hideDatePicker}
                         />
-                        <Text style={styles.profileText}>Profile Background Color</Text>
+                        {/* <Text style={styles.profileText}>Profile Background Color</Text>
 
                         <SafeAreaView style={{ flex: 1 }}>
                             <FlatList
@@ -287,7 +287,7 @@ export default function PersonalProfileDetails(props) {
                                     </TouchableOpacity>
                                 )}
                             />
-                        </SafeAreaView>
+                        </SafeAreaView> */}
                         <Text style={styles.ReminderText}>Reminders</Text>
                         <View style={{}}>
                             <ProfileDetailsCard></ProfileDetailsCard>

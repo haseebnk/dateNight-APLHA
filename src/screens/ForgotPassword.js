@@ -7,14 +7,56 @@ import {
     TextInput,
     Keyboard,
     TouchableWithoutFeedback,
-    TouchableOpacity,
+    TouchableOpacity
 
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Loader from './loader';
+import AppContext from '../components/appcontext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import axiosconfig from '../Providers/axios';
+
+export default function ForgotPassword({navigation}) {
 
 
+    const [email,setemail] = useState();
+    const [loader, setLoader] = useState(false)
 
-export default function ForgotPassword(props) {
+    
+
+    const sendOtp =() => {
+        
+        if(email == '' || email == null){
+            showToast('error', 'Email cannot be null.');
+            return false
+        }
+        // setLoader(true)
+
+        var signData = {
+           
+            email:email
+        }
+        axiosconfig
+        .post('email-verify', {email:email}) 
+        .then((res: any) => {
+
+           
+            // setLoader(false)
+            navigation.navigate('otp', signData);
+            console.log(res)
+       
+        }).catch((err) => {
+            // setLoader(false)
+               console.log(err)
+        
+        })
+    }
+
+
+    
+
+
 
     return (
 
@@ -27,6 +69,14 @@ export default function ForgotPassword(props) {
                 colors={['#24202f', '#24202f', '#24202f']}
                 style={styles.container}
             >
+
+{
+                loader ? (
+                    <>
+                        <Loader />
+                    </>
+                ) : null
+            }
 
                 <View style={styles.viewStyle}>
                     <TouchableOpacity onPress={() => props.navigation.goBack()}>
@@ -55,11 +105,12 @@ export default function ForgotPassword(props) {
                         autoCompleteType='email'
                         keyboardType='email-address'
                         textContentType='emailAddress'
+                        onChangeText={(e) => setemail(e)}
 
                     />
                 </View>
                 <View style={styles.Cont}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("otp")}>
+                    <TouchableOpacity   onPress={()=>sendOtp()}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                             colors={['#FF7474', '#E20303']}
                             style={styles.linearGradient} >

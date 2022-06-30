@@ -5,8 +5,11 @@ import {
     SafeAreaView,
     Switch,
     ScrollView,
+    StyleSheet,
+    Text,
     View,
     Image,
+    TouchableOpacity,
     Animated,
     TextInput,
     FlatList,
@@ -16,14 +19,9 @@ import {
     LayoutAnimation,
     Platform,
     UIManager,
+    TouchableHighlight,
     BackHandler,
     Alert,
-    Text, StyleSheet,
-    TouchableOpacity,
-    TouchableHighlight,
-    StatusBar,
-    ImageBackground,
-
 
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -41,18 +39,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-
-// import GetLocation from 'react-native-get-location';
-
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { delay, entries, filter } from 'lodash';
-import { Badge } from 'react-native-paper';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-import axiosconfig from "../GoogleServices/googlemap"
-// import HomeScreen from './HomeScreen';
-import GetLocation from 'react-native-get-location';
-import Loader from './loader';
-
+import Notifications from './Notifications';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -77,59 +64,51 @@ const PreData = [
         id: 1,
         key: "1",
         title: 'Pre-Plan',
-        description: 'Date 01',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 01',
     },
     {
         id: 2,
         key: "2",
         title: 'Pre-Plan',
-        description: 'Date 02',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 02',
     },
     {
         id: 3,
         key: "3",
         title: 'Pre-Plan',
-        description: 'Date 03',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 03',
     },
 
     {
         id: 4,
         key: "4",
         title: 'Pre-Plan',
-        description: 'Date 04',
-        type: "lock",
-        selected: false,
-
+        description:
+            'Date 04',
     },
     {
         id: 5,
         key: "5",
         title: 'Pre-Plan',
-        description: 'Date 05',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 05',
     },
     {
         id: 6,
         key: "6",
         title: 'Pre-Plan',
-        description: 'Date 06',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 06',
     },
     {
         id: 7,
         key: "7",
         title: 'Pre-Plan',
-        description: 'Date 07',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 07',
     },
 ]
 const data = [
@@ -170,6 +149,7 @@ const data = [
             'It may,  may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
     },
 ];
+
 const pink = [
     {
         id: "1",
@@ -230,111 +210,10 @@ const pink = [
 
 ]
 
-const DATA = [
-    {
-        Id: 1,
-        title: 'Asian Food',
-        meal: 'chicken',
-        dessert: 'lava',
-        drink: 'dew',
-        check: false
-    },
-    {
-        Id: 2,
-        title: 'Barbeque',
-        check: false
-    },
-    {
-        Id: 3,
-        title: 'Breakfast Food',
-        check: false
-    },
-    {
-        Id: 4,
-        title: 'Buffets',
-        check: false
-    },
-    {
-        Id: 5,
-        title: 'Burger & Fries',
-        check: false
-    },
-    {
 
-        Id: 6,
-        title: 'Fine Dining',
-        check: false
-    },
-    {
-        Id: 7,
-        title: 'Fondue',
-        check: false
-    },
-
-    {
-        Id: 9,
-        title: 'Hawaiian & Island Food',
-        check: false
-    },
-    {
-        Id: 10,
-        title: 'Greek Food',
-        check: false
-    },
-    {
-        Id: 11,
-        title: 'Hot Dogs',
-        check: false
-    },
-    {
-        Id: 12,
-        title: 'Italian Food',
-        check: false
-
-    },
-    {
-        Id: 19,
-        title: 'Mexican Food',
-        check: false
-
-    },
-    {
-        Id: 13,
-        title: 'Pizza',
-        check: false
-
-    },
-    {
-        Id: 14,
-        title: 'Sandwiches',
-        check: false
-
-    },
-    {
-        Id: 15,
-        title: 'Soup & Salads',
-        check: false
-
-    },
-    {
-        Id: 16,
-        title: 'Sushi & Seafood',
-        check: false
-
-    },
-    {
-        Id: 17,
-        title: 'Steak',
-        check: false
-
-    }
-
-]
 const HomeScreen = (props) => {
 
     useEffect(() => {
-
-        getCurrentLocation()
         setPings(pink)
         setEntries([{ type: 'add' }]);
         const backAction = () => {
@@ -373,334 +252,23 @@ const HomeScreen = (props) => {
     const [time, settime] = useState('Select Time');
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpenn, setModalOpenn] = useState(false);
+    // const [typee, setType] = useState(true)
     const [entries, setEntries] = useState([]);
+
     const [xy, setXy] = useState('inactive')
     const [vy, setVy] = useState('active')
+
     const carouselRef = useRef(null);
-
-
-
-    // const [checked, setChecked] = React.useState(false);
-    const [checkedd, setCheckedd] = React.useState(false);
-    const [mainData, setMainData] = useState(DATA);
-    const [isEnabled, setIsEnabled] = useState(false);
-    const [checkes, setCheckes] = React.useState(false);
-    const [checkei, setCheckei] = React.useState(false);
-    const [Place, setPlace] = useState(false)
-    const [Recommended, setRecommended] = useState(false)
-    const [Filters, setFilters] = useState(false)
-    const [tabState, setTabstate] = useState('yes')
-    const [LocationName, setLocationName] = useState("")
-    const [ustate, setState] = useState()
-    const [location, setLocation] = useState()
-    const [locationon, setlocationon] = useState(true);
-    const [lat, setLat] = useState(24.871733)
-    const [lng, setLng] = useState(67.359277);
-    const [PlaceData, setPlaceData] = useState([])
-
-    const [del, setDel] = useState(false)
-    const [loader, setLoader] = useState(false);
-
-
-    const getCurrentLocation = () => {
-        setLoader(true)
-        GetLocation.getCurrentPosition({
-            enableHighAccuracy: true,
-            timeout: 15000,
-        })
-            .then(location => {
-                // setLocation(location)
-                console.log(location)
-                setLat(location.latitude);
-                setLng(location.longitude);
-
-                setTimeout(() => {
-                    handleRestaurantSearch(location.latitude, location.longitude);
-                }, 1000);
-            })
-            .catch(error => {
-                setlocationon(false)
-                const { code, message } = error;
-                setLoader(false)
-            })
+    
+    const doneNow =()=>{
+        props.navigation.navigate("datemode")
+        setNotification()
     }
 
-    const handleRestaurantSearch = async (l, ln) => {
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?`
-        const location = `location=${l},${ln}`;
-        const radius = '&radius=2000';
-        const type = '&type=restaurant';
-        // const keyword = '&keyword=Meal';
-        const key = '&key=AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
-        const restaurantSearchUrl = url + location + radius + type + key;
-        try {
-            let response = await fetch(
-                restaurantSearchUrl
-            );
-            let json = await response.json();
-            console.log(json, 'json');
-
-            let a = []
-            json.results.map((v, i) => {
-                a.push(v.name)
-            })
-            setPlaceData(a);
-        } catch (error) {
-            console.error(error);
-        }
-
-    }
-
-    const setToggleee = (item, id) => {
-        mainData.map((v, i) => {
-            if (v.Id == id) {
-                console.log(mainData[i].check)
-                mainData[i].check = !mainData[i].check;
-                setMainData([...mainData])
-            }
-        })
-
-        // handleRestaurantSearch(lat,lng)
-    }
-
-
-
-    const toggleInvert = (item, id) => {
-        mainData.map((v, i) => {
-            if (v.check != id) {
-                console.log(mainData[i].check)
-                mainData[i].check = !mainData[i].check;
-                setMainData([...mainData])
-            }
-        })
-
-    }
-
-    const Item = ({ title, meal, drink, isEnabled, setIsEnabled, Id, index }) => {
-
-
-        return (
-            <View >
-                <View style={{ marginTop: moderateScale(0) }}>
-                    <TouchableOpacity  >
-
-                        <Text style={styles.title2}>{title}</Text>
-
-                    </TouchableOpacity>
-                </View>
-                <TouchableOpacity
-                    style={[
-                        styles.toggleContainer2,
-                        { borderColor: null ? activeColor : null, },
-                    ]}
-                    onPress={() => {
-                        LayoutAnimation.easeInEaseOut();
-                        setToggleee(isEnabled, Id);
-                    }}
-                    activeOpacity={1}>
-                    <View
-                        style={[
-                            styles.toggleBtn2,
-                            isEnabled
-                                ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
-                                : { backgroundColor: activeColor, borderRadius: 25, },
-                        ]}
-
-                    />
-                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-
-    const renderItemm = ({ item, i }) => (
-        <Item title={item.title} isEnabled={item.check} setIsEnabled={setIsEnabled} Id={item.Id} index={i} />
-    );
-
-
-
-    const PlaceName = () => {
-
-
-        return (
-
-            <FlatList
-                data={PlaceData}
-                keyExtractor={(item) => item}
-                renderItem={({ item, index }) => (
-
-
-
-
-                    < ScrollView >
-
-                       
-
-                        <View style={styles.placeView2}>
-
-                            <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
-                                    <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                        style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
-                                    </TouchableOpacity>
-                                    <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                        <View style={{ top: 4 }}>
-                                            <View
-
-                                            >
-                                                {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-                                                    {item}
-                                                </Text> */}
-                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
-                                                    (((item).substring(0, 10 - 3)) + '...') :
-                                                    item}
-                                                </Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                        </View>
-                                    </View>
-
-                                </View>
-
-
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
-
-
-                )}
-
-            />
-        )
-    }
-
-
-    const PlaceRecommended = () => {
-
-        return (
-            <FlatList
-                data={PlaceData}
-                keyExtractor={(item) => item}
-                renderItem={({ item, index }) => (
-
-                    <ScrollView nestedScrollEnabled={true} >
-                        {
-                            index == 0 ?
-                                (
-                                    <>
-                                        <View >
-                                            <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
-                                                <View style={styles.placeViewc}>
-                                                    <View style={styles.yellowView}>
-                                                        <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
-                                                    </View>
-                                                    <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
-                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-
-                                                        <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
-                                                            style={{ top: 25, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkes ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
-
-                                                        </TouchableOpacity>
-
-                                                        <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-
-                                                            <View>
-                                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
-                                                                    (((item).substring(0, 10 - 3)) + '...') :
-                                                                    item}
-                                                                </Text>
-                                                            </View>
-
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                                            </View>
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                                            </View>
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                                            </View>
-                                                        </View>
-                                                    </View>
-                                                    <View style={{ flexDirection: 'row' }}>
-                                                        <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
-                                                    </View>
-                                                    <View style={{ flexDirection: 'row' }}>
-                                                        <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
-                                                    </View>
-                                                </View>
-                                            </TouchableOpacity>
-
-                                            <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, marginHorizontal: moderateScale(28), marginBottom: 15 }}></View>
-
-                                        </View>
-                                    </>
-                                ) :
-
-
-
-                                < ScrollView >
-
-                                    <View style={styles.placeView2}>
-                                        <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
-                                                <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                                    style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
-                                                </TouchableOpacity>
-                                                <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                                    <View style={{ top: 4 }}>
-                                                        <View
-
-                                                        >
-                                                            {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-                                                    {item}
-                                                </Text> */}
-                                                            <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
-                                                                (((item).substring(0, 10 - 3)) + '...') :
-                                                                item}
-                                                            </Text>
-                                                        </View>
-                                                    </View>
-                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                                    </View>
-                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                                    </View>
-                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                                    </View>
-                                                </View>
-
-                                            </View>
-
-
-                                        </TouchableOpacity>
-                                    </View>
-                                </ScrollView>
-                        }
-
-
-                    </ScrollView>
-
-                )}
-
-            />
-        )
-
-    }
-
+    const setNotification = () => {
+        // Notifications.schduleNotification(date);
+        Notifications.schduleNotification(new Date(Date.now() + 5 * 1000));
+      };
 
 
     const showDatePicker = () => {
@@ -752,7 +320,9 @@ const HomeScreen = (props) => {
     const xyz = (type, selected, Id) => {
 
 
+       
         type == 'lock' ? setModalOpenn(true) : null
+
         type == 'unlock' && selected == true
 
     }
@@ -769,8 +339,8 @@ const HomeScreen = (props) => {
     }
     const RemoveEventCard = (b) => {
 
-        entries.pop({ type: b })
-        setEntries([...entries]);
+        entries.pop(indexOf, { type: b })
+
         LayoutAnimation.easeInEaseOut();
     }
 
@@ -778,7 +348,6 @@ const HomeScreen = (props) => {
         // console.log(entries)
         return (
             <View style={styles.item}>
-
                 {
                     item.type == 'add' ? (
                         <>
@@ -822,64 +391,10 @@ const HomeScreen = (props) => {
                     ) : (
                         <>
                             <View style={styles.mealView2}   >
-                                <View style={styles.Contain}>
-                                    <View style={styles.InnerContain}>
-                                        <View>
-                                            <LinearGradient
-                                                start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                                colors={item.type == 'meal' ? ['#80D3FC', '#80D3FC'] : item.type == 'activity' ? ['#44BEFB', '#44BEFB'] : item.type == 'desert' ? ['#0883FB', '#0883FB'] : ['#0149FF', '#0149FF']}
-                                                style={styles.chooseContaine}>
-                                                <TouchableOpacity onPress={() => RemoveEventCard()}>
-                                                    <MaterialIcons style={{ marginLeft: 15, marginTop: 18 }} name='delete-outline' size={hp('4.5%')} color="white" />
-                                                </TouchableOpacity>
-                                                <Text style={styles.ChooseMeal}>
-                                                    {item.type + ' Filter'}
-                                                </Text>
-                                                <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                                                    style={{ marginRight: 15, marginTop: moderateScale(15), height: moderateScale(37), width: moderateScale(37), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
-                                                </TouchableOpacity>
-                                            </LinearGradient>
-                                            <ScrollView nestedScrollEnabled={true}>
-                                                <View style={{ marginTop: 20, }}>
-
-                                                    {tabState == 'yes' ? (
-                                                        <>
-                                                            <SafeAreaView style={{ flex: 1 }}>
-                                                                <FlatList
-                                                                    nestedScrollEnabled={true}
-                                                                    data={mainData}
-                                                                    renderItem={(item, i) => renderItemm(item, i)}
-                                                                    keyExtractor={items => items.Id}
-                                                                />
-                                                            </SafeAreaView>
-                                                        </>) : tabState == 'place' ? (
-                                                            <>
-                                                                {PlaceName()}
-                                                            </>
-                                                        ) : tabState == 'recomended' ?
-
-                                                        (
-                                                            <>
-                                                                {PlaceRecommended()}
-                                                            </>
-                                                        ) : null
-                                                    }
-                                                </View>
-                                            </ScrollView>
-                                            <View style={styles.bottomTab}>
-                                                <TouchableOpacity onPress={() => setTabstate('yes')} onPressIn={() => toggleInvert()}  >
-                                                    <Image style={{ width: 60, height: 60 }} source={require('../assets/card1.png')}></Image>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity onPress={() => setTabstate('place')}>
-                                                    <Image style={{ width: 60, height: 60 }} source={require('../assets/card2.png')}></Image>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity onPress={() => setTabstate('recomended')}>
-                                                    <Image style={{ width: 60, height: 60 }} source={require('../assets/card3.png')}></Image>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-                                    </View >
-                                </View >
+                                {/* <TouchableHighlight onPress={() => RemoveEventCard()}>
+                                <MaterialIcons style={{ marginLeft: 10, marginTop: 35 }} name='delete-outline' size={hp('5.5%')} color="white" />
+                                </TouchableHighlight> */}
+                                <ReactNavigationBottomTabs nestedScrollEnabled={true} item={item}></ReactNavigationBottomTabs>
                             </View>
                         </>
                     )
@@ -915,7 +430,6 @@ const HomeScreen = (props) => {
     const onPress = () => setCount(count < 60 ? count + 5 : 0);
     const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
-
     const rendenPlanPing = () => {
         return (
             PreData.map((v, i) => {
@@ -935,16 +449,6 @@ const HomeScreen = (props) => {
                                 <Text style={styles.pinLockUnclock2}>
                                     {v.description}
                                 </Text>
-                                {
-                                    v.type == 'lock' ? (
-                                        <>
-                                            <View style={styles.pinLockPicback2}>
-                                                {/* {v.type} */}
-                                                <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
-                                            </ View>
-                                        </>
-                                    ) : null
-                                }
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -1012,7 +516,9 @@ const HomeScreen = (props) => {
                                         </ View>
                                     </View>
                                 </>) : null}
+
                         </TouchableOpacity>
+
                     </View>
                 )
             })
@@ -1021,11 +527,11 @@ const HomeScreen = (props) => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+        <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 <View style={styles.TopHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                        <Text style={{ fontSize: 20, fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
+                        <Text style={{ fontSize: 20, fontFamily: "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => props.navigation.navigate('personalprofiledetails')}>
@@ -1038,9 +544,13 @@ const HomeScreen = (props) => {
                 <ScrollView>
 
                     <Modal
+
                         transparent={true}
+
                         visible={modalOpenn}
                         animationType='fade'
+
+
                     >
                         <View style={{
                             flex: 1,
@@ -1069,10 +579,15 @@ const HomeScreen = (props) => {
                                     >
                                         <Text style={styles.textStyleNo1}>No Thanks</Text>
                                     </Pressable>
+
                                 </View>
+
+
                             </LinearGradient>
                         </View>
+
                     </Modal>
+
                     <View >
                         <View style={{ alignItems: 'center', }}>
 
@@ -1083,10 +598,12 @@ const HomeScreen = (props) => {
 
                             <SafeAreaView style={{ flex: 1 }}>
                                 <FlatList
+
                                     nestedScrollEnabled
                                     ListEmptyComponent={null}
                                     ListFooterComponent={null}
                                     ListHeaderComponent={null}
+
                                     data={data}
                                     keyExtractor={(item, index) => index.toString()}
                                     style={{ width: (windowWidth - 50), }}
@@ -1118,7 +635,7 @@ const HomeScreen = (props) => {
                                                             padding: 5,
                                                             color: 'white',
                                                             marginLeft: -20,
-                                                            fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+                                                            fontFamily: "Gazpacho Regular",
                                                             fontSize: 16,
                                                             width: moderateScale(180)
                                                         }}>{item.title}</Text>
@@ -1141,7 +658,7 @@ const HomeScreen = (props) => {
                                                     <View >
                                                         <Text style={{
                                                             padding: 5, marginLeft: -20,
-                                                            fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+                                                            fontFamily: "Gazpacho Regular",
                                                             color: "white",
                                                             fontSize: 16,
                                                             width: moderateScale(180),
@@ -1164,13 +681,18 @@ const HomeScreen = (props) => {
                                                                     borderWidth: 2.5,
                                                                     borderColor: 'white'
                                                                 }} >
+
                                                             </TouchableOpacity>
                                                         </View>
                                                     </TouchableOpacity>
+
                                                 </LinearGradient>
                                             }
+
                                             {press === item.id ?
+
                                                 <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
+
                                                     <View style={{ backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, }}>
                                                         <Text style={{
                                                             margin: 15,
@@ -1185,7 +707,10 @@ const HomeScreen = (props) => {
                                                             fontFamily: 'Poppins-Regular',
                                                         }}>{item.description} </Text>
                                                     </View>
+
+
                                                 </Pressable>
+
                                                 :
                                                 null
                                             }
@@ -1196,19 +721,27 @@ const HomeScreen = (props) => {
                             </SafeAreaView>
                         </View>
                     </View>
+
                     <View >
                         <Modal
+
                             transparent={true}
+
                             visible={modalOpen}
                             animationType='fade'
+
                             navigation={props.navigation}
+
                         >
                             <View style={styles.centeredView} >
                                 <LinearGradient
                                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
                                     style={styles.modalView}>
-                                    <Text style={styles.modalText}>This pre-planned date is currently locked.  Would you like to unlock it for just $19.99?</Text>
+                                    <Text style={styles.modalText}>Lorem ipsum dolor sit amet, consectetuer
+                                        adipiscing elit, sed diam nonummy nibh
+                                        euismod tincidunt ut laoreet dolore
+                                        magna aliquam erat volutpat. Ut wisi.</Text>
 
                                     <View style={styles.modalButtons} >
                                         <Pressable
@@ -1231,8 +764,11 @@ const HomeScreen = (props) => {
                                             <Text style={styles.textStyleNo}>Learn More</Text>
                                         </Pressable>
                                     </View>
+
+
                                 </LinearGradient>
                             </View>
+
                         </Modal>
                     </View>
                     <View style={styles.PrePlainDate}>
@@ -1241,6 +777,7 @@ const HomeScreen = (props) => {
                             {rendenPlanPing()}
                         </ScrollView>
                     </View>
+
                     {
                         state && state.length > 0 ? (
                             <>
@@ -1249,7 +786,9 @@ const HomeScreen = (props) => {
                                     <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
                                         <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular', }}>Add New +</Text>
                                     </TouchableOpacity>
+
                                     <CoupleCard navigation={props.navigation}></CoupleCard>
+                                    {/* </TouchableOpacity> */}
                                 </View>
                             </>
                         ) : <View style={styles.AddPersonView5}>
@@ -1267,6 +806,7 @@ const HomeScreen = (props) => {
                         </View>
                     }
                     <View style={styles.AddCouple}>
+
                         <Text style={styles.choosePersonText}>   Add Another Couple</Text>
                         <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
                             <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular', }}>Add New +</Text>
@@ -1295,9 +835,11 @@ const HomeScreen = (props) => {
                             <Text style={styles.choosePersonText}>  Add an Event</Text>
                             <View>
                                 <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20, marginBottom: 20 }}>
+
                                     {
                                         toggleActive == true ?
                                             <GooglePlacesAutocomplete
+
                                                 placeholder='Enter Location'
                                                 minLength={2}
                                                 autoFocus={false}
@@ -1354,7 +896,9 @@ const HomeScreen = (props) => {
                                             />
                                             :
                                             <Text style={styles.zipCode}> Use Current Location ? </Text>
+
                                     }
+
                                     <View style={{ flexDirection: 'row', position: 'absolute', right: 10, marginTop: 3 }}>
                                         <TouchableOpacity
                                             style={[
@@ -1373,13 +917,18 @@ const HomeScreen = (props) => {
                                                         ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
                                                         : { backgroundColor: activeColor, borderRadius: 25, },
                                                 ]}
+
                                             />
+
                                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.6, 0) }}>N</Text>
+
                                         </TouchableOpacity>
                                     </View>
+
                                 </View>
                             </View>
+
                             <Carousel
                                 ref={carouselRef}
                                 sliderWidth={screenWidth}
@@ -1388,8 +937,11 @@ const HomeScreen = (props) => {
                                 renderItem={renderItem}
                                 hasParallaxImages={true}
                             />
+
                         </View>
+
                     </View>
+
                     <View style={{ height: moderateScale(400), backgroundColor: '#4D4D4D' }}>
                         <Text style={styles.SelectYourPingText}>   Select Your Ping Frequency</Text>
                         <View style={styles.ping}>
@@ -1430,6 +982,7 @@ const HomeScreen = (props) => {
                         <Text style={styles.mins}>mins</Text>
                         <Text style={styles.selectPngText}>Select Your Pings</Text>
                         <ScrollView horizontal={true}>
+
                             {
                                 rendenPing()
                             }
@@ -1468,7 +1021,10 @@ const HomeScreen = (props) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => props.navigation.navigate('donefornow')}>
+                        <TouchableOpacity onPress={
+                            () => 
+                            doneNow()
+                            }>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.linearGradient2} >
@@ -1501,191 +1057,6 @@ const HomeScreen = (props) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-
-
-
-
-
-    bottomTab: {
-        height: 70,
-        margin: 5,
-        marginHorizontal: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    status: {
-        width: 100,
-        textAlign: 'center',
-        marginBottom: 20,
-        fontWeight: 'bold',
-        borderRadius: 19,
-    },
-    toggleContainer2: {
-        top: moderateScale(-20), marginLeft: 20,
-        height: 22,
-        width: 43,
-        borderRadius: 20,
-        borderWidth: 0,
-        overflow: 'hidden',
-        backgroundColor: '#24202F',
-        padding: 2,
-        position: 'relative',
-
-    },
-    toggleBtn2: { height: '100%', width: '50%' },
-
-    chooseContaine: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        borderRadius: 20,
-        height: moderateScale(70),
-        width: moderateScale(windowWidth - 61, 0.1),
-    },
-    InnerContain: {
-        borderRadius: 20,
-        alignSelf: 'center',
-        backgroundColor: '#363143'
-    },
-    Contain: {
-
-        backgroundColor: 'black'
-    },
-    placeView2: {
-
-        borderRadius: 18,
-        height: moderateScale(70),
-        width: moderateScale(270),
-        backgroundColor: '#24202F',
-        marginBottom: 10,
-        alignSelf: 'center'
-
-    },
-    yellowView: {
-        height: moderateScale(24),
-        width: moderateScale(270),
-        backgroundColor: '#FFD500',
-        borderTopLeftRadius: 18,
-        borderTopRightRadius: 18,
-    },
-    placeViewc: {
-        borderRadius: 18,
-        height: moderateScale(152),
-        width: moderateScale(270),
-        backgroundColor: '#24202F',
-        alignSelf: 'center',
-        marginBottom: 10,
-    },
-    placeView: {
-        margin: 15,
-        borderRadius: 18,
-        height: moderateScale(152),
-        width: moderateScale(270),
-        backgroundColor: '#24202F',
-        alignSelf: 'center',
-    },
-    Baap: {
-        alignSelf: 'center'
-    },
-
-    MainBack: {
-        backgroundColor: '#4D4D4D',
-        padding: moderateScale(40),
-
-    },
-    BtnViews: {
-        flex: 1,
-        flexDirection: "row",
-        backgroundColor: "red",
-        position: "absolute",
-        zIndex: 999,
-        top: 500,
-        width: '100%',
-        height: 100,
-
-    },
-    container: {
-        flex: 1,
-        marginTop: 10,
-        flexDirection: 'row'
-    },
-    title2: {
-        fontSize: 16,
-        color: "white",
-        fontFamily: 'Poppins-Regular',
-        left: 100,
-        marginTop: moderateScale(1)
-    },
-    item: {
-        marginLeft: 70,
-        padding: 0,
-        fontSize: 16,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
-        height: 60,
-        color: "white",
-        top: 20,
-    },
-    container2: {
-        flexDirection: 'column',
-    },
-    radiosView: {
-        backgroundColor: "#363143",
-        height: moderateScale(650),
-        width: moderateScale(291),
-        flexDirection: "column",
-    },
-    RadioInnerView: {
-        width: 30,
-        height: 30,
-        backgroundColor: '#00B712',
-        borderRadius: 120,
-        alignSelf: "center",
-        margin: 6,
-    },
-
-    RadioView: {
-        marginHorizontal: moderateScale(120),
-        flexDirection: "row",
-        width: 42,
-        height: 42,
-        justifyContent: 'space-between',
-        backgroundColor: 'white',
-        borderRadius: 120,
-        marginTop: 13,
-    },
-    ChooseMeal: {
-        fontSize: 16,
-        fontFamily: 'Poppins-Regular',
-        color: 'white',
-        textTransform: 'capitalize',
-        marginTop: 22,
-
-    },
-    MainView: {
-        backgroundColor: "#534C64",
-        height: moderateScale(76),
-        borderRadius: 20,
-        zIndex: 99,
-        alignSelf: 'center'
-    },
-    InnerView: {
-        width: moderateScale(293),
-        flexDirection: "row",
-
-    },
-
-
-
-
-
-
-
-
-
-
-    // tabs card style up 
-
-
-
     activeText: {
         color: 'white',
         fontFamily: 'Poppins-Regular',
@@ -1785,16 +1156,15 @@ const styles = StyleSheet.create({
         margin: 6.5,
     },
     modalText: {
-        fontSize: 18,
+        fontSize: 14,
         color: 'white',
         fontFamily: 'Poppins-Regular',
-        textAlign: 'center'
     },
     textStyleNo: {
         color: 'white',
         margin: 20,
         fontFamily: 'Poppins-Regular',
-        fontSize: 16
+        fontSize: 14
     },
     buttonNo: {
         backgroundColor: 'white',
@@ -1885,7 +1255,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
 
         marginBottom: 5,
-        fontFamily: Platform.OS === 'ios' ? Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center',
 
     },
@@ -1930,7 +1300,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
 
 
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1946,7 +1316,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         marginTop: 20,
 
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1960,23 +1330,23 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     },
     PingUnlock: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     },
     PingLock: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     PingPlayed2: {
@@ -1984,26 +1354,26 @@ const styles = StyleSheet.create({
         height: moderateScale(85),
         borderRadius: 12,
         margin: 15,
-        backgroundColor: "#C5C5C5",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        backgroundColor: "#1AC72B",
+        fontFamily: "Gazpacho Regular",
 
     },
     PingPlayed: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#1AC72B",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     PingText1: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
-        marginTop: 22,
+        marginTop: 26,
         lineHeight: 25,
         marginHorizontal: 6
 
@@ -2012,7 +1382,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Bold",
         textAlign: "center",
         marginTop: 27,
         marginHorizontal: 4,
@@ -2021,7 +1391,7 @@ const styles = StyleSheet.create({
         fontSize: 11.5,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
         marginTop: moderateScale(20),
         marginHorizontal: 6,
@@ -2040,19 +1410,11 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginHorizontal: 65
     },
-    pinLockPicback2: {
-        height: 17,
-        width: 17,
-        borderRadius: 20,
-        backgroundColor: 'white',
-        marginTop: 2,
-        marginHorizontal: 65
-    },
     pinLockUnclock2: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
         marginTop: -4,
         marginHorizontal: 6
@@ -2073,7 +1435,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: -25,
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: "center",
 
     },
@@ -2114,7 +1476,7 @@ const styles = StyleSheet.create({
         height: 58,
         margin: 25,
         borderRadius: 18,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
 
     },
@@ -2156,7 +1518,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 25,
         fontSize: 16,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     zipCode: {
@@ -2253,7 +1615,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
 
     },
@@ -2263,7 +1625,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     PrePlanText: {
@@ -2273,7 +1635,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     SelectYourPingText: {
@@ -2282,7 +1644,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     },
     choosePersonText: {
         marginTop: 40,
@@ -2290,7 +1652,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     }
     ,
     contentHead: {
@@ -2307,7 +1669,7 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 18,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         marginBottom: 20,
     },
     header: {
@@ -2325,7 +1687,7 @@ const styles = StyleSheet.create({
     headerText: {
         textAlign: 'center',
         fontSize: 16,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         color: "white",
         alignSelf: "flex-start",
         marginTop: 15,
@@ -2354,7 +1716,7 @@ const styles = StyleSheet.create({
     },
     selectTitle: {
         fontSize: 14,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         padding: 10,
         textAlign: 'center',
     },
@@ -2367,6 +1729,6 @@ const styles = StyleSheet.create({
     multipleToggle__title: {
         fontSize: 16,
         marginRight: 8,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     },
 });

@@ -48,11 +48,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { delay, entries, filter } from 'lodash';
 import { Badge } from 'react-native-paper';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-import axiosconfig from "../GoogleServices/googlemap"
+import AppContext from '../components/appcontext';
 // import HomeScreen from './HomeScreen';
 import GetLocation from 'react-native-get-location';
 import Loader from './loader';
-
+import axios from 'axios';
+import axiosconfig from '../Providers/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -132,6 +134,10 @@ const PreData = [
         selected: false,
     },
 ]
+
+
+const data2 = []
+
 const data = [
     {
 
@@ -170,6 +176,9 @@ const data = [
             'It may,  may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
     },
 ];
+
+const pink2 = []
+
 const pink = [
     {
         id: "1",
@@ -334,8 +343,11 @@ const HomeScreen = (props) => {
 
     useEffect(() => {
 
+        PingData()
+        ModeData()
+
         getCurrentLocation()
-        setPings(pink)
+        setPings(pink2)
         setEntries([{ type: 'add' }]);
         const backAction = () => {
             Alert.alert("Hold on!", "Are you sure you want to go back?", [
@@ -397,9 +409,71 @@ const HomeScreen = (props) => {
     const [lat, setLat] = useState(24.871733)
     const [lng, setLng] = useState(67.359277);
     const [PlaceData, setPlaceData] = useState([])
-
+    const myContext = useContext(AppContext);
     const [del, setDel] = useState(false)
     const [loader, setLoader] = useState(false);
+    const [myData, setMyData] = useState()
+    const [Pricestate, setPrice] = useState();
+
+    // const [data, setData] = useState([]);
+
+    const PingData = async () => {
+
+
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.get(`pings`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+
+            res.data.data.map((res, i) => {
+
+                pink2.push(res)
+
+                console.log(res, "pings hello")
+
+            })
+
+
+
+        }).catch((err) => {
+
+        })
+    }
+
+
+    const ModeData = async () => {
+        myData
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.get(`date-mode`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+            // console.log(res,"my data");
+            res.data.data.map((res, i) => {
+                data2.push(res)
+                console.log(i)
+                if (data2[i] == 0) { data2[i].color = ['#80D3FC', '#80D3FC',] }
+                if (data2[i] == 1) { data2[i].color = ['#44BEFB', '#44BEFB',] }
+                if (data2[i] == 2) { data2[i].color = ['#0883FB', '#0883FB',] }
+                else { data2[i].color = ['#0149FF', '#0149FF',] }
+
+
+            })
+
+
+            console.log(data2, "hello")
+
+        }).catch((err) => {
+
+        })
+    }
 
 
     const getCurrentLocation = () => {
@@ -535,7 +609,7 @@ const HomeScreen = (props) => {
 
                     < ScrollView >
 
-                       
+
 
                         <View style={styles.placeView2}>
 
@@ -749,13 +823,7 @@ const HomeScreen = (props) => {
         setPress(item.id)
     }
 
-    const xyz = (type, selected, Id) => {
 
-
-        type == 'lock' ? setModalOpenn(true) : null
-        type == 'unlock' && selected == true
-
-    }
 
 
 
@@ -954,10 +1022,28 @@ const HomeScreen = (props) => {
 
     }
 
-    const setActive = (i) => {
-        Pings[i].selected = !Pings[i].selected;
-        console.log(Pings[i])
-        setPings([...Pings])
+
+
+
+    const xyz = (type, selected, Id, paid_or_free, item) => {
+
+
+        Pings.paid_or_free == 'paid' ? setModalOpenn(true) : null
+        console.log("not found")
+        // type == 'unlock' && selected == true
+
+    }
+
+    const setActive = (index) => {
+        // Pings[index].selected = !Pings[index].selected;
+        // console.log(Pings[index])
+        // setPings([...Pings])
+    }
+
+    const PingModeId = (id) => {
+
+        console.log(id);
+
     }
 
     const rendenPing = () => {
@@ -966,56 +1052,72 @@ const HomeScreen = (props) => {
             let myLocalArray = []
             myLocalArray = Pings.splice(0, 1)
             setMyArray(myLocalArray)
-            { Pings[0].type == 'lock' ? setModalOpenn(true) : null }
+            { Pings.paid_or_free == 'paid' ? setModalOpenn(true) : null }
         }
         return (
-            Pings.map((v, i) => {
-                return (
-                    <View style={styles.ping}
-                        key={i}
-                    >
-                        <TouchableOpacity onPress={() => xyz(v.type, v.selected, v.key)}>
-                            {v.type == 'lock' ?
+            <FlatList
+                data={Pings}
+                keyExtractor={(item) => item}
+                horizontal={true}
+                renderItem={({ item, index }) => (
+
+
+                    <View style={styles.ping} >
+                        {
+                            item.paid_or_free == "paid" ?
                                 (<>
-                                    <View style={styles.PingLock}>
-                                        <View style={{ height: 60 }}>
-                                            <Text style={styles.PingText11}>{v.text}</Text>
+                                    <TouchableOpacity onPress={() => { (item.paid_or_free ? [setModalOpenn(true), setPrice(item.price)] : null); PingModeId(item.mode_id) }}>
+
+                                        <View style={styles.PingLock}>
+                                            <View style={{ height: 60 }}>
+                                                <Text style={styles.PingText11}>{item.name}</Text>
+                                            </View>
+                                            <View style={styles.pinLockPicback}>
+                                                <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
+                                            </ View>
                                         </View>
-                                        <View style={styles.pinLockPicback}>
-                                            <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
-                                        </ View>
-                                    </View>
-                                </>) : null}
-                        </TouchableOpacity >
-                        {v.type == 'unlock' && v.selected == true ?
-                            (<>
-                                <TouchableOpacity onPress={() => setActive(i)}>
-                                    <View style={styles.PingPlayed}>
-                                        <View style={{ height: 65 }}>
-                                            <Text style={styles.PingText11}>{v.text}</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={styles.activeText} >Active</Text>
-                                        </ View>
-                                    </View>
-                                </TouchableOpacity>
-                            </>) : null}
-                        <TouchableOpacity onPress={() => setActive(i)}>
-                            {v.type == 'unlock' && v.selected == false ?
-                                (<>
+
+                                    </TouchableOpacity >
+
+
+                                </>) :
+
+                                <TouchableOpacity onPress={() => PingModeId(item.mode_id)}>
+
                                     <View style={styles.PingUnlock}>
                                         <View style={{ height: 65 }}>
-                                            <Text style={styles.PingText11}>{v.text}</Text>
+                                            <Text style={styles.PingText11}>{item.name}</Text>
                                         </View>
                                         <View>
                                             <Text style={styles.activeText} >Inactive</Text>
                                         </ View>
                                     </View>
-                                </>) : null}
+
+                                </TouchableOpacity>
+
+
+
+                        }
+
+
+                        {/* {item.name == 'unlock' && item.selected == true ?
+                    (<>
+                        <TouchableOpacity onPress={() => setActive(item)}>
+                            <View style={styles.PingPlayed}>
+                                <View style={{ height: 65 }}>
+                                    <Text style={styles.PingText11}>{item.name}</Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.activeText} >Active</Text>
+                                </ View>
+                            </View>
                         </TouchableOpacity>
+                    </>) : null} */}
+
                     </View>
-                )
-            })
+
+                )}
+            />
         )
 
     }
@@ -1041,6 +1143,8 @@ const HomeScreen = (props) => {
                         transparent={true}
                         visible={modalOpenn}
                         animationType='fade'
+
+
                     >
                         <View style={{
                             flex: 1,
@@ -1053,7 +1157,7 @@ const HomeScreen = (props) => {
                                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.modalViewH}>
-                                <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just $0.99 ?</Text>
+                                <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just ${Pricestate} ?</Text>
 
                                 <View style={styles.modalButtons2} >
                                     <Pressable
@@ -1087,7 +1191,7 @@ const HomeScreen = (props) => {
                                     ListEmptyComponent={null}
                                     ListFooterComponent={null}
                                     ListHeaderComponent={null}
-                                    data={data}
+                                    data={data2}
                                     keyExtractor={(item, index) => index.toString()}
                                     style={{ width: (windowWidth - 50), }}
                                     renderItem={({ item, index }) => (
@@ -1099,7 +1203,7 @@ const HomeScreen = (props) => {
 
                                                 <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }}  >
                                                     <LinearGradient
-                                                        colors={[item.color[0], item.color[1]]}
+                                                        colors={item.color}
                                                         style={{
                                                             flexDirection: 'row',
                                                             justifyContent: 'space-between',
@@ -1121,7 +1225,7 @@ const HomeScreen = (props) => {
                                                             fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
                                                             fontSize: 16,
                                                             width: moderateScale(180)
-                                                        }}>{item.title}</Text>
+                                                        }}>{item.name}</Text>
 
                                                         {/* <AntDesign name="caretdown" size={16} color="black"/> */}
                                                         <TouchableOpacity>
@@ -1135,7 +1239,7 @@ const HomeScreen = (props) => {
 
                                                 :
                                                 <LinearGradient
-                                                    colors={[item.color[0], item.color[1]]}
+                                                    colors={item.color}
                                                     style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
                                                     <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
                                                     <View >
@@ -1145,7 +1249,7 @@ const HomeScreen = (props) => {
                                                             color: "white",
                                                             fontSize: 16,
                                                             width: moderateScale(180),
-                                                        }}>{item.title}</Text>
+                                                        }}>{item.name}</Text>
                                                     </View>
                                                     <TouchableOpacity>
                                                         <View style={styles.RadioView2}>

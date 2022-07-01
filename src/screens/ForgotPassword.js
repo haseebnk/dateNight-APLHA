@@ -79,7 +79,7 @@ export default function ForgotPassword({navigation}) {
             }
 
                 <View style={styles.viewStyle}>
-                    <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
 
                         <Image style={styles.imgClose}
                             source={require("../assets/close.png")}

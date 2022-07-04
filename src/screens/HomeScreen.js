@@ -39,9 +39,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-
-import GetLocation from 'react-native-get-location';
-
+import Notifications from './Notifications';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -66,59 +64,51 @@ const PreData = [
         id: 1,
         key: "1",
         title: 'Pre-Plan',
-        description: 'Date 01',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 01',
     },
     {
         id: 2,
         key: "2",
         title: 'Pre-Plan',
-        description:  'Date 02',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 02',
     },
     {
         id: 3,
         key: "3",
         title: 'Pre-Plan',
-        description:  'Date 03',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 03',
     },
 
     {
         id: 4,
         key: "4",
         title: 'Pre-Plan',
-        description: 'Date 04',
-        type: "lock",
-        selected: false,
-
+        description:
+            'Date 04',
     },
     {
         id: 5,
         key: "5",
         title: 'Pre-Plan',
-        description: 'Date 05',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 05',
     },
     {
         id: 6,
         key: "6",
         title: 'Pre-Plan',
-        description: 'Date 06',
-        type: "lock",
-        selected: false,
+        description:
+            'Date 06',
     },
     {
         id: 7,
         key: "7",
         title: 'Pre-Plan',
-        description:  'Date 07',
-        type: "lock",
-        selected: false,                                                                                                                                                                                                                                                                         
+        description:
+            'Date 07',
     },
 ]
 const data = [
@@ -224,8 +214,6 @@ const pink = [
 const HomeScreen = (props) => {
 
     useEffect(() => {
-        getCurrentLocation();
-       
         setPings(pink)
         setEntries([{ type: 'add' }]);
         const backAction = () => {
@@ -266,38 +254,21 @@ const HomeScreen = (props) => {
     const [modalOpenn, setModalOpenn] = useState(false);
     // const [typee, setType] = useState(true)
     const [entries, setEntries] = useState([]);
-    const [location, setLocation] = useState()
-    const [locationon, setlocationon] = useState(true);
+
     const [xy, setXy] = useState('inactive')
     const [vy, setVy] = useState('active')
 
     const carouselRef = useRef(null);
-
-
-    const getCurrentLocation = () => {
-        // setLoader(true)
-        GetLocation.getCurrentPosition({
-            enableHighAccuracy: true,
-            timeout: 15000,
-        })
-            .then(location => {
-
-                setLocation(location)
-                console.log(location)
-                getRestaurents(location)
-            })
-            .catch(error => {
-                setlocationon(false)
-                const { code, message } = error;
-
-
-                // setLoader(false)
-            })
+    
+    const doneNow =()=>{
+        props.navigation.navigate("datemode")
+        setNotification()
     }
 
-
-
-
+    const setNotification = () => {
+        // Notifications.schduleNotification(date);
+        Notifications.schduleNotification(new Date(Date.now() + 5 * 1000));
+      };
 
 
     const showDatePicker = () => {
@@ -349,7 +320,9 @@ const HomeScreen = (props) => {
     const xyz = (type, selected, Id) => {
 
 
+       
         type == 'lock' ? setModalOpenn(true) : null
+
         type == 'unlock' && selected == true
 
     }
@@ -476,16 +449,6 @@ const HomeScreen = (props) => {
                                 <Text style={styles.pinLockUnclock2}>
                                     {v.description}
                                 </Text>
-                                {
-                                v.type == 'lock' ? (
-                                    <>
-                                        <View style={styles.pinLockPicback2}>
-                                            {/* {v.type} */}
-                                            <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
-                                        </ View>
-                                    </>
-                                ) : null
-                            }
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -564,11 +527,11 @@ const HomeScreen = (props) => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+        <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 <View style={styles.TopHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                        <Text style={{ fontSize: 20, fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
+                        <Text style={{ fontSize: 20, fontFamily: "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => props.navigation.navigate('personalprofiledetails')}>
@@ -672,7 +635,7 @@ const HomeScreen = (props) => {
                                                             padding: 5,
                                                             color: 'white',
                                                             marginLeft: -20,
-                                                            fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+                                                            fontFamily: "Gazpacho Regular",
                                                             fontSize: 16,
                                                             width: moderateScale(180)
                                                         }}>{item.title}</Text>
@@ -695,7 +658,7 @@ const HomeScreen = (props) => {
                                                     <View >
                                                         <Text style={{
                                                             padding: 5, marginLeft: -20,
-                                                            fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+                                                            fontFamily: "Gazpacho Regular",
                                                             color: "white",
                                                             fontSize: 16,
                                                             width: moderateScale(180),
@@ -775,7 +738,10 @@ const HomeScreen = (props) => {
                                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
                                     style={styles.modalView}>
-                                    <Text style={styles.modalText}>This pre-planned date is currently locked.  Would you like to unlock it for just $19.99?</Text>
+                                    <Text style={styles.modalText}>Lorem ipsum dolor sit amet, consectetuer
+                                        adipiscing elit, sed diam nonummy nibh
+                                        euismod tincidunt ut laoreet dolore
+                                        magna aliquam erat volutpat. Ut wisi.</Text>
 
                                     <View style={styles.modalButtons} >
                                         <Pressable
@@ -955,7 +921,7 @@ const HomeScreen = (props) => {
                                             />
 
                                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.6, 0) }}>N</Text>
 
                                         </TouchableOpacity>
                                     </View>
@@ -1016,6 +982,7 @@ const HomeScreen = (props) => {
                         <Text style={styles.mins}>mins</Text>
                         <Text style={styles.selectPngText}>Select Your Pings</Text>
                         <ScrollView horizontal={true}>
+
                             {
                                 rendenPing()
                             }
@@ -1054,7 +1021,10 @@ const HomeScreen = (props) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => props.navigation.navigate('donefornow')}>
+                        <TouchableOpacity onPress={
+                            () => 
+                            doneNow()
+                            }>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.linearGradient2} >
@@ -1186,16 +1156,15 @@ const styles = StyleSheet.create({
         margin: 6.5,
     },
     modalText: {
-        fontSize: 18,
+        fontSize: 14,
         color: 'white',
         fontFamily: 'Poppins-Regular',
-        textAlign: 'center'
     },
     textStyleNo: {
         color: 'white',
         margin: 20,
         fontFamily: 'Poppins-Regular',
-        fontSize: 16
+        fontSize: 14
     },
     buttonNo: {
         backgroundColor: 'white',
@@ -1286,7 +1255,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
 
         marginBottom: 5,
-        fontFamily: Platform.OS === 'ios' ? Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular" : "Gazpacho Regular", 
+        fontFamily: "Gazpacho Regular",
         textAlign: 'center',
 
     },
@@ -1331,7 +1300,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
 
 
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1347,7 +1316,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         marginTop: 20,
 
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1361,23 +1330,23 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     },
     PingUnlock: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     },
     PingLock: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     PingPlayed2: {
@@ -1385,26 +1354,26 @@ const styles = StyleSheet.create({
         height: moderateScale(85),
         borderRadius: 12,
         margin: 15,
-        backgroundColor: "#C5C5C5",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        backgroundColor: "#1AC72B",
+        fontFamily: "Gazpacho Regular",
 
     },
     PingPlayed: {
         width: 90,
-        height: 90,
+        height: moderateScale(90),
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#1AC72B",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     PingText1: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
-        marginTop: 22,
+        marginTop: 26,
         lineHeight: 25,
         marginHorizontal: 6
 
@@ -1413,7 +1382,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Bold",
         textAlign: "center",
         marginTop: 27,
         marginHorizontal: 4,
@@ -1422,7 +1391,7 @@ const styles = StyleSheet.create({
         fontSize: 11.5,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
         marginTop: moderateScale(20),
         marginHorizontal: 6,
@@ -1441,19 +1410,11 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginHorizontal: 65
     },
-    pinLockPicback2: {
-        height: 17,
-        width: 17,
-        borderRadius: 20,
-        backgroundColor: 'white',
-        marginTop: 2,
-        marginHorizontal: 65
-    },
     pinLockUnclock2: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Regular',
+        fontFamily: 'Poppins-Bold',
         textAlign: "center",
         marginTop: -4,
         marginHorizontal: 6
@@ -1474,7 +1435,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: -25,
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         textAlign: "center",
 
     },
@@ -1515,7 +1476,7 @@ const styles = StyleSheet.create({
         height: 58,
         margin: 25,
         borderRadius: 18,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
 
     },
@@ -1557,7 +1518,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 25,
         fontSize: 16,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     zipCode: {
@@ -1654,7 +1615,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
 
     },
@@ -1664,7 +1625,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     PrePlanText: {
@@ -1674,7 +1635,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
 
     },
     SelectYourPingText: {
@@ -1683,7 +1644,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     },
     choosePersonText: {
         marginTop: 40,
@@ -1691,7 +1652,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     }
     ,
     contentHead: {
@@ -1708,7 +1669,7 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 18,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         marginBottom: 20,
     },
     header: {
@@ -1726,7 +1687,7 @@ const styles = StyleSheet.create({
     headerText: {
         textAlign: 'center',
         fontSize: 16,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         color: "white",
         alignSelf: "flex-start",
         marginTop: 15,
@@ -1755,7 +1716,7 @@ const styles = StyleSheet.create({
     },
     selectTitle: {
         fontSize: 14,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
         padding: 10,
         textAlign: 'center',
     },
@@ -1768,6 +1729,6 @@ const styles = StyleSheet.create({
     multipleToggle__title: {
         fontSize: 16,
         marginRight: 8,
-        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontFamily: "Gazpacho Regular",
     },
 });

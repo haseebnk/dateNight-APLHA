@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useContext} from 'react';
 import {
     StyleSheet,
     Image,
@@ -10,11 +10,147 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity,
     Switch,
+    
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import AppContext from '../components/appcontext';
+import axios from 'axios';
+import axiosconfig from '../Providers/axios';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function ChangePassword(props) {
+
+export default function ChangePassword({route , navigation }) {
+
+
+
+    const [new_password, setnewPass] = useState();
+    const [confirm_password, setconfirmPass] = useState();
+    const [email,setemail] = useState("haseebnk37@gmail.com");
+
+    // const context = useContext(AppContext);
+    // const {
+    //   name,
+    //   email,
+    //   password,
+    //   roles,
+    //   dob,
+    //   phone,
+    //   image,
+    // } = route.params;
+
+
+
+    const changePass = async() => {
+        if(new_password == '' || new_password == null){
+            alert('error', 'New Password Required')
+            return false
+        }
+        else if(confirm_password == '' || confirm_password == null){
+            alert('error', 'Confirm password Required')
+            return false
+        }
+
+        if(new_password != confirm_password){
+            alert('error', 'Password not match')
+            return false
+        }
+
+        if ( email == '' || email == null ){
+
+
+            alert('error', 'email not match')
+            return false
+
+        }
+
+
+
+        var data = {
+            email: email,
+            new_password: new_password,
+            confirm_password:confirm_password
+        }
+       
+
+        // setLoader(true)
+      
+        // route.params.email
+    
+        await axiosconfig.post('forgot-password' , data).then((res:any)=>{
+      
+            (res.data)
+           console.log(res) 
+           navigation.navigate('login')
+
+           
+            
+        }).catch((err)=>{
+            // setLoader(false)
+            alert('error hai ', err.response.message);
+        })
+        
+    }
+
+
+
+
+
+    // const onSignupUser = () => {
+
+    //     var data = {
+    //         name: name,
+    //         email: email,
+    //         password: password,
+    //         roles:'admin',
+    //         dob: dob,
+    //         phone: phone,
+    //         image: 'image1',
+            
+    
+      
+    //     }
+    
+    //     axiosconfig
+    //         .post('register', data)
+    //         .then((res: any) => {
+    //             //   setLoader(false);
+              
+    //             if (res.data.error) {
+    //                 alert('invalid credentials')
+    //                 console.log('here in invalid pass')
+    //                 console.log(res.data)
+    //                 //   alert('login error', res.data.error_description);
+    //             } else {
+    //                 alert("registered successfully", res)
+    
+    //                 storeData(res.data.token);
+    
+    //                 console.log(res.data)
+    //             }
+    //         })
+    //         .catch(err => {
+    //           console.log('here in invalid pass')
+    //             console.log('error', 'Invalid Credentials', err);
+    //         });
+    
+           
+    
+    // }
+
+
+    // const storeData = async (value) => {
+    //     try {
+    //         await AsyncStorage.setItem('@token', value);
+    //         context.setuserToken(value);
+    //         setTimeout(() => {
+    //             navigation.navigate('login')
+    //         }, 1000);
+    //     } catch (e) {
+      
+    //     }
+    //   }
 
     return (
         <TouchableWithoutFeedback
@@ -40,10 +176,21 @@ export default function ChangePassword(props) {
                 <View style={styles.sectionStyle}>
                     <TextInput
                         style={{ flex: 1, color: 'white',  fontFamily: 'Poppins-Regular', fontSize: 15 }}
+                        placeholder="Email"
+                        placeholderTextColor='white'
+                        
+                       
+                        onChangeText={(e) => setemail(e)}
+                    />
+                </View>
+                <View style={styles.sectionStyle}>
+                    <TextInput
+                        style={{ flex: 1, color: 'white',  fontFamily: 'Poppins-Regular', fontSize: 15 }}
                         placeholder="New Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
                         textContentType='password'
+                        onChangeText={(e) => setnewPass(e)}
                     />
                 </View>
                 <View style={styles.sectionStyle}>
@@ -53,10 +200,11 @@ export default function ChangePassword(props) {
                         placeholderTextColor='white'
                         secureTextEntry={true}
                         textContentType='password'
+                        onChangeText={(e) => setconfirmPass(e)}
                     />
                 </View>
                 <View style={styles.Cont}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("home")}>
+                    <TouchableOpacity onPress={() => changePass()}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                             colors={['#FF7474', '#E20303']}
                             style={styles.linearGradient} >

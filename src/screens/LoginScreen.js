@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
-import axiosconfig from '../services/axios';
+import axiosconfig from '../Providers/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from './loader';
 import { moderateScale } from 'react-native-size-matters';
@@ -30,6 +30,8 @@ if (Platform.OS === 'android') {
         UIManager.setLayoutAnimationEnabledExperimental(true);
     }
 }
+
+
 const inActiveColor = 'white';
 const activeColor = '#00B712';
 
@@ -65,6 +67,70 @@ export default function LoginScreen2(props) {
 
 
 
+    // const onLoginUser = () => {
+    //     setLoader(true);
+
+    //     var data = {
+    //         email: email,
+    //         password: password
+    //     }
+
+    //     var emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    //     setLoader(false);
+    //     if (!emailReg.test(data.email)) {
+    //         // alert('Invalid credentials')
+    //     }
+
+    //     if (data.email == '' || data.email == null) {
+    //         alert('Email Required!');
+    //         return false;
+    //     }
+    //     if (data.password == '' || data.password == null) {
+    //         alert('Password Required!');
+    //         return false;
+    //     }
+
+    //     setLoader(true);
+
+    //     axiosconfig
+    //         .post('login', data)
+    //         .then((res: any) => {
+    //             setLoader(false);
+
+    //             if (res.data.error) {
+    //                 alert('invalid credentials')
+    //                 // showToast('login error', res.data.error_description);
+    //             } else {
+                 
+
+    //                 storeData(res.data.access_token);
+    //                 console.log("Got it", res.data.access_token)
+                   
+
+    //             }
+    //         })
+    //         .catch(err => {
+    //             setLoader(false);
+    //            alert('Invalid Credentials', err);
+    //         });
+
+      
+
+    // }
+
+    // const storeData = async value => {
+    //     try {
+    //         await AsyncStorage.setItem('@auth_token', value);
+
+    //         //   context.setuserToken(value);
+    //         setTimeout(() => {
+    //             props.navigation.navigate('home');
+    //         }, 1000);
+    //     } catch (e) { }
+    // };
+
+
+
     const onLoginUser = () => {
         setLoader(true);
 
@@ -91,7 +157,7 @@ export default function LoginScreen2(props) {
         setLoader(true);
 
         axiosconfig
-            .post('/login', data)
+            .post('login', data)
             .then((res: any) => {
                 setLoader(false);
 
@@ -99,10 +165,10 @@ export default function LoginScreen2(props) {
                     alert('invalid credentials')
                     // showToast('login error', res.data.error_description);
                 } else {
-                    console.log("Got it", res.data.access_token)
+                    console.log("Got it", res.data.token , ) 
 
-                    storeData(res.data.access_token);
-
+                    storeData(res.data.token);
+                  
 
                 }
             })
@@ -114,16 +180,18 @@ export default function LoginScreen2(props) {
 
     }
 
-    const storeData = async value => {
+    const storeData = async (value) => {
         try {
-            await AsyncStorage.setItem('@auth_token', value);
 
+            await AsyncStorage.setItem('@auth_token', value);
             //   context.setuserToken(value);
             setTimeout(() => {
                 props.navigation.navigate('home');
             }, 1000);
+      
         } catch (e) { }
     };
+
 
     return (
         <TouchableWithoutFeedback

@@ -39,7 +39,20 @@ import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { NotesContext } from "../context/NotesContext";
 import { State } from 'react-native-gesture-handler';
-import Notifications from './Notifications';
+
+// import GetLocation from 'react-native-get-location';
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { delay, entries, filter } from 'lodash';
+import { Badge } from 'react-native-paper';
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import AppContext from '../components/appcontext';
+// import HomeScreen from './HomeScreen';
+import GetLocation from 'react-native-get-location';
+import Loader from './loader';
+import axios from 'axios';
+import axiosconfig from '../Providers/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -111,6 +124,10 @@ const PreData = [
             'Date 07',
     },
 ]
+
+
+const data2 = []
+
 const data = [
     {
 
@@ -149,6 +166,8 @@ const data = [
             'It may,  may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
     },
 ];
+
+const pink2 = []
 
 const pink = [
     {
@@ -214,7 +233,12 @@ const pink = [
 const HomeScreen = (props) => {
 
     useEffect(() => {
-        setPings(pink)
+
+        PingData()
+        ModeData()
+
+        getCurrentLocation()
+        setPings(pink2)
         setEntries([{ type: 'add' }]);
         const backAction = () => {
             Alert.alert("Hold on!", "Are you sure you want to go back?", [
@@ -257,6 +281,390 @@ const HomeScreen = (props) => {
 
     const [xy, setXy] = useState('inactive')
     const [vy, setVy] = useState('active')
+    const carouselRef = useRef(null);
+
+
+
+    // const [checked, setChecked] = React.useState(false);
+    const [checkedd, setCheckedd] = React.useState(false);
+    const [mainData, setMainData] = useState(DATA);
+    const [isEnabled, setIsEnabled] = useState(false);
+    const [checkes, setCheckes] = React.useState(false);
+    const [checkei, setCheckei] = React.useState(false);
+    const [Place, setPlace] = useState(false)
+    const [Recommended, setRecommended] = useState(false)
+    const [Filters, setFilters] = useState(false)
+    const [tabState, setTabstate] = useState('yes')
+    const [LocationName, setLocationName] = useState("")
+    const [ustate, setState] = useState()
+    const [location, setLocation] = useState()
+    const [locationon, setlocationon] = useState(true);
+    const [lat, setLat] = useState(24.871733)
+    const [lng, setLng] = useState(67.359277);
+    const [PlaceData, setPlaceData] = useState([])
+    const myContext = useContext(AppContext);
+    const [del, setDel] = useState(false)
+    const [loader, setLoader] = useState(false);
+    const [myData, setMyData] = useState()
+    const [Pricestate, setPrice] = useState();
+
+    // const [data, setData] = useState([]);
+
+    const PingData = async () => {
+
+
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.get(`pings`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+
+            res.data.data.map((res, i) => {
+
+                pink2.push(res)
+
+                console.log(res, "pings hello")
+
+            })
+
+
+
+        }).catch((err) => {
+
+        })
+    }
+
+
+    const ModeData = async () => {
+        myData
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.get(`date-mode`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+            // console.log(res,"my data");
+            res.data.data.map((res, i) => {
+                data2.push(res)
+                console.log(i)
+                if (data2[i] == 0) { data2[i].color = ['#80D3FC', '#80D3FC',] }
+                if (data2[i] == 1) { data2[i].color = ['#44BEFB', '#44BEFB',] }
+                if (data2[i] == 2) { data2[i].color = ['#0883FB', '#0883FB',] }
+                else { data2[i].color = ['#0149FF', '#0149FF',] }
+
+
+            })
+
+
+            console.log(data2, "hello")
+
+        }).catch((err) => {
+
+        })
+    }
+
+
+    const getCurrentLocation = () => {
+        setLoader(true)
+        GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 15000,
+        })
+            .then(location => {
+                // setLocation(location)
+                console.log(location)
+                setLat(location.latitude);
+                setLng(location.longitude);
+
+                setTimeout(() => {
+                    handleRestaurantSearch(location.latitude, location.longitude);
+                }, 1000);
+            })
+            .catch(error => {
+                setlocationon(false)
+                const { code, message } = error;
+                setLoader(false)
+            })
+    }
+
+    const handleRestaurantSearch = async (l, ln) => {
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?`
+        const location = `location=${l},${ln}`;
+        const radius = '&radius=2000';
+        const type = '&type=restaurant';
+        // const keyword = '&keyword=Meal';
+        const key = '&key=AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
+        const restaurantSearchUrl = url + location + radius + type + key;
+        try {
+            let response = await fetch(
+                restaurantSearchUrl
+            );
+            let json = await response.json();
+            console.log(json, 'json');
+
+            let a = []
+            json.results.map((v, i) => {
+                a.push(v.name)
+            })
+            setPlaceData(a);
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
+    const setToggleee = (item, id) => {
+        mainData.map((v, i) => {
+            if (v.Id == id) {
+                console.log(mainData[i].check)
+                mainData[i].check = !mainData[i].check;
+                setMainData([...mainData])
+            }
+        })
+
+        // handleRestaurantSearch(lat,lng)
+    }
+
+
+
+    const toggleInvert = (item, id) => {
+        mainData.map((v, i) => {
+            if (v.check != id) {
+                console.log(mainData[i].check)
+                mainData[i].check = !mainData[i].check;
+                setMainData([...mainData])
+            }
+        })
+
+    }
+
+    const Item = ({ title, meal, drink, isEnabled, setIsEnabled, Id, index }) => {
+
+
+        return (
+            <View >
+                <View style={{ marginTop: moderateScale(0) }}>
+                    <TouchableOpacity  >
+
+                        <Text style={styles.title2}>{title}</Text>
+
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                    style={[
+                        styles.toggleContainer2,
+                        { borderColor: null ? activeColor : null, },
+                    ]}
+                    onPress={() => {
+                        LayoutAnimation.easeInEaseOut();
+                        setToggleee(isEnabled, Id);
+                    }}
+                    activeOpacity={1}>
+                    <View
+                        style={[
+                            styles.toggleBtn2,
+                            isEnabled
+                                ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
+                                : { backgroundColor: activeColor, borderRadius: 25, },
+                        ]}
+
+                    />
+                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
+                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
+    const renderItemm = ({ item, i }) => (
+        <Item title={item.title} isEnabled={item.check} setIsEnabled={setIsEnabled} Id={item.Id} index={i} />
+    );
+
+
+
+    const PlaceName = () => {
+
+
+        return (
+
+            <FlatList
+                data={PlaceData}
+                keyExtractor={(item) => item}
+                renderItem={({ item, index }) => (
+
+
+
+
+                    < ScrollView >
+
+
+
+                        <View style={styles.placeView2}>
+
+                            <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
+
+                                    <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
+                                        style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+                                    </TouchableOpacity>
+                                    <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+                                        <View style={{ top: 4 }}>
+                                            <View
+
+                                            >
+                                                {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
+                                                    {item}
+                                                </Text> */}
+                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
+                                                    (((item).substring(0, 10 - 3)) + '...') :
+                                                    item}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
+                                        </View>
+                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
+                                        </View>
+                                    </View>
+
+                                </View>
+
+
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+
+
+                )}
+
+            />
+        )
+    }
+
+
+    const PlaceRecommended = () => {
+
+        return (
+            <FlatList
+                data={PlaceData}
+                keyExtractor={(item) => item}
+                renderItem={({ item, index }) => (
+
+                    <ScrollView nestedScrollEnabled={true} >
+                        {
+                            index == 0 ?
+                                (
+                                    <>
+                                        <View >
+                                            <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
+                                                <View style={styles.placeViewc}>
+                                                    <View style={styles.yellowView}>
+                                                        <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
+                                                    </View>
+                                                    <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
+                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                                                        <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
+                                                            style={{ top: 25, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkes ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+
+                                                        </TouchableOpacity>
+
+                                                        <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+
+                                                            <View>
+                                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
+                                                                    (((item).substring(0, 10 - 3)) + '...') :
+                                                                    item}
+                                                                </Text>
+                                                            </View>
+
+                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+                                                            </View>
+                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
+                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
+                                                            </View>
+                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
+                                                            </View>
+                                                        </View>
+                                                    </View>
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
+                                                    </View>
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
+
+                                            <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, marginHorizontal: moderateScale(28), marginBottom: 15 }}></View>
+
+                                        </View>
+                                    </>
+                                ) :
+
+
+
+                                < ScrollView >
+
+                                    <View style={styles.placeView2}>
+                                        <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
+
+                                                <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
+                                                    style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+                                                </TouchableOpacity>
+                                                <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+                                                    <View style={{ top: 4 }}>
+                                                        <View
+
+                                                        >
+                                                            {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
+                                                    {item}
+                                                </Text> */}
+                                                            <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
+                                                                (((item).substring(0, 10 - 3)) + '...') :
+                                                                item}
+                                                            </Text>
+                                                        </View>
+                                                    </View>
+                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+                                                    </View>
+                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
+                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
+                                                    </View>
+                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
+                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
+                                                    </View>
+                                                </View>
+
+                                            </View>
+
+
+                                        </TouchableOpacity>
+                                    </View>
+                                </ScrollView>
+                        }
+
+
+                    </ScrollView>
+
+                )}
+
+            />
+        )
 
     const carouselRef = useRef(null);
     
@@ -317,15 +725,7 @@ const HomeScreen = (props) => {
         setPress(item.id)
     }
 
-    const xyz = (type, selected, Id) => {
 
-
-       
-        type == 'lock' ? setModalOpenn(true) : null
-
-        type == 'unlock' && selected == true
-
-    }
 
 
 
@@ -458,10 +858,28 @@ const HomeScreen = (props) => {
 
     }
 
-    const setActive = (i) => {
-        Pings[i].selected = !Pings[i].selected;
-        console.log(Pings[i])
-        setPings([...Pings])
+
+
+
+    const xyz = (type, selected, Id, paid_or_free, item) => {
+
+
+        Pings.paid_or_free == 'paid' ? setModalOpenn(true) : null
+        console.log("not found")
+        // type == 'unlock' && selected == true
+
+    }
+
+    const setActive = (index) => {
+        // Pings[index].selected = !Pings[index].selected;
+        // console.log(Pings[index])
+        // setPings([...Pings])
+    }
+
+    const PingModeId = (id) => {
+
+        console.log(id);
+
     }
 
     const rendenPing = () => {
@@ -470,58 +888,72 @@ const HomeScreen = (props) => {
             let myLocalArray = []
             myLocalArray = Pings.splice(0, 1)
             setMyArray(myLocalArray)
-            { Pings[0].type == 'lock' ? setModalOpenn(true) : null }
+            { Pings.paid_or_free == 'paid' ? setModalOpenn(true) : null }
         }
         return (
-            Pings.map((v, i) => {
-                return (
-                    <View style={styles.ping}
-                        key={i}
-                    >
-                        <TouchableOpacity onPress={() => xyz(v.type, v.selected, v.key)}>
-                            {v.type == 'lock' ?
+            <FlatList
+                data={Pings}
+                keyExtractor={(item) => item}
+                horizontal={true}
+                renderItem={({ item, index }) => (
+
+
+                    <View style={styles.ping} >
+                        {
+                            item.paid_or_free == "paid" ?
                                 (<>
-                                    <View style={styles.PingLock}>
-                                        <View style={{ height: 60 }}>
-                                            <Text style={styles.PingText11}>{v.text}</Text>
+                                    <TouchableOpacity onPress={() => { (item.paid_or_free ? [setModalOpenn(true), setPrice(item.price)] : null); PingModeId(item.mode_id) }}>
+
+                                        <View style={styles.PingLock}>
+                                            <View style={{ height: 60 }}>
+                                                <Text style={styles.PingText11}>{item.name}</Text>
+                                            </View>
+                                            <View style={styles.pinLockPicback}>
+                                                <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
+                                            </ View>
                                         </View>
-                                        <View style={styles.pinLockPicback}>
-                                            <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
-                                        </ View>
-                                    </View>
-                                </>) : null}
-                        </TouchableOpacity >
-                        {v.type == 'unlock' && v.selected == true ?
-                            (<>
-                                <TouchableOpacity onPress={() => setActive(i)}>
-                                    <View style={styles.PingPlayed}>
-                                        <View style={{ height: 65 }}>
-                                            <Text style={styles.PingText11}>{v.text}</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={styles.activeText} >Active</Text>
-                                        </ View>
-                                    </View>
-                                </TouchableOpacity>
-                            </>) : null}
-                        <TouchableOpacity onPress={() => setActive(i)}>
-                            {v.type == 'unlock' && v.selected == false ?
-                                (<>
+
+                                    </TouchableOpacity >
+
+
+                                </>) :
+
+                                <TouchableOpacity onPress={() => PingModeId(item.mode_id)}>
+
                                     <View style={styles.PingUnlock}>
                                         <View style={{ height: 65 }}>
-                                            <Text style={styles.PingText11}>{v.text}</Text>
+                                            <Text style={styles.PingText11}>{item.name}</Text>
                                         </View>
                                         <View>
                                             <Text style={styles.activeText} >Inactive</Text>
                                         </ View>
                                     </View>
-                                </>) : null}
 
+                                </TouchableOpacity>
+
+
+
+                        }
+
+
+                        {/* {item.name == 'unlock' && item.selected == true ?
+                    (<>
+                        <TouchableOpacity onPress={() => setActive(item)}>
+                            <View style={styles.PingPlayed}>
+                                <View style={{ height: 65 }}>
+                                    <Text style={styles.PingText11}>{item.name}</Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.activeText} >Active</Text>
+                                </ View>
+                            </View>
                         </TouchableOpacity>
+                    </>) : null} */}
 
                     </View>
-                )
-            })
+
+                )}
+            />
         )
 
     }
@@ -563,7 +995,7 @@ const HomeScreen = (props) => {
                                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.modalViewH}>
-                                <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just $0.99 ?</Text>
+                                <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just ${Pricestate} ?</Text>
 
                                 <View style={styles.modalButtons2} >
                                     <Pressable
@@ -603,8 +1035,7 @@ const HomeScreen = (props) => {
                                     ListEmptyComponent={null}
                                     ListFooterComponent={null}
                                     ListHeaderComponent={null}
-
-                                    data={data}
+                                    data={data2}
                                     keyExtractor={(item, index) => index.toString()}
                                     style={{ width: (windowWidth - 50), }}
                                     renderItem={({ item, index }) => (
@@ -616,7 +1047,7 @@ const HomeScreen = (props) => {
 
                                                 <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }}  >
                                                     <LinearGradient
-                                                        colors={[item.color[0], item.color[1]]}
+                                                        colors={item.color}
                                                         style={{
                                                             flexDirection: 'row',
                                                             justifyContent: 'space-between',
@@ -638,7 +1069,7 @@ const HomeScreen = (props) => {
                                                             fontFamily: "Gazpacho Regular",
                                                             fontSize: 16,
                                                             width: moderateScale(180)
-                                                        }}>{item.title}</Text>
+                                                        }}>{item.name}</Text>
 
                                                         {/* <AntDesign name="caretdown" size={16} color="black"/> */}
                                                         <TouchableOpacity>
@@ -652,7 +1083,7 @@ const HomeScreen = (props) => {
 
                                                 :
                                                 <LinearGradient
-                                                    colors={[item.color[0], item.color[1]]}
+                                                    colors={item.color}
                                                     style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
                                                     <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
                                                     <View >
@@ -662,7 +1093,7 @@ const HomeScreen = (props) => {
                                                             color: "white",
                                                             fontSize: 16,
                                                             width: moderateScale(180),
-                                                        }}>{item.title}</Text>
+                                                        }}>{item.name}</Text>
                                                     </View>
                                                     <TouchableOpacity>
                                                         <View style={styles.RadioView2}>

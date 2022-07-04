@@ -29,7 +29,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const Data = [{
     id: 1,
-    name: 'Schedule Date 1',
+    name: 'Scheduled Date 1',
     Gname: 'Alvina Taichi',
     date: 'Date :  01 | 07 | 2022:',
     day: 'Day:  Wednesday:',
@@ -40,12 +40,12 @@ const Data = [{
 
 const Data2 = [{
     id: 1,
-    name: 'Schedule Date 2',
+    name: 'Scheduled Date 2',
     Gname: 'Alvina Taichi',
     date: 'Date :  01 | 12 | 2022:',
     day: 'Day:  Wednesday:',
     time: 'Time:  12:56 Am',
-    Frequency: 'Frequency:  10 min'
+    // Frequency: 'Frequency:  10 min'
 
 }]
 const renderData = () => {
@@ -54,11 +54,14 @@ const renderData = () => {
             return (
                 <View key={i} style={{ flexDirection: 'column' }}>
                     <Text style={styles.cardTextHead}>{v.name}</Text>
+
+                    <View style={{top:15}}>
                     <Text style={styles.cardText}>{v.Gname}</Text>
                     <Text style={styles.cardText}>{v.date}</Text>
 
                     <Text style={styles.cardText}>{v.time}</Text>
-                    <Text style={styles.cardText}>{v.Frequency}</Text>
+                    {/* <Text style={styles.cardText}>{v.Frequency}</Text> */}
+                    </View>
                 </View>
 
             )
@@ -72,11 +75,15 @@ const renderGift = () => {
             return (
                 <View key={i} style={{ flexDirection: 'column' }}>
                     <Text style={styles.cardTextHead}>{v.name}</Text>
-                    <Text style={styles.cardText}>{v.Gname}</Text>
-                    <Text style={styles.cardText}>{v.date}</Text>
 
-                    <Text style={styles.cardText}>{v.time}</Text>
-                    <Text style={styles.cardText}>{v.Frequency}</Text>
+                    <View style={{top:15}}>
+                        <Text style={styles.cardText}>{v.Gname}</Text>
+                        <Text style={styles.cardText}>{v.date}</Text>
+
+                        <Text style={styles.cardText}>{v.time}</Text>
+                        <Text style={styles.cardText}>{v.Frequency}</Text>
+                    </View>
+
                 </View>
 
             )
@@ -94,7 +101,7 @@ function DateTimeCard() {
 
     return (
         <ScrollView horizontal={true}>
-            <TouchableOpacity activeOpacity={.9} onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}>
+            <TouchableOpacity >
                 <LinearGradient
 
                     start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }}
@@ -108,10 +115,9 @@ function DateTimeCard() {
 
                     </View>
                     <View style={styles.flex3}>
-                        <TouchableOpacity onPress={() => checkedd ? setCheckedd(false) : setCheckedd(true)}
-                            style={{ margin: 0, marginRight: 1, marginTop: moderateScale(9, 0.1), height: moderateScale(32), width: moderateScale(32), borderRadius: moderateScale(20), backgroundColor: checkedd ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
-                        </TouchableOpacity>
-                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
+
+
+                        <MaterialIcons style={{ marginLeft: 7, marginTop: 25 }} name='mode-edit' size={hp('3.1%')} color="white" />
                         <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
                     </View>
                 </LinearGradient>
@@ -119,7 +125,7 @@ function DateTimeCard() {
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={.9} onPress={() => checked ? setChecked(false) : setChecked(true)}>
-               <LinearGradient
+                <LinearGradient
 
                     start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
                     colors={['#7AC9FD', '#0071BC']}
@@ -131,10 +137,8 @@ function DateTimeCard() {
                         {/* <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" /> */}
                     </View>
                     <View style={styles.flex3}>
-                        <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                            style={{ margin: 0, marginRight: 1, marginTop: moderateScale(9, 0.1), height: moderateScale(32), width: moderateScale(32), borderRadius: moderateScale(20), backgroundColor: checked ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
-                        </TouchableOpacity>
-                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
+
+                        <MaterialIcons style={{ marginLeft: 7, marginTop: 25 }} name='mode-edit' size={hp('3.1%')} color="white" />
                         <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
                     </View>
                 </LinearGradient>
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     },
     flex1: {
         flex: .5,
-        borderRadius: moderateScale(18),    
+        borderRadius: moderateScale(18),
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
@@ -200,7 +204,7 @@ const styles = StyleSheet.create({
     cardTextHead: {
         color: 'white',
         fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
-      
+
         fontSize: 18,
         marginLeft: 25,
         marginTop: moderateScale(15, 0.1)
@@ -210,7 +214,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Poppins-Regular',
         fontSize: 13,
-        marginTop: 7,
+        marginTop: 8,
         marginLeft: 25
     },
 

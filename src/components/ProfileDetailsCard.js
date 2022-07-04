@@ -31,7 +31,7 @@ const Data = [{
     name: 'Plan Your Next Date',
     date: 'Date :  MM | DD | YYYY:',
     day: 'Day:  Wednesday:',
-    time: 'Time:  12:56 Am',
+    time: 'Time:  12:34 pm',
     Frequency: 'Frequency:  Daily'
 }]
 
@@ -100,7 +100,7 @@ const renderGift = () => {
 
 function ProfileDetailsCard() {
 
-    const [checked, setChecked] = React.useState(false);
+    const [checked, setChecked] = React.useState(true);
     const [checkedd, setCheckedd] = React.useState(false);
     const [modalOpenn, setModalOpenn] = useState(false);
     const [reminder, setReminder] = useState();
@@ -167,8 +167,8 @@ function ProfileDetailsCard() {
 
                         }}> {checked ? 'Active' : 'Inactive'} </Text>
                      </TouchableOpacity>
-                        <MaterialIcons style={{ marginLeft:40, marginBottom: 0 }} name='mode-edit' size={hp('3.1%')} color="white" />
-                        <MaterialIcons style={{ marginLeft: 40, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
+                        <MaterialIcons style={{ marginLeft:40, marginBottom: 20 }} name='mode-edit' size={hp('3.1%')} color="white" />
+                        {/* <MaterialIcons style={{ marginLeft: 40, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" /> */}
                     </View>
                 </LinearGradient>
             </TouchableOpacity>

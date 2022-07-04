@@ -33,10 +33,11 @@ export default function Splashing(props) {
 
 
   useEffect(() => {
+    
     SplashScreen.hide()
     setTimeout(() => { fadeIn() }, 1000)
     setTimeout(() => { fadeInUp() }, 1000)
-    setTimeout(() => props.navigation.navigate("slider"), 2000);
+    setTimeout(() => props.navigation.navigate("slider"), 4000);
   }, []);
 
   const fadeAnim = useRef(new Animated.Value(-130)).current;
@@ -68,10 +69,10 @@ export default function Splashing(props) {
           <Animatable.Text delay={1500} style={styles.datingText} animation="slideInDown" >Dating just got <Animatable.Text animation="slideInDown" style={{
 
             fontSize: 20,
-            fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+            fontFamily:  'Poppins-Regular',
             fontStyle: 'italic',
             fontWeight: 'bold'
-          }}>fun</Animatable.Text > again!</Animatable.Text>
+          }}>FUN</Animatable.Text > again!</Animatable.Text>
         </Animated.View>
         <Animatable.Image style={styles.img} animation="zoomIn" source={require('../assets/imglogo.png')} >
         </Animatable.Image>

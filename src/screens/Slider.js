@@ -79,6 +79,7 @@ const SliderScreen = (props) => {
           <Image
           style={{ height: 123.49, width:123 , resizeMode:'contain'}}
           source={(require("../assets/imglogo.png"))} ></Image>
+           <Text style={styles.logoText}>Date Night</Text>
         <Text style={styles.introTitleStyle}>
           {item.title}
         </Text>
@@ -141,6 +142,14 @@ const SliderScreen = (props) => {
 export default SliderScreen;
 
 const styles = StyleSheet.create({
+  logoText: {
+    color: '#fd2d1f',
+    fontSize: 30,
+    fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Bold",
+    marginTop: -40,
+  
+    textAlign: 'center',
+},
   container: {
     flex: 1,
     backgroundColor: '#fff',

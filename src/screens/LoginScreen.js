@@ -22,8 +22,10 @@ import axiosconfig from '../Providers/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from './loader';
 import { moderateScale } from 'react-native-size-matters';
-
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from "react-native-vector-icons/AntDesign"
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -212,12 +214,14 @@ export default function LoginScreen2(props) {
                     <Image style={styles.tinyLogo}
                         source={require('../assets/imglogo.png')}
                     /></View>
-                <Text style={styles.loginText}>Please Sign into your account</Text>
+                     <Text style={styles.logoText}>Date Night</Text>
+                <Text style={styles.loginText}>Sign Into Your Account</Text>
                 <View style={styles.sectionStyle}>
-                    <Image
+                    {/* <Image
                         source={require('../assets/emailll.png')} //Change your icon image here
                         style={styles.ImageStyle}
-                    />
+                    /> */}
+                      <FontAwesome5 style={{ margin: 9 }} name='envelope' size={hp('2.7%')} color="#fff" />
                     <TextInput
                         style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginTop: 8 }}
                         value={email}
@@ -231,10 +235,11 @@ export default function LoginScreen2(props) {
                     />
                 </View>
                 <View style={styles.sectionStyle}>
-                    <Image
+                    {/* <Image
                         source={require('../assets/passs.png')} //Change your icon image here
                         style={styles.ImageStyle}
-                    />
+                    /> */}
+                      <MaterialIcons style={{ margin: 3, }} name='lock-outline' size={hp('3.5%')} color="#fff" />
                     <TextInput
                         value={password}
                         style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginTop: 8 }}
@@ -413,11 +418,19 @@ const styles = StyleSheet.create({
         color: '#fff',
         alignSelf: 'center',
     },
+    logoText: {
+        color: '#fd2d1f',
+        fontSize: 30,
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Bold",
+        marginTop: -5,
+        marginBottom: 10,
+        textAlign: 'center',
+    },
     loginText: {
         color: '#fff',
         fontSize: 20,
         fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
-        marginTop: 20,
+        marginTop: 10,
         marginBottom: 30,
         textAlign: 'center',
     },

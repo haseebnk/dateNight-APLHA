@@ -78,6 +78,7 @@ const FAQScreen = (props) => {
                                     <TouchableOpacity
                                         onPress={() => { LayoutAnimation.easeInEaseOut(); questionPick(item) }}
                                         style={{ marginTop: 20, width: '100%', padding: 0 }}
+                                       
                                     >
                                         {press === item.id ?
                                             <TouchableOpacity onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} >

@@ -1,18 +1,13 @@
 import React from 'react';
-import { Platform , UIManager,} from 'react-native';
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
-
-
-
+import {Platform, UIManager} from 'react-native';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import PushNotification from 'react-native-push-notification';
 
 if (Platform.OS === 'android') {
-    if (UIManager.setLayoutAnimationEnabledExperimental) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
 }
-
-
 
 class Notifications {
   constructor() {
@@ -50,12 +45,22 @@ class Notifications {
     });
   }
 
-  schduleNotification(date) {
+  cancelNotification() {
+    PushNotification.cancelAllLocalNotifications();
+  }
+  schduleNotification(date, message) {
     PushNotification.localNotificationSchedule({
       channelId: 'reminders',
       title: 'Reminder',
-      message: 'Reminder For Next Challenge',
-      date,
+      message: message,
+      date: date,
+    });
+  }
+  pushNotification(message) {
+    PushNotification.localNotification({
+      channelId: 'reminders',
+      title: 'Reminder',
+      message: message,
     });
   }
 }

@@ -17,44 +17,44 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import axiosconfig from '../Providers/axios';
 
-export default function ForgotPassword({navigation}) {
+export default function ForgotPassword({ navigation }) {
 
 
-    const [email,setemail] = useState();
+    const [email, setemail] = useState();
     const [loader, setLoader] = useState(false)
 
-    
 
-    const sendOtp =() => {
-        
-        if(email == '' || email == null){
+
+    const sendOtp = () => {
+
+        if (email == '' || email == null) {
             showToast('error', 'Email cannot be null.');
             return false
         }
-        // setLoader(true)
+        setLoader(true)
 
         var signData = {
-           
-            email:email
+
+            email: email
         }
         axiosconfig
-        .post('email-verify', {email:email}) 
-        .then((res: any) => {
+            .post('email-verify', { email: email })
+            .then((res: any) => {
 
-           
-            // setLoader(false)
-            navigation.navigate('otp', signData);
-            console.log(res)
-       
-        }).catch((err) => {
-            // setLoader(false)
-               console.log(err)
-        
-        })
+
+                setLoader(false)
+                navigation.navigate('otp', signData);
+                console.log(res)
+
+            }).catch((err) => {
+                setLoader(false)
+                console.log(err)
+
+            })
     }
 
 
-    
+
 
 
 
@@ -70,13 +70,13 @@ export default function ForgotPassword({navigation}) {
                 style={styles.container}
             >
 
-{
-                loader ? (
-                    <>
-                        <Loader />
-                    </>
-                ) : null
-            }
+                {
+                    loader ? (
+                        <>
+                            <Loader />
+                        </>
+                    ) : null
+                }
 
                 <View style={styles.viewStyle}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -90,14 +90,14 @@ export default function ForgotPassword({navigation}) {
                 </View>
                 <View>
                     <Text
-                        style={{ color: "#C2C2C2", marginBottom: 15, marginLeft: 15, fontSize: 12,  fontFamily: 'Poppins-Regular', }}
+                        style={{ color: "#C2C2C2", marginBottom: 15, marginLeft: 15, fontSize: 12, fontFamily: 'Poppins-Regular', }}
                     >Please enter your email address or Phone Number to change your Password</Text>
                 </View>
 
                 <View style={styles.sectionStyle}>
 
                     <TextInput
-                        style={{ flex: 1, color: 'white',  fontFamily: 'Poppins-Regular', fontSize: 15 }}
+                        style={{ flex: 1, color: 'white', fontFamily: 'Poppins-Regular', fontSize: 15 }}
 
                         placeholder='Email Address or Phone Number'
                         placeholderTextColor='white'
@@ -110,7 +110,7 @@ export default function ForgotPassword({navigation}) {
                     />
                 </View>
                 <View style={styles.Cont}>
-                    <TouchableOpacity   onPress={()=>sendOtp()}>
+                    <TouchableOpacity onPress={() => sendOtp()}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                             colors={['#FF7474', '#E20303']}
                             style={styles.linearGradient} >
@@ -120,7 +120,7 @@ export default function ForgotPassword({navigation}) {
                         </LinearGradient>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => props.navigation.navigate("login")}>
+                    <TouchableOpacity onPress={() => navigation.navigate("login")}>
 
                         <Text style={styles.cancelButtonText}>
                             Cancel

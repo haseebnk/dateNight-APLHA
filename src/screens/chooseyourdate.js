@@ -14,93 +14,99 @@ import {
     FlatList,
     SafeAreaView,
     Pressable,
-    Dimensions
+    Dimensions,
+    PermissionsAndroid
 } from 'react-native';
 import { moderateScale } from "react-native-size-matters";
 import LinearGradient from 'react-native-linear-gradient';
-// import SplashScreen from 'react-native-splash-screen';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NotesContext } from "../context/NotesContext";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
 import MaskInput from 'react-native-mask-input';
+import axiosconfig from '../Providers/axios';
+import AppContext from '../components/appcontext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import RNFS from 'react-native-fs';
+import Loader from './loader';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-
-
 
 const COLORS = [
     {
         id: 1,
         color: ['#F11775', '#FB6580',],
-
-
     },
     {
         id: 2,
         color: ['#7AC9FD', '#0071BC',],
-
-
     }
     ,
     {
         id: 3,
         color: ['#7AFDD0', '#00BC89',],
-
-
     },
     {
         id: 4,
         color: ['#6617F1', '#8265FB',],
-
-
     },
     {
         id: 5,
         color: ['#F1D417', '#FBFB65',],
-
-
     },
-
 ]
 
-
-
-
-
-
-export default function chooseYourDate(props) {
+export default function ChooseYourDate(props) {
 
     useEffect(() => {
-        console.log(socialSec);
-    }, [socialSec]);
+        console.log(props,'dsdsd');
+        myDataFunc()
+        if(props?.route?.params?.data){
+            let t = props?.route?.params?.data;
+            setProfile(t.image)
+            setName(t.name)
+            setPhonee(t.phone)
+            setEmail(t.email)
+            setdob(t.dob)
+            setColor([t.color1, t.color2])
+        }
+    }, []);
 
-
+    const myContext = useContext(AppContext);
+    const context = useContext(AppContext);
     const [isDateSelected, setIsDateSelected] = useState(false);
     const [isTimeSelected, setIsTimeSelected] = useState(false)
     const [date, setDate] = useState(new Date(Date.now()));
     const [time, setTime] = useState(new Date(Date.now()));
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
-    const [press, setPress] = useState('');
+    const [press, setPress] = useState(null);
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     const { state, dispatch } = useContext(NotesContext)
-    const [name, setName] = useState("")
-    const [number, setNumber] = useState("")
-    const [age, setAge] = useState("")
-    const [email, setEmail] = useState("")
-    const [dateb, setDateb] = useState("")
+    const [name, setName] = useState(null)
+    const [number, setNumber] = useState(null)
+    const [age, setAge] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [dateb, setDateb] = useState(null)
     const [password, setPass] = useState("")
-    const [dob, setdob] = useState('Birth Date ');
+    const [dob, setdob] = useState(null);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [color, setColor] = useState([])
     const [phoneNum, setphoneNum] = useState(null);
-    const [socialSec, setsocialSec] = useState('');
+    const [socialSec, setsocialSec] = useState(null);
+    const [phone, setPhonee] = useState(null)
+    const [user_id, setUserId] = useState()
+    const [Loader22, setLoader2] = useState(false);
+    const [profile, setProfile] = useState(null);
+    const [mydata,setMydata] = useState(null)
 
-const showDatePicker = () => {
+    const {type, con} = props.route.params
+
+    const showDatePicker = () => {
         setDatePickerVisibility(true);
     };
 
@@ -110,7 +116,7 @@ const showDatePicker = () => {
 
     const handleConfirm = (date) => {
         console.warn("A date has been picked: ", date);
-        setdob(moment(date).format('MM/DD/yy') +' ('+ moment().diff(date,'years')+')')
+        setdob(moment(date).format('MM/DD/yy') + ' (' + moment().diff(date, 'years') + ')')
         hideDatePicker();
     };
 
@@ -119,49 +125,207 @@ const showDatePicker = () => {
         setColor(item.color)
     }
 
-    function questionClose(item) {
-        setPress(item.id)
-    }
+    const requestCameraPermission = async () => {
+        if (Platform.OS === 'android') {
+            try {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.CAMERA,
+                    {
+                        title: 'Camera Permission',
+                        message: 'App needs camera permission',
+                    },
+                );
+                // If CAMERA Permission is granted
+                return granted === PermissionsAndroid.RESULTS.GRANTED;
+            } catch (err) {
+                console.warn(err);
+                return false;
+            }
+        } else return true;
+    };
 
-    const onTextChange = (text) => {
-        let rg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{3}$/
-        if (rg.test(text)) {
-            setphoneNum(null)
+    const requestExternalWritePermission = async () => {
+        if (Platform.OS === 'android') {
+            try {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                    {
+                        title: 'External Storage Write Permission',
+                        message: 'App needs write permission',
+                    },
+                );
+                // If WRITE_EXTERNAL_STORAGE Permission is granted
+                return granted === PermissionsAndroid.RESULTS.GRANTED;
+            } catch (err) {
+                console.warn(err);
+                alert('Write permission err', err);
+            }
+            return false;
+        } else return true;
+    };
+
+    const openCamer = async c => {
+
+        let isCameraPermitted = await requestCameraPermission();
+        let isStoragePermitted = await requestExternalWritePermission();
+        if (c == 'g') {
+            setTimeout(() => {
+                launchImageLibrary({
+                    width: 300,
+                    height: 400,
+                    cropping: true,
+                    freeStyleCropEnabled: true,
+                    saveToPhotos: true,
+                })
+                    .then(image => {
+                        if (image.assets) {
+                            // myContext.setProfile(image.assets[0].uri);
+                            imageUpload(image);
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            }, 1000);
+        } else if (c == 'c') {
+            setTimeout(() => {
+                if (isCameraPermitted && isStoragePermitted) {
+                    launchCamera({
+                        width: 300,
+                        height: 400,
+                        cropping: true,
+                        freeStyleCropEnabled: true,
+                        saveToPhotos: true,
+                    })
+                        .then(image => {
+                            if (image.assets) {
+                                imageUpload(image);
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        });
+                }
+            }, 1000);
         }
-        else {
-            var cleaned = ('' + text).replace(/\D/g, '')
-            var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
+    };
 
-            if (match) {
-                var intlCode = (match[1] ? '+1 ' : ''),
-                    number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+    const imageUpload = async img => {
+        let data = {
+            image: null,
+        };
+        RNFS.readFile(img.assets[0].uri, 'base64').then(res => {
+            data.image = res;
 
-                setphoneNum(number)
+            setLoader2(true);
+            axiosconfig
+                .post(
+                    'image-upload-64',
+                    { image: res },
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + myContext.userToken, //the token is a variable which holds the token
+                        },
+                    },
+                )
+                .then(res => {
+                    setLoader2(false);
+                    console.log(res, 'res img')
+                    setProfile(res.data.data.image_url);
+                })
+                .catch(err => {
+                    console.log(err.response, 'res')
+                    setLoader2(false);
+                });
+        });
+    };
 
+    const myDataFunc = async() => {
+        const value = await AsyncStorage.getItem('@auth_token');
+        axiosconfig.get('my-data',
+          {
+            headers: {
+              Authorization: 'Bearer ' + value //the token is a variable which holds the token
+            }
+          }
+        ).then((res)=>{
+          setMydata(res.data)
+        }).catch((err)=>{
+          console.log(err.response)
+        })
+      }
+
+    const onDateAdd = async () => {
+        console.log(myContext.myData)
+        let submitted = true
+        var data = {
+            user_id: mydata.id,
+            name: name,
+            phone: phone,
+            
+            email: email,
+            image: profile,
+            color: `${color[0]},${color[1]}`,
+            date_or_other: con
+        }
+
+        if(props?.route?.params?.data){
+            data['id'] = props?.route?.params?.data.id
+            data['dob'] = props?.route?.params?.data.dob
+        }else{
+            data['dob'] = moment(dob).format('DD-MM-yy')
+        }
+
+        for (const property in data) {
+            if(data[property] == null){
+                submitted = false;
+                alert(`${property} required!`)
                 return;
             }
         }
+        if(color.length == 0){
+            alert(`color required!`);
+            submitted = false;
+            return
+        }
+        if (submitted) {
+            setLoader2(true)
+            const value = await AsyncStorage.getItem('@auth_token');
+            await axiosconfig.post(`other-people-add`,
+                data,
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                    }
+                }
+            ).then((res: any) => {
+                setLoader2(false)
+                props.navigation.navigate('home');
+            }).catch((err) => {
+                setLoader2(false)
+                console.log('error', err.response);
+            })
+        }
     }
 
-    const handleKeyDown = (e) => {
-        console.log(e.nativeEvent.key)
-    };
-
     return (
-        <SafeAreaView style={{ flex: 1 , backgroundColor:'#000' }}>
-
-        <ScrollView>
-
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    Keyboard.dismiss();
-                }}
-            >
-                <LinearGradient
-                    colors={['#24202f', '#24202f', '#24202f']}
-                    style={styles.container}
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+            {Loader22 ? (
+                <>
+                    <Loader />
+                </>
+            ) : null}
+            <ScrollView>
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        Keyboard.dismiss();
+                    }}
                 >
-                   
+                    <LinearGradient
+                        colors={['#24202f', '#24202f', '#24202f']}
+                        style={styles.container}
+                    >
+
                         <View style={{ flexDirection: "row" }}>
                             <TouchableOpacity onPress={() => props.navigation.goBack()}>
 
@@ -169,16 +333,33 @@ const showDatePicker = () => {
                                     source={require("../assets/close.png")}
                                 ></Image>
                             </TouchableOpacity>
-                            <Text style={styles.ProfileDetails}>Add Date Info</Text>
+                            <Text style={styles.ProfileDetails}>{type}</Text>
                         </View>
                         <View style={styles.tinyLogo}>
-                            <Image style={styles.tinyLogo}
-
-                                source={require('../assets/profile.png')}
-                            />
+                            {
+                                profile == null ? (
+                                    <>
+                                        <Image style={styles.tinyLogo}
+                                            source={require('../assets/profile.png')}
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Image style={styles.tinyLogo}
+                                            source={{
+                                                uri: profile
+                                            }}
+                                        />
+                                    </>
+                                )
+                            }
                         </View>
-                        <Text style={styles.takePhoto}>Take a photo</Text>
-                        <Text style={styles.uploadPhoto}>Upload Photo</Text>
+                        <TouchableOpacity onPress={() => openCamer('c')}>
+                            <Text style={styles.takePhoto}>Take a photo</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => openCamer('g')}>
+                            <Text style={styles.uploadPhoto}>Upload Photo</Text>
+                        </TouchableOpacity>
 
                         <View style={styles.sectionStyle}>
 
@@ -192,14 +373,14 @@ const showDatePicker = () => {
                         </View>
                         <View style={styles.sectionStyle2}>
 
-                        <MaskInput
+                            <MaskInput
                                 placeholderTextColor={'white'}
                                 placeholder={'Mobile Number      '}
-                                
-                                style={{ color: 'white' , fontSize: 13, fontFamily: 'Poppins-Regular', width: '80%',}}
-                                value={socialSec}
+
+                                style={{ color: 'white', fontSize: 13, fontFamily: 'Poppins-Regular', width: '80%', }}
+                                value={phone}
                                 onChangeText={(masked, unmasked) => {
-                                    setsocialSec(masked);
+                                    setPhonee(masked);
 
                                     console.log(masked);
                                     console.log(unmasked);
@@ -236,14 +417,14 @@ const showDatePicker = () => {
                             />
                         </View>
                         <TouchableOpacity style={styles.sectionStyle} onPress={() => showDatePicker()}>
-                        <Text style={{ color: '#fff' , fontFamily: 'Poppins-Regular', }}>{dob}</Text>
-                    </TouchableOpacity>
-                    <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        onConfirm={handleConfirm}
-                        onCancel={hideDatePicker}
-                    />
+                            <Text style={{ color: '#fff', fontFamily: 'Poppins-Regular', }}>{dob == null ? 'Birth Date' : dob}</Text>
+                        </TouchableOpacity>
+                        <DateTimePickerModal
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            onConfirm={handleConfirm}
+                            onCancel={hideDatePicker}
+                        />
                         <Text style={styles.profileText}>Profile Background Color</Text>
                         <SafeAreaView style={{ flex: 1 }}>
                             <FlatList
@@ -255,6 +436,7 @@ const showDatePicker = () => {
                                     <TouchableOpacity
                                         onPress={() => questionPick(item)}
                                         style={{ marginTop: 5, padding: 0, marginTop: 20, }}
+                                      
                                     >
                                         <View style={{ flexDirection: 'row', width: '100%' }}>
                                             {press === item.id ?
@@ -282,17 +464,12 @@ const showDatePicker = () => {
                             />
                         </SafeAreaView>
 
-                        <TouchableOpacity
-                            onPress={() => {
-                                dispatch({ type: "Add", payload: { name, number, email, dateb, color }, }, props.navigation.navigate('home'))
-                            }}
-                        >
-                        </TouchableOpacity>              
+
                         <View style={styles.Cont}>
                             <TouchableOpacity
-                              onPress={() => { press == false  ? alert('Choose background color ') :
-                              dispatch({ type: "Add", payload: { name, socialSec, email, dob, color }, }, props.navigation.navigate('home'))
-                          }}
+                                onPress={() => {
+                                    onDateAdd()
+                                }}
                             >
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                     colors={['#FF7474', '#E20303']}
@@ -308,10 +485,10 @@ const showDatePicker = () => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                    
-                </LinearGradient>
-            </TouchableWithoutFeedback>
-        </ScrollView>
+
+                    </LinearGradient>
+                </TouchableWithoutFeedback>
+            </ScrollView>
         </SafeAreaView>
 
     );
@@ -494,6 +671,7 @@ const styles = StyleSheet.create({
     },
     tinyLogo: {
         display: "flex",
+        borderRadius:12,
         flexDirection: 'row',
         alignItems: 'center',
         marginLeft: "38%",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useContext} from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import {
     StyleSheet,
     Image,
@@ -10,147 +10,78 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity,
     Switch,
-    
+
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import AppContext from '../components/appcontext';
 import axios from 'axios';
 import axiosconfig from '../Providers/axios';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from './loader';
+import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 
 
 
-export default function ChangePassword({route , navigation }) {
+
+export default function ChangePassword({ route, navigation }) {
 
 
 
+
+    const myContext = useContext(AppContext);
+    const [loader, setLoader] = useState(false);
     const [new_password, setnewPass] = useState();
     const [confirm_password, setconfirmPass] = useState();
-    const [email,setemail] = useState("haseebnk37@gmail.com");
 
-    // const context = useContext(AppContext);
-    // const {
-    //   name,
-    //   email,
-    //   password,
-    //   roles,
-    //   dob,
-    //   phone,
-    //   image,
-    // } = route.params;
+    const [name, setUserName] = useState(null)
+    const [phone, setphone_number] = useState('')
+    const [email, setEmail] = useState(null)
+    const [dob, setdob] = useState(dob)
+    const [password, setPassword] = useState(null)
+    const [image, setImage] = useState(null)
 
 
-
-    const changePass = async() => {
-        if(new_password == '' || new_password == null){
+    const changePass = async () => {
+        if (new_password == '' || new_password == null) {
             alert('error', 'New Password Required')
             return false
         }
-        else if(confirm_password == '' || confirm_password == null){
+        else if (confirm_password == '' || confirm_password == null) {
             alert('error', 'Confirm password Required')
             return false
         }
 
-        if(new_password != confirm_password){
-            alert('error', 'Password not match')
+        if (new_password != confirm_password) {
+            alert('Password not match', 'Password not match')
             return false
         }
-
-        if ( email == '' || email == null ){
-
-
-            alert('error', 'email not match')
-            return false
-
-        }
-
-
 
         var data = {
-            email: email,
+
+            email: route.params.email,
             new_password: new_password,
-            confirm_password:confirm_password
+            confirm_password: confirm_password
         }
-       
 
-        // setLoader(true)
-      
-        // route.params.email
-    
-        await axiosconfig.post('forgot-password' , data).then((res:any)=>{
-      
+
+        await axiosconfig.post('forgot-password', data).then((res: any) => {
+
             (res.data)
-           console.log(res) 
-           navigation.navigate('login')
+            console.log(res)
+            navigation.navigate('login')
 
-           
-            
-        }).catch((err)=>{
-            // setLoader(false)
+
+
+        }).catch((err) => {
+
             alert('error hai ', err.response.message);
         })
-        
+
     }
 
 
 
 
-
-    // const onSignupUser = () => {
-
-    //     var data = {
-    //         name: name,
-    //         email: email,
-    //         password: password,
-    //         roles:'admin',
-    //         dob: dob,
-    //         phone: phone,
-    //         image: 'image1',
-            
-    
-      
-    //     }
-    
-    //     axiosconfig
-    //         .post('register', data)
-    //         .then((res: any) => {
-    //             //   setLoader(false);
-              
-    //             if (res.data.error) {
-    //                 alert('invalid credentials')
-    //                 console.log('here in invalid pass')
-    //                 console.log(res.data)
-    //                 //   alert('login error', res.data.error_description);
-    //             } else {
-    //                 alert("registered successfully", res)
-    
-    //                 storeData(res.data.token);
-    
-    //                 console.log(res.data)
-    //             }
-    //         })
-    //         .catch(err => {
-    //           console.log('here in invalid pass')
-    //             console.log('error', 'Invalid Credentials', err);
-    //         });
-    
-           
-    
-    // }
-
-
-    // const storeData = async (value) => {
-    //     try {
-    //         await AsyncStorage.setItem('@token', value);
-    //         context.setuserToken(value);
-    //         setTimeout(() => {
-    //             navigation.navigate('login')
-    //         }, 1000);
-    //     } catch (e) {
-      
-    //     }
-    //   }
 
     return (
         <TouchableWithoutFeedback
@@ -162,30 +93,40 @@ export default function ChangePassword({route , navigation }) {
                 colors={['#24202f', '#24202f', '#24202f']}
                 style={styles.container}
             >
+                {/* 
+                {
+                    loader ? (
+                        <>
+                            <Loader />
+                        </>
+                    ) : null
+                } */}
 
                 <View style={styles.viewStyle}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
 
                         <Image style={styles.imgClose}
                             source={require("../assets/close.png")}
-                        ></Image>
+                        >
+                            
+                        </Image>
                     </TouchableOpacity>
 
                     <Text style={styles.changePassHeading}>Change password</Text>
                 </View>
-                <View style={styles.sectionStyle}>
+                {/* <View style={styles.sectionStyle}>
                     <TextInput
-                        style={{ flex: 1, color: 'white',  fontFamily: 'Poppins-Regular', fontSize: 15 }}
-                        placeholder="Email"
+                        style={{ flex: 1, color: 'white', fontFamily: 'Poppins-Regular', fontSize: 15 }}
+                        placeholder={email}
                         placeholderTextColor='white'
-                        
-                       
-                        onChangeText={(e) => setemail(e)}
+                        value={route.params.email}
+
+
                     />
-                </View>
+                </View> */}
                 <View style={styles.sectionStyle}>
                     <TextInput
-                        style={{ flex: 1, color: 'white',  fontFamily: 'Poppins-Regular', fontSize: 15 }}
+                        style={{ flex: 1, color: 'white', fontFamily: 'Poppins-Regular', fontSize: 15 }}
                         placeholder="New Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
@@ -195,7 +136,7 @@ export default function ChangePassword({route , navigation }) {
                 </View>
                 <View style={styles.sectionStyle}>
                     <TextInput
-                        style={{ flex: 1, color: 'white',  fontFamily: 'Poppins-Regular', fontSize: 15 }}
+                        style={{ flex: 1, color: 'white', fontFamily: 'Poppins-Regular', fontSize: 15 }}
                         placeholder="Confirm Password"
                         placeholderTextColor='white'
                         secureTextEntry={true}
@@ -215,7 +156,7 @@ export default function ChangePassword({route , navigation }) {
 
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => props.navigation.navigate("forgotpassword")}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Text style={styles.cancelButtonText}>
                             Cancel
                         </Text>

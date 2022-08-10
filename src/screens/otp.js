@@ -24,9 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OPT = ({ route,  navigation}) => {
 
-
   const [loader, setLoader] = useState(false);
-
 
   const context = useContext(AppContext);
   const {
@@ -40,9 +38,6 @@ const OPT = ({ route,  navigation}) => {
   } = route.params;
 
 
- 
-
-
   const verifycode = async (c) => {
 
     if(route.params.roles == 'admin'){
@@ -54,48 +49,6 @@ const OPT = ({ route,  navigation}) => {
   }
 
 
-
-  const onSignupUser = () => {
-
-    var data = {
-        name: name,
-        email: email,
-        password: password,
-        roles:'admin',
-        dob: dob,
-        phone: phone,
-        image: 'image1',
-        
-
-  
-    }
-
-    axiosconfig
-        .post('register', data)
-        .then((res: any) => {
-            //   setLoader(false);
-          
-            if (res.data.error) {
-                alert('invalid credentials')
-                console.log('here in invalid pass')
-                console.log(res.data)
-                // showToast('login error', res.data.error_description);
-            } else {
-                alert("registered successfully", res)
-
-                storeData(res.data.token);
-
-                console.log(res.data)
-            }
-        })
-        .catch(err => {
-          console.log('here in invalid pass')
-            console.log('error', 'Invalid Credentials', err);
-        });
-
-       
-
-}
 
 
 const storeData = async (value) => {
@@ -120,12 +73,13 @@ const storeData = async (value) => {
     }
 
     axiosconfig.post('verify-otp',data).then((res:any)=>{
+    
       setLoader(false)
       navigation.navigate('changepassword', data);
     }).catch((err)=>{
       setLoader(false)
-      console.log('here in forgot pass')
-      showToast('error',err.response.data.message)
+      alert('Invalid Otp')
+      alert('Invalide Otp',err.response.data.message)
     })
   }
 
@@ -147,7 +101,7 @@ const storeData = async (value) => {
 
 
       <View style={styles.viewStyle}>
-        <TouchableOpacity onPress={() => props.navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
 
           <Image style={styles.imgClose}
             source={require("../assets/close.png")}
@@ -159,9 +113,9 @@ const storeData = async (value) => {
       
 
         <Text style={{ color: 'white', fontSize: moderateScale(20), fontFamily: Platform.OS === 'ios' ? "GazpachoBold" : "Gazpacho Bold", marginTop: 30 }}>OTP Verification</Text>
-        <Text style={{ color: '#666666', fontSize: moderateScale(12), marginTop: 10, textAlign: 'center', width: 240, marginBottom: 10 }}> Enter the 4 digit code we sent on email.</Text>
+        <Text style={{ color: '#666666', fontSize: moderateScale(12), marginTop: 10, textAlign: 'center', width: 240, marginBottom: 10 }}> Enter the 6 digit code we sent on email.</Text>
         <OTPInputView
-          style={{ width: '80%', height: 200, color: '#000' }}
+          style={{ width: '90%', height: 200, color: '#000' }}
           pinCount={6}
           autoFocusOnLoad={true}
           // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.

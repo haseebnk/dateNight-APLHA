@@ -4,12 +4,8 @@ import React, { useRef, useState, useContext, useEffect } from 'react';
 import {
     SafeAreaView,
     Switch,
-    ScrollView,
-    StyleSheet,
-    Text,
     View,
     Image,
-    TouchableOpacity,
     Animated,
     TextInput,
     FlatList,
@@ -19,9 +15,13 @@ import {
     LayoutAnimation,
     Platform,
     UIManager,
-    TouchableHighlight,
     BackHandler,
     Alert,
+    Text, StyleSheet,
+    TouchableOpacity,
+    TouchableHighlight,
+    StatusBar,
+    ImageBackground,
 
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -29,17 +29,20 @@ import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { moderateScale } from 'react-native-size-matters';
 import moment from 'moment';
 import ReactNavigationBottomTabs from './tabscardold';
 import { scale } from "react-native-size-matters";
-import CoupleCard from '../components/CoupleCard';
+// import CoupleCard from '../components/CoupleCard';
 import { indexOf, sortBy } from 'lodash';
 import Geolocation from 'react-native-geolocation-service';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { NotesContext } from "../context/NotesContext";
-import { State } from 'react-native-gesture-handler';
-
+import { ScrollView, State } from 'react-native-gesture-handler';
+import Geocoder from 'react-native-geocoding';
 // import GetLocation from 'react-native-get-location';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -49,10 +52,17 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'reac
 import AppContext from '../components/appcontext';
 // import HomeScreen from './HomeScreen';
 import GetLocation from 'react-native-get-location';
-import Loader from './loader';
+import RBSheet from "react-native-raw-bottom-sheet";
+import Loader2 from './loader2';
 import axios from 'axios';
 import axiosconfig from '../Providers/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import WebView from 'react-native-webview';
+import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
+import { useIsFocused } from '@react-navigation/native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { Popable } from 'react-native-popable';
+
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -69,176 +79,118 @@ const windowHeight = Dimensions.get('window').height;
 
 const activeIndex = 0
 const { width: screenWidth } = Dimensions.get('window');
-
-const PreData = [
+const DATA = [
     {
-
-
-        id: 1,
-        key: "1",
-        title: 'Pre-Plan',
-        description:
-            'Date 01',
+        Id: 1,
+        title: 'Asian Food',
+        meal: 'chicken',
+        dessert: 'lava',
+        drink: 'dew',
+        check: false
     },
     {
-        id: 2,
-        key: "2",
-        title: 'Pre-Plan',
-        description:
-            'Date 02',
+        Id: 2,
+        title: 'Barbeque',
+        check: false
     },
     {
-        id: 3,
-        key: "3",
-        title: 'Pre-Plan',
-        description:
-            'Date 03',
-    },
-
-    {
-        id: 4,
-        key: "4",
-        title: 'Pre-Plan',
-        description:
-            'Date 04',
+        Id: 3,
+        title: 'Breakfast Food',
+        check: false
     },
     {
-        id: 5,
-        key: "5",
-        title: 'Pre-Plan',
-        description:
-            'Date 05',
+        Id: 4,
+        title: 'Buffets',
+        check: false
     },
     {
-        id: 6,
-        key: "6",
-        title: 'Pre-Plan',
-        description:
-            'Date 06',
-    },
-    {
-        id: 7,
-        key: "7",
-        title: 'Pre-Plan',
-        description:
-            'Date 07',
-    },
-]
-
-
-const data2 = []
-
-const data = [
-    {
-
-        id: 1,
-        key: "1",
-        color: ['#80D3FC', '#80D3FC',],
-        title: 'First Date Mode',
-        description:
-            'It may, or may not  an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
+        Id: 5,
+        title: 'Burger & Fries',
+        check: false
     },
     {
 
-        id: 2,
-        key: "2",
-        color: ['#44BEFB', '#44BEFB',],
-        title: 'Casual Date Mode',
-        description:
-            'It may, or  not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
+        Id: 6,
+        title: 'Fine Dining',
+        check: false
     },
     {
+        Id: 7,
+        title: 'Fondue',
+        check: false
+    },
 
-        id: 3,
-        key: "3",
-        color: ['#0883FB', '#0883FB',],
-        title: 'Exclusive Date Mode',
-        description:
-            'It may, or may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
+    {
+        Id: 9,
+        title: 'Hawaiian & Island Food',
+        check: false
     },
     {
+        Id: 10,
+        title: 'Greek Food',
+        check: false
+    },
+    {
+        Id: 11,
+        title: 'Hot Dogs',
+        check: false
+    },
+    {
+        Id: 12,
+        title: 'Italian Food',
+        check: false
 
-        id: 4,
-        key: "4",
-        color: ['#0149FF', '#0149FF',],
-        title: 'Married Date Mode',
-        description:
-            'It may,  may not be an actual "first" date, but its certainly one of the first...a "get-to-know" Kind of date.You will need ice-breakers. ',
     },
-];
+    {
+        Id: 19,
+        title: 'Mexican Food',
+        check: false
 
-const pink2 = []
+    },
+    {
+        Id: 13,
+        title: 'Pizza',
+        check: false
 
-const pink = [
-    {
-        id: "1",
-        key: "1",
-        type: "unlock",
-        text: "Selfie challenge",
-        Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: false,
     },
     {
-        id: "2",
-        key: "2",
-        type: "unlock",
-        text: " Compliment your date ",
-        Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: false,
+        Id: 14,
+        title: 'Sandwiches',
+        check: false
+
     },
     {
-        id: "3",
-        key: "3",
-        type: "unlock",
-        text: "Truth  or  Dare",
-        Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: false,
+        Id: 15,
+        title: 'Soup & Salads',
+        check: false
+
     },
     {
-        id: "4",
-        key: "4",
-        type: "unlock",
-        text: " Compliment your date ",
-        Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: false,
+        Id: 16,
+        title: 'Sushi & Seafood',
+        check: false
+
     },
     {
-        id: "5",
-        key: "5",
-        type: "lock",
-        text: " Compliment your date ",
-        Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: false,
-    },
-    {
-        id: "6",
-        key: "6",
-        type: "lock",
-        text: " Compliment your date ",
-        Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: false,
-    },
-    {
-        id: "7",
-        key: "7",
-        type: "lock",
-        text: " Compliment your date ",
-        Description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        selected: false,
-    },
+        Id: 17,
+        title: 'Steak',
+        check: false
+
+    }
 
 ]
-
-
 const HomeScreen = (props) => {
-
+    const isFocused = useIsFocused();
+    const [refresher , setrefresher] = useState(true)
     useEffect(() => {
 
-        PingData()
+        EventData()
         ModeData()
-
+        getPysicalAddress()
         getCurrentLocation()
-        setPings(pink2)
+        PreplanData()
+        getDates()
+        // setPink(pink2)
         setEntries([{ type: 'add' }]);
         const backAction = () => {
             Alert.alert("Hold on!", "Are you sure you want to go back?", [
@@ -258,12 +210,10 @@ const HomeScreen = (props) => {
         );
 
         return () => backHandler.remove();
-    }, []);
+    }, [isFocused, refresher]);
 
     const { state } = useContext(NotesContext)
-
     const [Pings, setPings] = useState([])
-    const [count, setCount] = useState(0);
     const [addEvent, setEvent] = useState(false);
     const [toggleActive, setToggle] = useState(false);
     const [press, setPress] = useState('');
@@ -272,20 +222,13 @@ const HomeScreen = (props) => {
     const [mode, setMode] = useState('date');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
-    const [dob, setdob] = useState('Select Date');
-    const [time, settime] = useState('Select Time');
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpenn, setModalOpenn] = useState(false);
-    // const [typee, setType] = useState(true)
     const [entries, setEntries] = useState([]);
-
     const [xy, setXy] = useState('inactive')
     const [vy, setVy] = useState('active')
     const carouselRef = useRef(null);
 
-
-
-    // const [checked, setChecked] = React.useState(false);
     const [checkedd, setCheckedd] = React.useState(false);
     const [mainData, setMainData] = useState(DATA);
     const [isEnabled, setIsEnabled] = useState(false);
@@ -304,260 +247,337 @@ const HomeScreen = (props) => {
     const [PlaceData, setPlaceData] = useState([])
     const myContext = useContext(AppContext);
     const [del, setDel] = useState(false)
-    const [loader, setLoader] = useState(false);
-    const [myData, setMyData] = useState()
+    const [Loader22, setLoader2] = useState(false);
+    const [myData, setMyData] = useState({})
     const [Pricestate, setPrice] = useState();
+    const [Pricestate2, setPrice2] = useState();
+    const [pingid, setPingId] = useState();
+    const [eventName, setEventName] = useState()
+    const [modedataa, setModeData] = useState([]);
+    const [pink2, setPink] = useState([]);
+    const [prePlan, setPreplan] = useState([])
+    const [events, setEvents] = useState([])
+    const [eventChild, setEventChild] = useState([])
+    const [childName, setChildName] = useState([])
+    const [otherpersons1, setotherpersons1] = useState([])
+    const [otherpersons2, setotherpersons2] = useState([])
+    const [datepersons, setdatepersons] = useState([])
+    const [count, setCount] = useState(5);
+    const [dob, setdob] = useState('Select Date');
+    const [time, settime] = useState('Select Time');
 
-    // const [data, setData] = useState([]);
+    const refRBSheet = useRef();
+    const refRBSheet2 = useRef();
 
-    const PingData = async () => {
-
+    const EventData = async () => {
 
         const value = await AsyncStorage.getItem('@auth_token');
-        await axiosconfig.get(`pings`,
+        await axiosconfig.get(`events`,
             {
                 headers: {
                     Authorization: 'Bearer ' + value //the token is a variable which holds the token
                 }
             }
         ).then((res: any) => {
-
-            res.data.data.map((res, i) => {
-
-                pink2.push(res)
-
-                console.log(res, "pings hello")
-
+            res.data.data.map((res) => {
+                res.childs.map((r, i) => {
+                    r['check'] = false
+                })
             })
+            myDataFunc(value)
+            setEvents(res.data.data)
+        }).catch((err) => {
+            console.log(err.response, 'error')
+        })
+    }
 
-
-
+    const PreplanData = async () => {
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.get(`pre-plan-dates`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+            res.data.data.map((v, i) => {
+                v['check'] = false
+            })
+            console.log(res, "hehe");
+            setPreplan(res.data.data)
         }).catch((err) => {
 
         })
     }
 
+    const myDataFunc = (value) => {
+        axiosconfig.get('my-data',
+          {
+            headers: {
+              Authorization: 'Bearer ' + value //the token is a variable which holds the token
+            }
+          }
+        ).then((res)=>{
+          setMydata(res.data)
+        }).catch((err)=>{
+          console.log(err.response)
+        })
+      }
+
+    const [pingmode, PingModeId] = useState(null)
+
+    const [pingsid, setPingsId] = useState('')
+
+    const PingData = async (id, con) => {
+        setLoader2(true)
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.get(`pings-by-mode/${id}`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value
+                }
+            }
+        ).then((res: any) => {
+            res.data.data.map((v, i) => {
+                v['check'] = false
+            })
+            if (con) {
+                con.map((v, i) => {
+                    res.data.data.map((vi, ii) => {
+                        if (Number(v) == vi.id) {
+                            vi['check'] = true
+                        }
+                    })
+                })
+            }
+
+            setPink([...res.data.data])
+            res.data.data.map((v, i) => {
+                setPingsId(v.id, "pinkid")
+            })
+            setLoader2(false)
+
+        }).catch((err) => {
+            setLoader2(false)
+        })
+    }
 
     const ModeData = async () => {
-        myData
         const value = await AsyncStorage.getItem('@auth_token');
+        setLoader2(true)
         await axiosconfig.get(`date-mode`,
             {
                 headers: {
-                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                    Authorization: 'Bearer ' + value
                 }
             }
         ).then((res: any) => {
-            // console.log(res,"my data");
-            res.data.data.map((res, i) => {
-                data2.push(res)
-                console.log(i)
-                if (data2[i] == 0) { data2[i].color = ['#80D3FC', '#80D3FC',] }
-                if (data2[i] == 1) { data2[i].color = ['#44BEFB', '#44BEFB',] }
-                if (data2[i] == 2) { data2[i].color = ['#0883FB', '#0883FB',] }
-                else { data2[i].color = ['#0149FF', '#0149FF',] }
-
-
+            res.data.data.map((v, i) => {
+                v['check'] = false;
             })
+            setModeData([...res.data.data])
 
-
-            console.log(data2, "hello")
+            setLoader2(false)
 
         }).catch((err) => {
 
         })
     }
 
-
     const getCurrentLocation = () => {
-        setLoader(true)
+
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 15000,
         })
             .then(location => {
                 // setLocation(location)
-                console.log(location)
                 setLat(location.latitude);
                 setLng(location.longitude);
 
-                setTimeout(() => {
-                    handleRestaurantSearch(location.latitude, location.longitude);
-                }, 1000);
+                // setTimeout(() => {
+                //     handleRestaurantSearch(location.latitude, location.longitude);
+                // }, 1000);
             })
             .catch(error => {
                 setlocationon(false)
                 const { code, message } = error;
-                setLoader(false)
+                setLoader2(false)
             })
     }
 
-    const handleRestaurantSearch = async (l, ln) => {
+    const getPysicalAddress = (location) => {
+
+        Geocoder.init("AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU");
+        setTimeout(() => {
+            Geocoder.from(location?.latitude, location?.longitude)
+                .then(json => {
+                    var addressComponent = json.results[0].formatted_address;
+                    // myContext.setaddress(addressComponent)
+                    setPlaceData(addressComponent)
+                })
+                .catch(error =>
+
+                    console.warn(error), "yesss");
+        }, 1000);
+    }
+
+    const handleRestaurantSearch = async (l, ln, str, item) => {
         const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?`
         const location = `location=${l},${ln}`;
         const radius = '&radius=2000';
         const type = '&type=restaurant';
-        // const keyword = '&keyword=Meal';
         const key = '&key=AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
-        const restaurantSearchUrl = url + location + radius + type + key;
+        const keyword = `&keyword=${str}`
+
+        const restaurantSearchUrl = url + location + radius + type + keyword + key;
         try {
             let response = await fetch(
                 restaurantSearchUrl
             );
             let json = await response.json();
-            console.log(json, 'json');
 
             let a = []
             json.results.map((v, i) => {
-                a.push(v.name)
+                a.push(v)
             })
-            setPlaceData(a);
+            return a;
+            setPlaceData([...a]);
         } catch (error) {
             console.error(error);
         }
 
     }
 
-    const setToggleee = (item, id) => {
-        mainData.map((v, i) => {
-            if (v.Id == id) {
-                console.log(mainData[i].check)
-                mainData[i].check = !mainData[i].check;
-                setMainData([...mainData])
-            }
-        })
-
-        // handleRestaurantSearch(lat,lng)
+    const setToggleee = (item, id, index, i) => {
+        entries[index]['children'][i].check = !entries[index]['children'][i].check;
+        setEntries([...entries])
     }
 
-
-
-    const toggleInvert = (item, id) => {
-        mainData.map((v, i) => {
-            if (v.check != id) {
-                console.log(mainData[i].check)
-                mainData[i].check = !mainData[i].check;
-                setMainData([...mainData])
+    const toggleInvert = (item) => {
+        entries.map((v, i) => {
+            if (item.uid == v.uid) {
+                v.children.map((vi, ii) => {
+                    vi.check = !vi.check;
+                    setEntries([...entries])
+                })
             }
         })
-
     }
 
-    const Item = ({ title, meal, drink, isEnabled, setIsEnabled, Id, index }) => {
+    const changeTab = async (item, con) => {
+        if (con != 'yesno') {
+            setLoader2(true)
+        }
+        let str = ''
+        entries.map((v, i) => {
+            if (item.uid == v.uid) {
+                v.children.map((vi, ii) => {
+                    if (vi.check) {
+                        str += vi.label
+                    }
+                })
+            }
+        })
+        if (str == null || str == '') {
+            alert('Please select the atlease one ' + item.type)
+            return
+        }
+        else {
+            let t = handleRestaurantSearch(lat, lng, str, item);
+            setTimeout(async () => {
+                if (t._W) {
+                    entries.map((v, i) => {
+                        if (item.uid == v.uid) {
+                            for (const property in v.tabs) {
+                                v.tabs[property] = false
+                            }
+                            v.tabs[con] = true;
+                            v['places'] = t._W;
+                            v.places.map((vii, ii) => {
+                                vii['check'] = false
+                            })
+                            setEntries([...entries])
+                        }
+                    })
+                }
+                setLoader2(false)
+            }, 1000);
+        }
+    }
 
+    const RemoveEventCard = (item) => {
+        entries.map((v, i) => {
+            if (item.uid == v.uid) {
+                entries.splice(i, 1)
+                setEntries([...entries])
+            }
+        })
+    }
 
+    const setCheckedPlaces = (id, item) => {
+        entries.map((v, i) => {
+            if (item.uid == v.uid) {
+                v.places.map((vi, ii) => {
+                    if (vi.place_id == id) {
+                        vi.check = true
+                    } else {
+                        vi.check = false
+                    }
+                })
+                setEntries([...entries])
+            }
+        })
+    }
+
+    const PlaceName = (ii, item) => {
+        var iop = ii[Math.floor(Math.random() * ii.length)];
         return (
-            <View >
-                <View style={{ marginTop: moderateScale(0) }}>
-                    <TouchableOpacity  >
 
-                        <Text style={styles.title2}>{title}</Text>
+            <View style={styles.placeView2}>
+                <TouchableOpacity onPress={() => setCheckedPlaces(iop.place_id, item)}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -10 }}>
 
-                    </TouchableOpacity>
-                </View>
-                <TouchableOpacity
-                    style={[
-                        styles.toggleContainer2,
-                        { borderColor: null ? activeColor : null, },
-                    ]}
-                    onPress={() => {
-                        LayoutAnimation.easeInEaseOut();
-                        setToggleee(isEnabled, Id);
-                    }}
-                    activeOpacity={1}>
-                    <View
-                        style={[
-                            styles.toggleBtn2,
-                            isEnabled
-                                ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
-                                : { backgroundColor: activeColor, borderRadius: 25, },
-                        ]}
+                        <TouchableOpacity onPress={() => setCheckedPlaces(iop.place_id, item)}
+                            style={{ top: 29, left: 20, height: 20, width: 20, borderRadius: 20, backgroundColor: item.check ? 'green' : 'white', borderWidth: 4, borderColor: 'white' }} >
+                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
+                            <View style={{ top: 4 }}>
+                                <View>
 
-                    />
-                    <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
-                    <Text style={{ color: !isEnabled ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
+                                    <Popable content={iop.name}>
+                                        <Text numberOfLines={1}
+                                            style={{ marginLeft: -50, top: 0, color: '#FFD500', fontSize: 14, fontFamily: 'Poppins-Regular', }}>
+
+                                            {((iop.name).length > maxlimit) ?
+                                                (((iop.name).substring(0, maxlimit - 3)) + '...') :
+                                                iop.name}
+                                        </Text>
+                                    </Popable>
+
+
+                                </View>
+                            </View>
+
+                            <View style={{ backgroundColor: 'white', height: 25, width: 25, borderRadius: 50, justifyContent: 'center', alignContent: 'center' }}>
+                                <Ionicons style={{ alignSelf: 'center', top: 0, bottom: 0, }} name='location-outline' size={hp('2.6%')} color="red" />
+                            </View>
+
+                        </View>
+
+
+                    </View>
                 </TouchableOpacity>
             </View>
         )
     }
 
-    const renderItemm = ({ item, i }) => (
-        <Item title={item.title} isEnabled={item.check} setIsEnabled={setIsEnabled} Id={item.Id} index={i} />
-    );
+    const [maxlimit, setMaxlimit] = useState(17)
 
-
-
-    const PlaceName = () => {
-
-
-        return (
-
-            <FlatList
-                data={PlaceData}
-                keyExtractor={(item) => item}
-                renderItem={({ item, index }) => (
-
-
-
-
-                    < ScrollView >
-
-
-
-                        <View style={styles.placeView2}>
-
-                            <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
-
-                                    <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                        style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
-                                    </TouchableOpacity>
-                                    <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-                                        <View style={{ top: 4 }}>
-                                            <View
-
-                                            >
-                                                {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-                                                    {item}
-                                                </Text> */}
-                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
-                                                    (((item).substring(0, 10 - 3)) + '...') :
-                                                    item}
-                                                </Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                        </View>
-                                        <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                            <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                        </View>
-                                    </View>
-
-                                </View>
-
-
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
-
-
-                )}
-
-            />
-        )
-    }
-
-
-    const PlaceRecommended = () => {
-
+    const PlaceRecommended = (item, io) => {
         return (
             <FlatList
-                data={PlaceData}
-                keyExtractor={(item) => item}
+                data={item}
                 renderItem={({ item, index }) => (
 
                     <ScrollView nestedScrollEnabled={true} >
@@ -566,118 +586,86 @@ const HomeScreen = (props) => {
                                 (
                                     <>
                                         <View >
-                                            <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}>
+                                            <TouchableOpacity onPress={() => setCheckedPlaces(item.place_id, io)}>
                                                 <View style={styles.placeViewc}>
                                                     <View style={styles.yellowView}>
-                                                        <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', margin: 5, marginLeft: 10, }}>Recommended</Text>
+                                                        <Text style={{ color: '#000000', fontSize: 9, fontFamily: 'Poppins-Regular', alignSelf: 'center', marginLeft: 10, }}>Date Night's Official Recommendation</Text>
                                                     </View>
-                                                    <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 20, left: 45 }}>Don`t eat anywhere else</Text>
-                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                    <Text style={{ fontSize: 10, color: '#BBBBBB', fontFamily: 'Poppins-Regular', top: 10, left: 40 }}>Don`t eat anywhere else</Text>
+                                                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginVertical: 20 }}>
 
-                                                        <TouchableOpacity onPress={() => checkes ? setCheckes(false) : setCheckes(true)}
-                                                            style={{ top: 25, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checkes ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+                                                        <TouchableOpacity onPress={() => setCheckedPlaces(item.place_id, io)}
+                                                            style={{ top: 2, left: 20, height: 20, width: 20, borderRadius: 20, backgroundColor: item.check ? 'green' : 'white', borderWidth: 4, borderColor: 'white' }} >
 
                                                         </TouchableOpacity>
 
-                                                        <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
-
+                                                        <View style={{ marginLeft: 20, flexDirection: 'row', justifyContent: 'flex-start', marginTop: 0, marginRight: 20 }} >
                                                             <View>
-                                                                <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
-                                                                    (((item).substring(0, 10 - 3)) + '...') :
-                                                                    item}
+                                                                <Text style={{ marginLeft: 20, top: 2, color: '#FFD500', fontSize: 14, fontFamily: 'Poppins-Regular', }}>
+                                                                    {Recommended}
                                                                 </Text>
                                                             </View>
-
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
-                                                            </View>
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                                            </View>
-                                                            <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                                <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                                            </View>
+                                                        </View>
+                                                        <View style={{ backgroundColor: 'white', height: 25, width: 25, borderRadius: 50, }}>
+                                                            <Ionicons style={{ alignSelf: 'center', top: 0, bottom: 0, }} name='location-outline' size={hp('2.6%')} color="red" />
                                                         </View>
                                                     </View>
-                                                    <View style={{ flexDirection: 'row' }}>
-                                                        <Text style={{ color: 'white', fontSize: 8, fontFamily: 'Poppins-Regular', alignSelf: 'flex-start', top: 15, left: 50, }}>Discount Code</Text>
-                                                    </View>
-                                                    <View style={{ flexDirection: 'row' }}>
-                                                        <Badge style={{ backgroundColor: '#363143', top: 20, left: 50, fontSize: 8, fontFamily: 'Poppins-Regular', }}> 7C85A3</Badge>
-                                                    </View>
+
                                                 </View>
                                             </TouchableOpacity>
-
                                             <View style={{ height: 1, width: 270, borderColor: 'white', borderWidth: .2, borderRadius: .1, marginVertical: 5, marginHorizontal: moderateScale(28), marginBottom: 15 }}></View>
-
                                         </View>
                                     </>
                                 ) :
 
-
-
-                                < ScrollView >
-
+                                <ScrollView >
                                     <View style={styles.placeView2}>
-                                        <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -5 }}>
+                                        <TouchableOpacity onPress={() => setCheckedPlaces(item.place_id, io)}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -10 }}>
 
-                                                <TouchableOpacity onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                                    style={{ top: 30, left: 20, height: 25, width: 25, borderRadius: 20, backgroundColor: checked ? 'white' : 'white', borderWidth: 4, borderColor: 'white' }} >
+
+
+                                                <TouchableOpacity onPress={() => setCheckedPlaces(item.place_id, io)}
+                                                    style={{ top: 29, left: 20, height: 20, width: 20, borderRadius: 20, backgroundColor: item.check ? 'green' : 'white', borderWidth: 4, borderColor: 'white' }} >
                                                 </TouchableOpacity>
                                                 <View style={{ flexDirection: 'row', width: 150, justifyContent: 'space-between', marginTop: 25, marginRight: 20 }} >
                                                     <View style={{ top: 4 }}>
-                                                        <View
+                                                        <View>
+                                                            <Popable content={item.name}>
+                                                                <Text
+                                                                    numberOfLines={1}
 
-                                                        >
-                                                            {/* <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-                                                    {item}
-                                                </Text> */}
-                                                            <Text style={{ marginLeft: -50, top: 2, color: '#FFD500', fontSize: 16, fontFamily: 'Poppins-Regular', }}>{((item).length > 10) ?
-                                                                (((item).substring(0, 10 - 3)) + '...') :
-                                                                item}
-                                                            </Text>
+                                                                    style={{ marginLeft: -50, top: 0, color: '#FFD500', fontSize: 14, fontFamily: 'Poppins-Regular', }}>
+
+                                                                    {((item.name).length > maxlimit) ?
+                                                                        (((item.name).substring(0, maxlimit - 3)) + '...') :
+                                                                        item.name}
+                                                                </Text>
+                                                            </Popable>
                                                         </View>
                                                     </View>
-                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place1.png'))}></Image>
+
+                                                    <View style={{ backgroundColor: 'white', height: 25, width: 25, borderRadius: 50, justifyContent: 'center', alignContent: 'center' }}>
+                                                        <Ionicons style={{ alignSelf: 'center', top: 0, bottom: 0, }} name='location-outline' size={hp('2.6%')} color="red" />
                                                     </View>
-                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50 }}>
-                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place2.png'))}></Image>
-                                                    </View>
-                                                    <View style={{ backgroundColor: 'white', height: 30, width: 30, borderRadius: 50, }}>
-                                                        <Image style={{ alignSelf: 'center', top: 8 }} source={(require('../assets/place3.png'))}></Image>
-                                                    </View>
+
                                                 </View>
+
 
                                             </View>
 
 
                                         </TouchableOpacity>
                                     </View>
+
                                 </ScrollView>
                         }
-
-
                     </ScrollView>
 
                 )}
-
             />
         )
-
-    const carouselRef = useRef(null);
-    
-    const doneNow =()=>{
-        props.navigation.navigate("datemode")
-        setNotification()
     }
-
-    const setNotification = () => {
-        // Notifications.schduleNotification(date);
-        Notifications.schduleNotification(new Date(Date.now() + 5 * 1000));
-      };
-
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -688,11 +676,9 @@ const HomeScreen = (props) => {
     };
 
     const handleConfirm = (date) => {
-        console.warn("A date has been picked: ", date);
         setdob(moment(date).format('MM/DD/yy'))
         hideDatePicker();
     };
-
 
     const showTimePicker = () => {
         setTimePickerVisibility(true);
@@ -703,11 +689,9 @@ const HomeScreen = (props) => {
     };
 
     const handleConfirm2 = (time) => {
-        console.warn("A time has been picked: ", time);
         settime(moment(time).format('hh:mm A'))
         hideTimePicker();
     };
-
 
     const goForward = () => {
         carouselRef.current.snapToNext();
@@ -721,81 +705,156 @@ const HomeScreen = (props) => {
         setPress(item.id)
     }
 
-    function questionClose(item) {
-        setPress(item.id)
-    }
-
-
-
-
-
     const addEventCard = (t) => {
-        // entries.push({ type: t })
-        entries.splice(1, 0, { type: t })
+        entries.splice(1, 0, {
+            type: t.name,
+            children: t.childs,
+            id: t.id,
+            uid: Math.floor(Math.random() * 101),
+            tabs: { yesno: true, shuffle: false, all: false },
+            check: false
+        });
         setEntries([...entries]);
         setTimeout(() => {
-            goForward()
+            goForward();
+
         }, 1000);
     }
-    const RemoveEventCard = (b) => {
 
-        entries.pop(indexOf, { type: b })
-
-        LayoutAnimation.easeInEaseOut();
+    const setEventCheck = (item) => {
+        entries.map((v, i) => {
+            if (item.id == v.id) {
+                v.check = !v.check;
+                setEntries([...entries]);
+            }
+        })
     }
 
     const renderItem = ({ item, index }, parallaxProps) => {
-        // console.log(entries)
+
         return (
             <View style={styles.item}>
+
                 {
                     item.type == 'add' ? (
                         <>
-                            <TouchableOpacity onPress={() => addEventCard('meal')}>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#80D3FC', '#80D3FC']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add a Meal
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => addEventCard('activity')}>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#44BEFB', '#44BEFB']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add an Activity
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => addEventCard('desert')}>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#0883FB', '#0883FB']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add Dessert
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => addEventCard('drink')}>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#0149FF', '#0149FF']}
-                                    style={styles.addEventButton} >
-                                    <Text style={styles.AddMeal}>
-                                        Add Drink
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
+                            <FlatList
+                                data={events}
+                                renderItem={({ item, i }) => (
+                                    <TouchableOpacity onPress={() => { addEventCard(item), setEventName(item.name) }}>
+                                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                            colors={['#0883FB', '#0883FB']}
+                                            style={styles.addEventButton} >
+                                            <Text style={styles.AddMeal}>
+                                                {item.name}
+                                            </Text>
+                                        </LinearGradient>
+                                    </TouchableOpacity>
+
+                                )}
+                            />
                         </>
                     ) : (
                         <>
                             <View style={styles.mealView2}   >
-                                {/* <TouchableHighlight onPress={() => RemoveEventCard()}>
-                                <MaterialIcons style={{ marginLeft: 10, marginTop: 35 }} name='delete-outline' size={hp('5.5%')} color="white" />
-                                </TouchableHighlight> */}
-                                <ReactNavigationBottomTabs nestedScrollEnabled={true} item={item}></ReactNavigationBottomTabs>
+                                <View style={styles.Contain}>
+                                    <View style={styles.InnerContain}>
+                                        <View>
+                                            <LinearGradient
+                                                start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                                colors={item.type == 'meal' ? ['#80D3FC', '#80D3FC'] : item.type == 'activity' ? ['#44BEFB', '#44BEFB'] : item.type == 'desert' ? ['#0883FB', '#0883FB'] : ['#0149FF', '#0149FF']}
+                                                style={styles.chooseContaine}>
+                                                <TouchableOpacity onPress={() => RemoveEventCard(item)}>
+                                                    <MaterialIcons style={{ marginLeft: 15, marginTop: 18 }} name='delete-outline' size={hp('4.5%')} color="white" />
+                                                </TouchableOpacity>
+                                                <Text style={styles.ChooseMeal}>
+                                                    {item.type + ' Filter'}
+                                                </Text>
+                                                <TouchableOpacity onPress={() => setEventCheck(item)}
+                                                    style={{ marginRight: 15, marginTop: moderateScale(15), height: moderateScale(37), width: moderateScale(37), borderRadius: moderateScale(20), backgroundColor: item.check ? '#00B712' : 'white', borderWidth: 5, borderColor: 'white' }} >
+                                                </TouchableOpacity>
+                                            </LinearGradient>
+                                            <ScrollView nestedScrollEnabled={true}>
+                                                <View style={{ marginTop: 20, }}>
+
+                                                    {item.tabs.yesno ? (
+                                                        <>
+                                                            <SafeAreaView style={{ flex: 1 }}>
+                                                                <FlatList
+                                                                    nestedScrollEnabled={true}
+                                                                    data={item.children}
+                                                                    // renderItem={(io, i) => renderItemm(io, i, item)}
+                                                                    renderItem={(io, i) => (
+                                                                        <View>
+                                                                            {console.log(io.item, 'jhgjhgjgj', item.children)}
+                                                                            <View style={{ marginTop: moderateScale(0) }}>
+                                                                                <TouchableOpacity
+                                                                                    onPress={() => {
+                                                                                        LayoutAnimation.easeInEaseOut();
+                                                                                        setToggleee(item, io.item.id, index, io.index);
+                                                                                    }}
+                                                                                >
+
+                                                                                    <Text style={styles.title2}>{io.item.label}</Text>
+
+                                                                                </TouchableOpacity>
+                                                                            </View>
+                                                                            <TouchableOpacity
+                                                                                style={[
+                                                                                    styles.toggleContainer2,
+                                                                                    { borderColor: null ? activeColor : null, },
+                                                                                ]}
+                                                                                onPress={() => {
+                                                                                    LayoutAnimation.easeInEaseOut();
+                                                                                    setToggleee(item, io.item.id, index, io.index);
+                                                                                }}
+                                                                                activeOpacity={1}>
+                                                                                <View
+                                                                                    style={[
+                                                                                        styles.toggleBtn2,
+                                                                                        io.item.check
+                                                                                            ? { backgroundColor: activeColor, borderRadius: 25 }
+                                                                                            : { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' },
+                                                                                    ]}
+
+                                                                                />
+                                                                                <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(8, 0) : moderateScale(8, 0) }}>Y</Text>
+                                                                                <Text style={{ color: io.item.check ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.6, 0) : moderateScale(7.6, 0) }}>N</Text>
+                                                                            </TouchableOpacity>
+                                                                        </View>
+                                                                    )}
+                                                                />
+                                                            </SafeAreaView>
+                                                        </>) : item.tabs.shuffle && item.places ? (
+                                                            <>
+                                                                {PlaceName(item.places, item)}
+                                                            </>
+                                                        ) : item.tabs.all && item.places ?
+
+                                                        (
+                                                            <>
+                                                                {PlaceRecommended(item.places, item)}
+                                                            </>
+                                                        ) : null
+                                                    }
+                                                </View>
+                                            </ScrollView>
+                                            <View style={styles.bottomTab}>
+                                                <TouchableOpacity onPress={() => changeTab(item, 'yesno')} onPressIn={() => toggleInvert(item)}  >
+                                                    <Image style={{ width: 60, height: 60 }} source={require('../assets/card1.png')}></Image>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => { changeTab(item, 'shuffle'); }}>
+                                                    <Image style={{ width: 60, height: 60 }} source={require('../assets/card2.png')}></Image>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => { changeTab(item, 'all') }}>
+                                                    <Image style={{ width: 60, height: 60 }} source={require('../assets/card3.png')}></Image>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    </View >
+                                </View >
                             </View>
+
                         </>
                     )
                 }
@@ -811,6 +870,7 @@ const HomeScreen = (props) => {
             useNativeDriver: true,
         }).start();
     };
+
     const onPressOut = () => {
         setTimeout(() => {
             Animated.spring(animation, {
@@ -830,378 +890,744 @@ const HomeScreen = (props) => {
     const onPress = () => setCount(count < 60 ? count + 5 : 0);
     const onPree = () => setCount((count <= 60 && count > 0) ? count - 5 : (count == 0 ? 60 : 0))
 
+    const setPrePlaneDate = (item) => {
+        console.log(item, 'itemm')
+        prePlan.map((v, i) => {
+            if (item.id == v.id) {
+                v.check = !v.check;
+                if (v.check) {
+                    modedataa.map((vi, ii) => {
+                        if (vi.id == Number(v.mode_id)) {
+                            vi.check = true;
+                            let pIds = v.ping_id.split(',');
+                            PingData(vi.id, pIds)
+                        } else {
+                            vi.check = false;
+                        }
+                    })
+                }
+                setModeData([...modedataa])
+            } else {
+                v.check = false
+            }
+        })
+        setPreplan([...prePlan]);
+    }
+
     const rendenPlanPing = () => {
         return (
-            PreData.map((v, i) => {
-                return (
-                    <View >
-                        <View style={styles.ping}
-                            key={i}
-                        >
-                            <TouchableOpacity
-                                onPress={() => setModalOpen(true)}
-                                style={styles.PingPlayed2}
-                                type={PreData}
-                            >
-                                <Text style={styles.PingText1}>
-                                    {v.title}
-                                </Text>
-                                <Text style={styles.pinLockUnclock2}>
-                                    {v.description}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                )
-            })
+            <View>
+                <ScrollView horizontal={true}>
+                    {
+                        prePlan ? (
+                            <>
+                                {prePlan.map((item, index) => {
+                                    return (
+                                        <View>
+                                            <View style={styles.ping}>
+                                                {
+                                                    item.status == 'unpaid' ? (
+                                                        <>
+                                                            <TouchableOpacity
+                                                                onPress={() => [setModalOpen(true), setPrice2(item.price), setPingId(item.id)]}
+                                                                style={styles.PingPlayed2}
+                                                            >
+                                                                <Text style={styles.PingText1}>
+                                                                    {item.name}
+                                                                </Text>
+                                                                <View style={styles.pinLockPicback2}>
+                                                                    <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
+                                                                </ View>
+                                                            </TouchableOpacity>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <TouchableOpacity onPress={() => setPrePlaneDate(item)}>
+                                                                <View style={{ ...styles.PingUnlock, backgroundColor: item.check ? '#00B712' : '#FF2B25' }}>
+                                                                    <View style={{ height: 65 }}>
+                                                                        <Text style={styles.PingText11}>{item.name}</Text>
+                                                                    </View>
+                                                                    <View>
+                                                                        <Text style={styles.activeText} >{item.check ? 'Active' : 'Inactive'}</Text>
+                                                                    </ View>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                        </>
+                                                    )
+                                                }
+                                            </View>
+                                            <Modal
+                                                transparent={true}
+                                                visible={modalOpen}
+                                                animationType='fade'
+                                                navigation={props.navigation}
+                                            >
+                                                <View style={styles.centeredView} >
+                                                    <LinearGradient
+                                                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                                        colors={['#FF7474', '#E20303']}
+                                                        style={styles.modalView}>
+                                                        <Text style={styles.modalText}>This pre-planned date is currently locked.  Would you like to unlock it for just ${Pricestate2} ${pingid}?</Text>
+
+                                                        <View style={styles.modalButtons} >
+                                                            <Pressable
+                                                                style={styles.button}
+                                                                onPress={() => setModalOpen(false) || [refRBSheet.current.open(), setPrice2(item.price)]}
+                                                            >
+                                                                <Text style={styles.textStyleNo}>Buy</Text>
+                                                            </Pressable>
+
+                                                            <Pressable
+                                                                style={styles.button}
+                                                                onPress={() => setModalOpen(false)}
+                                                            >
+                                                                <Text style={styles.textStyleNo}>No Thanks</Text>
+                                                            </Pressable>
+                                                            <Pressable
+                                                                style={styles.button}
+                                                                onPress={() => setModalOpen(false) || props.navigation.navigate('faqscreen')}
+                                                            >
+                                                                <Text style={styles.textStyleNo}>Learn More</Text>
+                                                            </Pressable>
+                                                        </View>
+                                                    </LinearGradient>
+                                                </View>
+                                            </Modal>
+                                        </View>
+                                    )
+                                })}
+                            </>
+                        ) : null
+                    }
+                </ScrollView>
+            </View>
         )
-
     }
-
-
-
 
     const xyz = (type, selected, Id, paid_or_free, item) => {
-
-
         Pings.paid_or_free == 'paid' ? setModalOpenn(true) : null
-        console.log("not found")
-        // type == 'unlock' && selected == true
-
     }
 
-    const setActive = (index) => {
-        // Pings[index].selected = !Pings[index].selected;
-        // console.log(Pings[index])
-        // setPings([...Pings])
+    const setPingGreen = (item) => {
+        pink2.map((v, i) => {
+            if (item.id == v.id) {
+                v.check = !v.check;
+                setPink([...pink2])
+            }
+        })
     }
 
-    const PingModeId = (id) => {
 
-        console.log(id);
-
-    }
+    // console.log(props,"here props")
 
     const rendenPing = () => {
-        const [myArray, setMyArray] = useState([]);
-        function onlclick() {
-            let myLocalArray = []
-            myLocalArray = Pings.splice(0, 1)
-            setMyArray(myLocalArray)
-            { Pings.paid_or_free == 'paid' ? setModalOpenn(true) : null }
-        }
         return (
-            <FlatList
-                data={Pings}
-                keyExtractor={(item) => item}
-                horizontal={true}
-                renderItem={({ item, index }) => (
+            <ScrollView horizontal={true}>
+                {
+                    pink2 ? (
+                        <>
+                            {
+                                pink2.map((item, index) => {
+                                    return (
+                                        <View style={styles.ping}>
+                                            {
+                                                item.paid_or_free == "paid" ?
+                                                    (<>
+                                                        <TouchableOpacity onPress={() => { (item.paid_or_free ? [setModalOpenn(true), setPrice(item.price)] : null) }}>
+                                                            <View style={styles.PingLock}>
+                                                                <View style={{ height: 60 }}>
+                                                                    <Text style={styles.PingText11}>{item.name}</Text>
+                                                                </View>
+                                                                <View style={styles.pinLockPicback}>
+                                                                    <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
+                                                                </ View>
+                                                            </View>
+                                                        </TouchableOpacity >
+                                                    </>) : <>
+                                                        <TouchableOpacity onPress={() => setPingGreen(item)}>
+                                                            <View style={{ ...styles.PingUnlock, backgroundColor: item.check ? '#00B712' : '#FF2B25' }}>
+                                                                <View style={{ height: 65 }}>
+                                                                    <Text style={styles.PingText11}>{item.name}</Text>
+                                                                </View>
+                                                                <View>
+                                                                    <Text style={styles.activeText} >{item.check ? 'Active' : 'Inactive'}</Text>
+                                                                </ View>
+                                                            </View>
+                                                        </TouchableOpacity>
+                                                    </>
+                                            }
 
-
-                    <View style={styles.ping} >
-                        {
-                            item.paid_or_free == "paid" ?
-                                (<>
-                                    <TouchableOpacity onPress={() => { (item.paid_or_free ? [setModalOpenn(true), setPrice(item.price)] : null); PingModeId(item.mode_id) }}>
-
-                                        <View style={styles.PingLock}>
-                                            <View style={{ height: 60 }}>
-                                                <Text style={styles.PingText11}>{item.name}</Text>
-                                            </View>
-                                            <View style={styles.pinLockPicback}>
-                                                <Image style={styles.pinLockPic} source={require('../assets/lock.png')}></Image>
-                                            </ View>
                                         </View>
+                                    )
+                                })
+                            }
+                        </>
+                    ) : null
+                }
+            </ScrollView>
+        )
+    }
 
-                                    </TouchableOpacity >
+    const getDates = async () => {
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.get(`other-people`,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+            let other = [];
+            let date = [];
+            res.data.data.map((r, i) => {
+                r['color1'] = r.color.split(',')[0]
+                r['color2'] = r.color.split(',')[1]
+                r['check'] = false;
+                if (r.date_or_other == 'date') {
+                    date.push(r)
+                } else {
+                    other.push(r)
+                }
+            })
+
+            const middleIndex = Math.ceil(other.length / 2);
+            const firstHalf = other.splice(0, middleIndex);
+            const secondHalf = other.splice(-middleIndex);
+
+            setdatepersons([...date])
+            setotherpersons1([...firstHalf])
+            setotherpersons2([...secondHalf])
+        }).catch((err) => {
+            console.log(err.response, 'error')
+        })
+    }
+
+    const setModeMain = (item) => {
+        console.log(item, "modId")
+        modedataa.map((v, i) => {
+
+            if (v.id == item.id) {
+                v.check = true;
+                PingData(v.id)
+            } else {
+                v.check = false;
+            }
+        })
+        setModeData([...modedataa])
+    }
+
+    const saveDate = async () => {
+        let data = {
+            "ping_ids": null,
+            "date_person_id": null,
+            "mode_id": null,
+            "ping_duration": count,
+            "start_date": moment(dob).format('D-MM-yy'),
+            "preplan_id": null,
+            "first_other_id": null,
+            "second_other_id": null,
+            "start_time": moment(time, "h:mm A").format("HH:mm:ss"),
+            "event": [],
+            "user_id": myContext.myData.id
+        }
+
+        let pingsIds = '';
+        pink2.map((v, i) => {
+            if (v.check) {
+                pingsIds += v.id + ','
+            }
+        })
+        data.ping_ids = pingsIds.replace(/,\s*$/, "")
+
+        datepersons.map((v, i) => {
+            if (v.check) {
+                data.date_person_id = v.id
+            }
+        });
+
+        otherpersons1.map((v, i) => {
+            if (v.check) {
+                data.first_other_id = v.id
+            }
+
+        });
+
+        otherpersons2.map((v, i) => {
+            if (v.check) {
+                data.second_other_id = v.id
+            }
+        });
+
+        modedataa.map((v, i) => {
+            if (v.check) {
+                data.mode_id = v.id
+            }
+        });
+
+        entries.map((v, i) => {
+            if (v.type != 'add' && v.check) {
+                let ids = '';
+                let idx = '';
+                let restEvents = {
+                    "restaurant_name": null,
+                    "restaurant_latlng": null,
+                    "place_id": null,
+                    "vicinity": null,
+                    "event_id": null,
+                    "event_child_ids": null
+                }
+                restEvents.event_id = v.id;
+                v.children.map((vi, ii) => {
+                    if (vi.check) {
+                        ids += vi.id + ','
+                    }
+                })
+                restEvents.event_child_ids = ids.replace(/,\s*$/, "");
+                v.places.map((vi, ii) => {
+                    if (vi.check) {
+                        restEvents.place_id = vi.place_id
+                        restEvents.vicinity = vi.vicinity
+                        restEvents.restaurant_name = vi.name
+                        restEvents.restaurant_name = vi.name
+                        restEvents.restaurant_latlng = `${vi.geometry.location.lat},${vi.geometry.location.lng}`
+                    }
+                })
+                data.event.push(restEvents);
+            }
+        })
+
+        console.log(data)
+
+        // errors
+        if (data.mode_id == null) {
+            alert("Please Select Mode")
+            return
+        }
+        if (data.date_person_id == null) {
+            alert("Please Select Date Person")
+            return
+        }
+
+        if (data.start_date == "Invalid date") {
+            alert("Please Select date")
+            return
+        }
+        if (data.start_time == "Invalid date") {
+            alert("Please Select Time")
+            return
+        }
 
 
-                                </>) :
+        const value = await AsyncStorage.getItem('@auth_token');
+        axiosconfig
+            .post('date-book', data, {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            })
+            .then((res: any) => {
+                console.log(res);
+                // alert("Date Event Added Successfully")
+                props.navigation.navigate('donefornow')
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 
-                                <TouchableOpacity onPress={() => PingModeId(item.mode_id)}>
 
-                                    <View style={styles.PingUnlock}>
-                                        <View style={{ height: 65 }}>
-                                            <Text style={styles.PingText11}>{item.name}</Text>
+
+    useEffect(() => {
+        modedataa.map((v, i) => {
+            if (v.check) {
+                // PingData(v.id)
+            }
+        })
+    }, [modedataa])
+
+    const setDateChosen = (item, con) => {
+        if (con == 'otherpersons1') {
+            otherpersons1.map((v, i) => {
+                if (v.id == item.id) {
+                    v.check = true
+                } else {
+                    v.check = false
+                }
+            })
+            setotherpersons1([...otherpersons1])
+        } else if (con == 'otherpersons2') {
+            otherpersons2.map((v, i) => {
+                if (v.id == item.id) {
+                    v.check = true
+                } else {
+                    v.check = false
+                }
+            })
+            setotherpersons2([...otherpersons2])
+        }
+        else if (con == 'datepersons') {
+            datepersons.map((v, i) => {
+                if (v.id == item.id) {
+                    v.check = true
+                } else {
+                    v.check = false
+                }
+            })
+            setdatepersons([...datepersons])
+        }
+    }
+
+    const OnRemove = async(id) => {
+
+        Alert.alert("Hold on!", "Are you sure you want to delete that user?", [
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "YES", onPress: () => deletUser(id) }
+        ]);
+    }
+
+    const deletUser = async(id) => {
+        setLoader2(true)
+        let data = {
+            id:id,
+            active_status:0,
+            // user_id: myContext.myData.id,
+        }
+
+        const value = await AsyncStorage.getItem('@auth_token');
+        axiosconfig
+            .post('other-people-add', data, {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            })
+            .then((res: any) => {
+                console.log(res);
+                setLoader2(false)
+                alert("User delete Successfully")
+                setrefresher(!refresher)
+                // props.navigation.navigate('home');
+            })
+            .catch(err => {
+                console.log(err);
+                setLoader2(false)
+            });
+    }
+
+    const CoupleCard = ({ navigation, otherpersons, con }) => {
+        return (
+            <View style={{ marginTop: 30 }}>
+                <FlatList
+                    horizontal={true}
+                    data={otherpersons}
+                    renderItem={({ item, i }) => {
+                        return (
+                            <View style={styles.dpcontainer2} >
+                                <LinearGradient style={styles.dpwithBorder}
+                                    colors={[item?.color1, item?.color2]}
+                                    title="Welcome">
+                                    <View style={styles.dpflex1}>
+                                        <Image style={styles.dppicSize} source={{ uri: item.image }}></Image>
+                                    </View>
+                                    <View style={styles.dpflex2}>
+                                        <View style={{ flexDirection: 'column', marginTop: 20, }}>
+                                            <Text style={styles.dpcardTextHead}>{item.name} </Text>
+                                            <Text style={styles.dpcardText}>Phone:  {item.phone}</Text>
+                                            <Text style={styles.dpcardText}>Email:  {item.email}</Text>
+                                            <Text style={styles.dpcardText}>Date of Birth: {item.dob}</Text>
                                         </View>
-                                        <View>
-                                            <Text style={styles.activeText} >Inactive</Text>
-                                        </ View>
+                                    </View>
+                                    <View style={styles.dpflex3}>
+                                        <TouchableOpacity onPress={() => setDateChosen(item, con)}
+                                            style={{ marginTop: moderateScale(13, 0.1), height: moderateScale(35), width: moderateScale(35), borderRadius: moderateScale(20), backgroundColor: item.check ? '#00B712' : 'white', borderWidth: 5.2, borderColor: 'white' }} >
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity
+                                            onPress={() => navigation.navigate("choosedate", { type: 'Add Date Info', con: con, data: item})}
+                                        >
+
+                                            <MaterialIcons style={{ marginLeft: 7, marginBottom: 0 }} name='mode-edit' size={hp('4%')} color="white" />
+
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => OnRemove(item.id)}>
+                                            <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('4%')} color="white" />
+                                        </TouchableOpacity>
                                     </View>
 
-                                </TouchableOpacity>
-
-
-
-                        }
-
-
-                        {/* {item.name == 'unlock' && item.selected == true ?
-                    (<>
-                        <TouchableOpacity onPress={() => setActive(item)}>
-                            <View style={styles.PingPlayed}>
-                                <View style={{ height: 65 }}>
-                                    <Text style={styles.PingText11}>{item.name}</Text>
-                                </View>
-                                <View>
-                                    <Text style={styles.activeText} >Active</Text>
-                                </ View>
+                                </LinearGradient>
                             </View>
-                        </TouchableOpacity>
-                    </>) : null} */}
+                        )
+                    }}
+                />
+            </View>
 
-                    </View>
+        );
+    }
 
-                )}
-            />
-        )
+
+    const [payurl, setUrl] = useState('')
+
+
+
+
+    const getPaypal = async () => {
+
+        var data = {
+
+            user_id: myContext.myData.id,
+            type_id: pingsid,
+            type: 'ping',
+            price: Pricestate,
+
+        }
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.post(`get-paypal-url`,
+            data,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+
+            setUrl(res.data.url, "url here");
+            console.log(payurl, "here url set");
+            console.log(data)
+            props.navigation.navigate('webview', {
+                data: res.data.url,
+            })
+
+        }).catch((err) => {
+            console.log('error hai ', err.response);
+        })
+
+
+    }
+    const getPaypal2 = async () => {
+
+        var data = {
+
+            user_id: myContext.myData.id,
+            type_id: pingsid,
+            type: 'date',
+            price: Pricestate2,
+
+        }
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.post(`get-paypal-url`,
+            data,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+
+            setUrl(res.data.url, "url here");
+            console.log(payurl, "here url set");
+            console.log(data)
+            props.navigation.navigate('webview', {
+                data: res.data.url,
+            })
+
+        }).catch((err) => {
+            console.log('error hai ', err.response);
+        })
+
+
+    }
+
+
+
+
+    const getSkrill = async () => {
+
+        var data = {
+
+            user_id: myContext.myData.id,
+            email: myContext.myData.email,
+            type_id: pingsid,
+            type: 'ping',
+            price: Pricestate,
+
+        }
+        const value = await AsyncStorage.getItem('@auth_token');
+        await axiosconfig.post(`get-skrill-url`,
+            data,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + value //the token is a variable which holds the token
+                }
+            }
+        ).then((res: any) => {
+
+            setUrl(res.data.url, "url here");
+            console.log(payurl, "here url skrill");
+            console.log(data)
+            props.navigation.navigate('webview', {
+                data: res.data.url,
+            })
+
+        }).catch((err) => {
+            console.log('error hai ', err.response);
+        })
+
 
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+            {Loader22 ? (
+                <>
+                    <Loader2 />
+                </>
+            ) : null}
             <View style={styles.container}>
+                {/* top header */}
                 <View style={styles.TopHeader}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('faqscreen')}>
-                        <Text style={{ fontSize: 20, fontFamily: "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
+                        <Text style={{ fontSize: 20, fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular", color: "white", alignSelf: "flex-start", margin: 20, }}> FAQ</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => props.navigation.navigate('personalprofiledetails')}>
-
                         <Image style={styles.imgSetting}
                             source={require("../assets/setting.png")}
                         ></Image>
                     </TouchableOpacity>
                 </View>
+
+                {/* scroller */}
+
                 <ScrollView>
 
-                    <Modal
+                    {/* choose mode */}
+                    <View >
+                        <SafeAreaView style={{ flex: 1 }}>
+                            <View style={{ alignItems: 'center', }}>
+                                <View>
 
-                        transparent={true}
-
-                        visible={modalOpenn}
-                        animationType='fade'
-
-
-                    >
-                        <View style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginTop: -5,
-                            backgroundColor: '#000000e0',
-                        }} >
-                            <LinearGradient
-                                start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                colors={['#FF7474', '#E20303']}
-                                style={styles.modalViewH}>
-                                <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just ${Pricestate} ?</Text>
-
-                                <View style={styles.modalButtons2} >
-                                    <Pressable
-                                        style={styles.buttonH}
-                                        onPress={() => ('')}
-                                    >
-                                        <Text style={styles.textStyleNo1}>Yes</Text>
-                                    </Pressable>
-
-                                    <Pressable
-                                        style={styles.buttonH}
-                                        onPress={() => setModalOpenn(false)}
-                                    >
-                                        <Text style={styles.textStyleNo1}>No Thanks</Text>
-                                    </Pressable>
-
+                                    <Text style={styles.ModeHeading}>Choose Your Mode</Text>
                                 </View>
+                                <ScrollView style={{ width: '94%' }}>
+                                    {
+                                        modedataa ? (
+                                            <>
+                                                {
+                                                    modedataa.map((item, index) => {
+                                                        return (
+                                                            <Pressable
+                                                                onPress={() => { LayoutAnimation.easeInEaseOut(); questionPick(item) }}
+                                                                style={{ marginTop: 20, width: '100%', padding: 0, }}
+
+                                                            >
+                                                                {press === item.id ?
+
+                                                                    <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }}  >
+
+                                                                        <LinearGradient
+                                                                            colors={['#0883FB', '#0883FB']}
+                                                                            style={{
+                                                                                flexDirection: 'row',
+                                                                                justifyContent: 'space-between',
+                                                                                alignItems: 'center',
+                                                                                backgroundColor: '#0883FB',
+                                                                                paddingHorizontal: 10,
+                                                                                paddingVertical: 10, height: 76,
+                                                                                borderColor: 'white', borderWidth: 1.5,
+                                                                                borderTopLeftRadius: 18, borderTopRightRadius: 18,
+                                                                                borderBottomLeftRadius: 10,
+                                                                                borderBottomRightRadius: 10, color: "White",
+                                                                            }}>
+
+                                                                            <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
+                                                                            <Text style={{
+                                                                                padding: 5,
+                                                                                color: 'white',
+                                                                                marginLeft: -20,
+                                                                                fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+                                                                                fontSize: 16,
+                                                                                width: moderateScale(180)
+                                                                            }}>{item.name}</Text>
 
 
-                            </LinearGradient>
-                        </View>
+                                                                            <TouchableOpacity>
+                                                                                <View style={styles.RadioView2}>
+                                                                                </View>
+                                                                            </TouchableOpacity>
+                                                                        </LinearGradient>
+                                                                    </Pressable>
 
-                    </Modal>
-
-                    <View >
-                        <View style={{ alignItems: 'center', }}>
-
-                            <View>
-
-                                <Text style={styles.ModeHeading}>Choose Your Mode</Text>
+                                                                    :
+                                                                    <LinearGradient
+                                                                        colors={['#0883FB', '#0883FB']}
+                                                                        style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
+                                                                        <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
+                                                                        <View >
+                                                                            <Text style={{
+                                                                                padding: 5, marginLeft: -20,
+                                                                                fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+                                                                                color: "white",
+                                                                                fontSize: 16,
+                                                                                width: moderateScale(180),
+                                                                            }}>{item.name}</Text>
+                                                                        </View>
+                                                                        <TouchableOpacity>
+                                                                            <View style={styles.RadioView2}>
+                                                                                <TouchableOpacity
+                                                                                    onPress={() => setModeMain(item)}
+                                                                                    style={{
+                                                                                        marginTop: moderateScale(4, 0.1),
+                                                                                        width: moderateScale(35),
+                                                                                        height: moderateScale(35),
+                                                                                        backgroundColor: '#00B712',
+                                                                                        borderRadius: 120,
+                                                                                        alignSelf: "center",
+                                                                                        borderRadius: moderateScale(20),
+                                                                                        backgroundColor: item.check ? '#00B712' : 'white',
+                                                                                        borderWidth: 2.5,
+                                                                                        borderColor: 'white'
+                                                                                    }} >
+                                                                                </TouchableOpacity>
+                                                                            </View>
+                                                                        </TouchableOpacity>
+                                                                    </LinearGradient>
+                                                                }
+                                                                {press === item.id ?
+                                                                    <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
+                                                                        <View style={{ backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, }}>
+                                                                            <Text style={{
+                                                                                margin: 15,
+                                                                                padding: 15,
+                                                                                marginHorizontal: 0,
+                                                                                marginTop: -10,
+                                                                                backgroundColor: "white",
+                                                                                color: "#B4B4B4",
+                                                                                borderBottomLeftRadius: 18,
+                                                                                borderBottomRightRadius: 18,
+                                                                                fontSize: 14,
+                                                                                fontFamily: 'Poppins-Regular',
+                                                                            }}>{item.description} </Text>
+                                                                        </View>
+                                                                    </Pressable>
+                                                                    :
+                                                                    null
+                                                                }
+                                                            </Pressable>
+                                                        )
+                                                    })
+                                                }
+                                            </>
+                                        ) : null
+                                    }
+                                </ScrollView>
                             </View>
-
-                            <SafeAreaView style={{ flex: 1 }}>
-                                <FlatList
-
-                                    nestedScrollEnabled
-                                    ListEmptyComponent={null}
-                                    ListFooterComponent={null}
-                                    ListHeaderComponent={null}
-                                    data={data2}
-                                    keyExtractor={(item, index) => index.toString()}
-                                    style={{ width: (windowWidth - 50), }}
-                                    renderItem={({ item, index }) => (
-                                        <Pressable
-                                            onPress={() => { LayoutAnimation.easeInEaseOut(); questionPick(item) }}
-                                            style={{ marginTop: 20, width: '100%', padding: 0, }}
-                                        >
-                                            {press === item.id ?
-
-                                                <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }}  >
-                                                    <LinearGradient
-                                                        colors={item.color}
-                                                        style={{
-                                                            flexDirection: 'row',
-                                                            justifyContent: 'space-between',
-                                                            alignItems: 'center',
-                                                            backgroundColor: '#0883FB',
-                                                            paddingHorizontal: 10,
-                                                            paddingVertical: 10, height: 76,
-                                                            borderColor: 'white', borderWidth: 1.5,
-                                                            borderTopLeftRadius: 18, borderTopRightRadius: 18,
-                                                            borderBottomLeftRadius: 10,
-                                                            borderBottomRightRadius: 10, color: "White",
-                                                        }}>
-
-                                                        <MaterialIcons name='expand-less' size={hp('5%')} color="white" />
-                                                        <Text style={{
-                                                            padding: 5,
-                                                            color: 'white',
-                                                            marginLeft: -20,
-                                                            fontFamily: "Gazpacho Regular",
-                                                            fontSize: 16,
-                                                            width: moderateScale(180)
-                                                        }}>{item.name}</Text>
-
-                                                        {/* <AntDesign name="caretdown" size={16} color="black"/> */}
-                                                        <TouchableOpacity>
-                                                            <View style={styles.RadioView2}>
-                                                                {/* <View style={onPress == item ? styles.RadioInnerViewNormal : styles.RadioInnerView} >
-                                                                </View> */}
-                                                            </View>
-                                                        </TouchableOpacity>
-                                                    </LinearGradient>
-                                                </Pressable>
-
-                                                :
-                                                <LinearGradient
-                                                    colors={item.color}
-                                                    style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0883FB', paddingHorizontal: 10, paddingVertical: 10, height: 76, borderRadius: 18, color: "White", }}>
-                                                    <MaterialIcons name='expand-more' size={hp('5%')} color="white" />
-                                                    <View >
-                                                        <Text style={{
-                                                            padding: 5, marginLeft: -20,
-                                                            fontFamily: "Gazpacho Regular",
-                                                            color: "white",
-                                                            fontSize: 16,
-                                                            width: moderateScale(180),
-                                                        }}>{item.name}</Text>
-                                                    </View>
-                                                    <TouchableOpacity>
-                                                        <View style={styles.RadioView2}>
-                                                            <TouchableOpacity
-                                                                // onPress={() => checked ? setChecked(false) : setChecked(true)}
-                                                                onPress={() => setChecked(item)}
-                                                                style={{
-                                                                    marginTop: moderateScale(4, 0.1),
-                                                                    width: moderateScale(35),
-                                                                    height: moderateScale(35),
-                                                                    backgroundColor: '#00B712',
-                                                                    borderRadius: 120,
-                                                                    alignSelf: "center",
-                                                                    borderRadius: moderateScale(20),
-                                                                    backgroundColor: checked.id == item.id ? '#00B712' : 'white',
-                                                                    borderWidth: 2.5,
-                                                                    borderColor: 'white'
-                                                                }} >
-
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                    </TouchableOpacity>
-
-                                                </LinearGradient>
-                                            }
-
-                                            {press === item.id ?
-
-                                                <Pressable onPress={() => { LayoutAnimation.easeInEaseOut(); setPress('') }} style={{ zIndex: -999 }} >
-
-                                                    <View style={{ backgroundColor: "white", color: "#B4B4B4", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, }}>
-                                                        <Text style={{
-                                                            margin: 15,
-                                                            padding: 15,
-                                                            marginHorizontal: 0,
-                                                            marginTop: -10,
-                                                            backgroundColor: "white",
-                                                            color: "#B4B4B4",
-                                                            borderBottomLeftRadius: 18,
-                                                            borderBottomRightRadius: 18,
-                                                            fontSize: 14,
-                                                            fontFamily: 'Poppins-Regular',
-                                                        }}>{item.description} </Text>
-                                                    </View>
-
-
-                                                </Pressable>
-
-                                                :
-                                                null
-                                            }
-                                        </Pressable>
-
-                                    )}
-                                />
-                            </SafeAreaView>
-                        </View>
+                        </SafeAreaView>
                     </View>
 
-                    <View >
-                        <Modal
-
-                            transparent={true}
-
-                            visible={modalOpen}
-                            animationType='fade'
-
-                            navigation={props.navigation}
-
-                        >
-                            <View style={styles.centeredView} >
-                                <LinearGradient
-                                    start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#FF7474', '#E20303']}
-                                    style={styles.modalView}>
-                                    <Text style={styles.modalText}>Lorem ipsum dolor sit amet, consectetuer
-                                        adipiscing elit, sed diam nonummy nibh
-                                        euismod tincidunt ut laoreet dolore
-                                        magna aliquam erat volutpat. Ut wisi.</Text>
-
-                                    <View style={styles.modalButtons} >
-                                        <Pressable
-                                            style={styles.button}
-                                            onPress={() => setModalOpen(false)}
-                                        >
-                                            <Text style={styles.textStyleNo}>Buy</Text>
-                                        </Pressable>
-
-                                        <Pressable
-                                            style={styles.button}
-                                            onPress={() => setModalOpen(false)}
-                                        >
-                                            <Text style={styles.textStyleNo}>No Thanks</Text>
-                                        </Pressable>
-                                        <Pressable
-                                            style={styles.button}
-                                            onPress={() => setModalOpen(false) || props.navigation.navigate('faqscreen')}
-                                        >
-                                            <Text style={styles.textStyleNo}>Learn More</Text>
-                                        </Pressable>
-                                    </View>
-
-
-                                </LinearGradient>
-                            </View>
-
-                        </Modal>
-                    </View>
+                    {/* pre plane date */}
                     <View style={styles.PrePlainDate}>
                         <Text style={styles.PrePlanText}> Pre-Planned Dates</Text>
                         <ScrollView horizontal={true}>
@@ -1209,82 +1635,107 @@ const HomeScreen = (props) => {
                         </ScrollView>
                     </View>
 
-                    {
-                        state && state.length > 0 ? (
-                            <>
-                                <View style={styles.AddPersonView}>
+                    {/* Another Couple */}
+                    <View style={{ marginBottom: 20 }}>
+                        {
+                            datepersons && datepersons.length > 0 ? (
+                                <>
+                                    <View style={styles.AddPersonView}>
+                                        <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
+                                        <TouchableOpacity onPress={() => props.navigation.navigate("choosedate", { type: 'Add Date Info', con: 'date' })} style={{ marginRight: 45, top: 14, }}>
+                                            <Text style={{ fontSize: 12, color: 'white', alignSelf: 'flex-end', fontFamily: 'Poppins-Regular', }}>Add New +</Text>
+                                        </TouchableOpacity>
+                                        <CoupleCard navigation={props.navigation} otherpersons={datepersons} con={'datepersons'}></CoupleCard>
+                                    </View>
+                                </>
+                            ) :
+                                <View style={styles.AddPersonView5}>
                                     <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
-                                    <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
-                                        <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular', }}>Add New +</Text>
+                                    <TouchableOpacity onPress={() => props.navigation.navigate("choosedate", { type: 'Add Date Info', con: 'date' })} style={{ top: 14, }}>
+                                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                            colors={['#FF7474', '#E20303']}
+                                            style={styles.linearGradient} >
+                                            <Text style={styles.AddButtonText}>
+                                                Add Person
+                                            </Text>
+                                        </LinearGradient>
                                     </TouchableOpacity>
-
-                                    <CoupleCard navigation={props.navigation}></CoupleCard>
-                                    {/* </TouchableOpacity> */}
                                 </View>
-                            </>
-                        ) : <View style={styles.AddPersonView5}>
-                            <Text style={styles.chooseYourDateText}> Choose Your Date</Text>
-
-                            <TouchableOpacity onPress={() => props.navigation.navigate("choosedate")}>
-                                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={['#FF7474', '#E20303']}
-                                    style={styles.linearGradient} >
-                                    <Text style={styles.AddButtonText}>
-                                        Add Person
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        </View>
-                    }
-                    <View style={styles.AddCouple}>
-
-                        <Text style={styles.choosePersonText}>   Add Another Couple</Text>
-                        <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
-                            <Text style={{ bottom: -14, fontSize: 12, color: 'white', alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins-Regular', }}>Add New +</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                colors={['#FF7474', '#E20303']}
-                                style={styles.linearGradient} >
-                                <Text style={styles.AddButtonText}>
-                                    Add Person 1
-                                </Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => props.navigation.navigate("addcouple")}>
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                colors={['#FF7474', '#E20303']}
-                                style={styles.linearGradient} >
-                                <Text style={styles.AddButtonText}>
-                                    Add Person 2
-                                </Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
+                        }
                     </View>
+
+                    <View style={styles.AddCouple}>
+                        <Text style={styles.choosePersonText}>   Add Another Couple</Text>
+
+                        <View>
+                            {
+                                otherpersons1 && otherpersons1.length > 0 ? (
+                                    <>
+                                        <TouchableOpacity onPress={() => props.navigation.navigate("choosedate", { type: `Add Person's Info`, con: 'other' })} style={{ marginRight: 45, top: 14, }}>
+                                            <Text style={{ fontSize: 12, color: 'white', alignSelf: 'flex-end', fontFamily: 'Poppins-Regular', }}>Add New +</Text>
+                                        </TouchableOpacity>
+                                        <CoupleCard navigation={props.navigation} otherpersons={otherpersons1} con={'otherpersons1'}></CoupleCard>
+                                    </>
+                                ) : (
+                                    <>
+                                        <TouchableOpacity onPress={() => props.navigation.navigate("choosedate", { type: `Add Person's Info`, con: 'other' })}>
+                                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                                colors={['#FF7474', '#E20303']}
+                                                style={styles.linearGradient} >
+                                                <Text style={styles.AddButtonText}>
+                                                    Add Person 1
+                                                </Text>
+                                            </LinearGradient>
+                                        </TouchableOpacity>
+                                    </>
+                                )
+                            }
+                        </View>
+                        <View>
+                            {
+                                otherpersons2 && otherpersons2.length > 0 ? (
+                                    <>
+                                        <CoupleCard navigation={props.navigation} otherpersons={otherpersons2} con={'otherpersons2'}></CoupleCard>
+                                    </>
+                                ) : (
+                                    <>
+                                        <TouchableOpacity onPress={() => props.navigation.navigate("choosedate", { type: `Add Person's Info`, con: 'other' })}>
+                                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                                colors={['#FF7474', '#E20303']}
+                                                style={styles.linearGradient} >
+                                                <Text style={styles.AddButtonText}>
+                                                    Add Person 2
+                                                </Text>
+                                            </LinearGradient>
+                                        </TouchableOpacity>
+                                    </>
+                                )
+                            }
+                        </View>
+
+                    </View>
+
+                    {/* events */}
                     <View style={styles.addEvent} >
                         <View style={styles.mealView} >
                             <Text style={styles.choosePersonText}>  Add an Event</Text>
                             <View>
                                 <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20, marginBottom: 20 }}>
-
                                     {
                                         toggleActive == true ?
                                             <GooglePlacesAutocomplete
-
                                                 placeholder='Enter Location'
                                                 minLength={2}
                                                 autoFocus={false}
                                                 returnKeyType={'default'}
                                                 fetchDetails={true}
                                                 onPress={(data, details = null) => {
-                                                    // 'details' is provided when fetchDetails = true
-                                                    this.getPysicalAddress(data)
+                                                    console.log(data, details);
                                                 }}
                                                 query={{
-                                                    key: 'AIzaSyDpjC5dmFxhdUHi24y0ZH6PGD_NhOLFCMA',
+                                                    key: 'AIzaSyCpU6PeHUpZfoFjntHvJUQ0IGf2M2prSto',
                                                     language: 'en',
                                                 }}
-
                                                 styles={{
                                                     textInput: {
 
@@ -1321,15 +1772,11 @@ const HomeScreen = (props) => {
                                                         marginLeft: 10,
 
                                                     },
-
                                                 }}
-
                                             />
                                             :
                                             <Text style={styles.zipCode}> Use Current Location ? </Text>
-
                                     }
-
                                     <View style={{ flexDirection: 'row', position: 'absolute', right: 10, marginTop: 3 }}>
                                         <TouchableOpacity
                                             style={[
@@ -1348,18 +1795,14 @@ const HomeScreen = (props) => {
                                                         ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
                                                         : { backgroundColor: activeColor, borderRadius: 25, },
                                                 ]}
-
                                             />
 
                                             <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.6, 0) }}>N</Text>
-
+                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
                                         </TouchableOpacity>
                                     </View>
-
                                 </View>
                             </View>
-
                             <Carousel
                                 ref={carouselRef}
                                 sliderWidth={screenWidth}
@@ -1368,11 +1811,10 @@ const HomeScreen = (props) => {
                                 renderItem={renderItem}
                                 hasParallaxImages={true}
                             />
-
                         </View>
-
                     </View>
 
+                    {/* pings */}
                     <View style={{ height: moderateScale(400), backgroundColor: '#4D4D4D' }}>
                         <Text style={styles.SelectYourPingText}>   Select Your Ping Frequency</Text>
                         <View style={styles.ping}>
@@ -1413,25 +1855,25 @@ const HomeScreen = (props) => {
                         <Text style={styles.mins}>mins</Text>
                         <Text style={styles.selectPngText}>Select Your Pings</Text>
                         <ScrollView horizontal={true}>
-
                             {
                                 rendenPing()
                             }
                         </ScrollView>
                     </View>
+
+                    {/* schedule date */}
                     <View style={styles.ScheduleView}>
                         <Text style={styles.chooseDateText}> Schedule Your Date</Text>
                         <TouchableOpacity onPress={() => showDatePicker()}>
                             <View style={styles.sectionStyle2}>
                                 <Text
                                     style={{ color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginHorizontal: 20, }}
-
                                 >
                                     {dob}
                                 </Text>
                                 <View style={{ marginHorizontal: 20, backgroundColor: 'white', height: moderateScale(45), width: moderateScale(45), borderRadius: 55 }}>
                                     <Image
-                                        source={require('../assets/calendar.png')} //Change your icon image here
+                                        source={require('../assets/calendar.png')}
                                         style={styles.imageStyle}
                                     />
                                 </View>
@@ -1446,16 +1888,13 @@ const HomeScreen = (props) => {
 
                                 <View style={{ marginHorizontal: 20, backgroundColor: 'white', height: moderateScale(45), width: moderateScale(45), borderRadius: 55 }}>
                                     <Image
-                                        source={require('../assets/time.png')} //Change your icon image here
+                                        source={require('../assets/time.png')}
                                         style={styles.imageStyle}
                                     />
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={
-                            () => 
-                            doneNow()
-                            }>
+                        <TouchableOpacity onPress={() => saveDate()}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={['#FF7474', '#E20303']}
                                 style={styles.linearGradient2} >
@@ -1465,20 +1904,162 @@ const HomeScreen = (props) => {
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
+
+                    {/* modals */}
+                    <Modal
+                        transparent={true}
+                        visible={modalOpenn}
+                        animationType='fade'
+                    >
+                        <View style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: -5,
+                            backgroundColor: '#000000e0',
+                        }} >
+                            <LinearGradient
+                                start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                                colors={['#FF7474', '#E20303']}
+                                style={styles.modalViewH}>
+                                <Text style={styles.modalText2}>This Ping is currently locked. Would you like to permanently unlock it for just ${Pricestate} ?</Text>
+
+                                <View style={styles.modalButtons2} >
+                                    <TouchableOpacity
+                                        style={styles.buttonH}
+                                        onPress={() => refRBSheet2.current.open()}
+                                    >
+                                        <Text style={styles.textStyleNo1}>Yes</Text>
+                                    </TouchableOpacity>
+
+                                    <Pressable
+                                        style={styles.buttonH}
+                                        onPress={() => setModalOpenn(false)}
+                                    >
+                                        <Text style={styles.textStyleNo1}>No Thanks</Text>
+                                    </Pressable>
+                                </View>
+                            </LinearGradient>
+                        </View>
+                    </Modal>
+
+                    <RBSheet
+                        ref={refRBSheet2}
+                        closeOnDragDown={true}
+                        closeOnPressMask={false}
+                        height={280}
+                        customStyles={{
+                            wrapper: {
+                                backgroundColor: "#000000a0"
+                            },
+                            draggableIcon: {
+                                backgroundColor: "#fff"
+                            },
+                            container: {
+                                backgroundColor: '#24202f',
+                                borderTopRightRadius: 12,
+                                borderTopLeftRadius: 12,
+                            }
+
+                        }}
+                    >
+
+                        <TouchableOpacity onPress={() => { getPaypal() }}>
+                            {/* , props.navigation.navigate('webview') */}
+                            <View style={styles.sectionStyle2}>
+                                <Text
+                                    style={{ color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginHorizontal: 20, }}
+                                >PayPal
+                                </Text>
+
+                                <Image
+                                    source={require('../assets/p1.png')}
+                                    style={styles.imageStyle22}
+                                />
+
+                            </View>
+                        </TouchableOpacity >
+                        <TouchableOpacity onPress={() => { getSkrill() }}>
+                            <View style={styles.sectionStyle2}>
+                                <Text
+                                    style={{ color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginHorizontal: 20, }}
+                                >Skrill</Text>
+
+                                <Image
+                                    source={require('../assets/p2.png')}
+                                    style={styles.imageStyle22}
+                                />
+
+                            </View>
+                        </TouchableOpacity>
+
+
+                    </RBSheet>
+
                 </ScrollView>
+                <RBSheet
+                    ref={refRBSheet}
+                    closeOnDragDown={true}
+                    closeOnPressMask={false}
+                    height={280}
+                    customStyles={{
+                        wrapper: {
+                            backgroundColor: "#000000a0"
+                        },
+                        draggableIcon: {
+                            backgroundColor: "#fff"
+                        },
+                        container: {
+                            backgroundColor: '#24202f',
+                            borderTopRightRadius: 12,
+                            borderTopLeftRadius: 12,
+                        }
+
+                    }}
+                >
+
+                    <TouchableOpacity onPress={() => { getPaypal2() }}>
+                        {/* , props.navigation.navigate('webview') */}
+                        <View style={styles.sectionStyle2}>
+                            <Text
+                                style={{ color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginHorizontal: 20, }}
+                            >PayPal 1
+                            </Text>
+
+                            <Image
+                                source={require('../assets/p1.png')}
+                                style={styles.imageStyle22}
+                            />
+
+                        </View>
+                    </TouchableOpacity >
+                    <TouchableOpacity onPress={() => { getSkrill() }}>
+                        <View style={styles.sectionStyle2}>
+                            <Text
+                                style={{ color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginHorizontal: 20, }}
+                            >Skrill 1</Text>
+
+                            <Image
+                                source={require('../assets/p2.png')}
+                                style={styles.imageStyle22}
+                            />
+
+                        </View>
+                    </TouchableOpacity>
+
+
+                </RBSheet>
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="date"
                     onConfirm={handleConfirm}
                     onCancel={hideDatePicker}
-
                 />
                 <DateTimePickerModal
                     isVisible={isTimePickerVisible}
                     mode="time"
                     onConfirm={handleConfirm2}
                     onCancel={hideTimePicker}
-
                 />
             </View>
         </SafeAreaView>
@@ -1488,6 +2069,183 @@ const HomeScreen = (props) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+
+
+    bottomTab: {
+        height: 70,
+        margin: 5,
+        marginHorizontal: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    status: {
+        width: 100,
+        textAlign: 'center',
+        marginBottom: 20,
+        fontWeight: 'bold',
+        borderRadius: 19,
+    },
+    toggleContainer2: {
+        top: moderateScale(-20), marginLeft: 20,
+        height: 22,
+        width: 43,
+        borderRadius: 20,
+        borderWidth: 0,
+        overflow: 'hidden',
+        backgroundColor: '#24202F',
+        padding: 2,
+        position: 'relative',
+
+    },
+    toggleBtn2: { height: '100%', width: '50%' },
+
+    chooseContaine: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        borderRadius: 20,
+        height: moderateScale(70),
+        width: moderateScale(windowWidth - 61, 0.1),
+    },
+    InnerContain: {
+        borderRadius: 20,
+        alignSelf: 'center',
+        backgroundColor: '#363143'
+    },
+    Contain: {
+
+        backgroundColor: 'black'
+    },
+    placeView2: {
+
+        borderRadius: 18,
+        height: moderateScale(60),
+        width: moderateScale(270),
+        backgroundColor: '#24202F',
+        marginBottom: 10,
+        alignSelf: 'center'
+
+    },
+    yellowView: {
+        height: moderateScale(24),
+        width: moderateScale(270),
+        backgroundColor: '#FFD500',
+        borderTopLeftRadius: 18,
+        borderTopRightRadius: 18,
+        alignSelf: 'center', justifyContent: 'center'
+    },
+    placeViewc: {
+        borderRadius: 18,
+        // height: moderateScale(182),
+        width: moderateScale(270),
+        backgroundColor: '#24202F',
+        alignSelf: 'center',
+        marginVertical: 20,
+    },
+    placeView: {
+        margin: 15,
+        borderRadius: 18,
+        height: moderateScale(152),
+        width: moderateScale(270),
+        backgroundColor: '#24202F',
+        alignSelf: 'center',
+    },
+    Baap: {
+        alignSelf: 'center'
+    },
+
+    MainBack: {
+        backgroundColor: '#4D4D4D',
+        padding: moderateScale(40),
+
+    },
+    BtnViews: {
+        flex: 1,
+        flexDirection: "row",
+        backgroundColor: "red",
+        position: "absolute",
+        zIndex: 999,
+        top: 500,
+        width: '100%',
+        height: 100,
+
+    },
+    container: {
+        flex: 1,
+        marginTop: 10,
+        flexDirection: 'row'
+    },
+    title2: {
+        fontSize: 16,
+        color: "white",
+        fontFamily: 'Poppins-Regular',
+        left: 100,
+        marginTop: moderateScale(0),
+        transform: [{ translateY: 5 }]
+    },
+    item: {
+        marginLeft: 70,
+        padding: 0,
+        fontSize: 16,
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        height: 60,
+        color: "white",
+        top: 20,
+    },
+    container2: {
+        flexDirection: 'column',
+    },
+    radiosView: {
+        backgroundColor: "#363143",
+        height: moderateScale(650),
+        width: moderateScale(291),
+        flexDirection: "column",
+    },
+    RadioInnerView: {
+        width: 30,
+        height: 30,
+        backgroundColor: '#00B712',
+        borderRadius: 120,
+        alignSelf: "center",
+        margin: 6,
+    },
+
+    RadioView: {
+        marginHorizontal: moderateScale(120),
+        flexDirection: "row",
+        width: 42,
+        height: 42,
+        justifyContent: 'space-between',
+        backgroundColor: 'white',
+        borderRadius: 120,
+        marginTop: 13,
+    },
+    ChooseMeal: {
+        fontSize: 16,
+        fontFamily: 'Poppins-Regular',
+        color: 'white',
+        textTransform: 'capitalize',
+        marginTop: 22,
+
+    },
+    MainView: {
+        backgroundColor: "#534C64",
+        height: moderateScale(76),
+        borderRadius: 20,
+        zIndex: 99,
+        alignSelf: 'center'
+    },
+    InnerView: {
+        width: moderateScale(293),
+        flexDirection: "row",
+
+    },
+
+
+
+    // tabs card style up 
+
+
+
     activeText: {
         color: 'white',
         fontFamily: 'Poppins-Regular',
@@ -1587,15 +2345,16 @@ const styles = StyleSheet.create({
         margin: 6.5,
     },
     modalText: {
-        fontSize: 14,
+        fontSize: 18,
         color: 'white',
         fontFamily: 'Poppins-Regular',
+        textAlign: 'center'
     },
     textStyleNo: {
         color: 'white',
         margin: 20,
         fontFamily: 'Poppins-Regular',
-        fontSize: 14
+        fontSize: 16
     },
     buttonNo: {
         backgroundColor: 'white',
@@ -1686,7 +2445,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
 
         marginBottom: 5,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular" : "Gazpacho Regular",
         textAlign: 'center',
 
     },
@@ -1716,6 +2475,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
 
     },
+    imageStyle22: {
+
+        height: 60,
+        width: 120,
+        alignSelf: 'center',
+        resizeMode: 'contain'
+
+    },
     imageStyle: {
         top: 10,
         height: 25,
@@ -1731,7 +2498,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
 
 
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1747,7 +2514,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         marginTop: 20,
 
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         fontSize: 16,
         width: (windowWidth - 70),
         height: 76,
@@ -1761,23 +2528,23 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     PingUnlock: {
         width: 90,
-        height: moderateScale(90),
+        height: 90,
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#FF2B25",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     PingLock: {
         width: 90,
-        height: moderateScale(90),
+        height: 90,
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#C5C5C5",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     PingPlayed2: {
@@ -1785,26 +2552,26 @@ const styles = StyleSheet.create({
         height: moderateScale(85),
         borderRadius: 12,
         margin: 15,
-        backgroundColor: "#1AC72B",
-        fontFamily: "Gazpacho Regular",
+        backgroundColor: "#C5C5C5",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     PingPlayed: {
         width: 90,
-        height: moderateScale(90),
+        height: 90,
         borderRadius: 12,
         margin: 15,
         backgroundColor: "#1AC72B",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     PingText1: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Poppins-Regular',
         textAlign: "center",
-        marginTop: 26,
+        marginTop: 22,
         lineHeight: 25,
         marginHorizontal: 6
 
@@ -1813,7 +2580,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: "Gazpacho Bold",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         textAlign: "center",
         marginTop: 27,
         marginHorizontal: 4,
@@ -1822,7 +2589,7 @@ const styles = StyleSheet.create({
         fontSize: 11.5,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Poppins-Regular',
         textAlign: "center",
         marginTop: moderateScale(20),
         marginHorizontal: 6,
@@ -1841,11 +2608,19 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginHorizontal: 65
     },
+    pinLockPicback2: {
+        height: 17,
+        width: 17,
+        borderRadius: 20,
+        backgroundColor: 'white',
+        marginTop: 2,
+        marginHorizontal: 65
+    },
     pinLockUnclock2: {
         fontSize: 12,
         color: "white",
         alignSelf: "center",
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Poppins-Regular',
         textAlign: "center",
         marginTop: -4,
         marginHorizontal: 6
@@ -1866,7 +2641,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: -25,
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         textAlign: "center",
 
     },
@@ -1907,7 +2682,7 @@ const styles = StyleSheet.create({
         height: 58,
         margin: 25,
         borderRadius: 18,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
 
     },
@@ -1939,7 +2714,7 @@ const styles = StyleSheet.create({
         height: 76,
         borderRadius: 16,
 
-        width: (windowWidth - 50),
+        width: (windowWidth - 70),
         alignSelf: 'center'
     },
     AddMeal: {
@@ -1949,7 +2724,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 25,
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     zipCode: {
@@ -1994,8 +2769,9 @@ const styles = StyleSheet.create({
         height: 74,
     },
     AddCouple: {
-        height: 372,
+        // height: 372,
         backgroundColor: '#4D4D4D',
+        paddingBottom: 30
 
     },
     AddButtonText2: {
@@ -2046,7 +2822,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
 
     },
@@ -2056,7 +2832,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     PrePlanText: {
@@ -2066,7 +2842,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
 
     },
     SelectYourPingText: {
@@ -2075,7 +2851,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     },
     choosePersonText: {
         marginTop: 40,
@@ -2083,7 +2859,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFF",
         alignSelf: "center",
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
     }
     ,
     contentHead: {
@@ -2096,11 +2872,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'black',
+        // paddingBottom:60
     },
     title: {
         textAlign: 'center',
         fontSize: 18,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         marginBottom: 20,
     },
     header: {
@@ -2118,7 +2895,7 @@ const styles = StyleSheet.create({
     headerText: {
         textAlign: 'center',
         fontSize: 16,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         color: "white",
         alignSelf: "flex-start",
         marginTop: 15,
@@ -2147,7 +2924,7 @@ const styles = StyleSheet.create({
     },
     selectTitle: {
         fontSize: 14,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
         padding: 10,
         textAlign: 'center',
     },
@@ -2160,6 +2937,103 @@ const styles = StyleSheet.create({
     multipleToggle__title: {
         fontSize: 16,
         marginRight: 8,
-        fontFamily: "Gazpacho Regular",
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+    },
+
+    // datePerson
+    dpcontainer2: {
+        flex: 1,
+        height: moderateScale(185),
+        width: moderateScale(324),
+        // marginVertical: 35,
+        marginHorizontal: 10,
+        flexDirection: "row",
+        borderRadius: moderateScale(18),
+    },
+
+    dpwithOutBorder:
+    {
+        marginHorizontal: 4,
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        width: 38,
+        height: 38,
+        color: "White",
+    }
+    ,
+
+    dpwithBorder:
+    {
+        borderRadius: moderateScale(18),
+        height: moderateScale(185),
+        width: moderateScale(324),
+        alignSelf: 'center',
+        flexDirection: 'row',
+        marginHorizontal: 10,
+
+    },
+
+    dpinput: {
+        height: 50,
+        alignSelf: "center",
+        backgroundColor: 'white',
+        width: '80%',
+        margin: 10,
+
+    },
+
+    dppicSize: {
+
+        marginLeft: 3,
+
+        height: 140,
+        width: 100,
+        borderRadius: 14,
+
+    },
+    dpflex3: {
+        flex: .9,
+
+        borderRadius: moderateScale(18),
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+    },
+    dpflex2: {
+        flex: 3,
+
+    },
+    dpflex1: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: moderateScale(18),
+    },
+
+    dpcontainer: {
+        flex: 1,
+        backgroundColor: '#F11775',
+        height: moderateScale(185),
+        width: moderateScale(324),
+        marginVertical: 35,
+        marginHorizontal: 10,
+        flexDirection: "row",
+        borderRadius: moderateScale(18),
+    },
+
+    dpcardTextHead: {
+        color: 'white',
+        fontFamily: Platform.OS === 'ios' ? "Gazpacho" : "Gazpacho Regular",
+        fontSize: 18,
+        marginLeft: moderateScale(3),
+        alignSelf: 'center'
+
+    },
+    dpcardText: {
+        color: 'white',
+        fontFamily: 'Poppins-Regular',
+        fontSize: 11,
+        marginLeft: 2,
+        marginTop: 16,
     },
 });

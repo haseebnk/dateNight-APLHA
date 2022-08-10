@@ -13,11 +13,12 @@ import {
 } from "react-native";
 
 
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 import LinearGradient from "react-native-linear-gradient";
 import { scale } from "react-native-size-matters";
 import { moderateScale } from "react-native-size-matters";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
@@ -35,62 +36,20 @@ const Data = [{
     day: 'Day:  Wednesday:',
     time: 'Time:  12:56 Am',
     Frequency: 'Frequency:  5 min'
-}]
-
-
-const Data2 = [{
-    id: 1,
+},
+{
+    id: 2,
     name: 'Scheduled Date 2',
-    Gname: 'Alvina Taichi',
+    Gname: 'Alvina Taichi 2',
     date: 'Date :  01 | 12 | 2022:',
     day: 'Day:  Wednesday:',
     time: 'Time:  12:56 Am',
     // Frequency: 'Frequency:  10 min'
-
-}]
-const renderData = () => {
-    return (
-        Data.map((v, i) => {
-            return (
-                <View key={i} style={{ flexDirection: 'column' }}>
-                    <Text style={styles.cardTextHead}>{v.name}</Text>
-
-                    <View style={{top:15}}>
-                    <Text style={styles.cardText}>{v.Gname}</Text>
-                    <Text style={styles.cardText}>{v.date}</Text>
-
-                    <Text style={styles.cardText}>{v.time}</Text>
-                    {/* <Text style={styles.cardText}>{v.Frequency}</Text> */}
-                    </View>
-                </View>
-
-            )
-        })
-
-    )
 }
-const renderGift = () => {
-    return (
-        Data2.map((v, i) => {
-            return (
-                <View key={i} style={{ flexDirection: 'column' }}>
-                    <Text style={styles.cardTextHead}>{v.name}</Text>
 
-                    <View style={{top:15}}>
-                        <Text style={styles.cardText}>{v.Gname}</Text>
-                        <Text style={styles.cardText}>{v.date}</Text>
 
-                        <Text style={styles.cardText}>{v.time}</Text>
-                        <Text style={styles.cardText}>{v.Frequency}</Text>
-                    </View>
+]
 
-                </View>
-
-            )
-        })
-
-    )
-}
 
 
 function DateTimeCard() {
@@ -100,51 +59,48 @@ function DateTimeCard() {
     const [checkedd, setCheckedd] = React.useState(false);
 
     return (
-        <ScrollView horizontal={true}>
-            <TouchableOpacity >
-                <LinearGradient
+        Data.map((v, i) => {
+            return (
 
-                    start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }}
-                    colors={['#F11775', '#FB6580']}
-                    style={styles.container}>
-                    <View style={styles.flex2}>
-                        {renderData()}
-                    </View>
-                    <View style={styles.flex1}>
-                        {/* <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" /> */}
+                <ScrollView horizontal={true}>          
+                    <TouchableOpacity activeOpacity={.9} onPress={() => checked ? setChecked(false) : setChecked(true)}>
+                        <LinearGradient
 
-                    </View>
-                    <View style={styles.flex3}>
+                            start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
+                            colors={['#7AC9FD', '#0071BC']}
+                            style={styles.container2}>
+                            <View style={styles.flex2}>
 
 
-                        <MaterialIcons style={{ marginLeft: 7, marginTop: 25 }} name='mode-edit' size={hp('3.1%')} color="white" />
-                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
-                    </View>
-                </LinearGradient>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <Text style={styles.cardTextHead}>{v.name}</Text>
 
-            </TouchableOpacity>
+                                    <View style={{ top: 15 }}>
+                                        <Text style={styles.cardText}>{v.Gname}</Text>
+                                        <Text style={styles.cardText}>{v.date}</Text>
 
-            <TouchableOpacity activeOpacity={.9} onPress={() => checked ? setChecked(false) : setChecked(true)}>
-                <LinearGradient
+                                        <Text style={styles.cardText}>{v.time}</Text>
+                                        {/* <Text style={styles.cardText}>{v.Frequency}</Text> */}
+                                    </View>
+                                </View>
 
-                    start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
-                    colors={['#7AC9FD', '#0071BC']}
-                    style={styles.container2}>
-                    <View style={styles.flex2}>
-                        {renderGift()}
-                    </View>
-                    <View style={styles.flex1}>
-                        {/* <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" /> */}
-                    </View>
-                    <View style={styles.flex3}>
 
-                        <MaterialIcons style={{ marginLeft: 7, marginTop: 25 }} name='mode-edit' size={hp('3.1%')} color="white" />
-                        <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
-                    </View>
-                </LinearGradient>
-            </TouchableOpacity >
-        </ScrollView>
 
+                            </View>
+                            <View style={styles.flex1}>
+                                {/* <MaterialIcons style={{ marginLeft: -45, marginTop: 15 }} name='expand-more' size={hp('3%')} color="white" /> */}
+                            </View>
+                            <View style={styles.flex3}>
+
+                                <MaterialIcons style={{ marginLeft: 7, marginTop: 25 }} name='mode-edit' size={hp('3.1%')} color="white" />
+                                <MaterialIcons style={{ marginLeft: 7, marginBottom: 25 }} name='delete-outline' size={hp('3.5%')} color="white" />
+                            </View>
+                        </LinearGradient>
+                    </TouchableOpacity >
+                </ScrollView>
+
+            )
+        })
     );
 
 }
@@ -194,7 +150,7 @@ const styles = StyleSheet.create({
         height: moderateScale(165),
         width: moderateScale(318),
         marginVertical: 30,
-        marginRight: 30,
+        // marginRight: 30,
         flexDirection: "row",
         borderRadius: moderateScale(18),
         marginLeft: 20,

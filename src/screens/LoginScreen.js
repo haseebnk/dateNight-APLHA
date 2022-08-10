@@ -68,71 +68,6 @@ export default function LoginScreen2(props) {
     const [toggleActive, setToggle] = useState(false);
 
 
-
-    // const onLoginUser = () => {
-    //     setLoader(true);
-
-    //     var data = {
-    //         email: email,
-    //         password: password
-    //     }
-
-    //     var emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    //     setLoader(false);
-    //     if (!emailReg.test(data.email)) {
-    //         // alert('Invalid credentials')
-    //     }
-
-    //     if (data.email == '' || data.email == null) {
-    //         alert('Email Required!');
-    //         return false;
-    //     }
-    //     if (data.password == '' || data.password == null) {
-    //         alert('Password Required!');
-    //         return false;
-    //     }
-
-    //     setLoader(true);
-
-    //     axiosconfig
-    //         .post('login', data)
-    //         .then((res: any) => {
-    //             setLoader(false);
-
-    //             if (res.data.error) {
-    //                 alert('invalid credentials')
-    //                 // showToast('login error', res.data.error_description);
-    //             } else {
-                 
-
-    //                 storeData(res.data.access_token);
-    //                 console.log("Got it", res.data.access_token)
-                   
-
-    //             }
-    //         })
-    //         .catch(err => {
-    //             setLoader(false);
-    //            alert('Invalid Credentials', err);
-    //         });
-
-      
-
-    // }
-
-    // const storeData = async value => {
-    //     try {
-    //         await AsyncStorage.setItem('@auth_token', value);
-
-    //         //   context.setuserToken(value);
-    //         setTimeout(() => {
-    //             props.navigation.navigate('home');
-    //         }, 1000);
-    //     } catch (e) { }
-    // };
-
-
-
     const onLoginUser = () => {
         setLoader(true);
 
@@ -156,6 +91,7 @@ export default function LoginScreen2(props) {
             return false;
         }
 
+
         setLoader(true);
 
         axiosconfig
@@ -164,19 +100,21 @@ export default function LoginScreen2(props) {
                 setLoader(false);
 
                 if (res.data.error) {
-                    alert('invalid credentials')
+                    alert('Invalid credentials')
                     // showToast('login error', res.data.error_description);
-                } else {
-                    console.log("Got it", res.data.token , ) 
+                }
+              
+                else {
+                    console.log("Got it", res.data.token,)
 
                     storeData(res.data.token);
-                  
+
 
                 }
             })
             .catch(err => {
                 setLoader(false);
-                console.log('Invalid Credentials', err);
+                alert('User Email or Password Is Incorrect');
             });
 
 
@@ -190,10 +128,9 @@ export default function LoginScreen2(props) {
             setTimeout(() => {
                 props.navigation.navigate('home');
             }, 1000);
-      
+
         } catch (e) { }
     };
-
 
     return (
         <TouchableWithoutFeedback
@@ -214,14 +151,14 @@ export default function LoginScreen2(props) {
                     <Image style={styles.tinyLogo}
                         source={require('../assets/imglogo.png')}
                     /></View>
-                     <Text style={styles.logoText}>Date Night</Text>
+                <Text style={styles.logoText}>Date Night</Text>
                 <Text style={styles.loginText}>Sign Into Your Account</Text>
                 <View style={styles.sectionStyle}>
                     {/* <Image
                         source={require('../assets/emailll.png')} //Change your icon image here
                         style={styles.ImageStyle}
                     /> */}
-                      <FontAwesome5 style={{ margin: 9 }} name='envelope' size={hp('2.7%')} color="#fff" />
+                    <FontAwesome5 style={{ margin: 9 }} name='envelope' size={hp('2.7%')} color="#fff" />
                     <TextInput
                         style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginTop: 8 }}
                         value={email}
@@ -239,7 +176,7 @@ export default function LoginScreen2(props) {
                         source={require('../assets/passs.png')} //Change your icon image here
                         style={styles.ImageStyle}
                     /> */}
-                      <MaterialIcons style={{ margin: 3, }} name='lock-outline' size={hp('3.5%')} color="#fff" />
+                    <MaterialIcons style={{ margin: 3, }} name='lock-outline' size={hp('3.5%')} color="#fff" />
                     <TextInput
                         value={password}
                         style={{ flex: 1, color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular', marginTop: 8 }}
@@ -266,12 +203,12 @@ export default function LoginScreen2(props) {
                                 style={[
                                     styles.toggleBtn,
                                     toggleActive
-                                    ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
-                                    : { backgroundColor: activeColor, borderRadius: 25, },
+                                        ? { backgroundColor: inActiveColor, borderRadius: 25, alignSelf: 'flex-end' }
+                                        : { backgroundColor: activeColor, borderRadius: 25, },
                                 ]}
                             />
-                                            <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
-                                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
+                            <Text style={{ color: 'white', fontSize: 12, position: 'absolute', fontFamily: 'Poppins-Regular', bottom: Platform.OS === 'ios' ? moderateScale(1.7, 0) : moderateScale(-1, 0), left: Platform.OS === 'ios' ? moderateScale(5, 0) : moderateScale(5, 0) }}> Y</Text>
+                            <Text style={{ color: !toggleActive ? 'white' : 'black', fontSize: 12, fontFamily: 'Poppins-Regular', position: 'absolute', bottom: Platform.OS === 'ios' ? moderateScale(2, 0) : moderateScale(-0.5, 0), right: Platform.OS === 'ios' ? moderateScale(7.2, 0) : moderateScale(7.5, 0) }}>N</Text>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
